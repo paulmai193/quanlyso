@@ -10,7 +10,7 @@
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_KKbFAD6FEeeMipCu4ii91Q" name="type">
+  <packagedElement xmi:type="uml:Class" xmi:id="_KKbFAD6FEeeMipCu4ii91Q" name="type_play">
     <ownedAttribute xmi:id="_P7NX4D6FEeeMipCu4ii91Q" name="name">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
     </ownedAttribute>
@@ -47,18 +47,14 @@
   <packagedElement xmi:type="uml:Class" xmi:id="_wqHWsD6IEee46pHn84Ty0Q" name="profit_factor">
     <ownedAttribute xmi:id="_4B6DoD6IEee46pHn84Ty0Q" name="factor" type="_o53DQD6EEeeMipCu4ii91Q"/>
     <ownedAttribute xmi:id="_D1HL8D6JEee46pHn84Ty0Q" name="style" type="_BKPd8D6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_GeEyQD6JEee46pHn84Ty0Q" name="type" type="_KKbFAD6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_IRyyoD6JEee46pHn84Ty0Q" name="rate">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
-    </ownedAttribute>
+    <ownedAttribute xmi:id="_GeEyQD6JEee46pHn84Ty0Q" name="type_play" type="_KKbFAD6FEeeMipCu4ii91Q"/>
+    <ownedAttribute xmi:id="_IRyyoD6JEee46pHn84Ty0Q" name="rate" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_V_ht8D6JEee46pHn84Ty0Q" name="cost_factor">
     <ownedAttribute xmi:id="_V_ht8T6JEee46pHn84Ty0Q" name="factor" type="_o53DQD6EEeeMipCu4ii91Q"/>
     <ownedAttribute xmi:id="_V_ht8j6JEee46pHn84Ty0Q" name="style" type="_BKPd8D6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_V_ht8z6JEee46pHn84Ty0Q" name="type" type="_KKbFAD6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_V_ht9D6JEee46pHn84Ty0Q" name="rate">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
-    </ownedAttribute>
+    <ownedAttribute xmi:id="_V_ht8z6JEee46pHn84Ty0Q" name="type_play" type="_KKbFAD6FEeeMipCu4ii91Q"/>
+    <ownedAttribute xmi:id="_V_ht9D6JEee46pHn84Ty0Q" name="rate" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_no3jMD6JEee46pHn84Ty0Q" memberEnd="_no3jMT6JEee46pHn84Ty0Q _no70oT6JEee46pHn84Ty0Q" navigableOwnedEnd="_no70oT6JEee46pHn84Ty0Q">
     <ownedEnd xmi:id="_no3jMT6JEee46pHn84Ty0Q" name="factors" type="_o53DQD6EEeeMipCu4ii91Q" association="_no3jMD6JEee46pHn84Ty0Q">
@@ -120,32 +116,22 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_6vKeoD6JEee46pHn84Ty0Q" value="*"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_-eBWAD6JEee46pHn84Ty0Q" name="transaction">
-    <ownedAttribute xmi:id="_AD-AID6KEee46pHn84Ty0Q" name="user_id">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#ELongObject"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_-eBWAD6JEee46pHn84Ty0Q" name="transactions">
+    <ownedAttribute xmi:id="_AD-AID6KEee46pHn84Ty0Q" name="user_id" type="_3ZhRUD6xEeek_4cD17Oijw"/>
+    <ownedAttribute xmi:id="_E78bsD6KEee46pHn84Ty0Q" name="chosen_number">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
     </ownedAttribute>
-    <ownedAttribute xmi:id="_E78bsD6KEee46pHn84Ty0Q" name="number">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EShort"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:id="_LYm0wD6YEee46pHn84Ty0Q" name="net_value">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
-    </ownedAttribute>
+    <ownedAttribute xmi:id="_LYm0wD6YEee46pHn84Ty0Q" name="net_value" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_QfnTMD6KEee46pHn84Ty0Q" name="transaction_detail">
-    <ownedAttribute xmi:id="_TMDEQD6KEee46pHn84Ty0Q" name="transaction" type="_-eBWAD6JEee46pHn84Ty0Q"/>
+    <ownedAttribute xmi:id="_TMDEQD6KEee46pHn84Ty0Q" name="transactions" type="_-eBWAD6JEee46pHn84Ty0Q"/>
     <ownedAttribute xmi:id="_V5BA0D6KEee46pHn84Ty0Q" name="factor" type="_o53DQD6EEeeMipCu4ii91Q"/>
     <ownedAttribute xmi:id="_YvbNQD6KEee46pHn84Ty0Q" name="style" type="_BKPd8D6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_bOQAID6KEee46pHn84Ty0Q" name="type" type="_KKbFAD6FEeeMipCu4ii91Q"/>
+    <ownedAttribute xmi:id="_bOQAID6KEee46pHn84Ty0Q" name="type_play" type="_KKbFAD6FEeeMipCu4ii91Q"/>
     <ownedAttribute xmi:id="_4pq8UD6KEee46pHn84Ty0Q" name="channel" type="_VcOwcD6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_fztvYD6KEee46pHn84Ty0Q" name="amount">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:id="_irt3QD6KEee46pHn84Ty0Q" name="profit">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
-    </ownedAttribute>
-    <ownedAttribute xmi:id="_osFeQD6KEee46pHn84Ty0Q" name="cost">
-      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_METAMODELS/Ecore.metamodel.uml#EFloat"/>
-    </ownedAttribute>
+    <ownedAttribute xmi:id="_fztvYD6KEee46pHn84Ty0Q" name="amount" type="_S0-woD6hEeek_4cD17Oijw"/>
+    <ownedAttribute xmi:id="_irt3QD6KEee46pHn84Ty0Q" name="profit" type="_S0-woD6hEeek_4cD17Oijw"/>
+    <ownedAttribute xmi:id="_osFeQD6KEee46pHn84Ty0Q" name="costs" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_74nfYD6cEeeF8cu54sdYXw" memberEnd="_74nfYT6cEeeF8cu54sdYXw _74otgT6cEeeF8cu54sdYXw" navigableOwnedEnd="_74otgT6cEeeF8cu54sdYXw">
     <ownedEnd xmi:id="_74nfYT6cEeeF8cu54sdYXw" name="transactions" type="_-eBWAD6JEee46pHn84Ty0Q" association="_74nfYD6cEeeF8cu54sdYXw">
@@ -197,4 +183,6 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_S2nsMT6dEeeF8cu54sdYXw" value="*"/>
     </ownedEnd>
   </packagedElement>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_S0-woD6hEeek_4cD17Oijw" name="float"/>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_3ZhRUD6xEeek_4cD17Oijw" name="long"/>
 </uml:Model>
