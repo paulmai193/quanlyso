@@ -111,7 +111,6 @@
     </ownedEnd>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_-eBWAD6JEee46pHn84Ty0Q" name="transactions">
-    <ownedAttribute xmi:id="_AD-AID6KEee46pHn84Ty0Q" name="user_id" type="_3ZhRUD6xEeek_4cD17Oijw"/>
     <ownedAttribute xmi:id="_E78bsD6KEee46pHn84Ty0Q" name="chosen_number">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
     </ownedAttribute>
@@ -174,4 +173,19 @@
   </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_S0-woD6hEeek_4cD17Oijw" name="float"/>
   <packagedElement xmi:type="uml:DataType" xmi:id="_3ZhRUD6xEeek_4cD17Oijw" name="long"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_l3z9MD71EeeNCPVpjptU2g" name="client">
+    <ownedAttribute xmi:id="_t1HK8D71EeeNCPVpjptU2g" name="grantAccessDate" type="_Ht0Y4D73EeeNCPVpjptU2g"/>
+    <ownedAttribute xmi:id="_xwQ8cD72EeeNCPVpjptU2g" name="revokeAccessDate" type="_Ht0Y4D73EeeNCPVpjptU2g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_-YUpID72EeeNCPVpjptU2g" memberEnd="_-YUpIT72EeeNCPVpjptU2g _-YXFYT72EeeNCPVpjptU2g" navigableOwnedEnd="_-YXFYT72EeeNCPVpjptU2g">
+    <ownedEnd xmi:id="_-YUpIT72EeeNCPVpjptU2g" name="clients" type="_l3z9MD71EeeNCPVpjptU2g" association="_-YUpID72EeeNCPVpjptU2g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-YWeUD72EeeNCPVpjptU2g"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-YXFYD72EeeNCPVpjptU2g" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_-YXFYT72EeeNCPVpjptU2g" name="transactionss" type="_-eBWAD6JEee46pHn84Ty0Q" aggregation="composite" association="_-YUpID72EeeNCPVpjptU2g">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-YXscD72EeeNCPVpjptU2g"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-YXscT72EeeNCPVpjptU2g" value="*"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:DataType" xmi:id="_Ht0Y4D73EeeNCPVpjptU2g" name="ZonedDateTime"/>
 </uml:Model>

@@ -2,6 +2,8 @@ package logia.quanlyso.service.dto;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -11,11 +13,11 @@ public class TransactionsDTO implements Serializable {
 
     private Long id;
 
-    private Long userId;
-
     private Integer chosenNumber;
 
     private Float netValue;
+
+    private Long clientsId;
 
     public Long getId() {
         return id;
@@ -23,14 +25,6 @@ public class TransactionsDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Integer getChosenNumber() {
@@ -47,6 +41,14 @@ public class TransactionsDTO implements Serializable {
 
     public void setNetValue(Float netValue) {
         this.netValue = netValue;
+    }
+
+    public Long getClientsId() {
+        return clientsId;
+    }
+
+    public void setClientsId(Long clientId) {
+        this.clientsId = clientId;
     }
 
     @Override
@@ -74,7 +76,6 @@ public class TransactionsDTO implements Serializable {
     public String toString() {
         return "TransactionsDTO{" +
             "id=" + getId() +
-            ", userId='" + getUserId() + "'" +
             ", chosenNumber='" + getChosenNumber() + "'" +
             ", netValue='" + getNetValue() + "'" +
             "}";

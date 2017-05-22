@@ -6,13 +6,15 @@
       "relationshipName": "transactionDetails",
       "otherEntityName": "transactionDetails",
       "otherEntityRelationshipName": "transactions"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "clients",
+      "otherEntityName": "client",
+      "otherEntityField": "id"
     }
   ],
   "fields": [
-    {
-      "fieldName": "userId",
-      "fieldType": "Long"
-    },
     {
       "fieldName": "chosenNumber",
       "fieldType": "Integer"

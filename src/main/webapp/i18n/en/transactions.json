@@ -15,10 +15,10 @@
             "detail": {
                 "title": "Transactions"
             },
-            "userId": "User Id",
             "chosenNumber": "Chosen Number",
             "netValue": "Net Value",
-            "transactionDetails": "Transaction Details"
+            "transactionDetails": "Transaction Details",
+            "clients": "Clients"
         }
     }
 }

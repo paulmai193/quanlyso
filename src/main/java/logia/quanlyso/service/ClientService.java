@@ -1,41 +1,41 @@
 package logia.quanlyso.service;
 
-import logia.quanlyso.service.dto.TransactionsDTO;
+import logia.quanlyso.service.dto.ClientDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 /**
- * Service Interface for managing Transactions.
+ * Service Interface for managing Client.
  */
-public interface TransactionsService {
+public interface ClientService {
 
     /**
-     * Save a transactions.
+     * Save a client.
      *
-     * @param transactionsDTO the entity to save
+     * @param clientDTO the entity to save
      * @return the persisted entity
      */
-    TransactionsDTO save(TransactionsDTO transactionsDTO);
+    ClientDTO save(ClientDTO clientDTO);
 
     /**
-     *  Get all the transactions.
+     *  Get all the clients.
      *  
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    Page<TransactionsDTO> findAll(Pageable pageable);
+    Page<ClientDTO> findAll(Pageable pageable);
 
     /**
-     *  Get the "id" transactions.
+     *  Get the "id" client.
      *
      *  @param id the id of the entity
      *  @return the entity
      */
-    TransactionsDTO findOne(Long id);
+    ClientDTO findOne(Long id);
 
     /**
-     *  Delete the "id" transactions.
+     *  Delete the "id" client.
      *
      *  @param id the id of the entity
      */

@@ -1,18 +1,13 @@
 package logia.quanlyso.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import logia.quanlyso.QuanlysoApp;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
+import logia.quanlyso.domain.Transactions;
+import logia.quanlyso.repository.TransactionsRepository;
+import logia.quanlyso.service.TransactionsService;
+import logia.quanlyso.service.dto.TransactionsDTO;
+import logia.quanlyso.service.mapper.TransactionsMapper;
+import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +23,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import logia.quanlyso.QuanlysoApp;
-import logia.quanlyso.domain.Transactions;
-import logia.quanlyso.repository.TransactionsRepository;
-import logia.quanlyso.service.TransactionsService;
-import logia.quanlyso.service.dto.TransactionsDTO;
-import logia.quanlyso.service.mapper.TransactionsMapper;
-import logia.quanlyso.web.rest.errors.ExceptionTranslator;
+import javax.persistence.EntityManager;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Test class for the TransactionsResource REST controller.
@@ -44,9 +39,6 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = QuanlysoApp.class)
 public class TransactionsResourceIntTest {
-
-    private static final Long DEFAULT_USER_ID = 1L;
-    private static final Long UPDATED_USER_ID = 2L;
 
     private static final Integer DEFAULT_CHOSEN_NUMBER = 1;
     private static final Integer UPDATED_CHOSEN_NUMBER = 2;
@@ -97,7 +89,6 @@ public class TransactionsResourceIntTest {
      */
     public static Transactions createEntity(EntityManager em) {
         Transactions transactions = new Transactions()
-            .userId(DEFAULT_USER_ID)
             .chosenNumber(DEFAULT_CHOSEN_NUMBER)
             .netValue(DEFAULT_NET_VALUE);
         return transactions;
@@ -124,7 +115,6 @@ public class TransactionsResourceIntTest {
         List<Transactions> transactionsList = transactionsRepository.findAll();
         assertThat(transactionsList).hasSize(databaseSizeBeforeCreate + 1);
         Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
-        assertThat(testTransactions.getUserId()).isEqualTo(DEFAULT_USER_ID);
         assertThat(testTransactions.getChosenNumber()).isEqualTo(DEFAULT_CHOSEN_NUMBER);
         assertThat(testTransactions.getNetValue()).isEqualTo(DEFAULT_NET_VALUE);
     }
@@ -160,7 +150,6 @@ public class TransactionsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(transactions.getId().intValue())))
-            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
             .andExpect(jsonPath("$.[*].chosenNumber").value(hasItem(DEFAULT_CHOSEN_NUMBER)))
             .andExpect(jsonPath("$.[*].netValue").value(hasItem(DEFAULT_NET_VALUE.doubleValue())));
     }
@@ -176,7 +165,6 @@ public class TransactionsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(transactions.getId().intValue()))
-            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()))
             .andExpect(jsonPath("$.chosenNumber").value(DEFAULT_CHOSEN_NUMBER))
             .andExpect(jsonPath("$.netValue").value(DEFAULT_NET_VALUE.doubleValue()));
     }
@@ -199,7 +187,6 @@ public class TransactionsResourceIntTest {
         // Update the transactions
         Transactions updatedTransactions = transactionsRepository.findOne(transactions.getId());
         updatedTransactions
-            .userId(UPDATED_USER_ID)
             .chosenNumber(UPDATED_CHOSEN_NUMBER)
             .netValue(UPDATED_NET_VALUE);
         TransactionsDTO transactionsDTO = transactionsMapper.toDto(updatedTransactions);
@@ -213,7 +200,6 @@ public class TransactionsResourceIntTest {
         List<Transactions> transactionsList = transactionsRepository.findAll();
         assertThat(transactionsList).hasSize(databaseSizeBeforeUpdate);
         Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
-        assertThat(testTransactions.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testTransactions.getChosenNumber()).isEqualTo(UPDATED_CHOSEN_NUMBER);
         assertThat(testTransactions.getNetValue()).isEqualTo(UPDATED_NET_VALUE);
     }

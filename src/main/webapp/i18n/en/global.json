@@ -15,6 +15,7 @@
                 "costFactor": "Cost Factor",
                 "transactions": "Transactions",
                 "transactionDetails": "Transaction Details",
+                "client": "Client",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

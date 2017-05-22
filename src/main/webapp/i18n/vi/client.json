@@ -1,0 +1,23 @@
+{
+    "quanlysoApp": {
+        "client" : {
+            "home": {
+                "title": "Clients",
+                "createLabel": "Thêm mới một Client",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Client"
+            },
+            "created": "Một Client mới được tạo với định danh {{ param }}",
+            "updated": "Một Client cập nhật với định danh {{ param }}",
+            "deleted": "Một Client đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Client {{ id }}?"
+            },
+            "detail": {
+                "title": "Client"
+            },
+            "grantAccessDate": "Grant Access Date",
+            "revokeAccessDate": "Revoke Access Date",
+            "transactionss": "Transactionss"
+        }
+    }
+}

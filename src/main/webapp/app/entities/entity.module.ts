@@ -8,6 +8,7 @@ import { QuanlysoProfitFactorModule } from './profit-factor/profit-factor.module
 import { QuanlysoCostFactorModule } from './cost-factor/cost-factor.module';
 import { QuanlysoTransactionsModule } from './transactions/transactions.module';
 import { QuanlysoTransactionDetailsModule } from './transaction-details/transaction-details.module';
+import { QuanlysoClientModule } from './client/client.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -20,6 +21,7 @@ import { QuanlysoTransactionDetailsModule } from './transaction-details/transact
         QuanlysoCostFactorModule,
         QuanlysoTransactionsModule,
         QuanlysoTransactionDetailsModule,
+        QuanlysoClientModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

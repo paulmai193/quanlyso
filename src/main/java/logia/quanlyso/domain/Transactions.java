@@ -1,22 +1,14 @@
 package logia.quanlyso.domain;
 
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
  * A Transactions.
@@ -32,9 +24,6 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
-
     @Column(name = "chosen_number")
     private Integer chosenNumber;
 
@@ -46,25 +35,15 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<TransactionDetails> transactionDetails = new HashSet<>();
 
+    @ManyToOne
+    private Client clients;
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Transactions userId(Long userId) {
-        this.userId = userId;
-        return this;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 
     public Integer getChosenNumber() {
@@ -118,6 +97,19 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
         this.transactionDetails = transactionDetails;
     }
 
+    public Client getClients() {
+        return clients;
+    }
+
+    public Transactions clients(Client client) {
+        this.clients = client;
+        return this;
+    }
+
+    public void setClients(Client client) {
+        this.clients = client;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -142,7 +134,6 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
     public String toString() {
         return "Transactions{" +
             "id=" + getId() +
-            ", userId='" + getUserId() + "'" +
             ", chosenNumber='" + getChosenNumber() + "'" +
             ", netValue='" + getNetValue() + "'" +
             "}";

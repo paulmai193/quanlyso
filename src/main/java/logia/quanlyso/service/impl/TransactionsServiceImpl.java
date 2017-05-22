@@ -1,17 +1,20 @@
 package logia.quanlyso.service.impl;
 
+import logia.quanlyso.service.TransactionsService;
+import logia.quanlyso.domain.Transactions;
+import logia.quanlyso.repository.TransactionsRepository;
+import logia.quanlyso.service.dto.TransactionsDTO;
+import logia.quanlyso.service.mapper.TransactionsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Service;
 
-import logia.quanlyso.domain.Transactions;
-import logia.quanlyso.repository.TransactionsRepository;
-import logia.quanlyso.service.TransactionsService;
-import logia.quanlyso.service.dto.TransactionsDTO;
-import logia.quanlyso.service.mapper.TransactionsMapper;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Transactions.

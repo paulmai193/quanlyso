@@ -1,0 +1,32 @@
+package logia.quanlyso.service.mapper;
+
+import logia.quanlyso.domain.*;
+import logia.quanlyso.service.dto.ClientDTO;
+
+import org.mapstruct.*;
+
+/**
+ * Mapper for the entity Client and its DTO ClientDTO.
+ */
+@Mapper(componentModel = "spring", uses = {})
+public interface ClientMapper extends EntityMapper <ClientDTO, Client> {
+    
+    @Mapping(target = "transactionsses", ignore = true)
+    Client toEntity(ClientDTO clientDTO); 
+    /**
+     * generating the fromId for all mappers if the databaseType is sql, as the class has relationship to it might need it, instead of
+     * creating a new attribute to know if the entity has any relationship from some other entity
+     *
+     * @param id id of the entity
+     * @return the entity instance
+     */
+     
+    default Client fromId(Long id) {
+        if (id == null) {
+            return null;
+        }
+        Client client = new Client();
+        client.setId(id);
+        return client;
+    }
+}

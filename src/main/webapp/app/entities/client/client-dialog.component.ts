@@ -6,27 +6,23 @@ import { Observable } from 'rxjs/Rx';
 import { NgbActiveModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { EventManager, AlertService } from 'ng-jhipster';
 
-import { Transactions } from './transactions.model';
-import { TransactionsPopupService } from './transactions-popup.service';
-import { TransactionsService } from './transactions.service';
-import { Client, ClientService } from '../client';
+import { Client } from './client.model';
+import { ClientPopupService } from './client-popup.service';
+import { ClientService } from './client.service';
 
 @Component({
-    selector: 'jhi-transactions-dialog',
-    templateUrl: './transactions-dialog.component.html'
+    selector: 'jhi-client-dialog',
+    templateUrl: './client-dialog.component.html'
 })
-export class TransactionsDialogComponent implements OnInit {
+export class ClientDialogComponent implements OnInit {
 
-    transactions: Transactions;
+    client: Client;
     authorities: any[];
     isSaving: boolean;
-
-    clients: Client[];
 
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
-        private transactionsService: TransactionsService,
         private clientService: ClientService,
         private eventManager: EventManager
     ) {
@@ -35,8 +31,6 @@ export class TransactionsDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.clientService.query().subscribe(
-            (res: Response) => { this.clients = res.json(); }, (res: Response) => this.onError(res.json()));
     }
     clear() {
         this.activeModal.dismiss('cancel');
@@ -44,22 +38,22 @@ export class TransactionsDialogComponent implements OnInit {
 
     save() {
         this.isSaving = true;
-        if (this.transactions.id !== undefined) {
+        if (this.client.id !== undefined) {
             this.subscribeToSaveResponse(
-                this.transactionsService.update(this.transactions));
+                this.clientService.update(this.client));
         } else {
             this.subscribeToSaveResponse(
-                this.transactionsService.create(this.transactions));
+                this.clientService.create(this.client));
         }
     }
 
-    private subscribeToSaveResponse(result: Observable<Transactions>) {
-        result.subscribe((res: Transactions) =>
+    private subscribeToSaveResponse(result: Observable<Client>) {
+        result.subscribe((res: Client) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Transactions) {
-        this.eventManager.broadcast({ name: 'transactionsListModification', content: 'OK'});
+    private onSaveSuccess(result: Client) {
+        this.eventManager.broadcast({ name: 'clientListModification', content: 'OK'});
         this.isSaving = false;
         this.activeModal.dismiss(result);
     }
@@ -77,34 +71,30 @@ export class TransactionsDialogComponent implements OnInit {
     private onError(error) {
         this.alertService.error(error.message, null, null);
     }
-
-    trackClientById(index: number, item: Client) {
-        return item.id;
-    }
 }
 
 @Component({
-    selector: 'jhi-transactions-popup',
+    selector: 'jhi-client-popup',
     template: ''
 })
-export class TransactionsPopupComponent implements OnInit, OnDestroy {
+export class ClientPopupComponent implements OnInit, OnDestroy {
 
     modalRef: NgbModalRef;
     routeSub: any;
 
     constructor(
         private route: ActivatedRoute,
-        private transactionsPopupService: TransactionsPopupService
+        private clientPopupService: ClientPopupService
     ) {}
 
     ngOnInit() {
         this.routeSub = this.route.params.subscribe((params) => {
             if ( params['id'] ) {
-                this.modalRef = this.transactionsPopupService
-                    .open(TransactionsDialogComponent, params['id']);
+                this.modalRef = this.clientPopupService
+                    .open(ClientDialogComponent, params['id']);
             } else {
-                this.modalRef = this.transactionsPopupService
-                    .open(TransactionsDialogComponent);
+                this.modalRef = this.clientPopupService
+                    .open(ClientDialogComponent);
             }
         });
     }

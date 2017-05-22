@@ -13,9 +13,11 @@
     <include file="classpath:config/liquibase/changelog/20170522140704_added_entity_CostFactor.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170522140705_added_entity_Transactions.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170522141221_added_entity_TransactionDetails.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170522150455_added_entity_Client.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170522140703_added_entity_constraints_ProfitFactor.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170522140704_added_entity_constraints_CostFactor.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170522141221_added_entity_constraints_TransactionDetails.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170522140705_added_entity_constraints_Transactions.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
