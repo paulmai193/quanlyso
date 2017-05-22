@@ -10,7 +10,7 @@
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
     </ownedAttribute>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_KKbFAD6FEeeMipCu4ii91Q" name="type_play">
+  <packagedElement xmi:type="uml:Class" xmi:id="_KKbFAD6FEeeMipCu4ii91Q" name="types">
     <ownedAttribute xmi:id="_P7NX4D6FEeeMipCu4ii91Q" name="name">
       <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
     </ownedAttribute>
@@ -118,11 +118,6 @@
     <ownedAttribute xmi:id="_LYm0wD6YEee46pHn84Ty0Q" name="net_value" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_QfnTMD6KEee46pHn84Ty0Q" name="transaction_detail">
-    <ownedAttribute xmi:id="_TMDEQD6KEee46pHn84Ty0Q" name="transactions" type="_-eBWAD6JEee46pHn84Ty0Q"/>
-    <ownedAttribute xmi:id="_V5BA0D6KEee46pHn84Ty0Q" name="factor" type="_o53DQD6EEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_YvbNQD6KEee46pHn84Ty0Q" name="style" type="_BKPd8D6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_bOQAID6KEee46pHn84Ty0Q" name="type_play" type="_KKbFAD6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_4pq8UD6KEee46pHn84Ty0Q" name="channel" type="_VcOwcD6FEeeMipCu4ii91Q"/>
     <ownedAttribute xmi:id="_fztvYD6KEee46pHn84Ty0Q" name="amount" type="_S0-woD6hEeek_4cD17Oijw"/>
     <ownedAttribute xmi:id="_irt3QD6KEee46pHn84Ty0Q" name="profit" type="_S0-woD6hEeek_4cD17Oijw"/>
     <ownedAttribute xmi:id="_osFeQD6KEee46pHn84Ty0Q" name="costs" type="_S0-woD6hEeek_4cD17Oijw"/>
