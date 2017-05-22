@@ -543,7 +543,7 @@
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.obeonetwork.dsl.uml2.design/description/uml2.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Class%20Diagram']/@defaultLayer/@containerMappings[name='CD_ReusedMappingForFeatures']/@subNodeMappings[name='CD_Property']"/>
       </ownedElements>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_wqOrcD6IEee46pHn84Ty0Q" name="profit_factor" tooltipText="NewModel::profit_factor" incomingEdges="_npLsQD6JEee46pHn84Ty0Q _rZpGID6JEee46pHn84Ty0Q _sI9qQD6JEee46pHn84Ty0Q" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_wqOrcD6IEee46pHn84Ty0Q" name="profitFactor" tooltipText="NewModel::profitFactor" incomingEdges="_npLsQD6JEee46pHn84Ty0Q _rZpGID6JEee46pHn84Ty0Q _sI9qQD6JEee46pHn84Ty0Q" width="12" height="10">
       <target xmi:type="uml:Class" href="my.uml#_wqHWsD6IEee46pHn84Ty0Q"/>
       <semanticElements xmi:type="uml:Class" href="my.uml#_wqHWsD6IEee46pHn84Ty0Q"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -563,7 +563,7 @@
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.obeonetwork.dsl.uml2.design/description/uml2.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Class%20Diagram']/@defaultLayer/@containerMappings[name='CD_ReusedMappingForFeatures']/@subNodeMappings[name='CD_Property']"/>
       </ownedElements>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_V_qQ0D6JEee46pHn84Ty0Q" name="cost_factor" tooltipText="NewModel::cost_factor" incomingEdges="_5unnoD6JEee46pHn84Ty0Q _6OCukD6JEee46pHn84Ty0Q _6vi5ID6JEee46pHn84Ty0Q" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_V_qQ0D6JEee46pHn84Ty0Q" name="costFactor" tooltipText="NewModel::costFactor" incomingEdges="_5unnoD6JEee46pHn84Ty0Q _6OCukD6JEee46pHn84Ty0Q _6vi5ID6JEee46pHn84Ty0Q" width="12" height="10">
       <target xmi:type="uml:Class" href="my.uml#_V_ht8D6JEee46pHn84Ty0Q"/>
       <semanticElements xmi:type="uml:Class" href="my.uml#_V_ht8D6JEee46pHn84Ty0Q"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
@@ -691,7 +691,7 @@
         <actualMapping xmi:type="description_1:NodeMapping" href="platform:/plugin/org.obeonetwork.dsl.uml2.design/description/uml2.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Class%20Diagram']/@defaultLayer/@containerMappings[name='CD_ReusedMappingForFeatures']/@subNodeMappings[name='CD_Property']"/>
       </ownedElements>
     </ownedDiagramElements>
-    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_QfpIYD6KEee46pHn84Ty0Q" name="transaction_detail" tooltipText="NewModel::transaction_detail" incomingEdges="_74zsoD6cEeeF8cu54sdYXw _9FosID6cEeeF8cu54sdYXw _RhdQED6dEeeF8cu54sdYXw _SIXfED6dEeeF8cu54sdYXw _S2xdMD6dEeeF8cu54sdYXw" width="12" height="10">
+    <ownedDiagramElements xmi:type="diagram:DNodeList" xmi:id="_QfpIYD6KEee46pHn84Ty0Q" name="transactionDetail" tooltipText="NewModel::transactionDetail" incomingEdges="_74zsoD6cEeeF8cu54sdYXw _9FosID6cEeeF8cu54sdYXw _RhdQED6dEeeF8cu54sdYXw _SIXfED6dEeeF8cu54sdYXw _S2xdMD6dEeeF8cu54sdYXw" width="12" height="10">
       <target xmi:type="uml:Class" href="my.uml#_QfnTMD6KEee46pHn84Ty0Q"/>
       <semanticElements xmi:type="uml:Class" href="my.uml#_QfnTMD6KEee46pHn84Ty0Q"/>
       <arrangeConstraints>KEEP_LOCATION</arrangeConstraints>
