@@ -45,15 +45,9 @@
     </ownedAttribute>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_wqHWsD6IEee46pHn84Ty0Q" name="profit_factor">
-    <ownedAttribute xmi:id="_4B6DoD6IEee46pHn84Ty0Q" name="factor" type="_o53DQD6EEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_D1HL8D6JEee46pHn84Ty0Q" name="style" type="_BKPd8D6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_GeEyQD6JEee46pHn84Ty0Q" name="type_play" type="_KKbFAD6FEeeMipCu4ii91Q"/>
     <ownedAttribute xmi:id="_IRyyoD6JEee46pHn84Ty0Q" name="rate" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Class" xmi:id="_V_ht8D6JEee46pHn84Ty0Q" name="cost_factor">
-    <ownedAttribute xmi:id="_V_ht8T6JEee46pHn84Ty0Q" name="factor" type="_o53DQD6EEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_V_ht8j6JEee46pHn84Ty0Q" name="style" type="_BKPd8D6FEeeMipCu4ii91Q"/>
-    <ownedAttribute xmi:id="_V_ht8z6JEee46pHn84Ty0Q" name="type_play" type="_KKbFAD6FEeeMipCu4ii91Q"/>
     <ownedAttribute xmi:id="_V_ht9D6JEee46pHn84Ty0Q" name="rate" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_no3jMD6JEee46pHn84Ty0Q" memberEnd="_no3jMT6JEee46pHn84Ty0Q _no70oT6JEee46pHn84Ty0Q" navigableOwnedEnd="_no70oT6JEee46pHn84Ty0Q">
