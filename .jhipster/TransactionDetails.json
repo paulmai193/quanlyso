@@ -1,0 +1,54 @@
+{
+  "fluentMethods": true,
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "transactions",
+      "otherEntityName": "transactions",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "channels",
+      "otherEntityName": "channel",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "factors",
+      "otherEntityName": "factor",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "styles",
+      "otherEntityName": "style",
+      "otherEntityField": "id"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "types",
+      "otherEntityName": "types",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "amount",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "profit",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "costs",
+      "fieldType": "Float"
+    }
+  ],
+  "changelogDate": "20170522141221",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "entityTableName": "transaction_details"
+}

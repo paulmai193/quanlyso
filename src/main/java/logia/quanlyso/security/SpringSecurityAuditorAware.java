@@ -1,9 +1,9 @@
 package logia.quanlyso.security;
 
-import logia.quanlyso.config.Constants;
-
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
+
+import logia.quanlyso.config.Constants;
 
 /**
  * Implementation of AuditorAware based on Spring Security.

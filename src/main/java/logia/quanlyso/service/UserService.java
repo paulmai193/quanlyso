@@ -1,14 +1,12 @@
 package logia.quanlyso.service;
 
-import logia.quanlyso.domain.Authority;
-import logia.quanlyso.domain.User;
-import logia.quanlyso.repository.AuthorityRepository;
-import logia.quanlyso.config.Constants;
-import logia.quanlyso.repository.UserRepository;
-import logia.quanlyso.security.AuthoritiesConstants;
-import logia.quanlyso.security.SecurityUtils;
-import logia.quanlyso.service.util.RandomUtil;
-import logia.quanlyso.service.dto.UserDTO;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +17,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
+import logia.quanlyso.config.Constants;
+import logia.quanlyso.domain.Authority;
+import logia.quanlyso.domain.User;
+import logia.quanlyso.repository.AuthorityRepository;
+import logia.quanlyso.repository.UserRepository;
+import logia.quanlyso.security.AuthoritiesConstants;
+import logia.quanlyso.security.SecurityUtils;
+import logia.quanlyso.service.dto.UserDTO;
+import logia.quanlyso.service.util.RandomUtil;
 
 /**
  * Service class for managing users.

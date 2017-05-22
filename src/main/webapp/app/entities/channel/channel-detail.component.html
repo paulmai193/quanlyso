@@ -1,0 +1,57 @@
+
+<div *ngIf="channel">
+    <h2><span jhiTranslate="quanlysoApp.channel.detail.title">Channel</span> {{channel.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="quanlysoApp.channel.name">Name</span></dt>
+        <dd>
+            <span>{{channel.name}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.code">Code</span></dt>
+        <dd>
+            <span>{{channel.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.sunday">Sunday</span></dt>
+        <dd>
+            <span>{{channel.sunday}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.monday">Monday</span></dt>
+        <dd>
+            <span>{{channel.monday}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.tuesday">Tuesday</span></dt>
+        <dd>
+            <span>{{channel.tuesday}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.wednesday">Wednesday</span></dt>
+        <dd>
+            <span>{{channel.wednesday}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.thursday">Thursday</span></dt>
+        <dd>
+            <span>{{channel.thursday}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.friday">Friday</span></dt>
+        <dd>
+            <span>{{channel.friday}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.channel.saturday">Saturday</span></dt>
+        <dd>
+            <span>{{channel.saturday}}</span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'channel/'+ channel.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

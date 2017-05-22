@@ -1,0 +1,24 @@
+{
+    "quanlysoApp": {
+        "costFactor" : {
+            "home": {
+                "title": "Cost Factors",
+                "createLabel": "Create a new Cost Factor",
+                "createOrEditLabel": "Create or edit a Cost Factor"
+            },
+            "created": "A new Cost Factor is created with identifier {{ param }}",
+            "updated": "A Cost Factor is updated with identifier {{ param }}",
+            "deleted": "A Cost Factor is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Cost Factor {{ id }}?"
+            },
+            "detail": {
+                "title": "Cost Factor"
+            },
+            "rate": "Rate",
+            "factors": "Factors",
+            "styles": "Styles",
+            "types": "Types"
+        }
+    }
+}

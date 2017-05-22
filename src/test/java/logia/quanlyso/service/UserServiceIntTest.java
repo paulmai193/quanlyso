@@ -1,27 +1,27 @@
 package logia.quanlyso.service;
 
-import logia.quanlyso.QuanlysoApp;
-import logia.quanlyso.domain.User;
-import logia.quanlyso.config.Constants;
-import logia.quanlyso.repository.UserRepository;
-import logia.quanlyso.service.dto.UserDTO;
-import logia.quanlyso.service.util.RandomUtil;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.test.context.junit4.SpringRunner;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.Optional;
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
+import logia.quanlyso.QuanlysoApp;
+import logia.quanlyso.config.Constants;
+import logia.quanlyso.domain.User;
+import logia.quanlyso.repository.UserRepository;
+import logia.quanlyso.service.dto.UserDTO;
+import logia.quanlyso.service.util.RandomUtil;
 
 /**
  * Test class for the UserResource REST controller.

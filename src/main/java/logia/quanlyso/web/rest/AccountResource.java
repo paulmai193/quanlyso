@@ -1,16 +1,9 @@
 package logia.quanlyso.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
+import java.util.Optional;
 
-import logia.quanlyso.domain.User;
-import logia.quanlyso.repository.UserRepository;
-import logia.quanlyso.security.SecurityUtils;
-import logia.quanlyso.service.MailService;
-import logia.quanlyso.service.UserService;
-import logia.quanlyso.service.dto.UserDTO;
-import logia.quanlyso.web.rest.vm.KeyAndPasswordVM;
-import logia.quanlyso.web.rest.vm.ManagedUserVM;
-import logia.quanlyso.web.rest.util.HeaderUtil;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -19,11 +12,24 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-import java.util.*;
+import com.codahale.metrics.annotation.Timed;
+
+import logia.quanlyso.domain.User;
+import logia.quanlyso.repository.UserRepository;
+import logia.quanlyso.security.SecurityUtils;
+import logia.quanlyso.service.MailService;
+import logia.quanlyso.service.UserService;
+import logia.quanlyso.service.dto.UserDTO;
+import logia.quanlyso.web.rest.util.HeaderUtil;
+import logia.quanlyso.web.rest.vm.KeyAndPasswordVM;
+import logia.quanlyso.web.rest.vm.ManagedUserVM;
 
 /**
  * REST controller for managing the current user's account.

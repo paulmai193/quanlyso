@@ -1,0 +1,28 @@
+{
+    "quanlysoApp": {
+        "transactionDetails" : {
+            "home": {
+                "title": "Transaction Details",
+                "createLabel": "Thêm mới một Transaction Details",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Transaction Details"
+            },
+            "created": "Một Transaction Details mới được tạo với định danh {{ param }}",
+            "updated": "Một Transaction Details cập nhật với định danh {{ param }}",
+            "deleted": "Một Transaction Details đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Transaction Details {{ id }}?"
+            },
+            "detail": {
+                "title": "Transaction Details"
+            },
+            "amount": "Amount",
+            "profit": "Profit",
+            "costs": "Costs",
+            "transactions": "Transactions",
+            "channels": "Channels",
+            "factors": "Factors",
+            "styles": "Styles",
+            "types": "Types"
+        }
+    }
+}

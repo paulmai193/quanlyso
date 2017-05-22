@@ -1,12 +1,22 @@
 package logia.quanlyso.web.rest;
 
-import logia.quanlyso.QuanlysoApp;
-import logia.quanlyso.domain.User;
-import logia.quanlyso.repository.UserRepository;
-import logia.quanlyso.service.MailService;
-import logia.quanlyso.service.UserService;
-import logia.quanlyso.web.rest.errors.ExceptionTranslator;
-import logia.quanlyso.web.rest.vm.ManagedUserVM;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.EntityManager;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,16 +32,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.hamcrest.Matchers.containsInAnyOrder;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import logia.quanlyso.QuanlysoApp;
+import logia.quanlyso.domain.User;
+import logia.quanlyso.repository.UserRepository;
+import logia.quanlyso.service.MailService;
+import logia.quanlyso.service.UserService;
+import logia.quanlyso.web.rest.errors.ExceptionTranslator;
+import logia.quanlyso.web.rest.vm.ManagedUserVM;
 
 /**
  * Test class for the UserResource REST controller.

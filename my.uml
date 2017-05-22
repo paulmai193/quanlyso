@@ -117,7 +117,7 @@
     </ownedAttribute>
     <ownedAttribute xmi:id="_LYm0wD6YEee46pHn84Ty0Q" name="net_value" type="_S0-woD6hEeek_4cD17Oijw"/>
   </packagedElement>
-  <packagedElement xmi:type="uml:Class" xmi:id="_QfnTMD6KEee46pHn84Ty0Q" name="transactionDetail">
+  <packagedElement xmi:type="uml:Class" xmi:id="_QfnTMD6KEee46pHn84Ty0Q" name="transactionDetails">
     <ownedAttribute xmi:id="_fztvYD6KEee46pHn84Ty0Q" name="amount" type="_S0-woD6hEeek_4cD17Oijw"/>
     <ownedAttribute xmi:id="_irt3QD6KEee46pHn84Ty0Q" name="profit" type="_S0-woD6hEeek_4cD17Oijw"/>
     <ownedAttribute xmi:id="_osFeQD6KEee46pHn84Ty0Q" name="costs" type="_S0-woD6hEeek_4cD17Oijw"/>

@@ -1,0 +1,43 @@
+
+<div *ngIf="profitFactor">
+    <h2><span jhiTranslate="quanlysoApp.profitFactor.detail.title">Profit Factor</span> {{profitFactor.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="quanlysoApp.profitFactor.rate">Rate</span></dt>
+        <dd>
+            <span>{{profitFactor.rate}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.profitFactor.factors">Factors</span></dt>
+        <dd>
+            <div *ngIf="profitFactor.factorsId">
+                <a [routerLink]="['/factor', profitFactor.factorsId]">{{profitFactor.factorsId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.profitFactor.styles">Styles</span></dt>
+        <dd>
+            <div *ngIf="profitFactor.stylesId">
+                <a [routerLink]="['/style', profitFactor.stylesId]">{{profitFactor.stylesId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.profitFactor.types">Types</span></dt>
+        <dd>
+            <div *ngIf="profitFactor.typesId">
+                <a [routerLink]="['/types', profitFactor.typesId]">{{profitFactor.typesId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'profit-factor/'+ profitFactor.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

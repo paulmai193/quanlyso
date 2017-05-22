@@ -1,10 +1,11 @@
 package logia.quanlyso.web.rest.vm;
 
-import logia.quanlyso.service.dto.UserDTO;
-import javax.validation.constraints.Size;
-
 import java.time.Instant;
 import java.util.Set;
+
+import javax.validation.constraints.Size;
+
+import logia.quanlyso.service.dto.UserDTO;
 
 /**
  * View Model extending the UserDTO, which is meant to be used in the user management UI.

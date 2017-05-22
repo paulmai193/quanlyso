@@ -1,0 +1,72 @@
+<div>
+    <h2>
+        <span jhiTranslate="quanlysoApp.channel.home.title">Channels</span>
+        <button class="btn btn-primary float-right create-channel" [routerLink]="['/', { outlets: { popup: ['channel-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="quanlysoApp.channel.home.createLabel">
+            Create new Channel
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="channels">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span jhiTranslate="global.field.id">ID</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.name">Name</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.code">Code</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.sunday">Sunday</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.monday">Monday</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.tuesday">Tuesday</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.wednesday">Wednesday</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.thursday">Thursday</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.friday">Friday</span></th>
+            <th><span jhiTranslate="quanlysoApp.channel.saturday">Saturday</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let channel of channels ;trackBy: trackId">
+                <td><a [routerLink]="['../channel', channel.id ]">{{channel.id}}</a></td>
+                <td>{{channel.name}}</td>
+                <td>{{channel.code}}</td>
+                <td>{{channel.sunday}}</td>
+                <td>{{channel.monday}}</td>
+                <td>{{channel.tuesday}}</td>
+                <td>{{channel.wednesday}}</td>
+                <td>{{channel.thursday}}</td>
+                <td>{{channel.friday}}</td>
+                <td>{{channel.saturday}}</td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../channel', channel.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'channel/'+ channel.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'channel/'+ channel.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

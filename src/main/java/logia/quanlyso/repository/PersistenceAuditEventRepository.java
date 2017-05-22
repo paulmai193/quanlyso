@@ -1,13 +1,13 @@
 package logia.quanlyso.repository;
 
-import logia.quanlyso.domain.PersistentAuditEvent;
-
 import java.time.LocalDateTime;
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import logia.quanlyso.domain.PersistentAuditEvent;
 
 /**
  * Spring Data JPA repository for the PersistentAuditEvent entity.

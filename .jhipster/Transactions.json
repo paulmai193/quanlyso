@@ -1,0 +1,30 @@
+{
+  "fluentMethods": true,
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "relationshipName": "transactionDetails",
+      "otherEntityName": "transactionDetails",
+      "otherEntityRelationshipName": "transactions"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "userId",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "chosenNumber",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "netValue",
+      "fieldType": "Float"
+    }
+  ],
+  "changelogDate": "20170522140705",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "entityTableName": "transactions"
+}

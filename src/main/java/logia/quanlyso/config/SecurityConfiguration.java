@@ -1,9 +1,6 @@
 package logia.quanlyso.config;
 
-import logia.quanlyso.security.*;
-import logia.quanlyso.security.jwt.*;
-
-import io.github.jhipster.security.*;
+import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +20,10 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
-import javax.annotation.PostConstruct;
+import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
+import logia.quanlyso.security.AuthoritiesConstants;
+import logia.quanlyso.security.jwt.JWTConfigurer;
+import logia.quanlyso.security.jwt.TokenProvider;
 
 @Configuration
 @EnableWebSecurity

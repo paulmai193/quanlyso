@@ -1,0 +1,24 @@
+{
+    "quanlysoApp": {
+        "profitFactor" : {
+            "home": {
+                "title": "Profit Factors",
+                "createLabel": "Create a new Profit Factor",
+                "createOrEditLabel": "Create or edit a Profit Factor"
+            },
+            "created": "A new Profit Factor is created with identifier {{ param }}",
+            "updated": "A Profit Factor is updated with identifier {{ param }}",
+            "deleted": "A Profit Factor is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Profit Factor {{ id }}?"
+            },
+            "detail": {
+                "title": "Profit Factor"
+            },
+            "rate": "Rate",
+            "factors": "Factors",
+            "styles": "Styles",
+            "types": "Types"
+        }
+    }
+}

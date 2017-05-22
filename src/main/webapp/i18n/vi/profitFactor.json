@@ -1,0 +1,24 @@
+{
+    "quanlysoApp": {
+        "profitFactor" : {
+            "home": {
+                "title": "Profit Factors",
+                "createLabel": "Thêm mới một Profit Factor",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Profit Factor"
+            },
+            "created": "Một Profit Factor mới được tạo với định danh {{ param }}",
+            "updated": "Một Profit Factor cập nhật với định danh {{ param }}",
+            "deleted": "Một Profit Factor đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Profit Factor {{ id }}?"
+            },
+            "detail": {
+                "title": "Profit Factor"
+            },
+            "rate": "Rate",
+            "factors": "Factors",
+            "styles": "Styles",
+            "types": "Types"
+        }
+    }
+}

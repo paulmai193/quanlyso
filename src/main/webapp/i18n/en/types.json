@@ -1,0 +1,24 @@
+{
+    "quanlysoApp": {
+        "types" : {
+            "home": {
+                "title": "Types",
+                "createLabel": "Create a new Types",
+                "createOrEditLabel": "Create or edit a Types"
+            },
+            "created": "A new Types is created with identifier {{ param }}",
+            "updated": "A Types is updated with identifier {{ param }}",
+            "deleted": "A Types is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Types {{ id }}?"
+            },
+            "detail": {
+                "title": "Types"
+            },
+            "name": "Name",
+            "profitFactors": "Profit Factors",
+            "costFactors": "Cost Factors",
+            "transactionDetails": "Transaction Details"
+        }
+    }
+}

@@ -1,0 +1,30 @@
+{
+    "quanlysoApp": {
+        "channel" : {
+            "home": {
+                "title": "Channels",
+                "createLabel": "Thêm mới một Channel",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Channel"
+            },
+            "created": "Một Channel mới được tạo với định danh {{ param }}",
+            "updated": "Một Channel cập nhật với định danh {{ param }}",
+            "deleted": "Một Channel đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Channel {{ id }}?"
+            },
+            "detail": {
+                "title": "Channel"
+            },
+            "name": "Name",
+            "code": "Code",
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday",
+            "transactionDetails": "Transaction Details"
+        }
+    }
+}
