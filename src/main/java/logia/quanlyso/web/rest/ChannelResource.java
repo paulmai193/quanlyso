@@ -26,17 +26,27 @@ import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Channel.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class ChannelResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(ChannelResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "channel";
         
+    /** The channel service. */
     private final ChannelService channelService;
 
+    /**
+     * Instantiates a new channel resource.
+     *
+     * @param channelService the channel service
+     */
     public ChannelResource(ChannelService channelService) {
         this.channelService = channelService;
     }

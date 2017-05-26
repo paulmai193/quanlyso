@@ -17,7 +17,22 @@
             },
             "grantAccessDate": "Grant Access Date",
             "revokeAccessDate": "Revoke Access Date",
-            "transactionss": "Transactionss"
+            "transactionss": "Transactionss",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "message": {
+                "validate": {
+                    "firstName": {
+                        "required": "First name is required",
+                        "maxlength": "First name cannot be longer than 50 characters."
+                    },
+                    "lastName": {
+                        "required": "Last name is required",
+                        "maxlength": "Last name cannot be longer than 50 characters."
+                    }
+                }
+            }
         }
     }
 }

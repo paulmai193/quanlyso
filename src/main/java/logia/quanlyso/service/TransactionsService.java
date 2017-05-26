@@ -7,6 +7,8 @@ import java.util.List;
 
 /**
  * Service Interface for managing Transactions.
+ *
+ * @author Dai Mai
  */
 public interface TransactionsService {
 

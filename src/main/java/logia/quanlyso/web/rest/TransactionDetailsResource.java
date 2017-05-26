@@ -32,17 +32,27 @@ import logia.quanlyso.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for managing TransactionDetails.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class TransactionDetailsResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(TransactionDetailsResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "transactionDetails";
         
+    /** The transaction details service. */
     private final TransactionDetailsService transactionDetailsService;
 
+    /**
+     * Instantiates a new transaction details resource.
+     *
+     * @param transactionDetailsService the transaction details service
+     */
     public TransactionDetailsResource(TransactionDetailsService transactionDetailsService) {
         this.transactionDetailsService = transactionDetailsService;
     }

@@ -45,34 +45,49 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class ProfitFactorResourceIntTest {
 
+    /** The Constant DEFAULT_RATE. */
     private static final Float DEFAULT_RATE = 1F;
+    
+    /** The Constant UPDATED_RATE. */
     private static final Float UPDATED_RATE = 2F;
 
+    /** The profit factor repository. */
     @Autowired
     private ProfitFactorRepository profitFactorRepository;
 
+    /** The profit factor mapper. */
     @Autowired
     private ProfitFactorMapper profitFactorMapper;
 
+    /** The profit factor service. */
     @Autowired
     private ProfitFactorService profitFactorService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest profit factor mock mvc. */
     private MockMvc restProfitFactorMockMvc;
 
+    /** The profit factor. */
     private ProfitFactor profitFactor;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -85,9 +100,12 @@ public class ProfitFactorResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the profit factor
      */
     public static ProfitFactor createEntity(EntityManager em) {
         ProfitFactor profitFactor = new ProfitFactor()
@@ -95,11 +113,19 @@ public class ProfitFactorResourceIntTest {
         return profitFactor;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         profitFactor = createEntity(em);
     }
 
+    /**
+     * Creates the profit factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createProfitFactor() throws Exception {
@@ -119,6 +145,11 @@ public class ProfitFactorResourceIntTest {
         assertThat(testProfitFactor.getRate()).isEqualTo(DEFAULT_RATE);
     }
 
+    /**
+     * Creates the profit factor with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createProfitFactorWithExistingId() throws Exception {
@@ -139,6 +170,12 @@ public class ProfitFactorResourceIntTest {
         assertThat(profitFactorList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all profit factors.
+     *
+     * @return the all profit factors
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllProfitFactors() throws Exception {
@@ -153,6 +190,12 @@ public class ProfitFactorResourceIntTest {
             .andExpect(jsonPath("$.[*].rate").value(hasItem(DEFAULT_RATE.doubleValue())));
     }
 
+    /**
+     * Gets the profit factor.
+     *
+     * @return the profit factor
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getProfitFactor() throws Exception {
@@ -167,6 +210,12 @@ public class ProfitFactorResourceIntTest {
             .andExpect(jsonPath("$.rate").value(DEFAULT_RATE.doubleValue()));
     }
 
+    /**
+     * Gets the non existing profit factor.
+     *
+     * @return the non existing profit factor
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingProfitFactor() throws Exception {
@@ -175,6 +224,11 @@ public class ProfitFactorResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update profit factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateProfitFactor() throws Exception {
@@ -200,6 +254,11 @@ public class ProfitFactorResourceIntTest {
         assertThat(testProfitFactor.getRate()).isEqualTo(UPDATED_RATE);
     }
 
+    /**
+     * Update non existing profit factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingProfitFactor() throws Exception {
@@ -219,6 +278,11 @@ public class ProfitFactorResourceIntTest {
         assertThat(profitFactorList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete profit factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteProfitFactor() throws Exception {
@@ -236,6 +300,11 @@ public class ProfitFactorResourceIntTest {
         assertThat(profitFactorList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -251,6 +320,11 @@ public class ProfitFactorResourceIntTest {
         assertThat(profitFactor1).isNotEqualTo(profitFactor2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -267,6 +341,9 @@ public class ProfitFactorResourceIntTest {
         assertThat(profitFactorDTO1).isNotEqualTo(profitFactorDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

@@ -45,34 +45,49 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class CostFactorResourceIntTest {
 
+    /** The Constant DEFAULT_RATE. */
     private static final Float DEFAULT_RATE = 1F;
+    
+    /** The Constant UPDATED_RATE. */
     private static final Float UPDATED_RATE = 2F;
 
+    /** The cost factor repository. */
     @Autowired
     private CostFactorRepository costFactorRepository;
 
+    /** The cost factor mapper. */
     @Autowired
     private CostFactorMapper costFactorMapper;
 
+    /** The cost factor service. */
     @Autowired
     private CostFactorService costFactorService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest cost factor mock mvc. */
     private MockMvc restCostFactorMockMvc;
 
+    /** The cost factor. */
     private CostFactor costFactor;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -85,9 +100,12 @@ public class CostFactorResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the cost factor
      */
     public static CostFactor createEntity(EntityManager em) {
         CostFactor costFactor = new CostFactor()
@@ -95,11 +113,19 @@ public class CostFactorResourceIntTest {
         return costFactor;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         costFactor = createEntity(em);
     }
 
+    /**
+     * Creates the cost factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createCostFactor() throws Exception {
@@ -119,6 +145,11 @@ public class CostFactorResourceIntTest {
         assertThat(testCostFactor.getRate()).isEqualTo(DEFAULT_RATE);
     }
 
+    /**
+     * Creates the cost factor with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createCostFactorWithExistingId() throws Exception {
@@ -139,6 +170,12 @@ public class CostFactorResourceIntTest {
         assertThat(costFactorList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all cost factors.
+     *
+     * @return the all cost factors
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllCostFactors() throws Exception {
@@ -153,6 +190,12 @@ public class CostFactorResourceIntTest {
             .andExpect(jsonPath("$.[*].rate").value(hasItem(DEFAULT_RATE.doubleValue())));
     }
 
+    /**
+     * Gets the cost factor.
+     *
+     * @return the cost factor
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getCostFactor() throws Exception {
@@ -167,6 +210,12 @@ public class CostFactorResourceIntTest {
             .andExpect(jsonPath("$.rate").value(DEFAULT_RATE.doubleValue()));
     }
 
+    /**
+     * Gets the non existing cost factor.
+     *
+     * @return the non existing cost factor
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingCostFactor() throws Exception {
@@ -175,6 +224,11 @@ public class CostFactorResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update cost factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateCostFactor() throws Exception {
@@ -200,6 +254,11 @@ public class CostFactorResourceIntTest {
         assertThat(testCostFactor.getRate()).isEqualTo(UPDATED_RATE);
     }
 
+    /**
+     * Update non existing cost factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingCostFactor() throws Exception {
@@ -219,6 +278,11 @@ public class CostFactorResourceIntTest {
         assertThat(costFactorList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete cost factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteCostFactor() throws Exception {
@@ -236,6 +300,11 @@ public class CostFactorResourceIntTest {
         assertThat(costFactorList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -251,6 +320,11 @@ public class CostFactorResourceIntTest {
         assertThat(costFactor1).isNotEqualTo(costFactor2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -267,6 +341,9 @@ public class CostFactorResourceIntTest {
         assertThat(costFactorDTO1).isNotEqualTo(costFactorDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

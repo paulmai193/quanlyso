@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Spring Data JPA repository for the Transactions entity.
+ *
+ * @author Dai Mai
  */
 @SuppressWarnings("unused")
 public interface TransactionsRepository extends JpaRepository<Transactions,Long> {

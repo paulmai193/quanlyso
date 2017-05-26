@@ -29,14 +29,20 @@ import logia.quanlyso.QuanlysoApp;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class ProfileInfoResourceIntTest {
 
+    /** The environment. */
     @Mock
     private Environment environment;
 
+    /** The j hipster properties. */
     @Mock
     private JHipsterProperties jHipsterProperties;
 
+    /** The rest profile mock mvc. */
     private MockMvc restProfileMockMvc;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -55,6 +61,12 @@ public class ProfileInfoResourceIntTest {
             .build();
     }
 
+    /**
+     * Gets the profile info with ribbon.
+     *
+     * @return the profile info with ribbon
+     * @throws Exception the exception
+     */
     @Test
     public void getProfileInfoWithRibbon() throws Exception {
         restProfileMockMvc.perform(get("/api/profile-info"))
@@ -62,6 +74,12 @@ public class ProfileInfoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
 
+    /**
+     * Gets the profile info without ribbon.
+     *
+     * @return the profile info without ribbon
+     * @throws Exception the exception
+     */
     @Test
     public void getProfileInfoWithoutRibbon() throws Exception {
         JHipsterProperties.Ribbon ribbon = new JHipsterProperties.Ribbon();
@@ -73,6 +91,12 @@ public class ProfileInfoResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
 
+    /**
+     * Gets the profile info without active profiles.
+     *
+     * @return the profile info without active profiles
+     * @throws Exception the exception
+     */
     @Test
     public void getProfileInfoWithoutActiveProfiles() throws Exception {
         String emptyProfile[] = {};

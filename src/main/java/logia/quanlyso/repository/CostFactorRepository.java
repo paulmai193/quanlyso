@@ -6,6 +6,8 @@ import logia.quanlyso.domain.CostFactor;
 
 /**
  * Spring Data JPA repository for the CostFactor entity.
+ *
+ * @author Dai Mai
  */
 @SuppressWarnings("unused")
 public interface CostFactorRepository extends JpaRepository<CostFactor,Long> {

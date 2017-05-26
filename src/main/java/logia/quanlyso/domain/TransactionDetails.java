@@ -16,154 +16,307 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A TransactionDetails.
+ *
+ * @author Dai Mai
  */
 @Entity
 @Table(name = "transaction_details")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class TransactionDetails implements Serializable {
 
+    /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1L;
 
+    /** The id. */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /** The amount. */
     @Column(name = "amount")
     private Float amount;
 
+    /** The profit. */
     @Column(name = "profit")
     private Float profit;
 
+    /** The costs. */
     @Column(name = "costs")
     private Float costs;
 
+    /** The transactions. */
     @ManyToOne
     private Transactions transactions;
 
+    /** The channels. */
     @ManyToOne
     private Channel channels;
 
+    /** The factors. */
     @ManyToOne
     private Factor factors;
 
+    /** The styles. */
     @ManyToOne
     private Style styles;
 
+    /** The types. */
     @ManyToOne
     private Types types;
 
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Gets the amount.
+     *
+     * @return the amount
+     */
     public Float getAmount() {
         return amount;
     }
 
+    /**
+     * Amount.
+     *
+     * @param amount the amount
+     * @return the transaction details
+     */
     public TransactionDetails amount(Float amount) {
         this.amount = amount;
         return this;
     }
 
+    /**
+     * Sets the amount.
+     *
+     * @param amount the new amount
+     */
     public void setAmount(Float amount) {
         this.amount = amount;
     }
 
+    /**
+     * Gets the profit.
+     *
+     * @return the profit
+     */
     public Float getProfit() {
         return profit;
     }
 
+    /**
+     * Profit.
+     *
+     * @param profit the profit
+     * @return the transaction details
+     */
     public TransactionDetails profit(Float profit) {
         this.profit = profit;
         return this;
     }
 
+    /**
+     * Sets the profit.
+     *
+     * @param profit the new profit
+     */
     public void setProfit(Float profit) {
         this.profit = profit;
     }
 
+    /**
+     * Gets the costs.
+     *
+     * @return the costs
+     */
     public Float getCosts() {
         return costs;
     }
 
+    /**
+     * Costs.
+     *
+     * @param costs the costs
+     * @return the transaction details
+     */
     public TransactionDetails costs(Float costs) {
         this.costs = costs;
         return this;
     }
 
+    /**
+     * Sets the costs.
+     *
+     * @param costs the new costs
+     */
     public void setCosts(Float costs) {
         this.costs = costs;
     }
 
+    /**
+     * Gets the transactions.
+     *
+     * @return the transactions
+     */
     public Transactions getTransactions() {
         return transactions;
     }
 
+    /**
+     * Transactions.
+     *
+     * @param transactions the transactions
+     * @return the transaction details
+     */
     public TransactionDetails transactions(Transactions transactions) {
         this.transactions = transactions;
         return this;
     }
 
+    /**
+     * Sets the transactions.
+     *
+     * @param transactions the new transactions
+     */
     public void setTransactions(Transactions transactions) {
         this.transactions = transactions;
     }
 
+    /**
+     * Gets the channels.
+     *
+     * @return the channels
+     */
     public Channel getChannels() {
         return channels;
     }
 
+    /**
+     * Channels.
+     *
+     * @param channel the channel
+     * @return the transaction details
+     */
     public TransactionDetails channels(Channel channel) {
         this.channels = channel;
         return this;
     }
 
+    /**
+     * Sets the channels.
+     *
+     * @param channel the new channels
+     */
     public void setChannels(Channel channel) {
         this.channels = channel;
     }
 
+    /**
+     * Gets the factors.
+     *
+     * @return the factors
+     */
     public Factor getFactors() {
         return factors;
     }
 
+    /**
+     * Factors.
+     *
+     * @param factor the factor
+     * @return the transaction details
+     */
     public TransactionDetails factors(Factor factor) {
         this.factors = factor;
         return this;
     }
 
+    /**
+     * Sets the factors.
+     *
+     * @param factor the new factors
+     */
     public void setFactors(Factor factor) {
         this.factors = factor;
     }
 
+    /**
+     * Gets the styles.
+     *
+     * @return the styles
+     */
     public Style getStyles() {
         return styles;
     }
 
+    /**
+     * Styles.
+     *
+     * @param style the style
+     * @return the transaction details
+     */
     public TransactionDetails styles(Style style) {
         this.styles = style;
         return this;
     }
 
+    /**
+     * Sets the styles.
+     *
+     * @param style the new styles
+     */
     public void setStyles(Style style) {
         this.styles = style;
     }
 
+    /**
+     * Gets the types.
+     *
+     * @return the types
+     */
     public Types getTypes() {
         return types;
     }
 
+    /**
+     * Types.
+     *
+     * @param types the types
+     * @return the transaction details
+     */
     public TransactionDetails types(Types types) {
         this.types = types;
         return this;
     }
 
+    /**
+     * Sets the types.
+     *
+     * @param types the new types
+     */
     public void setTypes(Types types) {
         this.types = types;
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -179,11 +332,17 @@ public class TransactionDetails implements Serializable {
         return Objects.equals(getId(), transactionDetails.getId());
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode() {
         return Objects.hashCode(getId());
     }
 
+    /* (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
     @Override
     public String toString() {
         return "TransactionDetails{" +

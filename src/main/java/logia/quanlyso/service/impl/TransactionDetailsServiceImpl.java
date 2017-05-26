@@ -15,17 +15,28 @@ import logia.quanlyso.service.mapper.TransactionDetailsMapper;
 
 /**
  * Service Implementation for managing TransactionDetails.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class TransactionDetailsServiceImpl implements TransactionDetailsService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(TransactionDetailsServiceImpl.class);
     
+    /** The transaction details repository. */
     private final TransactionDetailsRepository transactionDetailsRepository;
 
+    /** The transaction details mapper. */
     private final TransactionDetailsMapper transactionDetailsMapper;
 
+    /**
+     * Instantiates a new transaction details service impl.
+     *
+     * @param transactionDetailsRepository the transaction details repository
+     * @param transactionDetailsMapper the transaction details mapper
+     */
     public TransactionDetailsServiceImpl(TransactionDetailsRepository transactionDetailsRepository, TransactionDetailsMapper transactionDetailsMapper) {
         this.transactionDetailsRepository = transactionDetailsRepository;
         this.transactionDetailsMapper = transactionDetailsMapper;

@@ -6,6 +6,8 @@ import logia.quanlyso.service.dto.ProfitFactorDTO;
 
 /**
  * Service Interface for managing ProfitFactor.
+ *
+ * @author Dai Mai
  */
 public interface ProfitFactorService {
 

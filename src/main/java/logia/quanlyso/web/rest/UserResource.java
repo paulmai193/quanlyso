@@ -41,7 +41,7 @@ import logia.quanlyso.web.rest.vm.ManagedUserVM;
 
 /**
  * REST controller for managing users.
- *
+ * 
  * <p>This class accesses the User entity, and needs to fetch its collection of authorities.</p>
  * <p>
  * For a normal use-case, it would be better to have an eager relationship between User and Authority,
@@ -62,21 +62,35 @@ import logia.quanlyso.web.rest.vm.ManagedUserVM;
  * <li> As this manages users, for security reasons, we'd rather have a DTO layer.</li>
  * </ul>
  * <p>Another option would be to have a specific JPA entity graph to handle this case.</p>
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class UserResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(UserResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "userManagement";
 
+    /** The user repository. */
     private final UserRepository userRepository;
 
+    /** The mail service. */
     private final MailService mailService;
 
+    /** The user service. */
     private final UserService userService;
 
+    /**
+     * Instantiates a new user resource.
+     *
+     * @param userRepository the user repository
+     * @param mailService the mail service
+     * @param userService the user service
+     */
     public UserResource(UserRepository userRepository, MailService mailService,
             UserService userService) {
 
@@ -167,6 +181,8 @@ public class UserResource {
     }
 
     /**
+     * Gets the authorities.
+     *
      * @return a string list of the all of the roles
      */
     @GetMapping("/users/authorities")

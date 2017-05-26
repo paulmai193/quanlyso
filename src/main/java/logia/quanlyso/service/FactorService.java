@@ -6,6 +6,8 @@ import logia.quanlyso.service.dto.FactorDTO;
 
 /**
  * Service Interface for managing Factor.
+ *
+ * @author Dai Mai
  */
 public interface FactorService {
 

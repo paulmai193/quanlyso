@@ -18,17 +18,28 @@ import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Transactions.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class TransactionsServiceImpl implements TransactionsService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(TransactionsServiceImpl.class);
     
+    /** The transactions repository. */
     private final TransactionsRepository transactionsRepository;
 
+    /** The transactions mapper. */
     private final TransactionsMapper transactionsMapper;
 
+    /**
+     * Instantiates a new transactions service impl.
+     *
+     * @param transactionsRepository the transactions repository
+     * @param transactionsMapper the transactions mapper
+     */
     public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper) {
         this.transactionsRepository = transactionsRepository;
         this.transactionsMapper = transactionsMapper;

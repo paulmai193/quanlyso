@@ -30,7 +30,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="clients_id" type="bigint">
+            <column name="users_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

@@ -15,11 +15,16 @@ import org.springframework.stereotype.Component;
 
 import logia.quanlyso.domain.PersistentAuditEvent;
 
+/**
+ * The Class AuditEventConverter.
+ *
+ * @author Dai Mai
+ */
 @Component
 public class AuditEventConverter {
 
     /**
-     * Convert a list of PersistentAuditEvent to a list of AuditEvent
+     * Convert a list of PersistentAuditEvent to a list of AuditEvent.
      *
      * @param persistentAuditEvents the list to convert
      * @return the converted list.
@@ -36,7 +41,7 @@ public class AuditEventConverter {
     }
 
     /**
-     * Convert a PersistentAuditEvent to an AuditEvent
+     * Convert a PersistentAuditEvent to an AuditEvent.
      *
      * @param persistentAuditEvent the event to convert
      * @return the converted list.

@@ -17,17 +17,28 @@ import logia.quanlyso.service.mapper.TypesMapper;
 
 /**
  * Service Implementation for managing Types.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class TypesServiceImpl implements TypesService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(TypesServiceImpl.class);
     
+    /** The types repository. */
     private final TypesRepository typesRepository;
 
+    /** The types mapper. */
     private final TypesMapper typesMapper;
 
+    /**
+     * Instantiates a new types service impl.
+     *
+     * @param typesRepository the types repository
+     * @param typesMapper the types mapper
+     */
     public TypesServiceImpl(TypesRepository typesRepository, TypesMapper typesMapper) {
         this.typesRepository = typesRepository;
         this.typesMapper = typesMapper;

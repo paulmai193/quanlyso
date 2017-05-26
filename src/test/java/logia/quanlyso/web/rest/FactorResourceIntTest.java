@@ -45,34 +45,49 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class FactorResourceIntTest {
 
+    /** The Constant DEFAULT_NAME. */
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    
+    /** The Constant UPDATED_NAME. */
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    /** The factor repository. */
     @Autowired
     private FactorRepository factorRepository;
 
+    /** The factor mapper. */
     @Autowired
     private FactorMapper factorMapper;
 
+    /** The factor service. */
     @Autowired
     private FactorService factorService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest factor mock mvc. */
     private MockMvc restFactorMockMvc;
 
+    /** The factor. */
     private Factor factor;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -85,9 +100,12 @@ public class FactorResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the factor
      */
     public static Factor createEntity(EntityManager em) {
         Factor factor = new Factor()
@@ -95,11 +113,19 @@ public class FactorResourceIntTest {
         return factor;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         factor = createEntity(em);
     }
 
+    /**
+     * Creates the factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createFactor() throws Exception {
@@ -119,6 +145,11 @@ public class FactorResourceIntTest {
         assertThat(testFactor.getName()).isEqualTo(DEFAULT_NAME);
     }
 
+    /**
+     * Creates the factor with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createFactorWithExistingId() throws Exception {
@@ -139,6 +170,12 @@ public class FactorResourceIntTest {
         assertThat(factorList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all factors.
+     *
+     * @return the all factors
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllFactors() throws Exception {
@@ -153,6 +190,12 @@ public class FactorResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
+    /**
+     * Gets the factor.
+     *
+     * @return the factor
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getFactor() throws Exception {
@@ -167,6 +210,12 @@ public class FactorResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
+    /**
+     * Gets the non existing factor.
+     *
+     * @return the non existing factor
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingFactor() throws Exception {
@@ -175,6 +224,11 @@ public class FactorResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateFactor() throws Exception {
@@ -200,6 +254,11 @@ public class FactorResourceIntTest {
         assertThat(testFactor.getName()).isEqualTo(UPDATED_NAME);
     }
 
+    /**
+     * Update non existing factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingFactor() throws Exception {
@@ -219,6 +278,11 @@ public class FactorResourceIntTest {
         assertThat(factorList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete factor.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteFactor() throws Exception {
@@ -236,6 +300,11 @@ public class FactorResourceIntTest {
         assertThat(factorList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -251,6 +320,11 @@ public class FactorResourceIntTest {
         assertThat(factor1).isNotEqualTo(factor2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -267,6 +341,9 @@ public class FactorResourceIntTest {
         assertThat(factorDTO1).isNotEqualTo(factorDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

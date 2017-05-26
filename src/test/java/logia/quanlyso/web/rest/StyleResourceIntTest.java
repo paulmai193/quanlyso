@@ -45,34 +45,49 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class StyleResourceIntTest {
 
+    /** The Constant DEFAULT_NAME. */
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    
+    /** The Constant UPDATED_NAME. */
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    /** The style repository. */
     @Autowired
     private StyleRepository styleRepository;
 
+    /** The style mapper. */
     @Autowired
     private StyleMapper styleMapper;
 
+    /** The style service. */
     @Autowired
     private StyleService styleService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest style mock mvc. */
     private MockMvc restStyleMockMvc;
 
+    /** The style. */
     private Style style;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -85,9 +100,12 @@ public class StyleResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the style
      */
     public static Style createEntity(EntityManager em) {
         Style style = new Style()
@@ -95,11 +113,19 @@ public class StyleResourceIntTest {
         return style;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         style = createEntity(em);
     }
 
+    /**
+     * Creates the style.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createStyle() throws Exception {
@@ -119,6 +145,11 @@ public class StyleResourceIntTest {
         assertThat(testStyle.getName()).isEqualTo(DEFAULT_NAME);
     }
 
+    /**
+     * Creates the style with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createStyleWithExistingId() throws Exception {
@@ -139,6 +170,12 @@ public class StyleResourceIntTest {
         assertThat(styleList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all styles.
+     *
+     * @return the all styles
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllStyles() throws Exception {
@@ -153,6 +190,12 @@ public class StyleResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
+    /**
+     * Gets the style.
+     *
+     * @return the style
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getStyle() throws Exception {
@@ -167,6 +210,12 @@ public class StyleResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
+    /**
+     * Gets the non existing style.
+     *
+     * @return the non existing style
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingStyle() throws Exception {
@@ -175,6 +224,11 @@ public class StyleResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update style.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateStyle() throws Exception {
@@ -200,6 +254,11 @@ public class StyleResourceIntTest {
         assertThat(testStyle.getName()).isEqualTo(UPDATED_NAME);
     }
 
+    /**
+     * Update non existing style.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingStyle() throws Exception {
@@ -219,6 +278,11 @@ public class StyleResourceIntTest {
         assertThat(styleList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete style.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteStyle() throws Exception {
@@ -236,6 +300,11 @@ public class StyleResourceIntTest {
         assertThat(styleList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -251,6 +320,11 @@ public class StyleResourceIntTest {
         assertThat(style1).isNotEqualTo(style2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -267,6 +341,9 @@ public class StyleResourceIntTest {
         assertThat(styleDTO1).isNotEqualTo(styleDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

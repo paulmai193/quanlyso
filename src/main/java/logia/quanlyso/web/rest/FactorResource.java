@@ -26,17 +26,27 @@ import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Factor.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class FactorResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(FactorResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "factor";
         
+    /** The factor service. */
     private final FactorService factorService;
 
+    /**
+     * Instantiates a new factor resource.
+     *
+     * @param factorService the factor service
+     */
     public FactorResource(FactorService factorService) {
         this.factorService = factorService;
     }

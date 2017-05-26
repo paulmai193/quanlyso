@@ -6,6 +6,8 @@ import logia.quanlyso.service.dto.TypesDTO;
 
 /**
  * Service Interface for managing Types.
+ *
+ * @author Dai Mai
  */
 public interface TypesService {
 

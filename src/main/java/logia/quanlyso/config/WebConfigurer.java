@@ -37,20 +37,34 @@ import io.undertow.UndertowOptions;
 
 /**
  * Configuration of web application with Servlet 3.0 APIs.
+ *
+ * @author Dai Mai
  */
 @Configuration
 public class WebConfigurer implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
+    /** The env. */
     private final Environment env;
 
+    /** The j hipster properties. */
     private final JHipsterProperties jHipsterProperties;
 
+    /** The hazelcast instance. */
     private final HazelcastInstance hazelcastInstance;
 
+    /** The metric registry. */
     private MetricRegistry metricRegistry;
 
+    /**
+     * Instantiates a new web configurer.
+     *
+     * @param env the env
+     * @param jHipsterProperties the j hipster properties
+     * @param hazelcastInstance the hazelcast instance
+     */
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties, HazelcastInstance hazelcastInstance) {
 
         this.env = env;
@@ -58,6 +72,9 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         this.hazelcastInstance = hazelcastInstance;
     }
 
+    /* (non-Javadoc)
+     * @see org.springframework.boot.web.servlet.ServletContextInitializer#onStartup(javax.servlet.ServletContext)
+     */
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
         if (env.getActiveProfiles().length != 0) {
@@ -73,6 +90,8 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
 
     /**
      * Customize the Servlet engine: Mime types, the document root, the cache.
+     *
+     * @param container the container
      */
     @Override
     public void customize(ConfigurableEmbeddedServletContainer container) {
@@ -100,6 +119,11 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         }
     }
 
+    /**
+     * Sets the location for static assets.
+     *
+     * @param container the new location for static assets
+     */
     private void setLocationForStaticAssets(ConfigurableEmbeddedServletContainer container) {
         File root;
         String prefixPath = resolvePathPrefix();
@@ -111,6 +135,8 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
 
     /**
      *  Resolve path prefix to static resources.
+     *
+     * @return the string
      */
     private String resolvePathPrefix() {
         String fullExecutablePath = this.getClass().getResource("").getPath();
@@ -125,6 +151,9 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
 
     /**
      * Initializes the caching HTTP Headers Filter.
+     *
+     * @param servletContext the servlet context
+     * @param disps the disps
      */
     private void initCachingHttpHeadersFilter(ServletContext servletContext,
                                               EnumSet<DispatcherType> disps) {
@@ -140,6 +169,9 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
 
     /**
      * Initializes Metrics.
+     *
+     * @param servletContext the servlet context
+     * @param disps the disps
      */
     private void initMetrics(ServletContext servletContext, EnumSet<DispatcherType> disps) {
         log.debug("Initializing Metrics registries");
@@ -164,6 +196,11 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         metricsAdminServlet.setLoadOnStartup(2);
     }
 
+    /**
+     * Cors filter.
+     *
+     * @return the cors filter
+     */
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -176,6 +213,11 @@ public class WebConfigurer implements ServletContextInitializer, EmbeddedServlet
         return new CorsFilter(source);
     }
 
+    /**
+     * Sets the metric registry.
+     *
+     * @param metricRegistry the new metric registry
+     */
     @Autowired(required = false)
     public void setMetricRegistry(MetricRegistry metricRegistry) {
         this.metricRegistry = metricRegistry;

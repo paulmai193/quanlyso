@@ -7,6 +7,8 @@ import logia.quanlyso.service.dto.TransactionDetailsDTO;
 
 /**
  * Service Interface for managing TransactionDetails.
+ *
+ * @author Dai Mai
  */
 public interface TransactionDetailsService {
 

@@ -17,17 +17,28 @@ import logia.quanlyso.service.mapper.ProfitFactorMapper;
 
 /**
  * Service Implementation for managing ProfitFactor.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class ProfitFactorServiceImpl implements ProfitFactorService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(ProfitFactorServiceImpl.class);
     
+    /** The profit factor repository. */
     private final ProfitFactorRepository profitFactorRepository;
 
+    /** The profit factor mapper. */
     private final ProfitFactorMapper profitFactorMapper;
 
+    /**
+     * Instantiates a new profit factor service impl.
+     *
+     * @param profitFactorRepository the profit factor repository
+     * @param profitFactorMapper the profit factor mapper
+     */
     public ProfitFactorServiceImpl(ProfitFactorRepository profitFactorRepository, ProfitFactorMapper profitFactorMapper) {
         this.profitFactorRepository = profitFactorRepository;
         this.profitFactorMapper = profitFactorMapper;

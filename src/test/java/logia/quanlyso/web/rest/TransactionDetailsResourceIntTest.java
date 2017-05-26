@@ -45,40 +45,61 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class TransactionDetailsResourceIntTest {
 
+    /** The Constant DEFAULT_AMOUNT. */
     private static final Float DEFAULT_AMOUNT = 1F;
+    
+    /** The Constant UPDATED_AMOUNT. */
     private static final Float UPDATED_AMOUNT = 2F;
 
+    /** The Constant DEFAULT_PROFIT. */
     private static final Float DEFAULT_PROFIT = 1F;
+    
+    /** The Constant UPDATED_PROFIT. */
     private static final Float UPDATED_PROFIT = 2F;
 
+    /** The Constant DEFAULT_COSTS. */
     private static final Float DEFAULT_COSTS = 1F;
+    
+    /** The Constant UPDATED_COSTS. */
     private static final Float UPDATED_COSTS = 2F;
 
+    /** The transaction details repository. */
     @Autowired
     private TransactionDetailsRepository transactionDetailsRepository;
 
+    /** The transaction details mapper. */
     @Autowired
     private TransactionDetailsMapper transactionDetailsMapper;
 
+    /** The transaction details service. */
     @Autowired
     private TransactionDetailsService transactionDetailsService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest transaction details mock mvc. */
     private MockMvc restTransactionDetailsMockMvc;
 
+    /** The transaction details. */
     private TransactionDetails transactionDetails;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -91,9 +112,12 @@ public class TransactionDetailsResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the transaction details
      */
     public static TransactionDetails createEntity(EntityManager em) {
         TransactionDetails transactionDetails = new TransactionDetails()
@@ -103,11 +127,19 @@ public class TransactionDetailsResourceIntTest {
         return transactionDetails;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         transactionDetails = createEntity(em);
     }
 
+    /**
+     * Creates the transaction details.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createTransactionDetails() throws Exception {
@@ -129,6 +161,11 @@ public class TransactionDetailsResourceIntTest {
         assertThat(testTransactionDetails.getCosts()).isEqualTo(DEFAULT_COSTS);
     }
 
+    /**
+     * Creates the transaction details with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createTransactionDetailsWithExistingId() throws Exception {
@@ -149,6 +186,12 @@ public class TransactionDetailsResourceIntTest {
         assertThat(transactionDetailsList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all transaction details.
+     *
+     * @return the all transaction details
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllTransactionDetails() throws Exception {
@@ -165,6 +208,12 @@ public class TransactionDetailsResourceIntTest {
             .andExpect(jsonPath("$.[*].costs").value(hasItem(DEFAULT_COSTS.doubleValue())));
     }
 
+    /**
+     * Gets the transaction details.
+     *
+     * @return the transaction details
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getTransactionDetails() throws Exception {
@@ -181,6 +230,12 @@ public class TransactionDetailsResourceIntTest {
             .andExpect(jsonPath("$.costs").value(DEFAULT_COSTS.doubleValue()));
     }
 
+    /**
+     * Gets the non existing transaction details.
+     *
+     * @return the non existing transaction details
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingTransactionDetails() throws Exception {
@@ -189,6 +244,11 @@ public class TransactionDetailsResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update transaction details.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateTransactionDetails() throws Exception {
@@ -218,6 +278,11 @@ public class TransactionDetailsResourceIntTest {
         assertThat(testTransactionDetails.getCosts()).isEqualTo(UPDATED_COSTS);
     }
 
+    /**
+     * Update non existing transaction details.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingTransactionDetails() throws Exception {
@@ -237,6 +302,11 @@ public class TransactionDetailsResourceIntTest {
         assertThat(transactionDetailsList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete transaction details.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteTransactionDetails() throws Exception {
@@ -254,6 +324,11 @@ public class TransactionDetailsResourceIntTest {
         assertThat(transactionDetailsList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -269,6 +344,11 @@ public class TransactionDetailsResourceIntTest {
         assertThat(transactionDetails1).isNotEqualTo(transactionDetails2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -285,6 +365,9 @@ public class TransactionDetailsResourceIntTest {
         assertThat(transactionDetailsDTO1).isNotEqualTo(transactionDetailsDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

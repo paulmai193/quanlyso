@@ -20,18 +20,30 @@ import logia.quanlyso.repository.UserRepository;
 
 /**
  * Authenticate a user from the database.
+ *
+ * @author Dai Mai
  */
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
+    /** The user repository. */
     private final UserRepository userRepository;
 
+    /**
+     * Instantiates a new domain user details service.
+     *
+     * @param userRepository the user repository
+     */
     public DomainUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
+    /* (non-Javadoc)
+     * @see org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang.String)
+     */
     @Override
     @Transactional
     public UserDetails loadUserByUsername(final String login) {

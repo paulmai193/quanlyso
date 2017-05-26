@@ -40,37 +40,55 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = QuanlysoApp.class)
 public class TransactionsResourceIntTest {
 
+    /** The Constant DEFAULT_CHOSEN_NUMBER. */
     private static final Integer DEFAULT_CHOSEN_NUMBER = 1;
+    
+    /** The Constant UPDATED_CHOSEN_NUMBER. */
     private static final Integer UPDATED_CHOSEN_NUMBER = 2;
 
+    /** The Constant DEFAULT_NET_VALUE. */
     private static final Float DEFAULT_NET_VALUE = 1F;
+    
+    /** The Constant UPDATED_NET_VALUE. */
     private static final Float UPDATED_NET_VALUE = 2F;
 
+    /** The transactions repository. */
     @Autowired
     private TransactionsRepository transactionsRepository;
 
+    /** The transactions mapper. */
     @Autowired
     private TransactionsMapper transactionsMapper;
 
+    /** The transactions service. */
     @Autowired
     private TransactionsService transactionsService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest transactions mock mvc. */
     private MockMvc restTransactionsMockMvc;
 
+    /** The transactions. */
     private Transactions transactions;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -83,9 +101,12 @@ public class TransactionsResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the transactions
      */
     public static Transactions createEntity(EntityManager em) {
         Transactions transactions = new Transactions()
@@ -94,11 +115,19 @@ public class TransactionsResourceIntTest {
         return transactions;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         transactions = createEntity(em);
     }
 
+    /**
+     * Creates the transactions.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createTransactions() throws Exception {
@@ -119,6 +148,11 @@ public class TransactionsResourceIntTest {
         assertThat(testTransactions.getNetValue()).isEqualTo(DEFAULT_NET_VALUE);
     }
 
+    /**
+     * Creates the transactions with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createTransactionsWithExistingId() throws Exception {
@@ -139,6 +173,12 @@ public class TransactionsResourceIntTest {
         assertThat(transactionsList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all transactions.
+     *
+     * @return the all transactions
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllTransactions() throws Exception {
@@ -154,6 +194,12 @@ public class TransactionsResourceIntTest {
             .andExpect(jsonPath("$.[*].netValue").value(hasItem(DEFAULT_NET_VALUE.doubleValue())));
     }
 
+    /**
+     * Gets the transactions.
+     *
+     * @return the transactions
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getTransactions() throws Exception {
@@ -169,6 +215,12 @@ public class TransactionsResourceIntTest {
             .andExpect(jsonPath("$.netValue").value(DEFAULT_NET_VALUE.doubleValue()));
     }
 
+    /**
+     * Gets the non existing transactions.
+     *
+     * @return the non existing transactions
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingTransactions() throws Exception {
@@ -177,6 +229,11 @@ public class TransactionsResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update transactions.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateTransactions() throws Exception {
@@ -204,6 +261,11 @@ public class TransactionsResourceIntTest {
         assertThat(testTransactions.getNetValue()).isEqualTo(UPDATED_NET_VALUE);
     }
 
+    /**
+     * Update non existing transactions.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingTransactions() throws Exception {
@@ -223,6 +285,11 @@ public class TransactionsResourceIntTest {
         assertThat(transactionsList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete transactions.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteTransactions() throws Exception {
@@ -240,6 +307,11 @@ public class TransactionsResourceIntTest {
         assertThat(transactionsList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -255,6 +327,11 @@ public class TransactionsResourceIntTest {
         assertThat(transactions1).isNotEqualTo(transactions2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -271,6 +348,9 @@ public class TransactionsResourceIntTest {
         assertThat(transactionsDTO1).isNotEqualTo(transactionsDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

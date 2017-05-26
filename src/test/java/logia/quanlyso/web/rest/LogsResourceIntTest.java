@@ -27,8 +27,12 @@ import logia.quanlyso.web.rest.vm.LoggerVM;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class LogsResourceIntTest {
 
+    /** The rest logs mock mvc. */
     private MockMvc restLogsMockMvc;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -39,6 +43,12 @@ public class LogsResourceIntTest {
             .build();
     }
 
+    /**
+     * Gets the all logs.
+     *
+     * @return the all logs
+     * @throws Exception the exception
+     */
     @Test
     public void getAllLogs()throws Exception {
         restLogsMockMvc.perform(get("/management/logs"))
@@ -46,6 +56,11 @@ public class LogsResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
 
+    /**
+     * Change logs.
+     *
+     * @throws Exception the exception
+     */
     @Test
     public void changeLogs()throws Exception {
         LoggerVM logger = new LoggerVM();

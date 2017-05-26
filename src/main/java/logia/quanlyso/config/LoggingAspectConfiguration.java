@@ -9,10 +9,21 @@ import org.springframework.core.env.Environment;
 import io.github.jhipster.config.JHipsterConstants;
 import logia.quanlyso.aop.logging.LoggingAspect;
 
+/**
+ * The Class LoggingAspectConfiguration.
+ *
+ * @author Dai Mai
+ */
 @Configuration
 @EnableAspectJAutoProxy
 public class LoggingAspectConfiguration {
 
+    /**
+     * Logging aspect.
+     *
+     * @param env the env
+     * @return the logging aspect
+     */
     @Bean
     @Profile(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
     public LoggingAspect loggingAspect(Environment env) {

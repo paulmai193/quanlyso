@@ -17,17 +17,28 @@ import logia.quanlyso.service.mapper.FactorMapper;
 
 /**
  * Service Implementation for managing Factor.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class FactorServiceImpl implements FactorService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(FactorServiceImpl.class);
     
+    /** The factor repository. */
     private final FactorRepository factorRepository;
 
+    /** The factor mapper. */
     private final FactorMapper factorMapper;
 
+    /**
+     * Instantiates a new factor service impl.
+     *
+     * @param factorRepository the factor repository
+     * @param factorMapper the factor mapper
+     */
     public FactorServiceImpl(FactorRepository factorRepository, FactorMapper factorMapper) {
         this.factorRepository = factorRepository;
         this.factorMapper = factorMapper;

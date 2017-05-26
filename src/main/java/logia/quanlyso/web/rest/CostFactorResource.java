@@ -26,17 +26,27 @@ import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing CostFactor.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class CostFactorResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(CostFactorResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "costFactor";
         
+    /** The cost factor service. */
     private final CostFactorService costFactorService;
 
+    /**
+     * Instantiates a new cost factor resource.
+     *
+     * @param costFactorService the cost factor service
+     */
     public CostFactorResource(CostFactorService costFactorService) {
         this.costFactorService = costFactorService;
     }

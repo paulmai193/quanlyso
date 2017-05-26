@@ -15,9 +15,24 @@
             "detail": {
                 "title": "Client"
             },
-            "grantAccessDate": "Grant Access Date",
-            "revokeAccessDate": "Revoke Access Date",
-            "transactionss": "Transactionss"
+            "grantAccessDate": "Ngày cấp quyền",
+            "revokeAccessDate": "Ngày hết hạn",
+            "transactionss": "Giao dịch",
+            "firstName": "Tên",
+            "lastName": "Họ",
+            "email": "Email",
+            "message": {
+                "validate": {
+                    "firstName": {
+                        "required": "Bạn phải nhập tên",
+                        "maxlength": "Tên không được vượt quá 50 ký tự."
+                    },
+                    "lastName": {
+                        "required": "Bạn phải nhập họ",
+                        "maxlength": "Họ không được vượt quá 50 ký tự."
+                    }
+                }
+            }
         }
     }
 }

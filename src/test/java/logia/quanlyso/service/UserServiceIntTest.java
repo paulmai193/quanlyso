@@ -33,12 +33,17 @@ import logia.quanlyso.service.util.RandomUtil;
 @Transactional
 public class UserServiceIntTest {
 
+    /** The user repository. */
     @Autowired
     private UserRepository userRepository;
 
+    /** The user service. */
     @Autowired
     private UserService userService;
 
+    /**
+     * Assert that user must exist to reset password.
+     */
     @Test
     public void assertThatUserMustExistToResetPassword() {
         Optional<User> maybeUser = userService.requestPasswordReset("john.doe@localhost");
@@ -52,6 +57,9 @@ public class UserServiceIntTest {
         assertThat(maybeUser.get().getResetKey()).isNotNull();
     }
 
+    /**
+     * Assert that only activated user can request password reset.
+     */
     @Test
     public void assertThatOnlyActivatedUserCanRequestPasswordReset() {
         User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
@@ -60,6 +68,9 @@ public class UserServiceIntTest {
         userRepository.delete(user);
     }
 
+    /**
+     * Assert that reset key must not be older than 24 hours.
+     */
     @Test
     public void assertThatResetKeyMustNotBeOlderThan24Hours() {
         User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
@@ -79,6 +90,9 @@ public class UserServiceIntTest {
         userRepository.delete(user);
     }
 
+    /**
+     * Assert that reset key must be valid.
+     */
     @Test
     public void assertThatResetKeyMustBeValid() {
         User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
@@ -93,6 +107,9 @@ public class UserServiceIntTest {
         userRepository.delete(user);
     }
 
+    /**
+     * Assert that user can reset password.
+     */
     @Test
     public void assertThatUserCanResetPassword() {
         User user = userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost", "http://placehold.it/50x50", "en-US");
@@ -112,6 +129,9 @@ public class UserServiceIntTest {
         userRepository.delete(user);
     }
 
+    /**
+     * Test find not activated users by creation date before.
+     */
     @Test
     public void testFindNotActivatedUsersByCreationDateBefore() {
         userService.removeNotActivatedUsers();
@@ -120,6 +140,9 @@ public class UserServiceIntTest {
         assertThat(users).isEmpty();
     }
 
+    /**
+     * Assert that anonymous user is not get.
+     */
     @Test
     public void assertThatAnonymousUserIsNotGet() {
         final PageRequest pageable = new PageRequest(0, (int) userRepository.count());

@@ -12,130 +12,233 @@ import java.util.Objects;
 
 /**
  * A Transactions.
+ *
+ * @author Dai Mai
  */
 @Entity
 @Table(name = "transactions")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Transactions extends AbstractAuditingEntity implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	/** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	/** The id. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(name = "chosen_number")
-    private Integer chosenNumber;
+	/** The chosen number. */
+	@Column(name = "chosen_number")
+	private Integer chosenNumber;
 
-    @Column(name = "net_value")
-    private Float netValue;
+	/** The net value. */
+	@Column(name = "net_value")
+	private Float netValue;
 
-    @OneToMany(mappedBy = "transactions")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<TransactionDetails> transactionDetails = new HashSet<>();
+	/** The transaction details. */
+	@OneToMany(mappedBy = "transactions")
+	@JsonIgnore
+	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+	private Set<TransactionDetails> transactionDetails = new HashSet<>();
 
-    @ManyToOne
-    private Client clients;
+	/** The users. */
+	@ManyToOne
+	private User users;
 
-    public Long getId() {
-        return id;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Integer getChosenNumber() {
-        return chosenNumber;
-    }
+	/**
+	 * Gets the chosen number.
+	 *
+	 * @return the chosen number
+	 */
+	public Integer getChosenNumber() {
+		return chosenNumber;
+	}
 
-    public Transactions chosenNumber(Integer chosenNumber) {
-        this.chosenNumber = chosenNumber;
-        return this;
-    }
+	/**
+	 * Chosen number.
+	 *
+	 * @param chosenNumber the chosen number
+	 * @return the transactions
+	 */
+	public Transactions chosenNumber(Integer chosenNumber) {
+		this.chosenNumber = chosenNumber;
+		return this;
+	}
 
-    public void setChosenNumber(Integer chosenNumber) {
-        this.chosenNumber = chosenNumber;
-    }
+	/**
+	 * Sets the chosen number.
+	 *
+	 * @param chosenNumber the new chosen number
+	 */
+	public void setChosenNumber(Integer chosenNumber) {
+		this.chosenNumber = chosenNumber;
+	}
 
-    public Float getNetValue() {
-        return netValue;
-    }
+	/**
+	 * Gets the net value.
+	 *
+	 * @return the net value
+	 */
+	public Float getNetValue() {
+		return netValue;
+	}
 
-    public Transactions netValue(Float netValue) {
-        this.netValue = netValue;
-        return this;
-    }
+	/**
+	 * Net value.
+	 *
+	 * @param netValue the net value
+	 * @return the transactions
+	 */
+	public Transactions netValue(Float netValue) {
+		this.netValue = netValue;
+		return this;
+	}
 
-    public void setNetValue(Float netValue) {
-        this.netValue = netValue;
-    }
+	/**
+	 * Sets the net value.
+	 *
+	 * @param netValue the new net value
+	 */
+	public void setNetValue(Float netValue) {
+		this.netValue = netValue;
+	}
 
-    public Set<TransactionDetails> getTransactionDetails() {
-        return transactionDetails;
-    }
+	/**
+	 * Gets the transaction details.
+	 *
+	 * @return the transaction details
+	 */
+	public Set<TransactionDetails> getTransactionDetails() {
+		return transactionDetails;
+	}
 
-    public Transactions transactionDetails(Set<TransactionDetails> transactionDetails) {
-        this.transactionDetails = transactionDetails;
-        return this;
-    }
+	/**
+	 * Transaction details.
+	 *
+	 * @param transactionDetails the transaction details
+	 * @return the transactions
+	 */
+	public Transactions transactionDetails(Set<TransactionDetails> transactionDetails) {
+		this.transactionDetails = transactionDetails;
+		return this;
+	}
 
-    public Transactions addTransactionDetails(TransactionDetails transactionDetails) {
-        this.transactionDetails.add(transactionDetails);
-        transactionDetails.setTransactions(this);
-        return this;
-    }
+	/**
+	 * Adds the transaction details.
+	 *
+	 * @param transactionDetails the transaction details
+	 * @return the transactions
+	 */
+	public Transactions addTransactionDetails(TransactionDetails transactionDetails) {
+		this.transactionDetails.add(transactionDetails);
+		transactionDetails.setTransactions(this);
+		return this;
+	}
 
-    public Transactions removeTransactionDetails(TransactionDetails transactionDetails) {
-        this.transactionDetails.remove(transactionDetails);
-        transactionDetails.setTransactions(null);
-        return this;
-    }
+	/**
+	 * Removes the transaction details.
+	 *
+	 * @param transactionDetails the transaction details
+	 * @return the transactions
+	 */
+	public Transactions removeTransactionDetails(TransactionDetails transactionDetails) {
+		this.transactionDetails.remove(transactionDetails);
+		transactionDetails.setTransactions(null);
+		return this;
+	}
 
-    public void setTransactionDetails(Set<TransactionDetails> transactionDetails) {
-        this.transactionDetails = transactionDetails;
-    }
+	/**
+	 * Sets the transaction details.
+	 *
+	 * @param transactionDetails the new transaction details
+	 */
+	public void setTransactionDetails(Set<TransactionDetails> transactionDetails) {
+		this.transactionDetails = transactionDetails;
+	}
 
-    public Client getClients() {
-        return clients;
-    }
+	/**
+	 * Gets the users.
+	 *
+	 * @return the users
+	 */
+	public User getUsers() {
+		return this.users;
+	}
 
-    public Transactions clients(Client client) {
-        this.clients = client;
-        return this;
-    }
+	/**
+	 * Users.
+	 *
+	 * @param user the user
+	 * @return the transactions
+	 */
+	public Transactions users(User user) {
+		this.setUsers(user);;
+		return this;
+	}
 
-    public void setClients(Client client) {
-        this.clients = client;
-    }
+	/**
+	 * Sets the users.
+	 *
+	 * @param user the new users
+	 */
+	public void setUsers(User user) {
+		this.users = user;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Transactions transactions = (Transactions) o;
-        if (transactions.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), transactions.getId());
-    }
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Transactions transactions = (Transactions) o;
+		if (transactions.getId() == null || getId() == null) {
+			return false;
+		}
+		return Objects.equals(getId(), transactions.getId());
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(getId());
+	}
 
-    @Override
-    public String toString() {
-        return "Transactions{" +
-            "id=" + getId() +
-            ", chosenNumber='" + getChosenNumber() + "'" +
-            ", netValue='" + getNetValue() + "'" +
-            "}";
-    }
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Transactions{" +
+				"id=" + getId() +
+				", chosenNumber='" + getChosenNumber() + "'" +
+				", netValue='" + getNetValue() + "'" +
+				"}";
+	}
 }

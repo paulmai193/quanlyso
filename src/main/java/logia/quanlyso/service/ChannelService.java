@@ -6,6 +6,8 @@ import logia.quanlyso.service.dto.ChannelDTO;
 
 /**
  * Service Interface for managing Channel.
+ *
+ * @author Dai Mai
  */
 public interface ChannelService {
 

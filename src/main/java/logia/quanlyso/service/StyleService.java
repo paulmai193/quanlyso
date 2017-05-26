@@ -6,6 +6,8 @@ import logia.quanlyso.service.dto.StyleDTO;
 
 /**
  * Service Interface for managing Style.
+ *
+ * @author Dai Mai
  */
 public interface StyleService {
 

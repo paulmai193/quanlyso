@@ -8,17 +8,23 @@ import logia.quanlyso.service.dto.FactorDTO;
 
 /**
  * Mapper for the entity Factor and its DTO FactorDTO.
+ *
+ * @author Dai Mai
  */
 @Mapper(componentModel = "spring", uses = {})
 public interface FactorMapper extends EntityMapper <FactorDTO, Factor> {
     
+    /* (non-Javadoc)
+     * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
+     */
     @Mapping(target = "profitFactors", ignore = true)
     @Mapping(target = "costFactors", ignore = true)
     @Mapping(target = "transactionDetails", ignore = true)
     Factor toEntity(FactorDTO factorDTO); 
+    
     /**
      * generating the fromId for all mappers if the databaseType is sql, as the class has relationship to it might need it, instead of
-     * creating a new attribute to know if the entity has any relationship from some other entity
+     * creating a new attribute to know if the entity has any relationship from some other entity.
      *
      * @param id id of the entity
      * @return the entity instance

@@ -6,6 +6,8 @@ import logia.quanlyso.service.dto.CostFactorDTO;
 
 /**
  * Service Interface for managing CostFactor.
+ *
+ * @author Dai Mai
  */
 public interface CostFactorService {
 

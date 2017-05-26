@@ -22,26 +22,47 @@ import com.hazelcast.core.HazelcastInstance;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
 
+/**
+ * The Class CacheConfiguration.
+ *
+ * @author Dai Mai
+ */
 @Configuration
 @EnableCaching
 @AutoConfigureAfter(value = { MetricsConfiguration.class })
 @AutoConfigureBefore(value = { WebConfigurer.class, DatabaseConfiguration.class })
 public class CacheConfiguration {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
 
+    /** The env. */
     private final Environment env;
 
+    /**
+     * Instantiates a new cache configuration.
+     *
+     * @param env the env
+     */
     public CacheConfiguration(Environment env) {
         this.env = env;
     }
 
+    /**
+     * Destroy.
+     */
     @PreDestroy
     public void destroy() {
         log.info("Closing Cache Manager");
         Hazelcast.shutdownAll();
     }
 
+    /**
+     * Cache manager.
+     *
+     * @param hazelcastInstance the hazelcast instance
+     * @return the cache manager
+     */
     @Bean
     public CacheManager cacheManager(HazelcastInstance hazelcastInstance) {
         log.debug("Starting HazelcastCacheManager");
@@ -49,6 +70,12 @@ public class CacheConfiguration {
         return cacheManager;
     }
 
+    /**
+     * Hazelcast instance.
+     *
+     * @param jHipsterProperties the j hipster properties
+     * @return the hazelcast instance
+     */
     @Bean
     public HazelcastInstance hazelcastInstance(JHipsterProperties jHipsterProperties) {
         log.debug("Configuring Hazelcast");
@@ -75,6 +102,11 @@ public class CacheConfiguration {
         return Hazelcast.newHazelcastInstance(config);
     }
 
+    /**
+     * Initialize default map config.
+     *
+     * @return the map config
+     */
     private MapConfig initializeDefaultMapConfig() {
         MapConfig mapConfig = new MapConfig();
 
@@ -105,6 +137,12 @@ public class CacheConfiguration {
         return mapConfig;
     }
 
+    /**
+     * Initialize domain map config.
+     *
+     * @param jHipsterProperties the j hipster properties
+     * @return the map config
+     */
     private MapConfig initializeDomainMapConfig(JHipsterProperties jHipsterProperties) {
         MapConfig mapConfig = new MapConfig();
         mapConfig.setTimeToLiveSeconds(jHipsterProperties.getCache().getHazelcast().getTimeToLiveSeconds());

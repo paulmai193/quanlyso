@@ -26,17 +26,27 @@ import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing ProfitFactor.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class ProfitFactorResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(ProfitFactorResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "profitFactor";
         
+    /** The profit factor service. */
     private final ProfitFactorService profitFactorService;
 
+    /**
+     * Instantiates a new profit factor resource.
+     *
+     * @param profitFactorService the profit factor service
+     */
     public ProfitFactorResource(ProfitFactorService profitFactorService) {
         this.profitFactorService = profitFactorService;
     }

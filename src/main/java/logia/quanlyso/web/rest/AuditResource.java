@@ -22,13 +22,21 @@ import logia.quanlyso.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for getting the audit events.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/management/audits")
 public class AuditResource {
 
+    /** The audit event service. */
     private final AuditEventService auditEventService;
 
+    /**
+     * Instantiates a new audit resource.
+     *
+     * @param auditEventService the audit event service
+     */
     public AuditResource(AuditEventService auditEventService) {
         this.auditEventService = auditEventService;
     }

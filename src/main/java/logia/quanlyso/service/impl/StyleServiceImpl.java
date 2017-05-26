@@ -17,17 +17,28 @@ import logia.quanlyso.service.mapper.StyleMapper;
 
 /**
  * Service Implementation for managing Style.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class StyleServiceImpl implements StyleService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(StyleServiceImpl.class);
     
+    /** The style repository. */
     private final StyleRepository styleRepository;
 
+    /** The style mapper. */
     private final StyleMapper styleMapper;
 
+    /**
+     * Instantiates a new style service impl.
+     *
+     * @param styleRepository the style repository
+     * @param styleMapper the style mapper
+     */
     public StyleServiceImpl(StyleRepository styleRepository, StyleMapper styleMapper) {
         this.styleRepository = styleRepository;
         this.styleMapper = styleMapper;

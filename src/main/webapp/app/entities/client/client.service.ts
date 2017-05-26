@@ -8,7 +8,7 @@ import { DateUtils } from 'ng-jhipster';
 @Injectable()
 export class ClientService {
 
-    private resourceUrl = 'api/clients';
+    private resourceUrl = 'api/users';
 
     constructor(private http: Http, private dateUtils: DateUtils) { }
 

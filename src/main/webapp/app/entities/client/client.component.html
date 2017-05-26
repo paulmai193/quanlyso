@@ -17,6 +17,9 @@
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
             <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="firstName"><span jhiTranslate="quanlysoApp.client.firstName">First Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="firstName"><span jhiTranslate="quanlysoApp.client.lastName">Last Name</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="email"><span jhiTranslate="quanlysoApp.client.email">Email</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="grantAccessDate"><span jhiTranslate="quanlysoApp.client.grantAccessDate">Grant Access Date</span> <span class="fa fa-sort"></span></th>
             <th jhiSortBy="revokeAccessDate"><span jhiTranslate="quanlysoApp.client.revokeAccessDate">Revoke Access Date</span> <span class="fa fa-sort"></span></th>
             <th></th>
@@ -25,6 +28,9 @@
             <tbody>
             <tr *ngFor="let client of clients ;trackBy: trackId">
                 <td><a [routerLink]="['../client', client.id ]">{{client.id}}</a></td>
+                <td>{{client.firstName}}</td>
+                <td>{{client.lastName}}</td>
+                <td>{{client.email}}</td>
                 <td>{{client.grantAccessDate | date:'medium'}}</td>
                 <td>{{client.revokeAccessDate | date:'medium'}}</td>
                 <td class="text-right">

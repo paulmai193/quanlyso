@@ -45,58 +45,97 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class ChannelResourceIntTest {
 
+    /** The Constant DEFAULT_NAME. */
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    
+    /** The Constant UPDATED_NAME. */
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    /** The Constant DEFAULT_CODE. */
     private static final String DEFAULT_CODE = "AAAAAAAAAA";
+    
+    /** The Constant UPDATED_CODE. */
     private static final String UPDATED_CODE = "BBBBBBBBBB";
 
+    /** The Constant DEFAULT_SUNDAY. */
     private static final Boolean DEFAULT_SUNDAY = false;
+    
+    /** The Constant UPDATED_SUNDAY. */
     private static final Boolean UPDATED_SUNDAY = true;
 
+    /** The Constant DEFAULT_MONDAY. */
     private static final Boolean DEFAULT_MONDAY = false;
+    
+    /** The Constant UPDATED_MONDAY. */
     private static final Boolean UPDATED_MONDAY = true;
 
+    /** The Constant DEFAULT_TUESDAY. */
     private static final Boolean DEFAULT_TUESDAY = false;
+    
+    /** The Constant UPDATED_TUESDAY. */
     private static final Boolean UPDATED_TUESDAY = true;
 
+    /** The Constant DEFAULT_WEDNESDAY. */
     private static final Boolean DEFAULT_WEDNESDAY = false;
+    
+    /** The Constant UPDATED_WEDNESDAY. */
     private static final Boolean UPDATED_WEDNESDAY = true;
 
+    /** The Constant DEFAULT_THURSDAY. */
     private static final Boolean DEFAULT_THURSDAY = false;
+    
+    /** The Constant UPDATED_THURSDAY. */
     private static final Boolean UPDATED_THURSDAY = true;
 
+    /** The Constant DEFAULT_FRIDAY. */
     private static final Boolean DEFAULT_FRIDAY = false;
+    
+    /** The Constant UPDATED_FRIDAY. */
     private static final Boolean UPDATED_FRIDAY = true;
 
+    /** The Constant DEFAULT_SATURDAY. */
     private static final Boolean DEFAULT_SATURDAY = false;
+    
+    /** The Constant UPDATED_SATURDAY. */
     private static final Boolean UPDATED_SATURDAY = true;
 
+    /** The channel repository. */
     @Autowired
     private ChannelRepository channelRepository;
 
+    /** The channel mapper. */
     @Autowired
     private ChannelMapper channelMapper;
 
+    /** The channel service. */
     @Autowired
     private ChannelService channelService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest channel mock mvc. */
     private MockMvc restChannelMockMvc;
 
+    /** The channel. */
     private Channel channel;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -109,9 +148,12 @@ public class ChannelResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the channel
      */
     public static Channel createEntity(EntityManager em) {
         Channel channel = new Channel()
@@ -127,11 +169,19 @@ public class ChannelResourceIntTest {
         return channel;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         channel = createEntity(em);
     }
 
+    /**
+     * Creates the channel.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createChannel() throws Exception {
@@ -159,6 +209,11 @@ public class ChannelResourceIntTest {
         assertThat(testChannel.isSaturday()).isEqualTo(DEFAULT_SATURDAY);
     }
 
+    /**
+     * Creates the channel with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createChannelWithExistingId() throws Exception {
@@ -179,6 +234,12 @@ public class ChannelResourceIntTest {
         assertThat(channelList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all channels.
+     *
+     * @return the all channels
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllChannels() throws Exception {
@@ -201,6 +262,12 @@ public class ChannelResourceIntTest {
             .andExpect(jsonPath("$.[*].saturday").value(hasItem(DEFAULT_SATURDAY.booleanValue())));
     }
 
+    /**
+     * Gets the channel.
+     *
+     * @return the channel
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getChannel() throws Exception {
@@ -223,6 +290,12 @@ public class ChannelResourceIntTest {
             .andExpect(jsonPath("$.saturday").value(DEFAULT_SATURDAY.booleanValue()));
     }
 
+    /**
+     * Gets the non existing channel.
+     *
+     * @return the non existing channel
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingChannel() throws Exception {
@@ -231,6 +304,11 @@ public class ChannelResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update channel.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateChannel() throws Exception {
@@ -272,6 +350,11 @@ public class ChannelResourceIntTest {
         assertThat(testChannel.isSaturday()).isEqualTo(UPDATED_SATURDAY);
     }
 
+    /**
+     * Update non existing channel.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingChannel() throws Exception {
@@ -291,6 +374,11 @@ public class ChannelResourceIntTest {
         assertThat(channelList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete channel.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteChannel() throws Exception {
@@ -308,6 +396,11 @@ public class ChannelResourceIntTest {
         assertThat(channelList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -323,6 +416,11 @@ public class ChannelResourceIntTest {
         assertThat(channel1).isNotEqualTo(channel2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -339,6 +437,9 @@ public class ChannelResourceIntTest {
         assertThat(channelDTO1).isNotEqualTo(channelDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

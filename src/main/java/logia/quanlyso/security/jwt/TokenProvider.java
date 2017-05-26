@@ -25,25 +25,44 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 
+/**
+ * The Class TokenProvider.
+ *
+ * @author Dai Mai
+ */
 @Component
 public class TokenProvider {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 
+    /** The Constant AUTHORITIES_KEY. */
     private static final String AUTHORITIES_KEY = "auth";
 
+    /** The secret key. */
     private String secretKey;
 
+    /** The token validity in milliseconds. */
     private long tokenValidityInMilliseconds;
 
+    /** The token validity in milliseconds for remember me. */
     private long tokenValidityInMillisecondsForRememberMe;
 
+    /** The j hipster properties. */
     private final JHipsterProperties jHipsterProperties;
 
+    /**
+     * Instantiates a new token provider.
+     *
+     * @param jHipsterProperties the j hipster properties
+     */
     public TokenProvider(JHipsterProperties jHipsterProperties) {
         this.jHipsterProperties = jHipsterProperties;
     }
 
+    /**
+     * Inits the.
+     */
     @PostConstruct
     public void init() {
         this.secretKey =
@@ -55,6 +74,13 @@ public class TokenProvider {
             1000 * jHipsterProperties.getSecurity().getAuthentication().getJwt().getTokenValidityInSecondsForRememberMe();
     }
 
+    /**
+     * Creates the token.
+     *
+     * @param authentication the authentication
+     * @param rememberMe the remember me
+     * @return the string
+     */
     public String createToken(Authentication authentication, Boolean rememberMe) {
         String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
@@ -76,6 +102,12 @@ public class TokenProvider {
             .compact();
     }
 
+    /**
+     * Gets the authentication.
+     *
+     * @param token the token
+     * @return the authentication
+     */
     public Authentication getAuthentication(String token) {
         Claims claims = Jwts.parser()
             .setSigningKey(secretKey)
@@ -92,6 +124,12 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
 
+    /**
+     * Validate token.
+     *
+     * @param authToken the auth token
+     * @return true, if successful
+     */
     public boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(authToken);

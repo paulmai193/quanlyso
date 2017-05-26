@@ -17,17 +17,28 @@ import logia.quanlyso.service.mapper.CostFactorMapper;
 
 /**
  * Service Implementation for managing CostFactor.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class CostFactorServiceImpl implements CostFactorService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(CostFactorServiceImpl.class);
     
+    /** The cost factor repository. */
     private final CostFactorRepository costFactorRepository;
 
+    /** The cost factor mapper. */
     private final CostFactorMapper costFactorMapper;
 
+    /**
+     * Instantiates a new cost factor service impl.
+     *
+     * @param costFactorRepository the cost factor repository
+     * @param costFactorMapper the cost factor mapper
+     */
     public CostFactorServiceImpl(CostFactorRepository costFactorRepository, CostFactorMapper costFactorMapper) {
         this.costFactorRepository = costFactorRepository;
         this.costFactorMapper = costFactorMapper;

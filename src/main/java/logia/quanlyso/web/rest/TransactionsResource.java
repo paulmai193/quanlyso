@@ -25,17 +25,27 @@ import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Transactions.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class TransactionsResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(TransactionsResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "transactions";
         
+    /** The transactions service. */
     private final TransactionsService transactionsService;
 
+    /**
+     * Instantiates a new transactions resource.
+     *
+     * @param transactionsService the transactions service
+     */
     public TransactionsResource(TransactionsService transactionsService) {
         this.transactionsService = transactionsService;
     }

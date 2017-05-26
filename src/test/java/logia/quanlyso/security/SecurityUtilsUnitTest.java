@@ -19,6 +19,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 */
 public class SecurityUtilsUnitTest {
 
+    /**
+     * Testget current user login.
+     */
     @Test
     public void testgetCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
@@ -28,6 +31,9 @@ public class SecurityUtilsUnitTest {
         assertThat(login).isEqualTo("admin");
     }
 
+    /**
+     * Testget current user JWT.
+     */
     @Test
     public void testgetCurrentUserJWT() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
@@ -37,6 +43,9 @@ public class SecurityUtilsUnitTest {
         assertThat(jwt).isEqualTo("token");
     }
 
+    /**
+     * Test is authenticated.
+     */
     @Test
     public void testIsAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
@@ -46,6 +55,9 @@ public class SecurityUtilsUnitTest {
         assertThat(isAuthenticated).isTrue();
     }
 
+    /**
+     * Test anonymous is not authenticated.
+     */
     @Test
     public void testAnonymousIsNotAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();

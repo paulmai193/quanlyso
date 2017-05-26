@@ -30,22 +30,36 @@ import logia.quanlyso.service.dto.UserDTO;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 import logia.quanlyso.web.rest.vm.KeyAndPasswordVM;
 import logia.quanlyso.web.rest.vm.ManagedUserVM;
+import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * REST controller for managing the current user's account.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class AccountResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
+    /** The user repository. */
     private final UserRepository userRepository;
 
+    /** The user service. */
     private final UserService userService;
 
+    /** The mail service. */
     private final MailService mailService;
 
+    /**
+     * Instantiates a new account resource.
+     *
+     * @param userRepository the user repository
+     * @param userService the user service
+     * @param mailService the mail service
+     */
     public AccountResource(UserRepository userRepository, UserService userService,
             MailService mailService) {
 
@@ -63,6 +77,7 @@ public class AccountResource {
     @PostMapping(path = "/register",
                     produces={MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE})
     @Timed
+    @ApiIgnore("Quanlyso system don't support register account. Contact administrator to get new one")
     public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
 
         HttpHeaders textPlainHeaders = new HttpHeaders();
@@ -92,6 +107,7 @@ public class AccountResource {
      */
     @GetMapping("/activate")
     @Timed
+    @ApiIgnore("Quanlyso system don't support activate account. Contact administrator to do this")
     public ResponseEntity<String> activateAccount(@RequestParam(value = "key") String key) {
         return userService.activateRegistration(key)
             .map(user -> new ResponseEntity<String>(HttpStatus.OK))
@@ -132,6 +148,7 @@ public class AccountResource {
      */
     @PostMapping("/account")
     @Timed
+    @ApiIgnore("Quanlyso system don't support update account. Contact administrator to do this")
     public ResponseEntity saveAccount(@Valid @RequestBody UserDTO userDTO) {
         final String userLogin = SecurityUtils.getCurrentUserLogin();
         Optional<User> existingUser = userRepository.findOneByEmail(userDTO.getEmail());
@@ -149,7 +166,7 @@ public class AccountResource {
     }
 
     /**
-     * POST  /account/change_password : changes the current user's password
+     * POST  /account/change_password : changes the current user's password.
      *
      * @param password the new password
      * @return the ResponseEntity with status 200 (OK), or status 400 (Bad Request) if the new password is not strong enough
@@ -166,7 +183,7 @@ public class AccountResource {
     }
 
     /**
-     * POST   /account/reset_password/init : Send an email to reset the password of the user
+     * POST   /account/reset_password/init : Send an email to reset the password of the user.
      *
      * @param mail the mail of the user
      * @return the ResponseEntity with status 200 (OK) if the email was sent, or status 400 (Bad Request) if the email address is not registered
@@ -183,7 +200,7 @@ public class AccountResource {
     }
 
     /**
-     * POST   /account/reset_password/finish : Finish to reset the password of the user
+     * POST   /account/reset_password/finish : Finish to reset the password of the user.
      *
      * @param keyAndPassword the generated key and the new password
      * @return the ResponseEntity with status 200 (OK) if the password has been reset,
@@ -201,6 +218,12 @@ public class AccountResource {
               .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
     }
 
+    /**
+     * Check password length.
+     *
+     * @param password the password
+     * @return true, if successful
+     */
     private boolean checkPasswordLength(String password) {
         return !StringUtils.isEmpty(password) &&
             password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH &&

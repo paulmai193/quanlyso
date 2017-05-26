@@ -21,12 +21,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
+ *
+ * @author Dai Mai
  */
 @ControllerAdvice
 public class ExceptionTranslator {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(ExceptionTranslator.class);
 
+    /**
+     * Process concurrency error.
+     *
+     * @param ex the ex
+     * @return the error VM
+     */
     @ExceptionHandler(ConcurrencyFailureException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
@@ -34,6 +43,12 @@ public class ExceptionTranslator {
         return new ErrorVM(ErrorConstants.ERR_CONCURRENCY_FAILURE);
     }
 
+    /**
+     * Process validation error.
+     *
+     * @param ex the ex
+     * @return the error VM
+     */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -47,6 +62,12 @@ public class ExceptionTranslator {
         return dto;
     }
 
+    /**
+     * Process parameterized validation error.
+     *
+     * @param ex the ex
+     * @return the parameterized error VM
+     */
     @ExceptionHandler(CustomParameterizedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -54,6 +75,12 @@ public class ExceptionTranslator {
         return ex.getErrorVM();
     }
 
+    /**
+     * Process access denied exception.
+     *
+     * @param e the e
+     * @return the error VM
+     */
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
@@ -61,6 +88,12 @@ public class ExceptionTranslator {
         return new ErrorVM(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
     }
 
+    /**
+     * Process method not supported exception.
+     *
+     * @param exception the exception
+     * @return the error VM
+     */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
@@ -68,6 +101,12 @@ public class ExceptionTranslator {
         return new ErrorVM(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
     }
 
+    /**
+     * Process exception.
+     *
+     * @param ex the ex
+     * @return the response entity
+     */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorVM> processException(Exception ex) {
         log.error(ex.getMessage(), ex);

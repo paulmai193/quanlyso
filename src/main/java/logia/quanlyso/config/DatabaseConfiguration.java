@@ -20,20 +20,40 @@ import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.liquibase.AsyncSpringLiquibase;
 import liquibase.integration.spring.SpringLiquibase;
 
+/**
+ * The Class DatabaseConfiguration.
+ *
+ * @author Dai Mai
+ */
 @Configuration
 @EnableJpaRepositories("logia.quanlyso.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 public class DatabaseConfiguration {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
 
+    /** The env. */
     private final Environment env;
 
+    /**
+     * Instantiates a new database configuration.
+     *
+     * @param env the env
+     */
     public DatabaseConfiguration(Environment env) {
         this.env = env;
     }
 
+    /**
+     * Liquibase.
+     *
+     * @param taskExecutor the task executor
+     * @param dataSource the data source
+     * @param liquibaseProperties the liquibase properties
+     * @return the spring liquibase
+     */
     @Bean
     public SpringLiquibase liquibase(@Qualifier("taskExecutor") TaskExecutor taskExecutor,
             DataSource dataSource, LiquibaseProperties liquibaseProperties) {
@@ -54,6 +74,11 @@ public class DatabaseConfiguration {
         return liquibase;
     }
 
+    /**
+     * Hibernate 5 module.
+     *
+     * @return the hibernate 5 module
+     */
     @Bean
     public Hibernate5Module hibernate5Module() {
         return new Hibernate5Module();

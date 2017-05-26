@@ -26,17 +26,27 @@ import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Types.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class TypesResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(TypesResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "types";
         
+    /** The types service. */
     private final TypesService typesService;
 
+    /**
+     * Instantiates a new types resource.
+     *
+     * @param typesService the types service
+     */
     public TypesResource(TypesService typesService) {
         this.typesService = typesService;
     }

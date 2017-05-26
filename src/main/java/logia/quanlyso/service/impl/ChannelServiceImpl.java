@@ -17,17 +17,28 @@ import logia.quanlyso.service.mapper.ChannelMapper;
 
 /**
  * Service Implementation for managing Channel.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class ChannelServiceImpl implements ChannelService{
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(ChannelServiceImpl.class);
     
+    /** The channel repository. */
     private final ChannelRepository channelRepository;
 
+    /** The channel mapper. */
     private final ChannelMapper channelMapper;
 
+    /**
+     * Instantiates a new channel service impl.
+     *
+     * @param channelRepository the channel repository
+     * @param channelMapper the channel mapper
+     */
     public ChannelServiceImpl(ChannelRepository channelRepository, ChannelMapper channelMapper) {
         this.channelRepository = channelRepository;
         this.channelMapper = channelMapper;

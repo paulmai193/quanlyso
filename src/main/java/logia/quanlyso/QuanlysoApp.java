@@ -22,15 +22,27 @@ import io.github.jhipster.config.JHipsterConstants;
 import logia.quanlyso.config.ApplicationProperties;
 import logia.quanlyso.config.DefaultProfileUtil;
 
+/**
+ * The Class QuanlysoApp.
+ *
+ * @author Dai Mai
+ */
 @ComponentScan
 @EnableAutoConfiguration(exclude = {MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class})
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 public class QuanlysoApp {
 
+    /** The Constant log. */
     private static final Logger log = LoggerFactory.getLogger(QuanlysoApp.class);
 
+    /** The env. */
     private final Environment env;
 
+    /**
+     * Instantiates a new quanlyso app.
+     *
+     * @param env the env
+     */
     public QuanlysoApp(Environment env) {
         this.env = env;
     }

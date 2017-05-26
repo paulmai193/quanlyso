@@ -29,25 +29,44 @@ import logia.quanlyso.service.util.RandomUtil;
 
 /**
  * Service class for managing users.
+ *
+ * @author Dai Mai
  */
 @Service
 @Transactional
 public class UserService {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(UserService.class);
 
+    /** The user repository. */
     private final UserRepository userRepository;
 
+    /** The password encoder. */
     private final PasswordEncoder passwordEncoder;
 
+    /** The authority repository. */
     private final AuthorityRepository authorityRepository;
 
+    /**
+     * Instantiates a new user service.
+     *
+     * @param userRepository the user repository
+     * @param passwordEncoder the password encoder
+     * @param authorityRepository the authority repository
+     */
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.authorityRepository = authorityRepository;
     }
 
+    /**
+     * Activate registration.
+     *
+     * @param key the key
+     * @return the optional
+     */
     public Optional<User> activateRegistration(String key) {
         log.debug("Activating user for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
@@ -60,6 +79,13 @@ public class UserService {
             });
     }
 
+    /**
+     * Complete password reset.
+     *
+     * @param newPassword the new password
+     * @param key the key
+     * @return the optional
+     */
     public Optional<User> completePasswordReset(String newPassword, String key) {
        log.debug("Reset user password for reset key {}", key);
 
@@ -73,6 +99,12 @@ public class UserService {
            });
     }
 
+    /**
+     * Request password reset.
+     *
+     * @param mail the mail
+     * @return the optional
+     */
     public Optional<User> requestPasswordReset(String mail) {
         return userRepository.findOneByEmail(mail)
             .filter(User::getActivated)
@@ -83,32 +115,76 @@ public class UserService {
             });
     }
 
+    /**
+     * Creates the user.
+     *
+     * @param login the login
+     * @param password the password
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param email the email
+     * @param imageUrl the image url
+     * @param langKey the lang key
+     * @return the user
+     */
+    @Deprecated
     public User createUser(String login, String password, String firstName, String lastName, String email,
         String imageUrl, String langKey) {
 
-        User newUser = new User();
-        Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
-        Set<Authority> authorities = new HashSet<>();
-        String encryptedPassword = passwordEncoder.encode(password);
-        newUser.setLogin(login);
-        // new user gets initially a generated password
-        newUser.setPassword(encryptedPassword);
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setEmail(email);
-        newUser.setImageUrl(imageUrl);
-        newUser.setLangKey(langKey);
-        // new user is not active
-        newUser.setActivated(false);
-        // new user gets registration key
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
-        authorities.add(authority);
-        newUser.setAuthorities(authorities);
-        userRepository.save(newUser);
-        log.debug("Created Information for User: {}", newUser);
-        return newUser;
+        return createUser(login, password, firstName, lastName, email, imageUrl, langKey, false);
     }
+    
+    /**
+     * Creates the user.
+     *
+     * @param login the login
+     * @param password the password
+     * @param firstName the first name
+     * @param lastName the last name
+     * @param email the email
+     * @param imageUrl the image url
+     * @param langKey the lang key
+     * @param isActivate the is activate
+     * @return the user
+     */
+    @Deprecated
+    public User createUser(String login, String password, String firstName, String lastName, String email,
+            String imageUrl, String langKey, boolean isActivate) {
 
+            User newUser = new User();
+            Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
+            Set<Authority> authorities = new HashSet<>();
+            String encryptedPassword = passwordEncoder.encode(password);
+            newUser.setLogin(login);
+            // new user gets initially a generated password
+            newUser.setPassword(encryptedPassword);
+            newUser.setFirstName(firstName);
+            newUser.setLastName(lastName);
+            newUser.setEmail(email);
+            newUser.setImageUrl(imageUrl);
+            newUser.setLangKey(langKey);
+            if (isActivate) {
+            	// force activate
+                newUser.setActivated(true);
+			} else {
+				// new user is not active
+	            newUser.setActivated(false);
+	            // new user gets registration key
+	            newUser.setActivationKey(RandomUtil.generateActivationKey());
+			}            
+            authorities.add(authority);
+            newUser.setAuthorities(authorities);
+            userRepository.save(newUser);
+            log.debug("Created Information for User: {}", newUser);
+            return newUser;
+        }
+
+    /**
+     * Creates the user.
+     *
+     * @param userDTO the user DTO
+     * @return the user
+     */
     public User createUser(UserDTO userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin());
@@ -132,7 +208,10 @@ public class UserService {
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
+        user.setGrantAccessDate(userDTO.getGrantAccessDate());
+        user.setRevokeAccessDate(userDTO.getRevokeAccessDate());
         user.setActivated(true);
+        
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;
@@ -186,6 +265,11 @@ public class UserService {
             .map(UserDTO::new);
     }
 
+    /**
+     * Delete user.
+     *
+     * @param login the login
+     */
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
@@ -193,6 +277,11 @@ public class UserService {
         });
     }
 
+    /**
+     * Change password.
+     *
+     * @param password the password
+     */
     public void changePassword(String password) {
         userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(user -> {
             String encryptedPassword = passwordEncoder.encode(password);
@@ -201,21 +290,44 @@ public class UserService {
         });
     }
 
+    /**
+     * Gets the all managed users.
+     *
+     * @param pageable the pageable
+     * @return the all managed users
+     */
     @Transactional(readOnly = true)
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
         return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
+    /**
+     * Gets the user with authorities by login.
+     *
+     * @param login the login
+     * @return the user with authorities by login
+     */
     @Transactional(readOnly = true)
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
         return userRepository.findOneWithAuthoritiesByLogin(login);
     }
 
+    /**
+     * Gets the user with authorities.
+     *
+     * @param id the id
+     * @return the user with authorities
+     */
     @Transactional(readOnly = true)
     public User getUserWithAuthorities(Long id) {
         return userRepository.findOneWithAuthoritiesById(id);
     }
 
+    /**
+     * Gets the user with authorities.
+     *
+     * @return the user with authorities
+     */
     @Transactional(readOnly = true)
     public User getUserWithAuthorities() {
         return userRepository.findOneWithAuthoritiesByLogin(SecurityUtils.getCurrentUserLogin()).orElse(null);
@@ -238,6 +350,8 @@ public class UserService {
     }
 
     /**
+     * Gets the authorities.
+     *
      * @return a list of all the authorities
      */
     public List<String> getAuthorities() {

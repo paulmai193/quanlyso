@@ -45,34 +45,49 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class TypesResourceIntTest {
 
+    /** The Constant DEFAULT_NAME. */
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    
+    /** The Constant UPDATED_NAME. */
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    /** The types repository. */
     @Autowired
     private TypesRepository typesRepository;
 
+    /** The types mapper. */
     @Autowired
     private TypesMapper typesMapper;
 
+    /** The types service. */
     @Autowired
     private TypesService typesService;
 
+    /** The jackson message converter. */
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
+    /** The pageable argument resolver. */
     @Autowired
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
+    /** The exception translator. */
     @Autowired
     private ExceptionTranslator exceptionTranslator;
 
+    /** The em. */
     @Autowired
     private EntityManager em;
 
+    /** The rest types mock mvc. */
     private MockMvc restTypesMockMvc;
 
+    /** The types. */
     private Types types;
 
+    /**
+     * Setup.
+     */
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
@@ -85,9 +100,12 @@ public class TypesResourceIntTest {
 
     /**
      * Create an entity for this test.
-     *
+     * 
      * This is a static method, as tests for other entities might also need it,
      * if they test an entity which requires the current entity.
+     *
+     * @param em the em
+     * @return the types
      */
     public static Types createEntity(EntityManager em) {
         Types types = new Types()
@@ -95,11 +113,19 @@ public class TypesResourceIntTest {
         return types;
     }
 
+    /**
+     * Inits the test.
+     */
     @Before
     public void initTest() {
         types = createEntity(em);
     }
 
+    /**
+     * Creates the types.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createTypes() throws Exception {
@@ -119,6 +145,11 @@ public class TypesResourceIntTest {
         assertThat(testTypes.getName()).isEqualTo(DEFAULT_NAME);
     }
 
+    /**
+     * Creates the types with existing id.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void createTypesWithExistingId() throws Exception {
@@ -139,6 +170,12 @@ public class TypesResourceIntTest {
         assertThat(typesList).hasSize(databaseSizeBeforeCreate);
     }
 
+    /**
+     * Gets the all types.
+     *
+     * @return the all types
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getAllTypes() throws Exception {
@@ -153,6 +190,12 @@ public class TypesResourceIntTest {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
     }
 
+    /**
+     * Gets the types.
+     *
+     * @return the types
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getTypes() throws Exception {
@@ -167,6 +210,12 @@ public class TypesResourceIntTest {
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
     }
 
+    /**
+     * Gets the non existing types.
+     *
+     * @return the non existing types
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void getNonExistingTypes() throws Exception {
@@ -175,6 +224,11 @@ public class TypesResourceIntTest {
             .andExpect(status().isNotFound());
     }
 
+    /**
+     * Update types.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateTypes() throws Exception {
@@ -200,6 +254,11 @@ public class TypesResourceIntTest {
         assertThat(testTypes.getName()).isEqualTo(UPDATED_NAME);
     }
 
+    /**
+     * Update non existing types.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void updateNonExistingTypes() throws Exception {
@@ -219,6 +278,11 @@ public class TypesResourceIntTest {
         assertThat(typesList).hasSize(databaseSizeBeforeUpdate + 1);
     }
 
+    /**
+     * Delete types.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void deleteTypes() throws Exception {
@@ -236,6 +300,11 @@ public class TypesResourceIntTest {
         assertThat(typesList).hasSize(databaseSizeBeforeDelete - 1);
     }
 
+    /**
+     * Equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void equalsVerifier() throws Exception {
@@ -251,6 +320,11 @@ public class TypesResourceIntTest {
         assertThat(types1).isNotEqualTo(types2);
     }
 
+    /**
+     * Dto equals verifier.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void dtoEqualsVerifier() throws Exception {
@@ -267,6 +341,9 @@ public class TypesResourceIntTest {
         assertThat(typesDTO1).isNotEqualTo(typesDTO2);
     }
 
+    /**
+     * Test entity from id.
+     */
     @Test
     @Transactional
     public void testEntityFromId() {

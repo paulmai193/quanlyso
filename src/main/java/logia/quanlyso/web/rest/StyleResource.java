@@ -26,17 +26,27 @@ import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Style.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class StyleResource {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(StyleResource.class);
 
+    /** The Constant ENTITY_NAME. */
     private static final String ENTITY_NAME = "style";
         
+    /** The style service. */
     private final StyleService styleService;
 
+    /**
+     * Instantiates a new style resource.
+     *
+     * @param styleService the style service
+     */
     public StyleResource(StyleService styleService) {
         this.styleService = styleService;
     }

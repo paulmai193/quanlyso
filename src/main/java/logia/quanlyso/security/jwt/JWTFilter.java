@@ -21,17 +21,29 @@ import io.jsonwebtoken.ExpiredJwtException;
 /**
  * Filters incoming requests and installs a Spring Security principal if a header corresponding to a valid user is
  * found.
+ *
+ * @author Dai Mai
  */
 public class JWTFilter extends GenericFilterBean {
 
+    /** The log. */
     private final Logger log = LoggerFactory.getLogger(JWTFilter.class);
 
+    /** The token provider. */
     private TokenProvider tokenProvider;
 
+    /**
+     * Instantiates a new JWT filter.
+     *
+     * @param tokenProvider the token provider
+     */
     public JWTFilter(TokenProvider tokenProvider) {
         this.tokenProvider = tokenProvider;
     }
 
+    /* (non-Javadoc)
+     * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+     */
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
         throws IOException, ServletException {
@@ -52,6 +64,12 @@ public class JWTFilter extends GenericFilterBean {
         }
     }
 
+    /**
+     * Resolve token.
+     *
+     * @param request the request
+     * @return the string
+     */
     private String resolveToken(HttpServletRequest request){
         String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
