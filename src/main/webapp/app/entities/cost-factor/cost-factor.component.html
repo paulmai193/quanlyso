@@ -26,21 +26,21 @@
             </thead>
             <tbody>
             <tr *ngFor="let costFactor of costFactors ;trackBy: trackId">
-                <td><a [routerLink]="['../cost-factor', costFactor.id ]">{{costFactor.id}}</a></td>
+                <td><a [routerLink]="['../cost-factor', costFactor.id ]">{{ costFactor.id }}</a></td>
                 <td>{{costFactor.rate}}</td>
                 <td>
                     <div *ngIf="costFactor.factorsId">
-                        <a [routerLink]="['../factor', costFactor.factorsId  ]" >{{costFactor.factorsId}}</a>
+                        <a [routerLink]="['../factor', costFactor.factorsId  ]" >{{ costFactor.factorsName }}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="costFactor.stylesId">
-                        <a [routerLink]="['../style', costFactor.stylesId  ]" >{{costFactor.stylesId}}</a>
+                        <a [routerLink]="['../style', costFactor.stylesId  ]" >{{ costFactor.stylesName }}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="costFactor.typesId">
-                        <a [routerLink]="['../types', costFactor.typesId  ]" >{{costFactor.typesId}}</a>
+                        <a [routerLink]="['../types', costFactor.typesId  ]" >{{ costFactor.typesName }}</a>
                     </div>
                 </td>
                 <td class="text-right">

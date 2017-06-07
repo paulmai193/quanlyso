@@ -26,7 +26,10 @@ export class FactorService {
     }
 
     find(id: number): Observable<Factor> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+        /*return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+            return res.json();
+        });*/
+        return this.http.get(this.resourceUrl + '/' + id).map((res: Response) => {
             return res.json();
         });
     }
