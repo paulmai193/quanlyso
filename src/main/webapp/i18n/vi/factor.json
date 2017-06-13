@@ -2,23 +2,23 @@
     "quanlysoApp": {
         "factor" : {
             "home": {
-                "title": "Factors",
-                "createLabel": "Thêm mới một Factor",
-                "createOrEditLabel": "Thêm mới hoặc cập nhật Factor"
+                "title": "Hệ số",
+                "createLabel": "Thêm Hệ số",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Hệ số"
             },
-            "created": "Một Factor mới được tạo với định danh {{ param }}",
-            "updated": "Một Factor cập nhật với định danh {{ param }}",
-            "deleted": "Một Factor đã xóa với định danh {{ param }}",
+            "created": "Một Hệ số mới được tạo với định danh {{ param }}",
+            "updated": "Một Hệ số cập nhật với định danh {{ param }}",
+            "deleted": "Một Hệ số đã xóa với định danh {{ param }}",
             "delete": {
-                "question": "Bạn có chắc là muốn xóa Factor {{ id }}?"
+                "question": "Bạn có chắc là muốn xóa Hệ số {{ id }}?"
             },
             "detail": {
-                "title": "Factor"
+                "title": "Hệ số"
             },
-            "name": "Name",
-            "profitFactors": "Profit Factors",
-            "costFactors": "Cost Factors",
-            "transactionDetails": "Transaction Details"
+            "name": "Tên",
+            "profitFactors": "Hệ số lợi nhuận",
+            "costFactors": "Hệ số giá",
+            "transactionDetails": "Chi tiết giao dịch"
         }
     }
 }

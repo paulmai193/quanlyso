@@ -37,7 +37,7 @@ export class FactorDialogComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;console.log(this.factor);
+        this.isSaving = true;
         if (this.factor.id !== undefined) {
             this.subscribeToSaveResponse(
                 this.factorService.update(this.factor));

@@ -23,21 +23,21 @@
             <label jhiTranslate="quanlysoApp.profitFactor.factors" for="field_factors">Factors</label>
             <select class="form-control" id="field_factors" name="factors" [(ngModel)]="profitFactor.factorsId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="factorOption.id" *ngFor="let factorOption of factors; trackBy: trackFactorById">{{factorOption.id}}</option>
+                <option [ngValue]="factorOption.id" *ngFor="let factorOption of factors; trackBy: trackFactorById">{{ factorOption.name }}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="quanlysoApp.profitFactor.styles" for="field_styles">Styles</label>
             <select class="form-control" id="field_styles" name="styles" [(ngModel)]="profitFactor.stylesId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="styleOption.id" *ngFor="let styleOption of styles; trackBy: trackStyleById">{{styleOption.id}}</option>
+                <option [ngValue]="styleOption.id" *ngFor="let styleOption of styles; trackBy: trackStyleById">{{ styleOption.name }}</option>
             </select>
         </div>
         <div class="form-group">
             <label jhiTranslate="quanlysoApp.profitFactor.types" for="field_types">Types</label>
             <select class="form-control" id="field_types" name="types" [(ngModel)]="profitFactor.typesId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{typesOption.id}}</option>
+                <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{ typesOption.name }}</option>
             </select>
         </div>
     </div>

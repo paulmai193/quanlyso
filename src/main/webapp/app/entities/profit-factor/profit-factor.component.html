@@ -30,17 +30,17 @@
                 <td>{{profitFactor.rate}}</td>
                 <td>
                     <div *ngIf="profitFactor.factorsId">
-                        <a [routerLink]="['../factor', profitFactor.factorsId  ]" >{{profitFactor.factorsId}}</a>
+                        <a [routerLink]="['../factor', profitFactor.factorsId  ]" >{{ profitFactor.factorsName }}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="profitFactor.stylesId">
-                        <a [routerLink]="['../style', profitFactor.stylesId  ]" >{{profitFactor.stylesId}}</a>
+                        <a [routerLink]="['../style', profitFactor.stylesId  ]" >{{ profitFactor.stylesName }}</a>
                     </div>
                 </td>
                 <td>
                     <div *ngIf="profitFactor.typesId">
-                        <a [routerLink]="['../types', profitFactor.typesId  ]" >{{profitFactor.typesId}}</a>
+                        <a [routerLink]="['../types', profitFactor.typesId  ]" >{{ profitFactor.typesName }}</a>
                     </div>
                 </td>
                 <td class="text-right">

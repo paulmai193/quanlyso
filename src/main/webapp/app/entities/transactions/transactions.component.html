@@ -30,7 +30,7 @@
                 <td>{{transactions.netValue}}</td>
                 <td>
                     <div *ngIf="transactions.clientsId">
-                        <a [routerLink]="['../client', transactions.clientsId  ]" >{{transactions.clientsId}}</a>
+                        <a [routerLink]="['../client', transactions.clientsId  ]" >{{ transactions.clientsName }}</a>
                     </div>
                 </td>
                 <td class="text-right">

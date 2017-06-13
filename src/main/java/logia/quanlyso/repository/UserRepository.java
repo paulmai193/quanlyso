@@ -65,7 +65,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
      * @return the user
      */
     @EntityGraph(attributePaths = "authorities")
-    User findOneWithAuthoritiesById(Long id);
+    Optional<User> findOneWithAuthoritiesById(Long id);
 
     /**
      * Find one with authorities by login.

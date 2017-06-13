@@ -27,7 +27,7 @@ export class ClientService {
     }
 
     find(id: number): Observable<Client> {
-        return this.http.get(`${this.resourceUrl}/${id}`).map((res: Response) => {
+        return this.http.get(`${this.resourceUrl}/id/${id}`).map((res: Response) => {
             const jsonResponse = res.json();
             jsonResponse.grantAccessDate = this.dateUtils
                 .convertDateTimeFromServer(jsonResponse.grantAccessDate);

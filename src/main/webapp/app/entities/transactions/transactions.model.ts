@@ -5,6 +5,7 @@ export class Transactions {
         public netValue?: number,
         public transactionDetailsId?: number,
         public clientsId?: number,
+        public clientsName?: string,
     ) {
     }
 }

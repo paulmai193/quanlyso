@@ -9,4 +9,5 @@ export class Client {
         public transactionssId?: number,
     ) {
     }
+
 }

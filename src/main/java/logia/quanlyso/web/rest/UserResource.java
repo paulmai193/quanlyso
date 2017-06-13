@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor;
 
 import com.codahale.metrics.annotation.Timed;
 
@@ -194,7 +195,7 @@ public class UserResource {
     /**
      * GET  /users/:login : get the "login" user.
      *
-     * @param login the login of the user to find
+     * @param login the login credential of the user to find
      * @return the ResponseEntity with status 200 (OK) and with body the "login" user, or with status 404 (Not Found)
      */
     @GetMapping("/users/{login:" + Constants.LOGIN_REGEX + "}")
@@ -216,8 +217,52 @@ public class UserResource {
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> deleteUser(@PathVariable String login) {
-        log.debug("REST request to delete User: {}", login);
+        log.debug("REST request to delete User by login credential: {}", login);
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
     }
+    
+    /**
+     * GET  /users/id/:id : get the "id" user.
+     *
+     * @param id the ID of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body the "id" user, or with status 404 (Not Found)
+     */
+    @GetMapping("/users/id/{id}")
+    @Timed
+    public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
+        log.debug("REST request to get User by ID : {}", id);
+        return ResponseUtil.wrapOrNotFound(
+            userService.getUserWithAuthorities(id)
+                .map(UserDTO::new));
+    }
+    
+    /**
+     * GET  /users/role/:role : get all users with specific role.
+     *
+     * @param role the role of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body list users have this role
+     */
+    @GetMapping("/users/role/{role}")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<List<UserDTO>> getUserByRole(@ApiParam Pageable pageable, @PathVariable String role) {
+        log.debug("REST request to get all User with role : {}", role);
+        final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/role/" + role);
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+    
+    /**
+     * GET  /users/role/:role : get all users with specific role.
+     *
+     * @param role the role of the user to find
+     * @return the ResponseEntity with status 200 (OK) and with body list users have this role
+     */
+    @GetMapping("/users/role-user")
+    @Timed
+    public ResponseEntity<List<UserDTO>> getByRoleUser(@ApiParam Pageable pageable) {
+        return this.getUserByRole(pageable, AuthoritiesConstants.USER);
+    }
+    
 }

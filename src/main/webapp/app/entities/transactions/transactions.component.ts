@@ -8,6 +8,8 @@ import { Transactions } from './transactions.model';
 import { TransactionsService } from './transactions.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { ClientService } from '../client/client.service';
+import { Client } from '../client/client.model';
 
 @Component({
     selector: 'jhi-transactions',
@@ -39,7 +41,8 @@ currentAccount: any;
         private router: Router,
         private eventManager: EventManager,
         private paginationUtil: PaginationUtil,
-        private paginationConfig: PaginationConfig
+        private paginationConfig: PaginationConfig,
+        private clientService: ClientService
     ) {
         this.itemsPerPage = ITEMS_PER_PAGE;
         this.routeData = this.activatedRoute.data.subscribe((data) => {
@@ -59,12 +62,14 @@ currentAccount: any;
             (res: Response) => this.onError(res.json())
         );
     }
+
     loadPage(page: number) {
         if (page !== this.previousPage) {
             this.previousPage = page;
             this.transition();
         }
     }
+
     transition() {
         this.router.navigate(['/transactions'], {queryParams:
             {
@@ -84,6 +89,7 @@ currentAccount: any;
         }]);
         this.loadAll();
     }
+
     ngOnInit() {
         this.loadAll();
         this.principal.identity().then((account) => {
@@ -99,6 +105,7 @@ currentAccount: any;
     trackId(index: number, item: Transactions) {
         return item.id;
     }
+
     registerChangeInTransactions() {
         this.eventSubscriber = this.eventManager.subscribe('transactionsListModification', (response) => this.loadAll());
     }
@@ -117,8 +124,16 @@ currentAccount: any;
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.transactions = data;
+        this.transactions.forEach((el: Transactions) => {
+            this.getClientsName(el);
+        });
     }
+
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    private getClientsName(transactions: Transactions): void {
+        this.clientService.find(transactions.clientsId).subscribe((client: Client) => transactions.clientsName = (client.firstName + ' ' + client.lastName));
     }
 }

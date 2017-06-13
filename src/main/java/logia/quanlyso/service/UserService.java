@@ -319,7 +319,7 @@ public class UserService {
      * @return the user with authorities
      */
     @Transactional(readOnly = true)
-    public User getUserWithAuthorities(Long id) {
+    public Optional<User> getUserWithAuthorities(Long id) {
         return userRepository.findOneWithAuthoritiesById(id);
     }
 

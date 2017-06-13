@@ -31,12 +31,12 @@
                     </small>
                 </div>
             </div>
-        </div>   
+        </div>
         <div class="form-group">
             <label class="form-control-label" for="email" jhiTranslate="global.form.email">Email</label>
             <div class="d-flex">
-                <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="{{'global.form.email.placeholder' | translate}}"
-                        [(ngModel)]="client.email" minlength=5 maxlength=100 required>
+                <input type="text" class="form-control" id="email" name="email" #email="ngModel" placeholder="{{'global.form.email.placeholder' | translate}}"
+                        [(ngModel)]="client.email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
                 <div *ngIf="email.dirty && email.invalid">
                     <small class="form-text text-danger" *ngIf="email.errors.required"
                             jhiTranslate="global.messages.validate.email.required">
@@ -92,7 +92,7 @@
             </div>
         </div>
         <!-- End clone from register form -->
-        
+
         <div class="form-group" [hidden]="!client.id">
             <label for="id" jhiTranslate="global.field.id">ID</label>
             <input type="text" class="form-control" id="id" name="id"

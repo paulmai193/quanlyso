@@ -18,18 +18,18 @@
                 [(ngModel)]="transactions.chosenNumber"
              />
         </div>
-        <div class="form-group">
+        <!--<div class="form-group">
             <label class="form-control-label" jhiTranslate="quanlysoApp.transactions.netValue" for="field_netValue">Net Value</label>
             <input type="number" class="form-control" name="netValue" id="field_netValue"
                 [(ngModel)]="transactions.netValue"
              />
-        </div>
+        </div>-->
 
         <div class="form-group">
             <label jhiTranslate="quanlysoApp.transactions.clients" for="field_clients">Clients</label>
             <select class="form-control" id="field_clients" name="clients" [(ngModel)]="transactions.clientsId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackClientById">{{clientOption.id}}</option>
+                <option [ngValue]="clientOption.id" *ngFor="let clientOption of clients; trackBy: trackClientById">{{ clientOption.firstName + ' ' + clientOption.lastName }}</option>
             </select>
         </div>
     </div>
