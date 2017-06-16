@@ -37,6 +37,10 @@ export class ClientService {
         });
     }
 
+    findByUserRole(): Observable<Client> {
+        return this.http.get(`${this.resourceUrl}/role/ROLE_USER`).map((res: Response) => this.convertResponse(res));
+    }
+
     query(req?: any): Observable<Response> {
         const options = this.createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

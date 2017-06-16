@@ -35,9 +35,10 @@ export class TransactionsDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.clientService.query().subscribe(
+        this.clientService.findByUserRole().subscribe(
             (res: Response) => { this.clients = res.json(); }, (res: Response) => this.onError(res.json()));
     }
+
     clear() {
         this.activeModal.dismiss('cancel');
     }
