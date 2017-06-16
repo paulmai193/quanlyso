@@ -8,7 +8,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
+import logia.quanlyso.domain.Authority;
 import logia.quanlyso.domain.User;
 
 /**
@@ -75,6 +78,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
      */
     @EntityGraph(attributePaths = "authorities")
     Optional<User> findOneWithAuthoritiesByLogin(String login);
+    
+    /**
+     * Find all by authority.
+     *
+     * @param pageable the pageable
+     * @param authority the authority
+     * @return the page
+     */
+    @EntityGraph(attributePaths = "authorities")
+    Page<User> findAllByAuthorities(Pageable pageable, Authority authority);
 
     /**
      * Find all by login not.

@@ -313,14 +313,27 @@ public class UserService {
     }
 
     /**
-     * Gets the user with authorities.
+     * Gets the user with authorities by ID.
      *
      * @param id the id
      * @return the user with authorities
      */
     @Transactional(readOnly = true)
-    public Optional<User> getUserWithAuthorities(Long id) {
+    public Optional<User> getUserWithAuthoritiesById(Long id) {
         return userRepository.findOneWithAuthoritiesById(id);
+    }
+    
+    /**
+     * Gets the user with authorities by role.
+     * @param pageable 
+     *
+     * @param id the id
+     * @return the user with authorities
+     */
+    @Transactional(readOnly = true)
+    public Page<UserDTO> getUserWithAuthoritiesByRole(Pageable pageable, String role) {
+    	Authority authority = authorityRepository.getOneByName(role);
+        return userRepository.findAllByAuthorities(pageable, authority).map(UserDTO::new);
     }
 
     /**

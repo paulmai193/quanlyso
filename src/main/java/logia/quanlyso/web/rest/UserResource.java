@@ -233,7 +233,7 @@ public class UserResource {
     public ResponseEntity<UserDTO> getUserById(@PathVariable Long id) {
         log.debug("REST request to get User by ID : {}", id);
         return ResponseUtil.wrapOrNotFound(
-            userService.getUserWithAuthorities(id)
+            userService.getUserWithAuthoritiesById(id)
                 .map(UserDTO::new));
     }
     
@@ -248,7 +248,7 @@ public class UserResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<List<UserDTO>> getUserByRole(@ApiParam Pageable pageable, @PathVariable String role) {
         log.debug("REST request to get all User with role : {}", role);
-        final Page<UserDTO> page = userService.getAllManagedUsers(pageable);
+        final Page<UserDTO> page = userService.getUserWithAuthoritiesByRole(pageable, role);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/users/role/" + role);
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
