@@ -34,8 +34,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import logia.quanlyso.QuanlysoApp;
+import logia.quanlyso.domain.Authority;
 import logia.quanlyso.domain.User;
 import logia.quanlyso.repository.UserRepository;
+import logia.quanlyso.security.AuthoritiesConstants;
 import logia.quanlyso.service.MailService;
 import logia.quanlyso.service.UserService;
 import logia.quanlyso.web.rest.errors.ExceptionTranslator;
@@ -159,6 +161,27 @@ public class UserResourceIntTest {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
+        return user;
+    }
+    
+    /**
+     * Creates the entity.
+     *
+     * @param em the em
+     * @param authorities the authorities
+     * @return the user
+     */
+    public static User createEntity(EntityManager em, Set<Authority> authorities) {
+        User user = new User();
+        user.setLogin(DEFAULT_LOGIN);
+        user.setPassword(RandomStringUtils.random(60));
+        user.setActivated(true);
+        user.setEmail(DEFAULT_EMAIL);
+        user.setFirstName(DEFAULT_FIRSTNAME);
+        user.setLastName(DEFAULT_LASTNAME);
+        user.setImageUrl(DEFAULT_IMAGEURL);
+        user.setLangKey(DEFAULT_LANGKEY);
+        user.setAuthorities(authorities);
         return user;
     }
 
@@ -369,21 +392,118 @@ public class UserResourceIntTest {
             .andExpect(jsonPath("$.[*].imageUrl").value(hasItem(DEFAULT_IMAGEURL)))
             .andExpect(jsonPath("$.[*].langKey").value(hasItem(DEFAULT_LANGKEY)));
     }
+    
+    /**
+     * Gets the all users by authority user.
+     *
+     * @return the all users by authority user
+     * @throws Exception the exception
+     */
+    @Test
+    @Transactional
+    public void getAllUsersByAuthorityUser() throws Exception {
+        // Initialize the database
+    	Authority authorityUser = new Authority();
+    	authorityUser.setName(AuthoritiesConstants.USER);
+    	Set<Authority> authorities = new HashSet<>();
+    	authorities.add(authorityUser);
+		user.setAuthorities(authorities);
+        userRepository.saveAndFlush(user);
+
+        // Get all the users
+        restUserMockMvc.perform(get("/api/users/role-user?sort=id,desc")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].login").value(hasItem(UserResourceIntTest.DEFAULT_LOGIN)));
+    }
+    
+    /**
+     * Gets the all users by authority.
+     *
+     * @return the all users by authority
+     * @throws Exception the exception
+     */
+    @Test
+    @Transactional
+    public void getAllUsersByAuthority() throws Exception {
+        // Initialize the database
+    	// User
+    	Authority authority = new Authority();
+    	authority.setName(AuthoritiesConstants.USER);
+    	Set<Authority> authorities = new HashSet<>();
+    	authorities.add(authority);
+    	User user = createEntity(em);
+    	String prefix = "test_user";
+    	user.setLogin(prefix);
+    	user.setEmail(prefix + "@localhost");
+		user.setAuthorities(authorities);
+        userRepository.saveAndFlush(user);
+        
+        // Admin
+        authority.setName(AuthoritiesConstants.ADMIN);
+        authorities.clear();
+    	authorities.add(authority);
+    	User admin = createEntity(em);
+    	prefix = "test_admin";
+    	admin.setLogin(prefix);
+    	admin.setEmail(prefix + "@localhost");
+    	admin.setAuthorities(authorities);
+        userRepository.saveAndFlush(admin);
+
+        // Get all the users
+        restUserMockMvc.perform(get("/api/users/role/"+ AuthoritiesConstants.USER +"?sort=id,desc")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].login").value(hasItem(user.getLogin())));
+        
+        // Get all the admin
+        restUserMockMvc.perform(get("/api/users/role/"+ AuthoritiesConstants.ADMIN +"?sort=id,desc")
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].login").value(hasItem(admin.getLogin())));
+    }
 
     /**
-     * Gets the user.
+     * Gets the user by login information.
      *
      * @return the user
      * @throws Exception the exception
      */
     @Test
     @Transactional
-    public void getUser() throws Exception {
+    public void getUserByLogin() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
 
         // Get the user
         restUserMockMvc.perform(get("/api/users/{login}", user.getLogin()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.login").value(user.getLogin()))
+            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
+            .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
+            .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
+            .andExpect(jsonPath("$.imageUrl").value(DEFAULT_IMAGEURL))
+            .andExpect(jsonPath("$.langKey").value(DEFAULT_LANGKEY));
+    }
+    
+    /**
+     * Gets the user by id.
+     *
+     * @return the user by id
+     * @throws Exception the exception
+     */
+    @Test
+    @Transactional
+    public void getUserById() throws Exception {
+        // Initialize the database
+        userRepository.saveAndFlush(user);
+
+        // Get the user
+        restUserMockMvc.perform(get("/api/users/id/{id}", user.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.login").value(user.getLogin()))

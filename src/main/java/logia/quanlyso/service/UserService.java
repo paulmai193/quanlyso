@@ -127,7 +127,6 @@ public class UserService {
      * @param langKey the lang key
      * @return the user
      */
-    @Deprecated
     public User createUser(String login, String password, String firstName, String lastName, String email,
         String imageUrl, String langKey) {
 
@@ -147,7 +146,6 @@ public class UserService {
      * @param isActivate the is activate
      * @return the user
      */
-    @Deprecated
     public User createUser(String login, String password, String firstName, String lastName, String email,
             String imageUrl, String langKey, boolean isActivate) {
 
