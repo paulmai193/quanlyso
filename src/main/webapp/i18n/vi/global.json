@@ -40,7 +40,8 @@
                 "database": "Cơ sở dữ liệu",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
-            "language": "Ngôn ngữ"
+            "language": "Ngôn ngữ",
+            "tool": "Công cụ"
         },
         "form": {
             "username": "Tên tài khoản",
@@ -104,7 +105,9 @@
             "edit": "Sửa",
             "open": "Mở",
             "save": "Lưu",
-            "view": "Xem"
+            "view": "Xem",
+            "check": "Kiểm tra",
+            "add": "Thêm"
         },
         "detail": {
             "field": "Trường",

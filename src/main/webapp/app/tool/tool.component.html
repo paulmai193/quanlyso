@@ -1,0 +1,99 @@
+<div>
+    <h2>
+        <span jhiTranslate="global.menu.tool">Tool</span>
+    </h2>
+    <jhi-alert-error></jhi-alert-error>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <form name="toolForm" role="form" novalidate (ngSubmit)="check()" #toolForm="ngForm">
+            <!-- Transaction -->
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><span jhiTranslate="quanlysoApp.transactions.chosenNumber">Chosen Number</span> <span class="fa"></span></th>
+                    <th><span jhiTranslate="quanlysoApp.transactions.netValue">Net Value</span> <span class="fa"></span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <input type="number" class="form-control" name="chosenNumber" id="field_chosenNumber"
+                               [(ngModel)]="transactions.chosenNumber" required/>
+                    </td>
+                    <td>{{ transactions.netValue }}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <!-- Transaction detail -->
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th><span jhiTranslate="quanlysoApp.transactionDetails.amount">Amount</span> <span class="fa"></span></th>
+                    <th><span jhiTranslate="quanlysoApp.transactionDetails.channels">Channels</span> <span class="fa"></span></th>
+                    <th><span jhiTranslate="quanlysoApp.transactionDetails.factors">Factors</span> <span class="fa"></span></th>
+                    <th><span jhiTranslate="quanlysoApp.transactionDetails.styles">Styles</span> <span class="fa"></span></th>
+                    <th><span jhiTranslate="quanlysoApp.transactionDetails.types">Types</span> <span class="fa"></span></th>
+                    <th><span jhiTranslate="quanlysoApp.transactionDetails.profit">Profit</span> <span class="fa"></span></th>
+                    <th><span jhiTranslate="quanlysoApp.transactionDetails.costs">Costs</span> <span class="fa"></span></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let transactionDetails of transactionDetailses">
+                    <td>
+                        <input type="number" [(ngModel)]="transactionDetails.amount" name="amount" required>
+                    </td>
+                    <td>
+                        <select class="form-control" id="field_channels" name="channels" [(ngModel)]="transactionDetails.channelsId" required>
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="channelOption.id" *ngFor="let channelOption of channels; trackBy: trackChannelById">{{ channelOption.name }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" id="field_factors" name="factors" [(ngModel)]="transactionDetails.factorsId" required>
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="factorOption.id" *ngFor="let factorOption of factors; trackBy: trackFactorById">{{ factorOption.name }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" id="field_styles" name="styles" [(ngModel)]="transactionDetails.stylesId" required>
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="styleOption.id" *ngFor="let styleOption of styles; trackBy: trackStyleById">{{ styleOption.name }}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" id="field_types" name="types" [(ngModel)]="transactionDetails.typesId" required>
+                            <option [ngValue]="null"></option>
+                            <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{ typesOption.name }}</option>
+                        </select>
+                    </td>
+                    <td>{{ transactionDetails.profit }}</td>
+                    <td>{{ transactionDetails.costs }}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button class="btn btn-danger btn-sm" *ngIf="transactionDetailses.length > 1" (click)="removeRecord(transactionDetails)">
+                                <span class="fa fa-remove"></span>
+                                <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div>
+        <button class="btn btn-primary float-right" (click)="addRecord()">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="entity.action.add">
+                Add
+            </span>
+        </button>
+        <button type="submit" [disabled]="toolForm.form.invalid || isProcess" class="btn btn-primary">
+            <span class="fa fa-calculator"></span>&nbsp;<span jhiTranslate="entity.action.check">Check</span>
+        </button>
+    </div>
+</div>
