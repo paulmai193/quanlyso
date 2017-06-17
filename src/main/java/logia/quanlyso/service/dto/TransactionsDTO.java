@@ -3,8 +3,8 @@ package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * A DTO for the Transactions entity.
@@ -24,6 +24,9 @@ public class TransactionsDTO implements Serializable {
 
     /** The clients id. */
     private Long clientsId;
+    
+    /** The details DTOs. */
+    private Set<TransactionDetailsDTO> transactionDetailsDTOs = new HashSet<>();
 
     /**
      * Gets the id.
@@ -95,9 +98,23 @@ public class TransactionsDTO implements Serializable {
      */
     public void setClientsId(Long clientId) {
         this.clientsId = clientId;
-    }
+    }    
 
-    /* (non-Javadoc)
+	/**
+	 * @return the transactionDetailsDTOs
+	 */
+	public Set<TransactionDetailsDTO> getTransactionDetailsDTOs() {
+		return transactionDetailsDTOs;
+	}
+
+	/**
+	 * @param transactionDetailsDTOs the transactionDetailsDTOs to set
+	 */
+	public void setTransactionDetailsDTOs(Set<TransactionDetailsDTO> transactionDetailsDTOs) {
+		this.transactionDetailsDTOs = transactionDetailsDTOs;
+	}
+
+	/* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -133,6 +150,7 @@ public class TransactionsDTO implements Serializable {
             "id=" + getId() +
             ", chosenNumber='" + getChosenNumber() + "'" +
             ", netValue='" + getNetValue() + "'" +
+            ", details='" + getTransactionDetailsDTOs() + "'" +
             "}";
     }
 }

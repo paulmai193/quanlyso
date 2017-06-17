@@ -53,46 +53,46 @@ import logia.quanlyso.web.rest.vm.ManagedUserVM;
 public class UserResourceIntTest {
 
     /** The Constant DEFAULT_LOGIN. */
-    private static final String DEFAULT_LOGIN = "johndoe";
+    static final String DEFAULT_LOGIN = "johndoe";
     
     /** The Constant UPDATED_LOGIN. */
-    private static final String UPDATED_LOGIN = "jhipster";
+    static final String UPDATED_LOGIN = "jhipster";
 
     /** The Constant DEFAULT_PASSWORD. */
-    private static final String DEFAULT_PASSWORD = "passjohndoe";
+    static final String DEFAULT_PASSWORD = "passjohndoe";
     
     /** The Constant UPDATED_PASSWORD. */
-    private static final String UPDATED_PASSWORD = "passjhipster";
+    static final String UPDATED_PASSWORD = "passjhipster";
 
     /** The Constant DEFAULT_EMAIL. */
-    private static final String DEFAULT_EMAIL = "johndoe@localhost";
+    static final String DEFAULT_EMAIL = "johndoe@localhost";
     
     /** The Constant UPDATED_EMAIL. */
-    private static final String UPDATED_EMAIL = "jhipster@localhost";
+    static final String UPDATED_EMAIL = "jhipster@localhost";
 
     /** The Constant DEFAULT_FIRSTNAME. */
-    private static final String DEFAULT_FIRSTNAME = "john";
+    static final String DEFAULT_FIRSTNAME = "john";
     
     /** The Constant UPDATED_FIRSTNAME. */
-    private static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
+    static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
 
     /** The Constant DEFAULT_LASTNAME. */
-    private static final String DEFAULT_LASTNAME = "doe";
+    static final String DEFAULT_LASTNAME = "doe";
     
     /** The Constant UPDATED_LASTNAME. */
-    private static final String UPDATED_LASTNAME = "jhipsterLastName";
+    static final String UPDATED_LASTNAME = "jhipsterLastName";
 
     /** The Constant DEFAULT_IMAGEURL. */
-    private static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
+    static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
     
     /** The Constant UPDATED_IMAGEURL. */
-    private static final String UPDATED_IMAGEURL = "http://placehold.it/40x40";
+    static final String UPDATED_IMAGEURL = "http://placehold.it/40x40";
 
     /** The Constant DEFAULT_LANGKEY. */
-    private static final String DEFAULT_LANGKEY = "en";
+    static final String DEFAULT_LANGKEY = "en";
     
     /** The Constant UPDATED_LANGKEY. */
-    private static final String UPDATED_LANGKEY = "fr";
+    static final String UPDATED_LANGKEY = "fr";
 
     /** The user repository. */
     @Autowired
@@ -165,13 +165,12 @@ public class UserResourceIntTest {
     }
     
     /**
-     * Creates the entity.
+     * Creates the and save entity.
      *
      * @param em the em
-     * @param authorities the authorities
      * @return the user
      */
-    public static User createEntity(EntityManager em, Set<Authority> authorities) {
+    public static User createAndSaveEntity(EntityManager em) {
         User user = new User();
         user.setLogin(DEFAULT_LOGIN);
         user.setPassword(RandomStringUtils.random(60));
@@ -181,7 +180,8 @@ public class UserResourceIntTest {
         user.setLastName(DEFAULT_LASTNAME);
         user.setImageUrl(DEFAULT_IMAGEURL);
         user.setLangKey(DEFAULT_LANGKEY);
-        user.setAuthorities(authorities);
+        em.persist(user);
+        em.flush();
         return user;
     }
 

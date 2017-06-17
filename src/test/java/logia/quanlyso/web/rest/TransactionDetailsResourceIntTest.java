@@ -46,22 +46,22 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 public class TransactionDetailsResourceIntTest {
 
     /** The Constant DEFAULT_AMOUNT. */
-    private static final Float DEFAULT_AMOUNT = 1F;
+    static final Float DEFAULT_AMOUNT = 1F;
     
     /** The Constant UPDATED_AMOUNT. */
-    private static final Float UPDATED_AMOUNT = 2F;
+    static final Float UPDATED_AMOUNT = 2F;
 
     /** The Constant DEFAULT_PROFIT. */
-    private static final Float DEFAULT_PROFIT = 1F;
+    static final Float DEFAULT_PROFIT = 1F;
     
     /** The Constant UPDATED_PROFIT. */
-    private static final Float UPDATED_PROFIT = 2F;
+    static final Float UPDATED_PROFIT = 2F;
 
     /** The Constant DEFAULT_COSTS. */
-    private static final Float DEFAULT_COSTS = 1F;
+    static final Float DEFAULT_COSTS = 1F;
     
     /** The Constant UPDATED_COSTS. */
-    private static final Float UPDATED_COSTS = 2F;
+    static final Float UPDATED_COSTS = 2F;
 
     /** The transaction details repository. */
     @Autowired

@@ -1,8 +1,9 @@
 package logia.quanlyso.web.rest;
 
 import logia.quanlyso.QuanlysoApp;
-
+import logia.quanlyso.domain.TransactionDetails;
 import logia.quanlyso.domain.Transactions;
+import logia.quanlyso.domain.User;
 import logia.quanlyso.repository.TransactionsRepository;
 import logia.quanlyso.service.TransactionsService;
 import logia.quanlyso.service.dto.TransactionsDTO;
@@ -41,16 +42,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class TransactionsResourceIntTest {
 
     /** The Constant DEFAULT_CHOSEN_NUMBER. */
-    private static final Integer DEFAULT_CHOSEN_NUMBER = 1;
+    static final Integer DEFAULT_CHOSEN_NUMBER = 1;
     
     /** The Constant UPDATED_CHOSEN_NUMBER. */
-    private static final Integer UPDATED_CHOSEN_NUMBER = 2;
+    static final Integer UPDATED_CHOSEN_NUMBER = 2;
 
     /** The Constant DEFAULT_NET_VALUE. */
-    private static final Float DEFAULT_NET_VALUE = 1F;
+    static final Float DEFAULT_NET_VALUE = 1F;
     
     /** The Constant UPDATED_NET_VALUE. */
-    private static final Float UPDATED_NET_VALUE = 2F;
+    static final Float UPDATED_NET_VALUE = 2F;
 
     /** The transactions repository. */
     @Autowired
@@ -109,9 +110,13 @@ public class TransactionsResourceIntTest {
      * @return the transactions
      */
     public static Transactions createEntity(EntityManager em) {
+    	TransactionDetails transactionDetails = TransactionDetailsResourceIntTest.createEntity(em);
+    	User user = UserResourceIntTest.createAndSaveEntity(em);
         Transactions transactions = new Transactions()
             .chosenNumber(DEFAULT_CHOSEN_NUMBER)
-            .netValue(DEFAULT_NET_VALUE);
+            .netValue(DEFAULT_NET_VALUE)
+            .users(user)
+            .addTransactionDetails(transactionDetails);
         return transactions;
     }
 
@@ -146,6 +151,18 @@ public class TransactionsResourceIntTest {
         Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
         assertThat(testTransactions.getChosenNumber()).isEqualTo(DEFAULT_CHOSEN_NUMBER);
         assertThat(testTransactions.getNetValue()).isEqualTo(DEFAULT_NET_VALUE);
+        assertThat(testTransactions.getTransactionDetails().size()).isEqualTo(1);
+        assertThat(testTransactions.getUsers().getLogin()).isEqualTo(UserResourceIntTest.DEFAULT_LOGIN);
+        assertThat(testTransactions.getUsers().getFirstName()).isEqualTo(UserResourceIntTest.DEFAULT_FIRSTNAME);
+        assertThat(testTransactions.getUsers().getLastName()).isEqualTo(UserResourceIntTest.DEFAULT_LASTNAME);
+        assertThat(testTransactions.getUsers().getEmail()).isEqualTo(UserResourceIntTest.DEFAULT_EMAIL);
+        assertThat(testTransactions.getUsers().getImageUrl()).isEqualTo(UserResourceIntTest.DEFAULT_IMAGEURL);
+        assertThat(testTransactions.getUsers().getLangKey()).isEqualTo(UserResourceIntTest.DEFAULT_LANGKEY);
+        testTransactions.getTransactionDetails().forEach(testTransactionDetails -> {
+        	assertThat(testTransactionDetails.getAmount()).isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT);
+            assertThat(testTransactionDetails.getProfit()).isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_PROFIT);
+            assertThat(testTransactionDetails.getCosts()).isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_COSTS);
+        });
     }
 
     /**

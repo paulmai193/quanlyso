@@ -3,6 +3,7 @@ package logia.quanlyso.service.impl;
 import logia.quanlyso.service.TransactionsService;
 import logia.quanlyso.domain.Transactions;
 import logia.quanlyso.repository.TransactionsRepository;
+import logia.quanlyso.repository.UserRepository;
 import logia.quanlyso.service.dto.TransactionsDTO;
 import logia.quanlyso.service.mapper.TransactionsMapper;
 import org.slf4j.Logger;
@@ -33,6 +34,9 @@ public class TransactionsServiceImpl implements TransactionsService{
 
     /** The transactions mapper. */
     private final TransactionsMapper transactionsMapper;
+    
+    /** The user repository. */
+    private final UserRepository userRepository;
 
     /**
      * Instantiates a new transactions service impl.
@@ -40,9 +44,10 @@ public class TransactionsServiceImpl implements TransactionsService{
      * @param transactionsRepository the transactions repository
      * @param transactionsMapper the transactions mapper
      */
-    public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper) {
+    public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper, UserRepository userRepository) {
         this.transactionsRepository = transactionsRepository;
         this.transactionsMapper = transactionsMapper;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -55,6 +60,7 @@ public class TransactionsServiceImpl implements TransactionsService{
     public TransactionsDTO save(TransactionsDTO transactionsDTO) {
         log.debug("Request to save Transactions : {}", transactionsDTO);
         Transactions transactions = transactionsMapper.toEntity(transactionsDTO);
+        transactions.setUsers(userRepository.getOne(transactionsDTO.getClientsId()));
         transactions = transactionsRepository.save(transactions);
         TransactionsDTO result = transactionsMapper.toDto(transactions);
         return result;

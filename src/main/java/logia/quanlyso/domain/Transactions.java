@@ -43,7 +43,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	private Set<TransactionDetails> transactionDetails = new HashSet<>();
 
 	/** The users. */
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private User users;
 
 	/**
@@ -202,6 +202,19 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 */
 	public void setUsers(User user) {
 		this.users = user;
+	}
+	
+	/**
+	 * Sets the users.
+	 *
+	 * @param user the user
+	 * @param addSetToTarget the add set to target
+	 */
+	void setUsers(User user, boolean addSetToTarget) {
+		this.users = user;
+		if (user != null && addSetToTarget) {
+			user.addTransactions(this, false);
+		}
 	}
 
 	/* (non-Javadoc)

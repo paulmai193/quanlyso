@@ -10,24 +10,26 @@ import org.mapstruct.*;
  *
  * @author Dai Mai
  */
-@Mapper(componentModel = "spring", uses = {UserMapper.class, })
+@Mapper(componentModel = "spring", uses = {UserMapper.class, TransactionDetailsMapper.class})
 public interface TransactionsMapper extends EntityMapper <TransactionsDTO, Transactions> {
     
     /* (non-Javadoc)
      * @see logia.quanlyso.service.mapper.EntityMapper#toDto(java.lang.Object)
      */
     @Mapping(source = "users.id", target = "clientsId")
+    @Mapping(source = "transactionDetails", target = "transactionDetailsDTOs")
     TransactionsDTO toDto(Transactions transactions); 
     
     /* (non-Javadoc)
      * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
      */
-    @Mapping(target = "transactionDetails", ignore = true)
+//    @Mapping(target = "transactionDetails", ignore = true)
+    @Mapping(source = "transactionDetailsDTOs", target = "transactionDetails")
     @Mapping(source = "clientsId", target = "users")
     @Mapping(target = "createdBy", ignore = true)
     @Mapping(target = "createdDate", ignore = true)
     @Mapping(target = "lastModifiedBy", ignore = true)
-    @Mapping(target = "lastModifiedDate", ignore = true)
+    @Mapping(target = "lastModifiedDate", ignore = true)    
     Transactions toEntity(TransactionsDTO transactionsDTO); 
     
     /**

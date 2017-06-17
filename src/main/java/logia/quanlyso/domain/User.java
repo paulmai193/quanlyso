@@ -476,9 +476,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
      * @return the client
      */
     public User addTransactionss(Transactions transactions) {
-        this.transactionsses.add(transactions);
-        transactions.setUsers(this);
-        return this;
+        return this.addTransactions(transactions, true);
+    }
+    
+    /**
+     * Adds the transactions.
+     *
+     * @param transactions the transactions
+     * @param isSetToTarget the is set to target
+     * @return the user
+     */
+    User addTransactions(Transactions transactions, boolean isSetToTarget) {
+    	this.transactionsses.add(transactions);
+		if (isSetToTarget) {
+			transactions.setUsers(this, false);
+		}
+		return this;
     }
 
     /**
