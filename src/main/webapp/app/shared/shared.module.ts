@@ -16,6 +16,7 @@ import {
     HasAnyAuthorityDirective,
     JhiLoginModalComponent
 } from './';
+import { StorageService } from './storage/storage.service';
 
 @NgModule({
     imports: [
@@ -36,7 +37,8 @@ import {
         CSRFService,
         AuthServerProvider,
         UserService,
-        DatePipe
+        DatePipe,
+        StorageService
     ],
     entryComponents: [JhiLoginModalComponent],
     exports: [

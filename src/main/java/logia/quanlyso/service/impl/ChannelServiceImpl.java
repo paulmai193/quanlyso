@@ -1,5 +1,6 @@
 package logia.quanlyso.service.impl;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import logia.quanlyso.domain.Channel;
 import logia.quanlyso.repository.ChannelRepository;
 import logia.quanlyso.service.ChannelService;
 import logia.quanlyso.service.dto.ChannelDTO;
+import logia.quanlyso.service.dto.ChannelOpenDay;
 import logia.quanlyso.service.mapper.ChannelMapper;
 
 /**
@@ -88,6 +90,49 @@ public class ChannelServiceImpl implements ChannelService{
         Channel channel = channelRepository.findOne(id);
         ChannelDTO channelDTO = channelMapper.toDto(channel);
         return channelDTO;
+    }
+    
+    /* (non-Javadoc)
+     * @see logia.quanlyso.service.ChannelService#findAllByOpenDay(logia.quanlyso.service.dto.ChannelOpenDay)
+     */
+    @Override
+    public List<ChannelDTO> findAllByOpenDay(ChannelOpenDay openDay) {
+    	log.debug("Request to get Channel by open day: {}", openDay);
+    	List<Channel> result;
+    	switch (openDay) {
+		case sunday:
+			result = channelRepository.findAllBySunday();
+			break;
+			
+		case monday:
+			result = channelRepository.findAllByMonday();
+			break;
+			
+		case tuesday:
+			result = channelRepository.findAllByTuesday();
+			break;
+			
+		case wednesday:
+			result = channelRepository.findAllByWednesday();
+			break;
+			
+		case thursday:
+			result = channelRepository.findAllByThursday();
+			break;
+			
+		case friday:
+			result = channelRepository.findAllByFriday();
+			break;
+			
+		case saturday:
+			result = channelRepository.findAllBySaturday();
+			break;
+
+		default:
+			result = new ArrayList<>(0);
+			break;
+		}
+    	return result.stream().map(channelMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

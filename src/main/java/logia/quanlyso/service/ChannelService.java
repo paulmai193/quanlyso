@@ -3,6 +3,7 @@ package logia.quanlyso.service;
 import java.util.List;
 
 import logia.quanlyso.service.dto.ChannelDTO;
+import logia.quanlyso.service.dto.ChannelOpenDay;
 
 /**
  * Service Interface for managing Channel.
@@ -25,6 +26,14 @@ public interface ChannelService {
      *  @return the list of entities
      */
     List<ChannelDTO> findAll();
+    
+    /**
+     * Find all by open day.
+     *
+     * @param openDay the open day
+     * @return the list
+     */
+    List<ChannelDTO> findAllByOpenDay(ChannelOpenDay openDay);
 
     /**
      *  Get the "id" channel.

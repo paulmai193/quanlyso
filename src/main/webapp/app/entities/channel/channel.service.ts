@@ -31,10 +31,13 @@ export class ChannelService {
         });
     }
 
+    findByOpenDay(day: string): Observable<Channel> {
+        return this.http.get(`${this.resourceUrl}/day/${day}`);
+    }
+
     query(req?: any): Observable<Response> {
         const options = this.createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-        ;
+        return this.http.get(this.resourceUrl, options);
     }
 
     delete(id: number): Observable<Response> {

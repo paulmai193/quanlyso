@@ -289,6 +289,48 @@ public class ChannelResourceIntTest {
             .andExpect(jsonPath("$.friday").value(DEFAULT_FRIDAY.booleanValue()))
             .andExpect(jsonPath("$.saturday").value(DEFAULT_SATURDAY.booleanValue()));
     }
+    
+    /**
+     * Gets the channel by open day.
+     *
+     * @return the channel
+     * @throws Exception the exception
+     */
+    @Test
+    @Transactional
+    public void getChannelByOpenDayAssertHaveRecord() throws Exception {
+        // Initialize the database
+    	channel.setSunday(UPDATED_SUNDAY);
+        channelRepository.saveAndFlush(channel);
+
+        // Get the channel
+        restChannelMockMvc.perform(get("/api/channels/day/sunday"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(channel.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].code").value(hasItem(DEFAULT_CODE.toString())))
+            .andExpect(jsonPath("$.[*].sunday").value(hasItem(UPDATED_SUNDAY.booleanValue())))
+            .andExpect(jsonPath("$.[*].monday").value(hasItem(DEFAULT_MONDAY.booleanValue())))
+            .andExpect(jsonPath("$.[*].tuesday").value(hasItem(DEFAULT_TUESDAY.booleanValue())))
+            .andExpect(jsonPath("$.[*].wednesday").value(hasItem(DEFAULT_WEDNESDAY.booleanValue())))
+            .andExpect(jsonPath("$.[*].thursday").value(hasItem(DEFAULT_THURSDAY.booleanValue())))
+            .andExpect(jsonPath("$.[*].friday").value(hasItem(DEFAULT_FRIDAY.booleanValue())))
+            .andExpect(jsonPath("$.[*].saturday").value(hasItem(DEFAULT_SATURDAY.booleanValue())));
+    }
+    
+    @Test
+    @Transactional
+    public void getChannelByOpenDayAssertNotHaveRecord() throws Exception {
+        // Initialize the database
+        channelRepository.saveAndFlush(channel);
+
+        // Get the channel
+        restChannelMockMvc.perform(get("/api/channels/day/monday"))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isEmpty());
+    }
 
     /**
      * Gets the non existing channel.

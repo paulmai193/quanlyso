@@ -10,5 +10,7 @@ export class TransactionDetails {
         public stylesId?: number,
         public typesId?: number,
     ) {
+        this.profit = -1;
+        this.costs = -1;
     }
 }

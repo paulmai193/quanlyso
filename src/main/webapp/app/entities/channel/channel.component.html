@@ -34,13 +34,13 @@
                 <td><a [routerLink]="['../channel', channel.id ]">{{channel.id}}</a></td>
                 <td>{{channel.name}}</td>
                 <td>{{channel.code}}</td>
-                <td>{{channel.sunday}}</td>
-                <td>{{channel.monday}}</td>
-                <td>{{channel.tuesday}}</td>
-                <td>{{channel.wednesday}}</td>
-                <td>{{channel.thursday}}</td>
-                <td>{{channel.friday}}</td>
-                <td>{{channel.saturday}}</td>
+                <td style="text-align:center"><span class="fa" [class.fa-check]="channel.sunday"></span></td>
+                <td style="text-align:center"><span class="fa" [class.fa-check]="channel.monday"></span></td>
+                <td style="text-align:center"><span class="fa" [class.fa-check]="channel.tuesday"></span></td>
+                <td style="text-align:center"><span class="fa" [class.fa-check]="channel.wednesday"></span></td>
+                <td style="text-align:center"><span class="fa" [class.fa-check]="channel.thursday"></span></td>
+                <td style="text-align:center"><span class="fa" [class.fa-check]="channel.friday"></span></td>
+                <td style="text-align:center"><span class="fa" [class.fa-check]="channel.saturday"></span></td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

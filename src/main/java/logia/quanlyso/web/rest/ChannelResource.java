@@ -22,6 +22,7 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import logia.quanlyso.service.ChannelService;
 import logia.quanlyso.service.dto.ChannelDTO;
+import logia.quanlyso.service.dto.ChannelOpenDay;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
@@ -117,6 +118,19 @@ public class ChannelResource {
         log.debug("REST request to get Channel : {}", id);
         ChannelDTO channelDTO = channelService.findOne(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(channelDTO));
+    }
+    
+    /**
+     * GET  /channels/day/:openDay : get all channels by open day.
+     *
+     * @param openDay the open day of the channelDTOs to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the channelDTOs
+     */
+    @GetMapping("/channels/day/{openDay}")
+    @Timed
+    public List<ChannelDTO> getChannelByChannel(@PathVariable ChannelOpenDay openDay) {
+        log.debug("REST request to get Channels by open day : {}", openDay);
+        return this.channelService.findAllByOpenDay(openDay);
     }
 
     /**
