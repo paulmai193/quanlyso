@@ -384,8 +384,21 @@ public class Channel implements Serializable {
      * @return the channel
      */
     public Channel addTransactionDetails(TransactionDetails transactionDetails) {
+        return this.addTransactionDetails(transactionDetails, true);
+    }
+    
+    /**
+     * Adds the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the channel
+     */
+    Channel addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
         this.transactionDetails.add(transactionDetails);
-        transactionDetails.setChannels(this);
+        if (isSetToTarget) {
+        	transactionDetails.setChannels(this, false);	
+		}        
         return this;
     }
 
@@ -396,8 +409,21 @@ public class Channel implements Serializable {
      * @return the channel
      */
     public Channel removeTransactionDetails(TransactionDetails transactionDetails) {
+        return this.removeTransactionDetails(transactionDetails, true);
+    }
+    
+    /**
+     * Removes the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the channel
+     */
+    Channel removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
         this.transactionDetails.remove(transactionDetails);
-        transactionDetails.setChannels(null);
+        if (isSetToTarget) {
+        	transactionDetails.setChannels(null, false);	
+		}        
         return this;
     }
 

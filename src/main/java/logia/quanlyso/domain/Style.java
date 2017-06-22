@@ -238,8 +238,21 @@ public class Style implements Serializable {
      * @return the style
      */
     public Style addTransactionDetails(TransactionDetails transactionDetails) {
+        return this.addTransactionDetails(transactionDetails, true);
+    }
+    
+    /**
+     * Adds the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the style
+     */
+    Style addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
         this.transactionDetails.add(transactionDetails);
-        transactionDetails.setStyles(this);
+        if (isSetToTarget) {
+        	transactionDetails.setStyles(this, false);	
+		}        
         return this;
     }
 
@@ -250,8 +263,21 @@ public class Style implements Serializable {
      * @return the style
      */
     public Style removeTransactionDetails(TransactionDetails transactionDetails) {
+        return this.removeTransactionDetails(transactionDetails, true);
+    }
+    
+    /**
+     * Removes the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the style
+     */
+    Style removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
         this.transactionDetails.remove(transactionDetails);
-        transactionDetails.setStyles(null);
+        if (isSetToTarget) {
+        	transactionDetails.setStyles(null, false);	
+		}        
         return this;
     }
 

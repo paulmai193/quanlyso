@@ -227,7 +227,7 @@ public class TransactionDetails implements Serializable {
      * @return the transaction details
      */
     public TransactionDetails channels(Channel channel) {
-        this.channels = channel;
+        this.setChannels(channel);
         return this;
     }
 
@@ -237,7 +237,20 @@ public class TransactionDetails implements Serializable {
      * @param channel the new channels
      */
     public void setChannels(Channel channel) {
+        this.setChannels(channel, true);
+    }
+    
+    /**
+     * Sets the channels.
+     *
+     * @param channel the channel
+     * @param isSetToTarget the is set to target channel
+     */
+    void setChannels(Channel channel, boolean isSetToTarget) {
         this.channels = channel;
+        if (channel != null && isSetToTarget) {
+			channel.addTransactionDetails(this, false);
+		}
     }
 
     /**
@@ -256,7 +269,7 @@ public class TransactionDetails implements Serializable {
      * @return the transaction details
      */
     public TransactionDetails factors(Factor factor) {
-        this.factors = factor;
+        this.setFactors(factor);
         return this;
     }
 
@@ -266,7 +279,20 @@ public class TransactionDetails implements Serializable {
      * @param factor the new factors
      */
     public void setFactors(Factor factor) {
+        this.setFactors(factor, true);
+    }
+    
+    /**
+     * Sets the factors.
+     *
+     * @param factor the factor
+     * @param isSetToTarget the is set to target factor
+     */
+    void setFactors(Factor factor, boolean isSetToTarget) {
         this.factors = factor;
+        if (factor != null && isSetToTarget) {
+			factor.addTransactionDetails(this, false);
+		}
     }
 
     /**
@@ -285,7 +311,7 @@ public class TransactionDetails implements Serializable {
      * @return the transaction details
      */
     public TransactionDetails styles(Style style) {
-        this.styles = style;
+        this.setStyles(style);
         return this;
     }
 
@@ -295,9 +321,22 @@ public class TransactionDetails implements Serializable {
      * @param style the new styles
      */
     public void setStyles(Style style) {
-        this.styles = style;
+        this.setStyles(style, true);
     }
 
+    /**
+     * Sets the styles.
+     *
+     * @param style the style
+     * @param isSetToTarget the is set to target style
+     */
+    void setStyles(Style style, boolean isSetToTarget) {
+        this.styles = style;
+        if (style != null && isSetToTarget) {
+			style.addTransactionDetails(this, false);
+		}
+    }
+    
     /**
      * Gets the types.
      *
@@ -314,7 +353,7 @@ public class TransactionDetails implements Serializable {
      * @return the transaction details
      */
     public TransactionDetails types(Types types) {
-        this.types = types;
+        this.setTypes(types);
         return this;
     }
 
@@ -324,7 +363,20 @@ public class TransactionDetails implements Serializable {
      * @param types the new types
      */
     public void setTypes(Types types) {
+        this.setTypes(types, true);
+    }
+    
+    /**
+     * Sets the types.
+     *
+     * @param types the types
+     * @param isSetToTarget the is set to target type
+     */
+    void setTypes(Types types, boolean isSetToTarget) {
         this.types = types;
+        if (types != null && isSetToTarget) {
+			types.addTransactionDetails(this, false);
+		}
     }
 
     /* (non-Javadoc)

@@ -1,10 +1,8 @@
 package logia.quanlyso.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import logia.quanlyso.domain.Transactions;
-
-import org.springframework.data.jpa.repository.*;
-
-import java.util.List;
 
 /**
  * Spring Data JPA repository for the Transactions entity.

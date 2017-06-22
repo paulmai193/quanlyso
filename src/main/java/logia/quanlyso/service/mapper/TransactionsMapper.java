@@ -1,9 +1,10 @@
 package logia.quanlyso.service.mapper;
 
-import logia.quanlyso.domain.*;
-import logia.quanlyso.service.dto.TransactionsDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-import org.mapstruct.*;
+import logia.quanlyso.domain.Transactions;
+import logia.quanlyso.service.dto.TransactionsDTO;
 
 /**
  * Mapper for the entity Transactions and its DTO TransactionsDTO.

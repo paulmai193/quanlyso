@@ -238,8 +238,21 @@ public class Factor implements Serializable {
      * @return the factor
      */
     public Factor addTransactionDetails(TransactionDetails transactionDetails) {
+        return this.addTransactionDetails(transactionDetails, true);
+    }
+    
+    /**
+     * Adds the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the factor
+     */
+    Factor addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
         this.transactionDetails.add(transactionDetails);
-        transactionDetails.setFactors(this);
+        if (isSetToTarget) {
+        	transactionDetails.setFactors(this, false);            	
+		}
         return this;
     }
 
@@ -250,8 +263,21 @@ public class Factor implements Serializable {
      * @return the factor
      */
     public Factor removeTransactionDetails(TransactionDetails transactionDetails) {
+        return this.removeTransactionDetails(transactionDetails, true);
+    }
+    
+    /**
+     * Removes the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the factor
+     */
+    Factor removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
         this.transactionDetails.remove(transactionDetails);
-        transactionDetails.setFactors(null);
+        if (isSetToTarget) {
+        	transactionDetails.setFactors(null, false);	
+		}        
         return this;
     }
 

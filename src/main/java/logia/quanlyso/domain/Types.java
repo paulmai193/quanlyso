@@ -238,11 +238,24 @@ public class Types implements Serializable {
      * @return the types
      */
     public Types addTransactionDetails(TransactionDetails transactionDetails) {
-        this.transactionDetails.add(transactionDetails);
-        transactionDetails.setTypes(this);
-        return this;
+        return this.addTransactionDetails(transactionDetails, true);
     }
 
+    /**
+     * Adds the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the types
+     */
+    Types addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
+        this.transactionDetails.add(transactionDetails);
+        if (isSetToTarget) {
+        	transactionDetails.setTypes(this, false);	
+		}        
+        return this;
+    }
+    
     /**
      * Removes the transaction details.
      *
@@ -250,8 +263,21 @@ public class Types implements Serializable {
      * @return the types
      */
     public Types removeTransactionDetails(TransactionDetails transactionDetails) {
+        return this.removeTransactionDetails(transactionDetails, true);
+    }
+    
+    /**
+     * Removes the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget the is set to target detail
+     * @return the types
+     */
+    Types removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
         this.transactionDetails.remove(transactionDetails);
-        transactionDetails.setTypes(null);
+        if (isSetToTarget) {
+        	transactionDetails.setTypes(null, false);	
+		}        
         return this;
     }
 
