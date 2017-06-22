@@ -185,7 +185,7 @@ public class TransactionDetails implements Serializable {
      * @return the transaction details
      */
     public TransactionDetails transactions(Transactions transactions) {
-        this.transactions = transactions;
+        this.setTransactions(transactions);
         return this;
     }
 
@@ -195,7 +195,20 @@ public class TransactionDetails implements Serializable {
      * @param transactions the new transactions
      */
     public void setTransactions(Transactions transactions) {
+        this.setTransactions(transactions, true);
+    }
+    
+    /**
+     * Sets the transactions.
+     *
+     * @param transactions the transactions
+     * @param isSetToTarget the is set to target transaction
+     */
+    void setTransactions(Transactions transactions, boolean isSetToTarget) {
         this.transactions = transactions;
+        if (transactions != null && isSetToTarget) {
+			transactions.addTransactionDetails(this, false);
+		}
     }
 
     /**

@@ -1,7 +1,11 @@
 package logia.quanlyso.service.impl;
 
+import logia.quanlyso.service.TransactionDetailsService;
 import logia.quanlyso.service.TransactionsService;
+import logia.quanlyso.domain.TransactionDetails;
 import logia.quanlyso.domain.Transactions;
+import logia.quanlyso.domain.User;
+import logia.quanlyso.repository.TransactionDetailsRepository;
 import logia.quanlyso.repository.TransactionsRepository;
 import logia.quanlyso.repository.UserRepository;
 import logia.quanlyso.service.dto.TransactionsDTO;
@@ -13,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,17 +42,23 @@ public class TransactionsServiceImpl implements TransactionsService{
     
     /** The user repository. */
     private final UserRepository userRepository;
+    
+    /** The transaction details repository. */
+    private final TransactionDetailsRepository transactionDetailsRepository;
 
     /**
      * Instantiates a new transactions service impl.
      *
      * @param transactionsRepository the transactions repository
      * @param transactionsMapper the transactions mapper
+     * @param userRepository the user repository
+     * @param transactionDetailsRepository the transaction details repository
      */
-    public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper, UserRepository userRepository) {
+    public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper, UserRepository userRepository, TransactionDetailsRepository transactionDetailsRepository) {
         this.transactionsRepository = transactionsRepository;
         this.transactionsMapper = transactionsMapper;
         this.userRepository = userRepository;
+        this.transactionDetailsRepository = transactionDetailsRepository;
     }
 
     /**
@@ -59,8 +70,20 @@ public class TransactionsServiceImpl implements TransactionsService{
     @Override
     public TransactionsDTO save(TransactionsDTO transactionsDTO) {
         log.debug("Request to save Transactions : {}", transactionsDTO);
+        
         Transactions transactions = transactionsMapper.toEntity(transactionsDTO);
+        
+        // Get & set user entity to this transaction
         transactions.setUsers(userRepository.getOne(transactionsDTO.getClientsId()));
+        
+        // Save & set the detail (if have) to this transaction
+        List<TransactionDetails> saveDetails = transactionDetailsRepository.save(transactions.getTransactionDetails());
+        transactions.setTransactionDetails(new HashSet<>());
+        for (TransactionDetails saveDetail : saveDetails) {
+			transactions.addTransactionDetails(saveDetail);
+		}
+        
+        // Save transaction
         transactions = transactionsRepository.save(transactions);
         TransactionsDTO result = transactionsMapper.toDto(transactions);
         return result;
@@ -103,6 +126,18 @@ public class TransactionsServiceImpl implements TransactionsService{
     @Override
     public void delete(Long id) {
         log.debug("Request to delete Transactions : {}", id);
-        transactionsRepository.delete(id);
+        Transactions transactions = transactionsRepository.getOne(id);
+        
+        // Delete all detail of this transaction
+        for (TransactionDetails transactionDetails: transactions.getTransactionDetails()) {
+			transactionDetailsRepository.delete(transactionDetails);
+		}
+        
+        // Remove this transaction out of user collection
+        User user = transactions.getUsers().removeTransactionss(transactions);
+        this.userRepository.save(user);
+        
+        // Delete this transaction
+        transactionsRepository.delete(transactions);
     }
 }

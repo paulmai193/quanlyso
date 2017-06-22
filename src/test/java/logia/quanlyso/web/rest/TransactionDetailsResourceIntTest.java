@@ -126,6 +126,19 @@ public class TransactionDetailsResourceIntTest {
             .costs(DEFAULT_COSTS);
         return transactionDetails;
     }
+    
+    /**
+     * Creates the and save entity.
+     *
+     * @param em the em
+     * @return the transaction details
+     */
+    public static TransactionDetails createAndSaveEntity(EntityManager em) {
+    	TransactionDetails transactionDetails = createEntity(em);
+    	em.persist(transactionDetails);
+    	em.flush();
+    	return transactionDetails;
+    }
 
     /**
      * Inits the test.

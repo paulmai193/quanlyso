@@ -149,8 +149,21 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the transactions
 	 */
 	public Transactions addTransactionDetails(TransactionDetails transactionDetails) {
+		return this.addTransactionDetails(transactionDetails, true);
+	}
+	
+	/**
+	 * Adds the transaction details.
+	 *
+	 * @param transactionDetails the transaction details
+	 * @param isSetToTarget the is set to target detail
+	 * @return the transactions
+	 */
+	Transactions addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
 		this.transactionDetails.add(transactionDetails);
-		transactionDetails.setTransactions(this);
+		if (isSetToTarget) {
+			transactionDetails.setTransactions(this, false);	
+		}		
 		return this;
 	}
 
@@ -161,8 +174,21 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the transactions
 	 */
 	public Transactions removeTransactionDetails(TransactionDetails transactionDetails) {
+		return this.removeTransactionDetails(transactionDetails, true);
+	}
+	
+	/**
+	 * Removes the transaction details.
+	 *
+	 * @param transactionDetails the transaction details
+	 * @param isSetToTarget the is set to target detail
+	 * @return the transactions
+	 */
+	Transactions removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
 		this.transactionDetails.remove(transactionDetails);
-		transactionDetails.setTransactions(null);
+		if (isSetToTarget) {
+			transactionDetails.setTransactions(null, false);	
+		}		
 		return this;
 	}
 
@@ -201,18 +227,18 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @param user the new users
 	 */
 	public void setUsers(User user) {
-		this.users = user;
+		this.setUsers(user, true);
 	}
 	
 	/**
 	 * Sets the users.
 	 *
 	 * @param user the user
-	 * @param addSetToTarget the add set to target
+	 * @param isSetToTarget the is set to target user
 	 */
-	void setUsers(User user, boolean addSetToTarget) {
+	void setUsers(User user, boolean isSetToTarget) {
 		this.users = user;
-		if (user != null && addSetToTarget) {
+		if (user != null && isSetToTarget) {
 			user.addTransactions(this, false);
 		}
 	}

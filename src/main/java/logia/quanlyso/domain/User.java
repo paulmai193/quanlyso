@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,8 +16,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -483,7 +480,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
      * Adds the transactions.
      *
      * @param transactions the transactions
-     * @param isSetToTarget the is set to target
+     * @param isSetToTarget the is set to target transaction
      * @return the user
      */
     User addTransactions(Transactions transactions, boolean isSetToTarget) {
@@ -501,8 +498,25 @@ public class User extends AbstractAuditingEntity implements Serializable {
      * @return the client
      */
     public User removeTransactionss(Transactions transactions) {
-        this.transactionsses.remove(transactions);
-        transactions.setUsers(null);
+        return this.removeTransactionss(transactions, true);
+    }
+    
+    /**
+     * Removes the transactionss.
+     *
+     * @param transactions the transactions
+     * @param isSetToTarget the is set to target transaction
+     * @return the user
+     */
+    User removeTransactionss(Transactions transactions, boolean isSetToTarget) {
+    	Set<Transactions> wrapper = new HashSet<>(this.transactionsses);
+    	boolean isSuccess = wrapper.remove(transactions);
+    	if (isSuccess) {
+			this.setTransactionsses(wrapper);
+			if (isSetToTarget) {
+				transactions.setUsers(null, false);
+			}	
+		}        
         return this;
     }
 
