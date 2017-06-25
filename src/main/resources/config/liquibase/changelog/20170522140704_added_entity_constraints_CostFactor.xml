@@ -25,6 +25,13 @@
                                  constraintName="fk_cost_factor_types_id"
                                  referencedColumnNames="id"
                                  referencedTableName="types"/>
+        
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cost_factor.csv"
+                  separator=";"
+                  tableName="cost_factor">
+                  <column name="rate" type="float"/>
+        </loadData>
 
     </changeSet>
 </databaseChangeLog>

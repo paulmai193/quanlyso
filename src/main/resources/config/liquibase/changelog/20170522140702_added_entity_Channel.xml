@@ -30,36 +30,49 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="sunday" type="bit">
+            <column name="sunday" type="boolean">
                 <constraints nullable="true" />
             </column>
 
-            <column name="monday" type="bit">
+            <column name="monday" type="boolean">
                 <constraints nullable="true" />
             </column>
 
-            <column name="tuesday" type="bit">
+            <column name="tuesday" type="boolean">
                 <constraints nullable="true" />
             </column>
 
-            <column name="wednesday" type="bit">
+            <column name="wednesday" type="boolean">
                 <constraints nullable="true" />
             </column>
 
-            <column name="thursday" type="bit">
+            <column name="thursday" type="boolean">
                 <constraints nullable="true" />
             </column>
 
-            <column name="friday" type="bit">
+            <column name="friday" type="boolean">
                 <constraints nullable="true" />
             </column>
 
-            <column name="saturday" type="bit">
+            <column name="saturday" type="boolean">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/channel.csv"
+                  separator=";"
+                  tableName="channel">
+                  <column name="sunday" type="boolean"/>
+                  <column name="monday" type="boolean"/>
+                  <column name="tuesday" type="boolean"/>
+                  <column name="wednesday" type="boolean"/>
+                  <column name="thursday" type="boolean"/>
+                  <column name="friday" type="boolean"/>
+                  <column name="saturday" type="boolean"/>			             
+        </loadData>
+                  
     </changeSet>
 </databaseChangeLog>

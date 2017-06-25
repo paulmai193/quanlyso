@@ -74,15 +74,15 @@ public class TransactionsServiceImpl implements TransactionsService{
         // Get & set user entity to this transaction
         transactions.setUsers(userRepository.getOne(transactionsDTO.getClientsId()));
         
-        // Save & set the detail (if have) to this transaction
-        List<TransactionDetails> saveDetails = transactionDetailsRepository.save(transactions.getTransactionDetails());
-        transactions.setTransactionDetails(new HashSet<>());
-        for (TransactionDetails saveDetail : saveDetails) {
-			transactions.addTransactionDetails(saveDetail);
-		}
-        
         // Save transaction
         transactions = transactionsRepository.save(transactions);
+        
+        // Save & set the detail (if have) to this transaction
+        for (TransactionDetails details : transactions.getTransactionDetails()) {
+			details.setTransactions(transactions);
+			this.transactionDetailsRepository.save(details);
+		}
+        
         TransactionsDTO result = transactionsMapper.toDto(transactions);
         return result;
     }
@@ -132,8 +132,8 @@ public class TransactionsServiceImpl implements TransactionsService{
 		}
         
         // Remove this transaction out of user collection
-        User user = transactions.getUsers().removeTransactionss(transactions);
-        this.userRepository.save(user);
+//        User user = transactions.getUsers().removeTransactionss(transactions);
+//        this.userRepository.save(user);
         
         // Delete this transaction
         transactionsRepository.delete(transactions);
