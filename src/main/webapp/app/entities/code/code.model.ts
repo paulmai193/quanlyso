@@ -4,6 +4,7 @@ export class Code {
         public code?: number,
         public openDate?: any,
         public channelsId?: number,
+        public channelsName?: string,
     ) {
     }
 }

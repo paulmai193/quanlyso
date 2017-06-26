@@ -25,10 +25,10 @@ export class CostFactorComponent implements OnInit, OnDestroy {
     eventSubscriber: Subscription;
 
     constructor(
-        private costFactorService: CostFactorService,
-        private alertService: AlertService,
         private eventManager: EventManager,
         private principal: Principal,
+        private costFactorService: CostFactorService,
+        private alertService: AlertService,
         private factorService: FactorService,
         private styleService: StyleService,
         private typeService: TypesService
@@ -72,20 +72,30 @@ export class CostFactorComponent implements OnInit, OnDestroy {
     }
 
     private getFactorName(costFactor: CostFactor): void {
-        this.factorService.find(costFactor.factorsId).subscribe((factor: Factor) => {
-            costFactor.factorsName = factor.name;
-        });
+        this.factorService.find(costFactor.factorsId).toPromise()
+            .then((factor: Factor) => costFactor.factorsName = factor.name)
+            .catch((error: any) => {
+                console.error('Cannot retrieve factor', error);
+                this.onError(error);
+            });
     }
 
     private getStyleName(costFactor: CostFactor): void {
-        this.styleService.find(costFactor.stylesId).subscribe((style: Style) => {
-            costFactor.stylesName = style.name;
-        });
+        this.styleService.find(costFactor.stylesId).toPromise()
+            .then((style: Style) => costFactor.stylesName = style.name)
+            .catch((error: any) => {
+                console.error('Cannot retrieve styles', error);
+                this.onError(error);
+            });
     }
 
     private getTypeName(costFactor: CostFactor): void {
-        this.typeService.find(costFactor.typesId).subscribe((type: Types) => {
-            costFactor.typesName = type.name;
-        });
+        this.typeService.find(costFactor.typesId).toPromise()
+            .then((type: Types) => costFactor.typesName = type.name)
+            .catch((error: any) => {
+                console.error('Cannot retrieve types', error);
+                this.onError(error);
+            });
     }
+
 }

@@ -3,11 +3,13 @@ import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { User, UserService } from '../../shared';
+import { DatePipe } from '@angular/common';
 
 @Injectable()
 export class UserModalService {
     private isOpen = false;
     constructor(
+        private datePipe: DatePipe,
         private modalService: NgbModal,
         private router: Router,
         private userService: UserService
@@ -20,7 +22,13 @@ export class UserModalService {
         this.isOpen = true;
 
         if (login) {
-            this.userService.find(login).subscribe((user) => this.userModalRef(component, user));
+            this.userService.find(login).subscribe((user) => {
+                user.grantAccessDate = this.datePipe
+                    .transform(user.grantAccessDate, 'yyyy-MM-ddThh:mm');
+                user.revokeAccessDate = this.datePipe
+                    .transform(user.revokeAccessDate, 'yyyy-MM-ddThh:mm');
+                this.userModalRef(component, user);
+            });
         } else {
             return this.userModalRef(component, new User());
         }

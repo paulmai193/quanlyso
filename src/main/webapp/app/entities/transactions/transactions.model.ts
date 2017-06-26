@@ -10,7 +10,6 @@ export class Transactions {
         public clientsName?: string,
         public transactionDetailsDTOs?: TransactionDetails[]
     ) {
-        this.netValue = -1;
         this.transactionDetailsDTOs = [];
     }
 }

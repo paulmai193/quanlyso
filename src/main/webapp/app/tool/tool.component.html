@@ -22,7 +22,7 @@
                             <input type="number" class="form-control" name="chosenNumber" id="field_chosenNumber"
                                    [(ngModel)]="transactions.chosenNumber" required/>
                         </td>
-                        <td class="must-center">{{ transactions.netValue > -1 ? transactions.netValue : 'N/A' }}</td>
+                        <td class="must-center">{{ transactions.netValue ? transactions.netValue : 'N/A' }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -70,8 +70,8 @@
                                 <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{ typesOption.name }}</option>
                             </select>
                         </td>
-                        <td class="must-center">{{ transactionDetails.profit > -1 ? transactionDetails.profit : 'N/A' }}</td>
-                        <td class="must-center">{{ transactionDetails.costs > -1 ? transactionDetails.costs : 'N/A' }}</td>
+                        <td class="must-center">{{ transactionDetails.profit ? transactionDetails.profit : 'N/A' }}</td>
+                        <td class="must-center">{{ transactionDetails.costs ? transactionDetails.costs : 'N/A' }}</td>
                         <td class="text-right">
                             <div class="btn-group flex-btn-group-container">
                                 <button class="btn btn-danger btn-sm" *ngIf="transactions.transactionDetailsDTOs.length > 1" (click)="removeRecord(transactionDetails)">

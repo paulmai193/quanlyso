@@ -25,10 +25,10 @@ profitFactors: ProfitFactor[];
     eventSubscriber: Subscription;
 
     constructor(
-        private profitFactorService: ProfitFactorService,
-        private alertService: AlertService,
         private eventManager: EventManager,
         private principal: Principal,
+        private profitFactorService: ProfitFactorService,
+        private alertService: AlertService,
         private factorService: FactorService,
         private styleService: StyleService,
         private typeService: TypesService
@@ -72,20 +72,29 @@ profitFactors: ProfitFactor[];
     }
 
     private getFactorName(profitFactor: ProfitFactor): void {
-        this.factorService.find(profitFactor.factorsId).subscribe((factor: Factor) => {
-            profitFactor.factorsName = factor.name;
-        });
+        this.factorService.find(profitFactor.factorsId).toPromise()
+            .then((factor: Factor) => profitFactor.factorsName = factor.name)
+            .catch((error: any) => {
+                console.error('Cannot retrieve factor', error);
+                this.onError(error);
+            });
     }
 
     private getStyleName(profitFactor: ProfitFactor): void {
-        this.styleService.find(profitFactor.stylesId).subscribe((style: Style) => {
-            profitFactor.stylesName = style.name;
-        });
+        this.styleService.find(profitFactor.stylesId).toPromise()
+            .then((style: Style) => profitFactor.stylesName = style.name)
+            .catch((error: any) => {
+                console.error('Cannot retrieve styles', error);
+                this.onError(error);
+            });
     }
 
     private getTypeName(profitFactor: ProfitFactor): void {
-        this.typeService.find(profitFactor.typesId).subscribe((type: Types) => {
-            profitFactor.typesName = type.name;
+        this.typeService.find(profitFactor.typesId).toPromise()
+            .then((type: Types) => profitFactor.typesName = type.name)
+            .catch((error: any) => {
+            console.error('Cannot retrieve types', error);
+            this.onError(error);
         });
     }
 

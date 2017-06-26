@@ -8,6 +8,8 @@ import { Code } from './code.model';
 import { CodeService } from './code.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
+import { ChannelService } from '../channel/channel.service';
+import { Channel } from '../channel/channel.model';
 
 @Component({
     selector: 'jhi-code',
@@ -34,6 +36,7 @@ currentAccount: any;
         private codeService: CodeService,
         private parseLinks: ParseLinks,
         private alertService: AlertService,
+        private channelService: ChannelService,
         private principal: Principal,
         private activatedRoute: ActivatedRoute,
         private router: Router,
@@ -55,8 +58,8 @@ currentAccount: any;
             page: this.page - 1,
             size: this.itemsPerPage,
             sort: this.sort()}).subscribe(
-            (res: Response) => this.onSuccess(res.json(), res.headers),
-            (res: Response) => this.onError(res.json())
+                (res: Response) => this.onSuccess(res.json(), res.headers),
+                (res: Response) => this.onError(res.json())
         );
     }
     loadPage(page: number) {
@@ -117,8 +120,21 @@ currentAccount: any;
         this.queryCount = this.totalItems;
         // this.page = pagingParams.page;
         this.codes = data;
+        this.codes.forEach((el: Code) => {
+            this.getChannelName(el);
+        });
     }
+
     private onError(error) {
         this.alertService.error(error.message, null, null);
+    }
+
+    private getChannelName(code: Code): void {
+        this.channelService.find(code.channelsId).toPromise()
+            .then((channel: Channel) => code.channelsName = channel.name)
+            .catch((error: any) => {
+                console.error('Cannot retrieve channel', error);
+                this.onError(error);
+            });
     }
 }

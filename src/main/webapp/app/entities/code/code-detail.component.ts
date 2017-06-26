@@ -1,10 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Rx';
-import { EventManager  } from 'ng-jhipster';
+import { AlertService, EventManager } from 'ng-jhipster';
 
 import { Code } from './code.model';
 import { CodeService } from './code.service';
+import { ChannelService } from '../channel/channel.service';
+import { Channel } from '../channel/channel.model';
 
 @Component({
     selector: 'jhi-code-detail',
@@ -19,6 +21,8 @@ export class CodeDetailComponent implements OnInit, OnDestroy {
     constructor(
         private eventManager: EventManager,
         private codeService: CodeService,
+        private channelService: ChannelService,
+        private alertService: AlertService,
         private route: ActivatedRoute
     ) {
     }
@@ -33,8 +37,10 @@ export class CodeDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.codeService.find(id).subscribe((code) => {
             this.code = code;
+            this.getChannelName(this.code);
         });
     }
+
     previousState() {
         window.history.back();
     }
@@ -49,5 +55,18 @@ export class CodeDetailComponent implements OnInit, OnDestroy {
             'codeListModification',
             (response) => this.load(this.code.id)
         );
+    }
+
+    private onError(error) {
+        this.alertService.error(error.message, null, null);
+    }
+
+    private getChannelName(code: Code): void {
+        this.channelService.find(code.channelsId).toPromise()
+            .then((channel: Channel) => code.channelsName = channel.name)
+            .catch((error: any) => {
+                console.error('Cannot retrieve channel', error);
+                this.onError(error);
+            });
     }
 }

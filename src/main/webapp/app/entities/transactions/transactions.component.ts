@@ -134,6 +134,11 @@ currentAccount: any;
     }
 
     private getClientsName(transactions: Transactions): void {
-        this.clientService.find(transactions.clientsId).subscribe((client: Client) => transactions.clientsName = (client.firstName + ' ' + client.lastName));
+        this.clientService.find(transactions.clientsId).toPromise()
+            .then((client: Client) => transactions.clientsName = (client.firstName + ' ' + client.lastName))
+            .catch((error: any) => {
+                console.error('Cannot retrieve user', error);
+                this.onError(error);
+            });
     }
 }

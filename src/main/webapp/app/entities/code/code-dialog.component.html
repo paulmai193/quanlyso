@@ -30,7 +30,7 @@
             <label jhiTranslate="quanlysoApp.code.channels" for="field_channels">Channels</label>
             <select class="form-control" id="field_channels" name="channels" [(ngModel)]="code.channelsId" >
                 <option [ngValue]="null"></option>
-                <option [ngValue]="channelOption.id" *ngFor="let channelOption of channels; trackBy: trackChannelById">{{channelOption.id}}</option>
+                <option [ngValue]="channelOption.id" *ngFor="let channelOption of channels; trackBy: trackChannelById">{{channelOption.name}}</option>
             </select>
         </div>
     </div>

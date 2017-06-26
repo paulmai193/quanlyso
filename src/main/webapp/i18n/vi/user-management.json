@@ -25,6 +25,8 @@
         "createdBy": "Người tạo",
         "createdDate": "Ngày tạo",
         "lastModifiedBy": "Người sửa",
-        "lastModifiedDate": "Ngày sửa"
+        "lastModifiedDate": "Ngày sửa",
+        "grantAccessDate": "Ngày cấp quyền",
+        "revokeAccessDate": "Ngày hết hạn"
     }
 }
