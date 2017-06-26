@@ -173,19 +173,21 @@
   </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_S0-woD6hEeek_4cD17Oijw" name="float"/>
   <packagedElement xmi:type="uml:DataType" xmi:id="_3ZhRUD6xEeek_4cD17Oijw" name="long"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_l3z9MD71EeeNCPVpjptU2g" name="client">
-    <ownedAttribute xmi:id="_t1HK8D71EeeNCPVpjptU2g" name="grantAccessDate" type="_Ht0Y4D73EeeNCPVpjptU2g"/>
-    <ownedAttribute xmi:id="_xwQ8cD72EeeNCPVpjptU2g" name="revokeAccessDate" type="_Ht0Y4D73EeeNCPVpjptU2g"/>
-  </packagedElement>
-  <packagedElement xmi:type="uml:Association" xmi:id="_-YUpID72EeeNCPVpjptU2g" memberEnd="_-YUpIT72EeeNCPVpjptU2g _-YXFYT72EeeNCPVpjptU2g" navigableOwnedEnd="_-YXFYT72EeeNCPVpjptU2g">
-    <ownedEnd xmi:id="_-YUpIT72EeeNCPVpjptU2g" name="clients" type="_l3z9MD71EeeNCPVpjptU2g" association="_-YUpID72EeeNCPVpjptU2g">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-YWeUD72EeeNCPVpjptU2g"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-YXFYD72EeeNCPVpjptU2g" value="1"/>
-    </ownedEnd>
-    <ownedEnd xmi:id="_-YXFYT72EeeNCPVpjptU2g" name="transactionss" type="_-eBWAD6JEee46pHn84Ty0Q" aggregation="composite" association="_-YUpID72EeeNCPVpjptU2g">
-      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-YXscD72EeeNCPVpjptU2g"/>
-      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-YXscT72EeeNCPVpjptU2g" value="*"/>
-    </ownedEnd>
-  </packagedElement>
   <packagedElement xmi:type="uml:DataType" xmi:id="_Ht0Y4D73EeeNCPVpjptU2g" name="ZonedDateTime"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_GmMTkFoAEeeOvPwDuAAIEQ" name="code">
+    <ownedAttribute xmi:id="_h-YzwFoAEeeOvPwDuAAIEQ" name="code">
+      <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="__TskEFoEEeeh-YIVjVuqPA" name="open_date" type="_Ht0Y4D73EeeNCPVpjptU2g"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_-e5m4FoAEeeOvPwDuAAIEQ" memberEnd="_-e5m4VoAEeeOvPwDuAAIEQ _-e7cEloAEeeOvPwDuAAIEQ" navigableOwnedEnd="_-e7cEloAEeeOvPwDuAAIEQ">
+    <ownedEnd xmi:id="_-e5m4VoAEeeOvPwDuAAIEQ" name="channels" type="_VcOwcD6FEeeMipCu4ii91Q" association="_-e5m4FoAEeeOvPwDuAAIEQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-e7cEFoAEeeOvPwDuAAIEQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-e7cEVoAEeeOvPwDuAAIEQ" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_-e7cEloAEeeOvPwDuAAIEQ" name="codes" type="_GmMTkFoAEeeOvPwDuAAIEQ" aggregation="composite" association="_-e5m4FoAEeeOvPwDuAAIEQ">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_-e8DIFoAEeeOvPwDuAAIEQ"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_-e8DIVoAEeeOvPwDuAAIEQ" value="*"/>
+    </ownedEnd>
+  </packagedElement>
 </uml:Model>

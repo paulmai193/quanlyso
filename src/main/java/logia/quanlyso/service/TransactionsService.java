@@ -42,4 +42,12 @@ public interface TransactionsService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+    
+    /**
+     * Calculate value of transaction.
+     *
+     * @param transactionsDTO the transactions DTO
+     * @return the transactions DTO
+     */
+    TransactionsDTO calculate(TransactionsDTO transactionsDTO);
 }

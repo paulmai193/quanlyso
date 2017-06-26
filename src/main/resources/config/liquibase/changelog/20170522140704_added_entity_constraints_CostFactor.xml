@@ -30,7 +30,7 @@
                   file="config/liquibase/cost_factor.csv"
                   separator=";"
                   tableName="cost_factor">
-                  <column name="rate" type="float"/>
+                  <!-- <column name="rate" type="float"/> -->
         </loadData>
 
     </changeSet>

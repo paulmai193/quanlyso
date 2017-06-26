@@ -360,13 +360,14 @@ public class TransactionsResourceIntTest {
     @Transactional
     public void deleteTransactions() throws Exception {
         // Initialize the database
-    	createAndSaveEntity(em);
+    	Transactions transactions = createEntity(em);
+    	this.transactionsRepository.saveAndFlush(transactions);
         List<Transactions> transactionsList = transactionsRepository.findAll();
         int dbTransactionSizeBeforeDelete = transactionsList.size();
         int dbTransDetailSizeBeforeDelete = transactionDetailsRepository.findAll().size();
 
         // Get the transactions
-        Transactions transactions = transactionsList.get(0);
+        transactions = transactionsList.get(0);
         long testUserId = transactions.getUsers().getId();
         restTransactionsMockMvc.perform(delete("/api/transactions/{id}", transactions.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
@@ -379,6 +380,22 @@ public class TransactionsResourceIntTest {
         assertThat(transactionDetails).hasSize(dbTransDetailSizeBeforeDelete == 0 ? 0 : dbTransDetailSizeBeforeDelete - 1);
 //        User testUser = this.userRepository.findOne(testUserId);
 //        assertThat(testUser.getTransactionsses()).isEmpty();
+    }
+    
+    @Test
+    @Transactional
+    public void calculateTransactions() throws Exception {
+    	// Initialize the database
+    	transactions = createEntity(em);
+
+        // Create the Transactions
+        TransactionsDTO transactionsDTO = transactionsMapper.toDto(transactions);
+        restTransactionsMockMvc.perform(post("/api/transactions/calculate")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+            .andExpect(status().isOk());
+
+        // Validate the Transactions in the database     
     }
 
     /**

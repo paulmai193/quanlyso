@@ -1,0 +1,23 @@
+{
+    "quanlysoApp": {
+        "code" : {
+            "home": {
+                "title": "Codes",
+                "createLabel": "Thêm mới một Code",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Code"
+            },
+            "created": "Một Code mới được tạo với định danh {{ param }}",
+            "updated": "Một Code cập nhật với định danh {{ param }}",
+            "deleted": "Một Code đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Code {{ id }}?"
+            },
+            "detail": {
+                "title": "Code"
+            },
+            "code": "Code",
+            "openDate": "Open Date",
+            "channels": "Channels"
+        }
+    }
+}

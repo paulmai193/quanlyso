@@ -16,6 +16,7 @@ import logia.quanlyso.domain.User;
 import logia.quanlyso.repository.TransactionDetailsRepository;
 import logia.quanlyso.repository.TransactionsRepository;
 import logia.quanlyso.repository.UserRepository;
+import logia.quanlyso.service.CodeService;
 import logia.quanlyso.service.TransactionsService;
 import logia.quanlyso.service.dto.TransactionsDTO;
 import logia.quanlyso.service.mapper.TransactionsMapper;
@@ -43,6 +44,9 @@ public class TransactionsServiceImpl implements TransactionsService{
     
     /** The transaction details repository. */
     private final TransactionDetailsRepository transactionDetailsRepository;
+    
+    /** The code service. */
+    private final CodeService codeService;
 
     /**
      * Instantiates a new transactions service impl.
@@ -51,12 +55,15 @@ public class TransactionsServiceImpl implements TransactionsService{
      * @param transactionsMapper the transactions mapper
      * @param userRepository the user repository
      * @param transactionDetailsRepository the transaction details repository
+     * @param codeService the code service
      */
-    public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper, UserRepository userRepository, TransactionDetailsRepository transactionDetailsRepository) {
+    public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper, 
+    		UserRepository userRepository, TransactionDetailsRepository transactionDetailsRepository, CodeService codeService) {
         this.transactionsRepository = transactionsRepository;
         this.transactionsMapper = transactionsMapper;
         this.userRepository = userRepository;
         this.transactionDetailsRepository = transactionDetailsRepository;
+        this.codeService = codeService;
     }
 
     /**
@@ -137,5 +144,21 @@ public class TransactionsServiceImpl implements TransactionsService{
         
         // Delete this transaction
         transactionsRepository.delete(transactions);
+    }
+    
+    /* (non-Javadoc)
+     * @see logia.quanlyso.service.TransactionsService#calculate(logia.quanlyso.service.dto.TransactionsDTO)
+     */
+    @Override
+    public TransactionsDTO calculate(TransactionsDTO transactionsDTO) {
+    	log.debug("Request to calculate value of Transactions : {}", transactionsDTO);
+        
+        Transactions transactions = transactionsMapper.toEntity(transactionsDTO);
+        
+        // Get & set user entity to this transaction
+        transactions = this.codeService.calculate(transactions);
+        
+        TransactionsDTO result = transactionsMapper.toDto(transactions);
+        return result;
     }
 }

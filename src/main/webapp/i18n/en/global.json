@@ -16,6 +16,7 @@
                 "transactions": "Transactions",
                 "transactionDetails": "Transaction Details",
                 "client": "Client",
+                "code": "Code",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

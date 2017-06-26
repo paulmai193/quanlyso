@@ -141,5 +141,20 @@ public class TransactionsResource {
         transactionsService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    
+    /**
+     * POST  /transactions/calculate : Calculate value of transactions.
+     *
+     * @param transactionsDTO the transactionsDTO to calculate
+     * @return the ResponseEntity with status 200 (Success) and with body the transactionsDTO has been calculating value
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/transactions/calculate")
+    @Timed
+    public ResponseEntity<TransactionsDTO> calculateTransactions(@RequestBody TransactionsDTO transactionsDTO) throws URISyntaxException {
+        log.debug("REST request to calculate value of Transactions : {}", transactionsDTO);
+        TransactionsDTO result = transactionsService.calculate(transactionsDTO);
+        return ResponseEntity.ok(result);
+    }
 
 }

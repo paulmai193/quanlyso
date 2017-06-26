@@ -30,7 +30,7 @@
                   file="config/liquibase/profit_factor.csv"
                   separator=";"
                   tableName="profit_factor">
-                  <column name="rate" type="float"/>
+                  <!-- <column name="rate" type="REAL"/> -->
 		</loadData>
 
     </changeSet>
