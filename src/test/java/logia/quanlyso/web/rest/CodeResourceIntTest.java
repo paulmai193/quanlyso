@@ -45,11 +45,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = QuanlysoApp.class)
 public class CodeResourceIntTest {
 
-    private static final Integer DEFAULT_CODE = 1;
-    private static final Integer UPDATED_CODE = 2;
+    public static final Integer DEFAULT_CODE = 1;
+    public static final Integer UPDATED_CODE = 2;
 
-    private static final ZonedDateTime DEFAULT_OPEN_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_OPEN_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
+    public static final ZonedDateTime DEFAULT_OPEN_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    public static final ZonedDateTime UPDATED_OPEN_DATE = ZonedDateTime.now(ZoneId.systemDefault())
+    		.withHour(0).withMinute(0).withSecond(0).withNano(0);
 
     @Autowired
     private CodeRepository codeRepository;

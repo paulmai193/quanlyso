@@ -152,14 +152,16 @@ public class CodeServiceImpl implements CodeService{
 			// Assume transactions of current date
 			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
-			ZonedDateTime formattedDate = ZonedDateTime.parse(today.format(format), DateTimeFormatter.ISO_ZONED_DATE_TIME);
+//			ZonedDateTime formattedDate = ZonedDateTime.parse(today.format(format), DateTimeFormatter.ISO_ZONED_DATE_TIME);
+			ZonedDateTime formattedDate = today.withHour(0).withMinute(0).withSecond(0).withNano(0);
 			List<Code> listCodes = this.codeRepository.findAllByChannelsAndOpenDate(channel, formattedDate);
 			boolean isMatchCondition = this.checkCondition(chosenNumber, listCodes, style, types);
 			if (isMatchCondition) {
-				CostFactor costFactor = this.costFactorRepository.findOneByFactorsAndStylesAndTypes(factor, style, types);
+//				CostFactor costFactor = this.costFactorRepository.findOneByFactorsAndStylesAndTypes(factor, style, types);
+				List<CostFactor> costFactor = this.costFactorRepository.findAllByFactorsAndStylesAndTypes(factor, style, types);
 				ProfitFactor profitFactor = this.profitFactorRepository.findOneByFactorsAndStylesAndTypes(factor, style, types);
 				float amount = details.getAmount();
-				details.costs(amount * costFactor.getRate()).profit(amount * profitFactor.getRate());
+				details.costs(amount * costFactor.get(0).getRate()).profit(amount * profitFactor.getRate());
 				
 				netValue = netValue + details.getProfit() - details.getCosts();
 			}

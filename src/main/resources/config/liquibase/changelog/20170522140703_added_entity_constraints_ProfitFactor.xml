@@ -12,7 +12,7 @@
                                  baseTableName="profit_factor"
                                  constraintName="fk_profit_factor_factors_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="factor"/>
+                                 referencedTableName="factor" />
 
         <addForeignKeyConstraint baseColumnNames="styles_id"
                                  baseTableName="profit_factor"
@@ -25,6 +25,8 @@
                                  constraintName="fk_profit_factor_types_id"
                                  referencedColumnNames="id"
                                  referencedTableName="types"/>
+                                 
+		<addUniqueConstraint columnNames="factors_id, styles_id, types_id" tableName="profit_factor" constraintName="unique_profit_factor"/>
                                  
 		<loadData encoding="UTF-8"
                   file="config/liquibase/profit_factor.csv"

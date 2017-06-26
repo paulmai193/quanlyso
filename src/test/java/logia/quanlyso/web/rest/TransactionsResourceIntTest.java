@@ -10,7 +10,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -30,11 +29,21 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import logia.quanlyso.QuanlysoApp;
+import logia.quanlyso.domain.Channel;
+import logia.quanlyso.domain.Code;
+import logia.quanlyso.domain.Factor;
+import logia.quanlyso.domain.Style;
 import logia.quanlyso.domain.TransactionDetails;
 import logia.quanlyso.domain.Transactions;
+import logia.quanlyso.domain.Types;
 import logia.quanlyso.domain.User;
+import logia.quanlyso.repository.ChannelRepository;
+import logia.quanlyso.repository.CodeRepository;
+import logia.quanlyso.repository.FactorRepository;
+import logia.quanlyso.repository.StyleRepository;
 import logia.quanlyso.repository.TransactionDetailsRepository;
 import logia.quanlyso.repository.TransactionsRepository;
+import logia.quanlyso.repository.TypesRepository;
 import logia.quanlyso.repository.UserRepository;
 import logia.quanlyso.service.TransactionsService;
 import logia.quanlyso.service.dto.TransactionsDTO;
@@ -57,10 +66,10 @@ public class TransactionsResourceIntTest {
     static final Integer UPDATED_CHOSEN_NUMBER = 2;
 
     /** The Constant DEFAULT_NET_VALUE. */
-    static final Float DEFAULT_NET_VALUE = 1F;
+    static final Float DEFAULT_NET_VALUE = 0F;
     
-    /** The Constant UPDATED_NET_VALUE. */
-    static final Float UPDATED_NET_VALUE = 2F;
+//    /** The Constant UPDATED_NET_VALUE. */
+//    static final Float UPDATED_NET_VALUE = 2F;
 
     /** The transactions repository. */
     @Autowired
@@ -73,6 +82,26 @@ public class TransactionsResourceIntTest {
     /** The user repository. */
     @Autowired
     private UserRepository userRepository;
+    
+    /** The channel repository. */
+    @Autowired
+    private ChannelRepository channelRepository;
+    
+    /** The factor repository. */
+    @Autowired
+    private FactorRepository factorRepository;
+    
+    /** The style repository. */
+    @Autowired
+    private StyleRepository styleRepository;
+    
+    /** The types repository. */
+    @Autowired
+    private TypesRepository typesRepository;
+    
+    /** The code repository. */
+    @Autowired
+    private CodeRepository codeRepository;
 
     /** The transactions mapper. */
     @Autowired
@@ -101,8 +130,8 @@ public class TransactionsResourceIntTest {
     /** The rest transactions mock mvc. */
     private MockMvc restTransactionsMockMvc;
 
-    /** The transactions. */
-    private Transactions transactions;
+//    /** The transactions. */
+//    private Transactions transactions;
 
     /**
      * Setup.
@@ -127,31 +156,24 @@ public class TransactionsResourceIntTest {
      * @return the transactions
      */
     public static Transactions createEntity(EntityManager em) {
-    	User user = UserResourceIntTest.createAndSaveEntity(em);
-    	TransactionDetails transactionDetails = TransactionDetailsResourceIntTest.createEntity(em);
     	Transactions transactions = new Transactions()
             .chosenNumber(DEFAULT_CHOSEN_NUMBER)
-            .netValue(DEFAULT_NET_VALUE)
-            .users(user)
-            .addTransactionDetails(transactionDetails);
+            .netValue(DEFAULT_NET_VALUE);
         return transactions;
     }
     
-    /**
-     * Creates the and save entity.
-     *
-     * @param em the em
-     * @return the transactions
-     */
-    public static Transactions createAndSaveEntity(EntityManager em) {
-    	Transactions transactions = createEntity(em);
-    	TransactionDetails transactionDetails = TransactionDetailsResourceIntTest.createAndSaveEntity(em);
-    	transactions.setTransactionDetails(new HashSet<>());
-    	transactions.addTransactionDetails(transactionDetails);
-    	em.persist(transactions);
-    	em.flush();
-    	return transactions;
-    }
+//    /**
+//     * Creates the and save entity.
+//     *
+//     * @param em the em
+//     * @return the transactions
+//     */
+//    public static Transactions createAndSaveEntity(EntityManager em) {
+//    	Transactions transactions = createEntity(em);
+//    	em.persist(transactions);
+//    	em.flush();
+//    	return transactions;
+//    }
 
     /**
      * Inits the test.
@@ -170,7 +192,10 @@ public class TransactionsResourceIntTest {
     @Transactional
     public void createTransactions() throws Exception {
     	// Initialize the database
-    	transactions = createEntity(em);
+    	Transactions transactions = createEntity(em);
+    	User user = UserResourceIntTest.createEntity(em);
+    	user = this.userRepository.saveAndFlush(user);
+    	transactions.users(user);
         int databaseSizeBeforeCreate = transactionsRepository.findAll().size();
 
         // Create the Transactions
@@ -185,7 +210,37 @@ public class TransactionsResourceIntTest {
         assertThat(transactionsList).hasSize(databaseSizeBeforeCreate + 1);
         final Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
         assertThat(testTransactions.getChosenNumber()).isEqualTo(DEFAULT_CHOSEN_NUMBER);
-        assertThat(testTransactions.getNetValue()).isEqualTo(DEFAULT_NET_VALUE);
+    }
+    
+    /**
+     * Creates the complete transactions.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    @Transactional
+    public void createCompleteTransactions() throws Exception {
+    	// Initialize the database
+    	Transactions transactions = createEntity(em);
+    	TransactionDetails details = TransactionDetailsResourceIntTest.createEntity(em);
+    	User user = UserResourceIntTest.createEntity(em);
+    	user = this.userRepository.saveAndFlush(user);
+    	transactions.addTransactionDetails(details).users(user);
+    	
+        int databaseSizeBeforeCreate = transactionsRepository.findAll().size();
+
+        // Create the Transactions
+        TransactionsDTO transactionsDTO = transactionsMapper.toDto(transactions);
+        restTransactionsMockMvc.perform(post("/api/transactions")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+            .andExpect(status().isCreated());
+
+        // Validate the Transactions in the database
+        List<Transactions> transactionsList = transactionsRepository.findAll();
+        assertThat(transactionsList).hasSize(databaseSizeBeforeCreate + 1);
+        final Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
+        assertThat(testTransactions.getChosenNumber()).isEqualTo(DEFAULT_CHOSEN_NUMBER);
         assertThat(testTransactions.getTransactionDetails().size()).isEqualTo(1);
         assertThat(testTransactions.getUsers().getLogin()).isEqualTo(UserResourceIntTest.DEFAULT_LOGIN);
         assertThat(testTransactions.getUsers().getFirstName()).isEqualTo(UserResourceIntTest.DEFAULT_FIRSTNAME);
@@ -193,17 +248,14 @@ public class TransactionsResourceIntTest {
         assertThat(testTransactions.getUsers().getEmail()).isEqualTo(UserResourceIntTest.DEFAULT_EMAIL);
         assertThat(testTransactions.getUsers().getImageUrl()).isEqualTo(UserResourceIntTest.DEFAULT_IMAGEURL);
         assertThat(testTransactions.getUsers().getLangKey()).isEqualTo(UserResourceIntTest.DEFAULT_LANGKEY);
-        Long testUserId = testTransactions.getUsers().getId();
         assertThat(testTransactions.getTransactionDetails().size()).isEqualTo(1);
         Long testDetailId = null;
         for (TransactionDetails testTransactionDetails : testTransactions.getTransactionDetails()) {
         	assertThat(testTransactionDetails.getTransactions().getId()).isEqualTo(testTransactions.getId());
         	assertThat(testTransactionDetails.getAmount()).isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT);
-            assertThat(testTransactionDetails.getProfit()).isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_PROFIT);
-            assertThat(testTransactionDetails.getCosts()).isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_COSTS);
             testDetailId = testTransactionDetails.getId();
 		}
-        User testUser = this.userRepository.getOne(testUserId);
+        User testUser = this.userRepository.getOne(user.getId());
         assertThat(testUser.getTransactionsses()).contains(testTransactions);
         if (testDetailId != null) {
         	TransactionDetails testDetail = this.transactionDetailsRepository.getOne(testDetailId);
@@ -220,7 +272,7 @@ public class TransactionsResourceIntTest {
     @Transactional
     public void createTransactionsWithExistingId() throws Exception {
     	// Initialize the database
-    	transactions = createEntity(em);
+    	Transactions transactions = createEntity(em);
         int databaseSizeBeforeCreate = transactionsRepository.findAll().size();
 
         // Create the Transactions with an existing ID
@@ -248,15 +300,15 @@ public class TransactionsResourceIntTest {
     @Transactional
     public void getAllTransactions() throws Exception {
         // Initialize the database
-    	transactions = createAndSaveEntity(em);
+    	Transactions transactions = createEntity(em);
+    	this.transactionsRepository.saveAndFlush(transactions);
 
         // Get all the transactionsList
         restTransactionsMockMvc.perform(get("/api/transactions?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(transactions.getId().intValue())))
-            .andExpect(jsonPath("$.[*].chosenNumber").value(hasItem(DEFAULT_CHOSEN_NUMBER)))
-            .andExpect(jsonPath("$.[*].netValue").value(hasItem(DEFAULT_NET_VALUE.doubleValue())));
+            .andExpect(jsonPath("$.[*].chosenNumber").value(hasItem(DEFAULT_CHOSEN_NUMBER)));
     }
 
     /**
@@ -269,15 +321,15 @@ public class TransactionsResourceIntTest {
     @Transactional
     public void getTransactions() throws Exception {
         // Initialize the database
-    	transactions = createAndSaveEntity(em);
+    	Transactions transactions = createEntity(em);
+    	this.transactionsRepository.saveAndFlush(transactions);
 
         // Get the transactions
         restTransactionsMockMvc.perform(get("/api/transactions/{id}", transactions.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(transactions.getId().intValue()))
-            .andExpect(jsonPath("$.chosenNumber").value(DEFAULT_CHOSEN_NUMBER))
-            .andExpect(jsonPath("$.netValue").value(DEFAULT_NET_VALUE.doubleValue()));
+            .andExpect(jsonPath("$.chosenNumber").value(DEFAULT_CHOSEN_NUMBER));
     }
 
     /**
@@ -303,14 +355,17 @@ public class TransactionsResourceIntTest {
     @Transactional
     public void updateTransactions() throws Exception {
         // Initialize the database
-    	transactions = createAndSaveEntity(em);
+    	Transactions transactions = createEntity(em);
+    	User user = UserResourceIntTest.createEntity(em);
+    	user = this.userRepository.saveAndFlush(user);
+    	transactions.users(user);
+    	this.transactionsRepository.saveAndFlush(transactions);
         int databaseSizeBeforeUpdate = transactionsRepository.findAll().size();
 
         // Update the transactions
         Transactions updatedTransactions = transactionsRepository.findOne(transactions.getId());
         updatedTransactions
-            .chosenNumber(UPDATED_CHOSEN_NUMBER)
-            .netValue(UPDATED_NET_VALUE);
+            .chosenNumber(UPDATED_CHOSEN_NUMBER);
         TransactionsDTO transactionsDTO = transactionsMapper.toDto(updatedTransactions);
 
         restTransactionsMockMvc.perform(put("/api/transactions")
@@ -323,7 +378,6 @@ public class TransactionsResourceIntTest {
         assertThat(transactionsList).hasSize(databaseSizeBeforeUpdate);
         Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
         assertThat(testTransactions.getChosenNumber()).isEqualTo(UPDATED_CHOSEN_NUMBER);
-        assertThat(testTransactions.getNetValue()).isEqualTo(UPDATED_NET_VALUE);
     }
 
     /**
@@ -334,7 +388,10 @@ public class TransactionsResourceIntTest {
     @Test
     @Transactional
     public void updateNonExistingTransactions() throws Exception {
-    	transactions = createEntity(em);
+    	Transactions transactions = createEntity(em);
+    	User user = UserResourceIntTest.createEntity(em);
+    	user = this.userRepository.saveAndFlush(user);
+    	transactions.users(user);
         int databaseSizeBeforeUpdate = transactionsRepository.findAll().size();
 
         // Create the Transactions
@@ -364,11 +421,34 @@ public class TransactionsResourceIntTest {
     	this.transactionsRepository.saveAndFlush(transactions);
         List<Transactions> transactionsList = transactionsRepository.findAll();
         int dbTransactionSizeBeforeDelete = transactionsList.size();
+
+        // Get the transactions
+        transactions = transactionsList.get(0);
+        restTransactionsMockMvc.perform(delete("/api/transactions/{id}", transactions.getId())
+            .accept(TestUtil.APPLICATION_JSON_UTF8))
+            .andExpect(status().isOk());
+
+        // Validate the database is empty
+        transactionsList = transactionsRepository.findAll();
+        assertThat(transactionsList).hasSize(dbTransactionSizeBeforeDelete - 1);
+    }
+    
+    @Test
+    @Transactional
+    public void deleteCompleteTransactions() throws Exception {
+        // Initialize the database
+    	Transactions transactions = createEntity(em);
+    	TransactionDetails details = TransactionDetailsResourceIntTest.createEntity(em);
+    	User user = UserResourceIntTest.createEntity(em);
+    	user = this.userRepository.saveAndFlush(user);
+    	transactions.addTransactionDetails(details).users(user);
+    	this.transactionsRepository.saveAndFlush(transactions);
+        List<Transactions> transactionsList = transactionsRepository.findAll();
+        int dbTransactionSizeBeforeDelete = transactionsList.size();
         int dbTransDetailSizeBeforeDelete = transactionDetailsRepository.findAll().size();
 
         // Get the transactions
         transactions = transactionsList.get(0);
-        long testUserId = transactions.getUsers().getId();
         restTransactionsMockMvc.perform(delete("/api/transactions/{id}", transactions.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
@@ -378,7 +458,7 @@ public class TransactionsResourceIntTest {
         assertThat(transactionsList).hasSize(dbTransactionSizeBeforeDelete - 1);
         List<TransactionDetails> transactionDetails = transactionDetailsRepository.findAll();
         assertThat(transactionDetails).hasSize(dbTransDetailSizeBeforeDelete == 0 ? 0 : dbTransDetailSizeBeforeDelete - 1);
-//        User testUser = this.userRepository.findOne(testUserId);
+//        User testUser = this.userRepository.findOne(user.getId());
 //        assertThat(testUser.getTransactionsses()).isEmpty();
     }
     
@@ -386,16 +466,28 @@ public class TransactionsResourceIntTest {
     @Transactional
     public void calculateTransactions() throws Exception {
     	// Initialize the database
-    	transactions = createEntity(em);
+    	Transactions transactions = createEntity(em);
+    	TransactionDetails details = TransactionDetailsResourceIntTest.createEntity(em);
+    	Channel channel = this.channelRepository.getOne(1L);
+    	Code code = CodeResourceIntTest.createEntity(em);
+    	code.openDate(CodeResourceIntTest.UPDATED_OPEN_DATE).channels(channel);
+    	this.codeRepository.saveAndFlush(code);
+    	Factor factor = this.factorRepository.getOne(1L);
+		Style style = this.styleRepository.getOne(1L);
+		Types types = this.typesRepository.getOne(1L);
+		details.channels(channel).factors(factor).styles(style).types(types);
+		transactions.addTransactionDetails(details);
+		
+		// Expect net value
+		float netValue = (float) 74.25;
 
-        // Create the Transactions
+        // Calculate the Transactions
         TransactionsDTO transactionsDTO = transactionsMapper.toDto(transactions);
         restTransactionsMockMvc.perform(post("/api/transactions/calculate")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
-            .andExpect(status().isOk());
-
-        // Validate the Transactions in the database     
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.netValue").value(netValue));
     }
 
     /**

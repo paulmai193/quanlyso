@@ -164,26 +164,26 @@ public class UserResourceIntTest {
         return user;
     }
     
-    /**
-     * Creates the and save entity.
-     *
-     * @param em the em
-     * @return the user
-     */
-    public static User createAndSaveEntity(EntityManager em) {
-        User user = new User();
-        user.setLogin(DEFAULT_LOGIN);
-        user.setPassword(RandomStringUtils.random(60));
-        user.setActivated(true);
-        user.setEmail(DEFAULT_EMAIL);
-        user.setFirstName(DEFAULT_FIRSTNAME);
-        user.setLastName(DEFAULT_LASTNAME);
-        user.setImageUrl(DEFAULT_IMAGEURL);
-        user.setLangKey(DEFAULT_LANGKEY);
-        em.persist(user);
-        em.flush();
-        return user;
-    }
+//    /**
+//     * Creates the and save entity.
+//     *
+//     * @param em the em
+//     * @return the user
+//     */
+//    public static User createAndSaveEntity(EntityManager em) {
+//        User user = new User();
+//        user.setLogin(DEFAULT_LOGIN);
+//        user.setPassword(RandomStringUtils.random(60));
+//        user.setActivated(true);
+//        user.setEmail(DEFAULT_EMAIL);
+//        user.setFirstName(DEFAULT_FIRSTNAME);
+//        user.setLastName(DEFAULT_LASTNAME);
+//        user.setImageUrl(DEFAULT_IMAGEURL);
+//        user.setLangKey(DEFAULT_LANGKEY);
+//        em.persist(user);
+//        em.flush();
+//        return user;
+//    }
 
     /**
      * Inits the test.

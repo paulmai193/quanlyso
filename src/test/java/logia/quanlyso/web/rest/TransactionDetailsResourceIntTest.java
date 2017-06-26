@@ -51,17 +51,17 @@ public class TransactionDetailsResourceIntTest {
     /** The Constant UPDATED_AMOUNT. */
     static final Float UPDATED_AMOUNT = 2F;
 
-    /** The Constant DEFAULT_PROFIT. */
-    static final Float DEFAULT_PROFIT = 1F;
-    
-    /** The Constant UPDATED_PROFIT. */
-    static final Float UPDATED_PROFIT = 2F;
-
-    /** The Constant DEFAULT_COSTS. */
-    static final Float DEFAULT_COSTS = 1F;
-    
-    /** The Constant UPDATED_COSTS. */
-    static final Float UPDATED_COSTS = 2F;
+//    /** The Constant DEFAULT_PROFIT. */
+//    static final Float DEFAULT_PROFIT = 1F;
+//    
+//    /** The Constant UPDATED_PROFIT. */
+//    static final Float UPDATED_PROFIT = 2F;
+//
+//    /** The Constant DEFAULT_COSTS. */
+//    static final Float DEFAULT_COSTS = 1F;
+//    
+//    /** The Constant UPDATED_COSTS. */
+//    static final Float UPDATED_COSTS = 2F;
 
     /** The transaction details repository. */
     @Autowired
@@ -121,24 +121,22 @@ public class TransactionDetailsResourceIntTest {
      */
     public static TransactionDetails createEntity(EntityManager em) {
         TransactionDetails transactionDetails = new TransactionDetails()
-            .amount(DEFAULT_AMOUNT)
-            .profit(DEFAULT_PROFIT)
-            .costs(DEFAULT_COSTS);
+            .amount(DEFAULT_AMOUNT);
         return transactionDetails;
     }
     
-    /**
-     * Creates the and save entity.
-     *
-     * @param em the em
-     * @return the transaction details
-     */
-    public static TransactionDetails createAndSaveEntity(EntityManager em) {
-    	TransactionDetails transactionDetails = createEntity(em);
-    	em.persist(transactionDetails);
-    	em.flush();
-    	return transactionDetails;
-    }
+//    /**
+//     * Creates the and save entity.
+//     *
+//     * @param em the em
+//     * @return the transaction details
+//     */
+//    public static TransactionDetails createAndSaveEntity(EntityManager em) {
+//    	TransactionDetails transactionDetails = createEntity(em);
+//    	em.persist(transactionDetails);
+//    	em.flush();
+//    	return transactionDetails;
+//    }
 
     /**
      * Inits the test.
@@ -170,8 +168,6 @@ public class TransactionDetailsResourceIntTest {
         assertThat(transactionDetailsList).hasSize(databaseSizeBeforeCreate + 1);
         TransactionDetails testTransactionDetails = transactionDetailsList.get(transactionDetailsList.size() - 1);
         assertThat(testTransactionDetails.getAmount()).isEqualTo(DEFAULT_AMOUNT);
-        assertThat(testTransactionDetails.getProfit()).isEqualTo(DEFAULT_PROFIT);
-        assertThat(testTransactionDetails.getCosts()).isEqualTo(DEFAULT_COSTS);
     }
 
     /**
@@ -216,9 +212,7 @@ public class TransactionDetailsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(transactionDetails.getId().intValue())))
-            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())))
-            .andExpect(jsonPath("$.[*].profit").value(hasItem(DEFAULT_PROFIT.doubleValue())))
-            .andExpect(jsonPath("$.[*].costs").value(hasItem(DEFAULT_COSTS.doubleValue())));
+            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())));
     }
 
     /**
@@ -238,9 +232,7 @@ public class TransactionDetailsResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(transactionDetails.getId().intValue()))
-            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()))
-            .andExpect(jsonPath("$.profit").value(DEFAULT_PROFIT.doubleValue()))
-            .andExpect(jsonPath("$.costs").value(DEFAULT_COSTS.doubleValue()));
+            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()));
     }
 
     /**
@@ -272,9 +264,7 @@ public class TransactionDetailsResourceIntTest {
         // Update the transactionDetails
         TransactionDetails updatedTransactionDetails = transactionDetailsRepository.findOne(transactionDetails.getId());
         updatedTransactionDetails
-            .amount(UPDATED_AMOUNT)
-            .profit(UPDATED_PROFIT)
-            .costs(UPDATED_COSTS);
+            .amount(UPDATED_AMOUNT);
         TransactionDetailsDTO transactionDetailsDTO = transactionDetailsMapper.toDto(updatedTransactionDetails);
 
         restTransactionDetailsMockMvc.perform(put("/api/transaction-details")
@@ -287,8 +277,6 @@ public class TransactionDetailsResourceIntTest {
         assertThat(transactionDetailsList).hasSize(databaseSizeBeforeUpdate);
         TransactionDetails testTransactionDetails = transactionDetailsList.get(transactionDetailsList.size() - 1);
         assertThat(testTransactionDetails.getAmount()).isEqualTo(UPDATED_AMOUNT);
-        assertThat(testTransactionDetails.getProfit()).isEqualTo(UPDATED_PROFIT);
-        assertThat(testTransactionDetails.getCosts()).isEqualTo(UPDATED_COSTS);
     }
 
     /**

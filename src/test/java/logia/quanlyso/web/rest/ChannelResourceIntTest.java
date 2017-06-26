@@ -52,10 +52,10 @@ public class ChannelResourceIntTest {
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     /** The Constant DEFAULT_CODE. */
-    private static final String DEFAULT_CODE = "AAAAAAAAAA";
+    private static final String DEFAULT_CODE = "12345";
     
     /** The Constant UPDATED_CODE. */
-    private static final String UPDATED_CODE = "BBBBBBBBBB";
+    private static final String UPDATED_CODE = "54321";
 
     /** The Constant DEFAULT_SUNDAY. */
     private static final Boolean DEFAULT_SUNDAY = false;
