@@ -4,6 +4,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +23,7 @@ import logia.quanlyso.QuanlysoApp;
 import logia.quanlyso.domain.User;
 import logia.quanlyso.repository.UserRepository;
 import logia.quanlyso.security.jwt.TokenProvider;
+import logia.quanlyso.service.UserService;
 import logia.quanlyso.web.rest.vm.LoginVM;
 
 /**
@@ -46,6 +50,10 @@ public class UserJWTControllerIntTest {
     /** The password encoder. */
     @Autowired
     private PasswordEncoder passwordEncoder;
+    
+    /** The user service. */
+    @Autowired
+    private UserService userService;
 
     /** The mock mvc. */
     private MockMvc mockMvc;
@@ -55,10 +63,11 @@ public class UserJWTControllerIntTest {
      */
     @Before
     public void setup() {
-        UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager);
+        UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager, userService);
         this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController)
             .build();
-    }
+    }  
+    
 
     /**
      * Test authorize.
@@ -73,6 +82,9 @@ public class UserJWTControllerIntTest {
         user.setEmail("user-jwt-controller@example.com");
         user.setActivated(true);
         user.setPassword(passwordEncoder.encode("test"));
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        user.setGrantAccessDate(now.minusDays(1));
+        user.setRevokeAccessDate(now.plusDays(1));
 
         userRepository.saveAndFlush(user);
 
@@ -100,6 +112,9 @@ public class UserJWTControllerIntTest {
         user.setEmail("user-jwt-controller-remember-me@example.com");
         user.setActivated(true);
         user.setPassword(passwordEncoder.encode("test"));
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        user.setGrantAccessDate(now.minusDays(1));
+        user.setRevokeAccessDate(now.plusDays(1));
 
         userRepository.saveAndFlush(user);
 
@@ -116,13 +131,13 @@ public class UserJWTControllerIntTest {
     }
 
     /**
-     * Test authorize fails.
+     * Test authorize fails because wrong credential.
      *
      * @throws Exception the exception
      */
     @Test
     @Transactional
-    public void testAuthorizeFails() throws Exception {
+    public void testAuthorizeFailsBecauseWrongCredential() throws Exception {
         LoginVM login = new LoginVM();
         login.setUsername("wrong-user");
         login.setPassword("wrong password");
@@ -130,6 +145,30 @@ public class UserJWTControllerIntTest {
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(login)))
             .andExpect(status().isUnauthorized())
+            .andExpect(jsonPath("$.id_token").doesNotExist());
+    }
+    
+    @Test
+    @Transactional
+    public void testAuthorizeFailsBecauseBeRevoked() throws Exception {
+    	User user = new User();
+        user.setLogin("user-jwt-controller");
+        user.setEmail("user-jwt-controller@example.com");
+        user.setActivated(true);
+        user.setPassword(passwordEncoder.encode("test"));
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        user.setGrantAccessDate(now.minusDays(2));
+        user.setRevokeAccessDate(now.minusDays(1));
+
+        userRepository.saveAndFlush(user);
+        
+        LoginVM login = new LoginVM();
+        login.setUsername("user-jwt-controller");
+        login.setPassword("test");
+        mockMvc.perform(post("/api/authenticate")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(login)))
+            .andExpect(status().isPaymentRequired())
             .andExpect(jsonPath("$.id_token").doesNotExist());
     }
 }

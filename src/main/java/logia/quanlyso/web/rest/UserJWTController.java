@@ -1,5 +1,7 @@
 package logia.quanlyso.web.rest;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,8 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import logia.quanlyso.domain.User;
+import logia.quanlyso.security.UserRevokeAccessException;
 import logia.quanlyso.security.jwt.JWTConfigurer;
 import logia.quanlyso.security.jwt.TokenProvider;
+import logia.quanlyso.service.UserService;
 import logia.quanlyso.web.rest.vm.LoginVM;
 
 /**
@@ -43,16 +48,21 @@ public class UserJWTController {
 
     /** The authentication manager. */
     private final AuthenticationManager authenticationManager;
+    
+    /** The user service. */
+    private final UserService userService;
 
     /**
      * Instantiates a new user JWT controller.
      *
      * @param tokenProvider the token provider
      * @param authenticationManager the authentication manager
+     * @param userService the user service
      */
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
+    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager, UserService userService) {
         this.tokenProvider = tokenProvider;
         this.authenticationManager = authenticationManager;
+        this.userService = userService;
     }
 
     /**
@@ -71,11 +81,24 @@ public class UserJWTController {
 
         try {
             Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
+            
+            // Check grand & revoke access date
+            User user = this.userService.getUserWithAuthoritiesByLogin(loginVM.getUsername()).get();
+            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+            if (user.getGrantAccessDate().isAfter(now) || user.getRevokeAccessDate().isBefore(now)) {
+				throw new UserRevokeAccessException("Account be revoked access by administrator");
+			}
+            
+            // Return if every condition ok
             SecurityContextHolder.getContext().setAuthentication(authentication);
             boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
             String jwt = tokenProvider.createToken(authentication, rememberMe);
             response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
             return ResponseEntity.ok(new JWTToken(jwt));
+        } catch (UserRevokeAccessException ae) {
+            log.trace("Authentication exception trace: {}", ae);
+            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException",
+                ae.getLocalizedMessage()), HttpStatus.PAYMENT_REQUIRED);
         } catch (AuthenticationException ae) {
             log.trace("Authentication exception trace: {}", ae);
             return new ResponseEntity<>(Collections.singletonMap("AuthenticationException",
