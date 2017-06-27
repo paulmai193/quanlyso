@@ -66,8 +66,7 @@ public class UserJWTControllerIntTest {
         UserJWTController userJWTController = new UserJWTController(tokenProvider, authenticationManager, userService);
         this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController)
             .build();
-    }  
-    
+    }    
 
     /**
      * Test authorize.
@@ -148,6 +147,11 @@ public class UserJWTControllerIntTest {
             .andExpect(jsonPath("$.id_token").doesNotExist());
     }
     
+    /**
+     * Test authorize fails because be revoked.
+     *
+     * @throws Exception the exception
+     */
     @Test
     @Transactional
     public void testAuthorizeFailsBecauseBeRevoked() throws Exception {
