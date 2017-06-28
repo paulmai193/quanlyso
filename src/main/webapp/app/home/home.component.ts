@@ -25,8 +25,8 @@ export class HomeComponent implements OnInit {
 
     ngOnInit() {
         this.principal.identity().then((account) => {
-        	if (account === null) {
-        		this.login();
+			if (account === null) {
+				this.login();
 			} else {
 				this.account = account;
 			}
