@@ -1,14 +1,15 @@
 import { ComponentFixture, TestBed, async, inject } from '@angular/core/testing';
-import { OnInit } from '@angular/core';
+import { OnInit, Sanitizer } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
-import { DateUtils, DataUtils, EventManager } from 'ng-jhipster';
+import { DateUtils, DataUtils, EventManager, AlertService } from 'ng-jhipster';
 import { QuanlysoTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
 import { CodeDetailComponent } from '../../../../../../main/webapp/app/entities/code/code-detail.component';
 import { CodeService } from '../../../../../../main/webapp/app/entities/code/code.service';
 import { Code } from '../../../../../../main/webapp/app/entities/code/code.model';
+import { ChannelService } from '../../../../../../main/webapp/app/entities/channel/channel.service';
 
 describe('Component Tests', () => {
 
@@ -30,6 +31,7 @@ describe('Component Tests', () => {
                         useValue: new MockActivatedRoute({id: 123})
                     },
                     CodeService,
+                    ChannelService,
                     EventManager
                 ]
             }).overrideComponent(CodeDetailComponent, {

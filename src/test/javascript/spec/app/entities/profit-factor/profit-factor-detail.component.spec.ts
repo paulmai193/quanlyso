@@ -3,12 +3,15 @@ import { OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
-import { DateUtils, DataUtils, EventManager } from 'ng-jhipster';
+import { DateUtils, DataUtils, EventManager, AlertService } from 'ng-jhipster';
 import { QuanlysoTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
 import { ProfitFactorDetailComponent } from '../../../../../../main/webapp/app/entities/profit-factor/profit-factor-detail.component';
 import { ProfitFactorService } from '../../../../../../main/webapp/app/entities/profit-factor/profit-factor.service';
 import { ProfitFactor } from '../../../../../../main/webapp/app/entities/profit-factor/profit-factor.model';
+import { FactorService } from '../../../../../../main/webapp/app/entities/factor/factor.service';
+import { StyleService } from '../../../../../../main/webapp/app/entities/style/style.service';
+import { TypesService } from '../../../../../../main/webapp/app/entities/types/types.service';
 
 describe('Component Tests', () => {
 
@@ -30,6 +33,10 @@ describe('Component Tests', () => {
                         useValue: new MockActivatedRoute({id: 123})
                     },
                     ProfitFactorService,
+                    AlertService,
+                    FactorService,
+                    StyleService,
+                    TypesService,
                     EventManager
                 ]
             }).overrideComponent(ProfitFactorDetailComponent, {

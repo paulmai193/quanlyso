@@ -3,12 +3,15 @@ import { OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Rx';
-import { DateUtils, DataUtils, EventManager } from 'ng-jhipster';
+import { DateUtils, DataUtils, EventManager, AlertService } from 'ng-jhipster';
 import { QuanlysoTestModule } from '../../../test.module';
 import { MockActivatedRoute } from '../../../helpers/mock-route.service';
 import { CostFactorDetailComponent } from '../../../../../../main/webapp/app/entities/cost-factor/cost-factor-detail.component';
 import { CostFactorService } from '../../../../../../main/webapp/app/entities/cost-factor/cost-factor.service';
 import { CostFactor } from '../../../../../../main/webapp/app/entities/cost-factor/cost-factor.model';
+import { TypesService } from '../../../../../../main/webapp/app/entities/types/types.service';
+import { StyleService } from '../../../../../../main/webapp/app/entities/style/style.service';
+import { FactorService } from '../../../../../../main/webapp/app/entities/factor/factor.service';
 
 describe('Component Tests', () => {
 
@@ -30,6 +33,10 @@ describe('Component Tests', () => {
                         useValue: new MockActivatedRoute({id: 123})
                     },
                     CostFactorService,
+                    AlertService,
+                    FactorService,
+                    StyleService,
+                    TypesService,
                     EventManager
                 ]
             }).overrideComponent(CostFactorDetailComponent, {

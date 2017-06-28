@@ -20,9 +20,9 @@ export class CodeDetailComponent implements OnInit, OnDestroy {
 
     constructor(
         private eventManager: EventManager,
+        private alertService: AlertService,
         private codeService: CodeService,
         private channelService: ChannelService,
-        private alertService: AlertService,
         private route: ActivatedRoute
     ) {
     }
