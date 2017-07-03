@@ -85,7 +85,7 @@ public class UserJWTController {
             // Check grand & revoke access date
             User user = this.userService.getUserWithAuthoritiesByLogin(loginVM.getUsername()).get();
             ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
-            if (user.getGrantAccessDate().isAfter(now) || user.getRevokeAccessDate().isBefore(now)) {
+            if (user.getRevokeAccessDate() != null && (user.getGrantAccessDate().isAfter(now) || user.getRevokeAccessDate().isBefore(now))) {
 				throw new UserRevokeAccessException("Account be revoked access by administrator");
 			}
             
