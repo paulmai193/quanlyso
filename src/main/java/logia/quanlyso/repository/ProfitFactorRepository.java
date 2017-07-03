@@ -1,7 +1,5 @@
 package logia.quanlyso.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import logia.quanlyso.domain.Factor;

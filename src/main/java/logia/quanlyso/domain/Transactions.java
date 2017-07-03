@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,7 +39,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 
 	/** The chosen number. */
 	@Column(name = "chosen_number")
-	private Integer chosenNumber;
+	private String chosenNumber;
 
 	/** The net value. */
 	@Column(name = "net_value")
@@ -79,7 +78,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 *
 	 * @return the chosen number
 	 */
-	public Integer getChosenNumber() {
+	public String getChosenNumber() {
 		return chosenNumber;
 	}
 
@@ -89,8 +88,8 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @param chosenNumber the chosen number
 	 * @return the transactions
 	 */
-	public Transactions chosenNumber(Integer chosenNumber) {
-		this.chosenNumber = chosenNumber;
+	public Transactions chosenNumber(String chosenNumber) {
+		this.setChosenNumber(chosenNumber);
 		return this;
 	}
 
@@ -99,7 +98,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 *
 	 * @param chosenNumber the new chosen number
 	 */
-	public void setChosenNumber(Integer chosenNumber) {
+	public void setChosenNumber(String chosenNumber) {
 		this.chosenNumber = chosenNumber;
 	}
 

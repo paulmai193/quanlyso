@@ -60,10 +60,10 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 public class TransactionsResourceIntTest {
 
     /** The Constant DEFAULT_CHOSEN_NUMBER. */
-    static final Integer DEFAULT_CHOSEN_NUMBER = 1;
+    static final String DEFAULT_CHOSEN_NUMBER = "01";
     
     /** The Constant UPDATED_CHOSEN_NUMBER. */
-    static final Integer UPDATED_CHOSEN_NUMBER = 2;
+    static final String UPDATED_CHOSEN_NUMBER = "02";
 
     /** The Constant DEFAULT_NET_VALUE. */
     static final Float DEFAULT_NET_VALUE = 0F;

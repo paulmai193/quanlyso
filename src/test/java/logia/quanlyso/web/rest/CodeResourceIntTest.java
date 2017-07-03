@@ -1,13 +1,23 @@
 package logia.quanlyso.web.rest;
 
-import logia.quanlyso.QuanlysoApp;
+import static logia.quanlyso.web.rest.TestUtil.sameInstant;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import logia.quanlyso.domain.Code;
-import logia.quanlyso.repository.CodeRepository;
-import logia.quanlyso.service.CodeService;
-import logia.quanlyso.service.dto.CodeDTO;
-import logia.quanlyso.service.mapper.CodeMapper;
-import logia.quanlyso.web.rest.errors.ExceptionTranslator;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.util.List;
+
+import javax.persistence.EntityManager;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,18 +33,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZonedDateTime;
-import java.time.ZoneOffset;
-import java.time.ZoneId;
-import java.util.List;
-
-import static logia.quanlyso.web.rest.TestUtil.sameInstant;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import logia.quanlyso.QuanlysoApp;
+import logia.quanlyso.domain.Code;
+import logia.quanlyso.repository.CodeRepository;
+import logia.quanlyso.service.CodeService;
+import logia.quanlyso.service.dto.CodeDTO;
+import logia.quanlyso.service.mapper.CodeMapper;
+import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 
 /**
  * Test class for the CodeResource REST controller.
@@ -45,8 +50,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = QuanlysoApp.class)
 public class CodeResourceIntTest {
 
-    public static final Integer DEFAULT_CODE = 1;
-    public static final Integer UPDATED_CODE = 2;
+    public static final String DEFAULT_CODE = "01";
+    public static final String UPDATED_CODE = "02";
 
     public static final ZonedDateTime DEFAULT_OPEN_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     public static final ZonedDateTime UPDATED_OPEN_DATE = ZonedDateTime.now(ZoneId.systemDefault())

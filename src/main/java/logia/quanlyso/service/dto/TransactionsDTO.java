@@ -17,7 +17,7 @@ public class TransactionsDTO implements Serializable {
     private Long id;
 
     /** The chosen number. */
-    private Integer chosenNumber;
+    private String chosenNumber;
 
     /** The net value. */
     private Float netValue;
@@ -51,7 +51,7 @@ public class TransactionsDTO implements Serializable {
      *
      * @return the chosen number
      */
-    public Integer getChosenNumber() {
+    public String getChosenNumber() {
         return chosenNumber;
     }
 
@@ -60,7 +60,7 @@ public class TransactionsDTO implements Serializable {
      *
      * @param chosenNumber the new chosen number
      */
-    public void setChosenNumber(Integer chosenNumber) {
+    public void setChosenNumber(String chosenNumber) {
         this.chosenNumber = chosenNumber;
     }
 

@@ -1,10 +1,8 @@
 package logia.quanlyso.service.dto;
 
 
-import java.time.ZonedDateTime;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -14,7 +12,7 @@ public class CodeDTO implements Serializable {
 
     private Long id;
 
-    private Integer code;
+    private String code;
 
     private ZonedDateTime openDate;
 
@@ -28,11 +26,11 @@ public class CodeDTO implements Serializable {
         this.id = id;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(Integer code) {
+    public void setCode(String code) {
         this.code = code;
     }
 

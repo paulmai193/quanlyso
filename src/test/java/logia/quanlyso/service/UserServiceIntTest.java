@@ -7,14 +7,12 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
-import org.hibernate.dialect.DataDirectOracle9Dialect;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +23,6 @@ import logia.quanlyso.repository.UserRepository;
 import logia.quanlyso.security.AuthoritiesConstants;
 import logia.quanlyso.service.dto.UserDTO;
 import logia.quanlyso.service.util.RandomUtil;
-import logia.quanlyso.web.rest.util.PaginationUtil;
 
 /**
  * Test class for the UserResource REST controller.

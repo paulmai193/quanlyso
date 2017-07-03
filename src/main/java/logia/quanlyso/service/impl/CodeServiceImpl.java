@@ -2,8 +2,9 @@ package logia.quanlyso.service.impl;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,7 +141,7 @@ public class CodeServiceImpl implements CodeService{
 	 */
 	@Override
 	public Transactions calculate(Transactions transactions) {
-		int chosenNumber = transactions.getChosenNumber();
+		String chosenNumber = transactions.getChosenNumber();
 		float netValue = transactions.getNetValue();
 		for (TransactionDetails details : transactions.getTransactionDetails()) {
 			// Get all condition
@@ -150,7 +151,6 @@ public class CodeServiceImpl implements CodeService{
 			Types types = details.getTypes();
 			
 			// Assume transactions of current date
-			DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
 			ZonedDateTime formattedDate = today.withHour(0).withMinute(0).withSecond(0).withNano(0);
 			List<Code> listCodes = this.codeRepository.findAllByChannelsAndOpenDate(channel, formattedDate);
@@ -178,73 +178,49 @@ public class CodeServiceImpl implements CodeService{
 	 * @param types the types
 	 * @return true, if successful
 	 */
-	private boolean checkCondition(int chosenNumber, List<Code> listCodes, Style style, Types types) {
-		if (style.getId().equals(StyleConstants.TWO_NUM.getId())) {
-			if (types.getId().equals(TypesConstants.TOP.getId())) {
-				// TODO check function
-				return true;
+	private boolean checkCondition(String chosenNumber, List<Code> listCodes, Style style, Types types) {
+		List<Code> filtered = new ArrayList<>();
+
+		if (types.getId().equals(TypesConstants.TOP.getId())) {
+			if (style.getId().equals(StyleConstants.TWO_NUM.getId())) {
+				filtered = this.filterCodeOnTop(listCodes, 2);	
 			}
-			else if (types.getId().equals(TypesConstants.BOTTOM.getId())) {
-				// TODO check function
-				return true;
-			}
-			else if (types.getId().equals(TypesConstants.BOTH.getId())) {
-				// TODO check function
-				return true;
-			}
-			else if (types.getId().equals(TypesConstants.ROLL.getId())) {
-				// TODO check function
-				return true;
-			}
-			else {
-				return false;
+			else if (style.getId().equals(StyleConstants.THREE_NUM.getId())) {
+				filtered = this.filterCodeOnTop(listCodes, 3);
 			}
 		}
-		else if (style.getId().equals(StyleConstants.THREE_NUM.getId())) {
-			if (types.getId().equals(TypesConstants.TOP.getId())) {
-				// TODO check function
-				return true;
+		else if (types.getId().equals(TypesConstants.BOTH.getId())) {
+			if (style.getId().equals(StyleConstants.TWO_NUM.getId())) {
+				filtered = this.filterCodeOnTop(listCodes, 2);	
 			}
-			else if (types.getId().equals(TypesConstants.BOTTOM.getId())) {
-				// TODO check function
-				return true;
+			else if (style.getId().equals(StyleConstants.THREE_NUM.getId())) {
+				filtered = this.filterCodeOnTop(listCodes, 3);
 			}
-			else if (types.getId().equals(TypesConstants.BOTH.getId())) {
-				// TODO check function
-				return true;
-			}
-			else if (types.getId().equals(TypesConstants.ROLL.getId())) {
-				// TODO check function
-				return true;
-			}
-			else {
-				return false;
-			}
+			filtered.addAll(this.filterCodeOnBottom(listCodes));
 		}
-		else if (style.getId().equals(StyleConstants.FOUR_NUM.getId())) {
-			if (types.getId().equals(TypesConstants.TOP.getId())) {
-				// TODO check function
-				return true;
-			}
-			else if (types.getId().equals(TypesConstants.BOTTOM.getId())) {
-				// TODO check function
-				return true;
-			}
-			else if (types.getId().equals(TypesConstants.BOTH.getId())) {
-				// TODO check function
-				return true;
-			}
-			else if (types.getId().equals(TypesConstants.ROLL.getId())) {
-				// TODO check function
-				return true;
-			}
-			else {
-				return false;
-			}
+		else if (types.getId().equals(TypesConstants.BOTTOM.getId())) {
+			filtered = this.filterCodeOnBottom(listCodes);				
 		}
-		else {
-			return false;	
-		}		
+		else if (types.getId().equals(TypesConstants.ROLL.getId())) {
+			filtered = listCodes;
+		}
+		
+		for (Code code : filtered) {
+			if (code.getCode().contains(chosenNumber))
+				return true;
+		}
+		return false;
 	}
 	
+	private List<Code> filterCodeOnTop(List<Code> codes, int length) {
+		List<Code> filtered = new ArrayList<>();
+		filtered = codes.stream().filter(code -> code.getCode().length() == length).collect(Collectors.toList());
+		return filtered;
+	}
+	
+	private List<Code> filterCodeOnBottom(List<Code> codes) {
+		List<Code> filtered = new ArrayList<>();
+		filtered = codes.stream().filter(code -> code.getCode().length() == 6).collect(Collectors.toList()); // 6 is max length of code
+		return filtered;
+	}
 }

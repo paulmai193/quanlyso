@@ -1,10 +1,10 @@
 package logia.quanlyso.service;
 
-import logia.quanlyso.domain.Transactions;
-import logia.quanlyso.service.dto.CodeDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
+
+import logia.quanlyso.domain.Transactions;
+import logia.quanlyso.service.dto.CodeDTO;
 
 /**
  * Service Interface for managing Code.
