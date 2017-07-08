@@ -22,82 +22,83 @@ import logia.quanlyso.service.mapper.ProfitFactorMapper;
  */
 @Service
 @Transactional
-public class ProfitFactorServiceImpl implements ProfitFactorService{
+public class ProfitFactorServiceImpl implements ProfitFactorService {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(ProfitFactorServiceImpl.class);
-    
-    /** The profit factor repository. */
-    private final ProfitFactorRepository profitFactorRepository;
+	/** The log. */
+	private final Logger					log	= LoggerFactory
+			.getLogger(ProfitFactorServiceImpl.class);
 
-    /** The profit factor mapper. */
-    private final ProfitFactorMapper profitFactorMapper;
+	/** The profit factor repository. */
+	private final ProfitFactorRepository	profitFactorRepository;
 
-    /**
-     * Instantiates a new profit factor service impl.
-     *
-     * @param profitFactorRepository the profit factor repository
-     * @param profitFactorMapper the profit factor mapper
-     */
-    public ProfitFactorServiceImpl(ProfitFactorRepository profitFactorRepository, ProfitFactorMapper profitFactorMapper) {
-        this.profitFactorRepository = profitFactorRepository;
-        this.profitFactorMapper = profitFactorMapper;
-    }
+	/** The profit factor mapper. */
+	private final ProfitFactorMapper		profitFactorMapper;
 
-    /**
-     * Save a profitFactor.
-     *
-     * @param profitFactorDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public ProfitFactorDTO save(ProfitFactorDTO profitFactorDTO) {
-        log.debug("Request to save ProfitFactor : {}", profitFactorDTO);
-        ProfitFactor profitFactor = profitFactorMapper.toEntity(profitFactorDTO);
-        profitFactor = profitFactorRepository.save(profitFactor);
-        ProfitFactorDTO result = profitFactorMapper.toDto(profitFactor);
-        return result;
-    }
+	/**
+	 * Instantiates a new profit factor service impl.
+	 *
+	 * @param profitFactorRepository the profit factor repository
+	 * @param profitFactorMapper the profit factor mapper
+	 */
+	public ProfitFactorServiceImpl(ProfitFactorRepository profitFactorRepository,
+			ProfitFactorMapper profitFactorMapper) {
+		this.profitFactorRepository = profitFactorRepository;
+		this.profitFactorMapper = profitFactorMapper;
+	}
 
-    /**
-     *  Get all the profitFactors.
-     *  
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<ProfitFactorDTO> findAll() {
-        log.debug("Request to get all ProfitFactors");
-        List<ProfitFactorDTO> result = profitFactorRepository.findAll().stream()
-            .map(profitFactorMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+	/**
+	 * Save a profitFactor.
+	 *
+	 * @param profitFactorDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public ProfitFactorDTO save(ProfitFactorDTO profitFactorDTO) {
+		this.log.debug("Request to save ProfitFactor : {}", profitFactorDTO);
+		ProfitFactor profitFactor = this.profitFactorMapper.toEntity(profitFactorDTO);
+		profitFactor = this.profitFactorRepository.save(profitFactor);
+		ProfitFactorDTO result = this.profitFactorMapper.toDto(profitFactor);
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Get all the profitFactors.
+	 * 
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<ProfitFactorDTO> findAll() {
+		this.log.debug("Request to get all ProfitFactors");
+		List<ProfitFactorDTO> result = this.profitFactorRepository.findAll().stream()
+				.map(this.profitFactorMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
 
-    /**
-     *  Get one profitFactor by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public ProfitFactorDTO findOne(Long id) {
-        log.debug("Request to get ProfitFactor : {}", id);
-        ProfitFactor profitFactor = profitFactorRepository.findOne(id);
-        ProfitFactorDTO profitFactorDTO = profitFactorMapper.toDto(profitFactor);
-        return profitFactorDTO;
-    }
+		return result;
+	}
 
-    /**
-     *  Delete the  profitFactor by id.
-     *
-     *  @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete ProfitFactor : {}", id);
-        profitFactorRepository.delete(id);
-    }
+	/**
+	 * Get one profitFactor by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public ProfitFactorDTO findOne(Long id) {
+		this.log.debug("Request to get ProfitFactor : {}", id);
+		ProfitFactor profitFactor = this.profitFactorRepository.findOne(id);
+		ProfitFactorDTO profitFactorDTO = this.profitFactorMapper.toDto(profitFactor);
+		return profitFactorDTO;
+	}
+
+	/**
+	 * Delete the profitFactor by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		this.log.debug("Request to delete ProfitFactor : {}", id);
+		this.profitFactorRepository.delete(id);
+	}
 }

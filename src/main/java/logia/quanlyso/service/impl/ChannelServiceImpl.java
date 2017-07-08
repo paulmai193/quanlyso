@@ -24,125 +24,128 @@ import logia.quanlyso.service.mapper.ChannelMapper;
  */
 @Service
 @Transactional
-public class ChannelServiceImpl implements ChannelService{
+public class ChannelServiceImpl implements ChannelService {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(ChannelServiceImpl.class);
-    
-    /** The channel repository. */
-    private final ChannelRepository channelRepository;
+	/** The log. */
+	private final Logger			log	= LoggerFactory.getLogger(ChannelServiceImpl.class);
 
-    /** The channel mapper. */
-    private final ChannelMapper channelMapper;
+	/** The channel repository. */
+	private final ChannelRepository	channelRepository;
 
-    /**
-     * Instantiates a new channel service impl.
-     *
-     * @param channelRepository the channel repository
-     * @param channelMapper the channel mapper
-     */
-    public ChannelServiceImpl(ChannelRepository channelRepository, ChannelMapper channelMapper) {
-        this.channelRepository = channelRepository;
-        this.channelMapper = channelMapper;
-    }
+	/** The channel mapper. */
+	private final ChannelMapper		channelMapper;
 
-    /**
-     * Save a channel.
-     *
-     * @param channelDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public ChannelDTO save(ChannelDTO channelDTO) {
-        log.debug("Request to save Channel : {}", channelDTO);
-        Channel channel = channelMapper.toEntity(channelDTO);
-        channel = channelRepository.save(channel);
-        ChannelDTO result = channelMapper.toDto(channel);
-        return result;
-    }
+	/**
+	 * Instantiates a new channel service impl.
+	 *
+	 * @param channelRepository the channel repository
+	 * @param channelMapper the channel mapper
+	 */
+	public ChannelServiceImpl(ChannelRepository channelRepository, ChannelMapper channelMapper) {
+		this.channelRepository = channelRepository;
+		this.channelMapper = channelMapper;
+	}
 
-    /**
-     *  Get all the channels.
-     *  
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<ChannelDTO> findAll() {
-        log.debug("Request to get all Channels");
-        List<ChannelDTO> result = channelRepository.findAll().stream()
-            .map(channelMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+	/**
+	 * Save a channel.
+	 *
+	 * @param channelDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public ChannelDTO save(ChannelDTO channelDTO) {
+		this.log.debug("Request to save Channel : {}", channelDTO);
+		Channel channel = this.channelMapper.toEntity(channelDTO);
+		channel = this.channelRepository.save(channel);
+		ChannelDTO result = this.channelMapper.toDto(channel);
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Get all the channels.
+	 * 
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<ChannelDTO> findAll() {
+		this.log.debug("Request to get all Channels");
+		List<ChannelDTO> result = this.channelRepository.findAll().stream().map(this.channelMapper::toDto)
+				.collect(Collectors.toCollection(LinkedList::new));
 
-    /**
-     *  Get one channel by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public ChannelDTO findOne(Long id) {
-        log.debug("Request to get Channel : {}", id);
-        Channel channel = channelRepository.findOne(id);
-        ChannelDTO channelDTO = channelMapper.toDto(channel);
-        return channelDTO;
-    }
-    
-    /* (non-Javadoc)
-     * @see logia.quanlyso.service.ChannelService#findAllByOpenDay(logia.quanlyso.service.dto.ChannelOpenDay)
-     */
-    @Override
-    public List<ChannelDTO> findAllByOpenDay(ChannelOpenDay openDay) {
-    	log.debug("Request to get Channel by open day: {}", openDay);
-    	List<Channel> result;
-    	switch (openDay) {
-		case sunday:
-			result = channelRepository.findAllBySunday();
-			break;
-			
-		case monday:
-			result = channelRepository.findAllByMonday();
-			break;
-			
-		case tuesday:
-			result = channelRepository.findAllByTuesday();
-			break;
-			
-		case wednesday:
-			result = channelRepository.findAllByWednesday();
-			break;
-			
-		case thursday:
-			result = channelRepository.findAllByThursday();
-			break;
-			
-		case friday:
-			result = channelRepository.findAllByFriday();
-			break;
-			
-		case saturday:
-			result = channelRepository.findAllBySaturday();
-			break;
+		return result;
+	}
 
-		default:
-			result = new ArrayList<>(0);
-			break;
+	/**
+	 * Get one channel by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public ChannelDTO findOne(Long id) {
+		this.log.debug("Request to get Channel : {}", id);
+		Channel channel = this.channelRepository.findOne(id);
+		ChannelDTO channelDTO = this.channelMapper.toDto(channel);
+		return channelDTO;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see logia.quanlyso.service.ChannelService#findAllByOpenDay(logia.quanlyso.service.dto.
+	 * ChannelOpenDay)
+	 */
+	@Override
+	public List<ChannelDTO> findAllByOpenDay(ChannelOpenDay openDay) {
+		this.log.debug("Request to get Channel by open day: {}", openDay);
+		List<Channel> result;
+		switch (openDay) {
+			case sunday:
+				result = this.channelRepository.findAllBySunday();
+				break;
+
+			case monday:
+				result = this.channelRepository.findAllByMonday();
+				break;
+
+			case tuesday:
+				result = this.channelRepository.findAllByTuesday();
+				break;
+
+			case wednesday:
+				result = this.channelRepository.findAllByWednesday();
+				break;
+
+			case thursday:
+				result = this.channelRepository.findAllByThursday();
+				break;
+
+			case friday:
+				result = this.channelRepository.findAllByFriday();
+				break;
+
+			case saturday:
+				result = this.channelRepository.findAllBySaturday();
+				break;
+
+			default:
+				result = new ArrayList<>(0);
+				break;
 		}
-    	return result.stream().map(channelMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
-    }
+		return result.stream().map(this.channelMapper::toDto)
+				.collect(Collectors.toCollection(LinkedList::new));
+	}
 
-    /**
-     *  Delete the  channel by id.
-     *
-     *  @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Channel : {}", id);
-        channelRepository.delete(id);
-    }
+	/**
+	 * Delete the channel by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		this.log.debug("Request to delete Channel : {}", id);
+		this.channelRepository.delete(id);
+	}
 }

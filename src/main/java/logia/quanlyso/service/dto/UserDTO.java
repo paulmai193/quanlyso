@@ -22,290 +22,285 @@ import logia.quanlyso.domain.User;
  */
 public class UserDTO {
 
-    /** The id. */
-    private Long id;
+	/** The id. */
+	private Long			id;
 
-    /** The login. */
-    @NotBlank
-    @Pattern(regexp = Constants.LOGIN_REGEX)
-    @Size(min = 1, max = 50)
-    private String login;
+	/** The login. */
+	@NotBlank
+	@Pattern(regexp = Constants.LOGIN_REGEX)
+	@Size(min = 1, max = 50)
+	private String			login;
 
-    /** The first name. */
-    @Size(max = 50)
-    private String firstName;
+	/** The first name. */
+	@Size(max = 50)
+	private String			firstName;
 
-    /** The last name. */
-    @Size(max = 50)
-    private String lastName;
+	/** The last name. */
+	@Size(max = 50)
+	private String			lastName;
 
-    /** The email. */
-    @Email
-    @Size(min = 5, max = 100)
-    private String email;
+	/** The email. */
+	@Email
+	@Size(min = 5, max = 100)
+	private String			email;
 
-    /** The image url. */
-    @Size(max = 256)
-    private String imageUrl;
+	/** The image url. */
+	@Size(max = 256)
+	private String			imageUrl;
 
-    /** The activated. */
-    private boolean activated = false;
+	/** The activated. */
+	private boolean			activated	= false;
 
-    /** The lang key. */
-    @Size(min = 2, max = 5)
-    private String langKey;
+	/** The lang key. */
+	@Size(min = 2, max = 5)
+	private String			langKey;
 
-    /** The created by. */
-    private String createdBy;
+	/** The created by. */
+	private String			createdBy;
 
-    /** The created date. */
-    private Instant createdDate;
+	/** The created date. */
+	private Instant			createdDate;
 
-    /** The last modified by. */
-    private String lastModifiedBy;
+	/** The last modified by. */
+	private String			lastModifiedBy;
 
-    /** The last modified date. */
-    private Instant lastModifiedDate;
+	/** The last modified date. */
+	private Instant			lastModifiedDate;
 
-    /** The authorities. */
-    private Set<String> authorities;
-    
-    /** The grant access date. */
-    private ZonedDateTime grantAccessDate;
+	/** The authorities. */
+	private Set<String>		authorities;
 
-    /** The revoke access date. */
-    private ZonedDateTime revokeAccessDate;
+	/** The grant access date. */
+	private ZonedDateTime	grantAccessDate;
 
-    /**
-     * Instantiates a new user DTO.
-     */
-    public UserDTO() {
-        // Empty constructor needed for MapStruct.
-    }
+	/** The revoke access date. */
+	private ZonedDateTime	revokeAccessDate;
 
-    /**
-     * Instantiates a new user DTO.
-     *
-     * @param user the user
-     */
-    public UserDTO(User user) {
-        this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
-            user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
-            user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(), user.getLastModifiedDate(),
-            user.getAuthorities().stream().map(Authority::getName)
-                .collect(Collectors.toSet()), user.getGrantAccessDate(), user.getRevokeAccessDate());
-    }
+	/**
+	 * Instantiates a new user DTO.
+	 */
+	public UserDTO() {
+		// Empty constructor needed for MapStruct.
+	}
 
-    /**
-     * Instantiates a new user DTO.
-     *
-     * @param id the id
-     * @param login the login
-     * @param firstName the first name
-     * @param lastName the last name
-     * @param email the email
-     * @param activated the activated
-     * @param imageUrl the image url
-     * @param langKey the lang key
-     * @param createdBy the created by
-     * @param createdDate the created date
-     * @param lastModifiedBy the last modified by
-     * @param lastModifiedDate the last modified date
-     * @param authorities the authorities
-     * @param grantAccessDate the grant access date
-     * @param revokeAccessDate the revoke access date
-     */
-    public UserDTO(Long id, String login, String firstName, String lastName,
-        String email, boolean activated, String imageUrl, String langKey,
-        String createdBy, Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
-        Set<String> authorities, ZonedDateTime grantAccessDate, ZonedDateTime revokeAccessDate) {
+	/**
+	 * Instantiates a new user DTO.
+	 *
+	 * @param user the user
+	 */
+	public UserDTO(User user) {
+		this(user.getId(), user.getLogin(), user.getFirstName(), user.getLastName(),
+				user.getEmail(), user.getActivated(), user.getImageUrl(), user.getLangKey(),
+				user.getCreatedBy(), user.getCreatedDate(), user.getLastModifiedBy(),
+				user.getLastModifiedDate(),
+				user.getAuthorities().stream().map(Authority::getName).collect(Collectors.toSet()),
+				user.getGrantAccessDate(), user.getRevokeAccessDate());
+	}
 
-        this.id = id;
-        this.login = login;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.activated = activated;
-        this.imageUrl = imageUrl;
-        this.langKey = langKey;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.lastModifiedBy = lastModifiedBy;
-        this.lastModifiedDate = lastModifiedDate;
-        this.authorities = authorities;
-        this.grantAccessDate = grantAccessDate;
-        this.revokeAccessDate = revokeAccessDate;
-    }
+	/**
+	 * Instantiates a new user DTO.
+	 *
+	 * @param id the id
+	 * @param login the login
+	 * @param firstName the first name
+	 * @param lastName the last name
+	 * @param email the email
+	 * @param activated the activated
+	 * @param imageUrl the image url
+	 * @param langKey the lang key
+	 * @param createdBy the created by
+	 * @param createdDate the created date
+	 * @param lastModifiedBy the last modified by
+	 * @param lastModifiedDate the last modified date
+	 * @param authorities the authorities
+	 * @param grantAccessDate the grant access date
+	 * @param revokeAccessDate the revoke access date
+	 */
+	public UserDTO(Long id, String login, String firstName, String lastName, String email,
+			boolean activated, String imageUrl, String langKey, String createdBy,
+			Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
+			Set<String> authorities, ZonedDateTime grantAccessDate,
+			ZonedDateTime revokeAccessDate) {
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
+		this.id = id;
+		this.login = login;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.activated = activated;
+		this.imageUrl = imageUrl;
+		this.langKey = langKey;
+		this.createdBy = createdBy;
+		this.createdDate = createdDate;
+		this.lastModifiedBy = lastModifiedBy;
+		this.lastModifiedDate = lastModifiedDate;
+		this.authorities = authorities;
+		this.grantAccessDate = grantAccessDate;
+		this.revokeAccessDate = revokeAccessDate;
+	}
 
-    /**
-     * Sets the id.
-     *
-     * @param id the new id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * Gets the login.
-     *
-     * @return the login
-     */
-    public String getLogin() {
-        return login;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * Sets the login.
-     *
-     * @param login the new login
-     */
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	/**
+	 * Gets the login.
+	 *
+	 * @return the login
+	 */
+	public String getLogin() {
+		return this.login;
+	}
 
-    /**
-     * Gets the first name.
-     *
-     * @return the first name
-     */
-    public String getFirstName() {
-        return firstName;
-    }
+	/**
+	 * Sets the login.
+	 *
+	 * @param login the new login
+	 */
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    /**
-     * Gets the last name.
-     *
-     * @return the last name
-     */
-    public String getLastName() {
-        return lastName;
-    }
+	/**
+	 * Gets the first name.
+	 *
+	 * @return the first name
+	 */
+	public String getFirstName() {
+		return this.firstName;
+	}
 
-    /**
-     * Gets the email.
-     *
-     * @return the email
-     */
-    public String getEmail() {
-        return email;
-    }
+	/**
+	 * Gets the last name.
+	 *
+	 * @return the last name
+	 */
+	public String getLastName() {
+		return this.lastName;
+	}
 
-    /**
-     * Gets the image url.
-     *
-     * @return the image url
-     */
-    public String getImageUrl() {
-        return imageUrl;
-    }
+	/**
+	 * Gets the email.
+	 *
+	 * @return the email
+	 */
+	public String getEmail() {
+		return this.email;
+	}
 
-    /**
-     * Checks if is activated.
-     *
-     * @return true, if is activated
-     */
-    public boolean isActivated() {
-        return activated;
-    }
+	/**
+	 * Gets the image url.
+	 *
+	 * @return the image url
+	 */
+	public String getImageUrl() {
+		return this.imageUrl;
+	}
 
-    /**
-     * Gets the lang key.
-     *
-     * @return the lang key
-     */
-    public String getLangKey() {
-        return langKey;
-    }
+	/**
+	 * Checks if is activated.
+	 *
+	 * @return true, if is activated
+	 */
+	public boolean isActivated() {
+		return this.activated;
+	}
 
-    /**
-     * Gets the created by.
-     *
-     * @return the created by
-     */
-    public String getCreatedBy() {
-        return createdBy;
-    }
+	/**
+	 * Gets the lang key.
+	 *
+	 * @return the lang key
+	 */
+	public String getLangKey() {
+		return this.langKey;
+	}
 
-    /**
-     * Gets the created date.
-     *
-     * @return the created date
-     */
-    public Instant getCreatedDate() {
-        return createdDate;
-    }
+	/**
+	 * Gets the created by.
+	 *
+	 * @return the created by
+	 */
+	public String getCreatedBy() {
+		return this.createdBy;
+	}
 
-    /**
-     * Gets the last modified by.
-     *
-     * @return the last modified by
-     */
-    public String getLastModifiedBy() {
-        return lastModifiedBy;
-    }
+	/**
+	 * Gets the created date.
+	 *
+	 * @return the created date
+	 */
+	public Instant getCreatedDate() {
+		return this.createdDate;
+	}
 
-    /**
-     * Gets the last modified date.
-     *
-     * @return the last modified date
-     */
-    public Instant getLastModifiedDate() {
-        return lastModifiedDate;
-    }
+	/**
+	 * Gets the last modified by.
+	 *
+	 * @return the last modified by
+	 */
+	public String getLastModifiedBy() {
+		return this.lastModifiedBy;
+	}
 
-    /**
-     * Gets the authorities.
-     *
-     * @return the authorities
-     */
-    public Set<String> getAuthorities() {
-        return authorities;
-    }
+	/**
+	 * Gets the last modified date.
+	 *
+	 * @return the last modified date
+	 */
+	public Instant getLastModifiedDate() {
+		return this.lastModifiedDate;
+	}
 
-    /**
+	/**
+	 * Gets the authorities.
+	 *
+	 * @return the authorities
+	 */
+	public Set<String> getAuthorities() {
+		return this.authorities;
+	}
+
+	/**
 	 * @return the grantAccessDate
 	 */
 	public ZonedDateTime getGrantAccessDate() {
-		return grantAccessDate;
+		return this.grantAccessDate;
 	}
 
 	/**
 	 * @return the revokeAccessDate
 	 */
 	public ZonedDateTime getRevokeAccessDate() {
-		return revokeAccessDate;
+		return this.revokeAccessDate;
 	}
 
-	/* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "UserDTO{" +
-            "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", imageUrl='" + imageUrl + '\'' +
-            ", activated=" + activated +
-            ", langKey='" + langKey + '\'' +
-            ", createdBy=" + createdBy +
-            ", createdDate=" + createdDate +
-            ", lastModifiedBy='" + lastModifiedBy + '\'' +
-            ", lastModifiedDate=" + lastModifiedDate +
-            ", authorities=" + authorities +
-            ", grantAccessDate=" + grantAccessDate +
-            ", revokeAccessDate=" + revokeAccessDate +
-            "}";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "UserDTO{" + "login='" + this.login + '\'' + ", firstName='" + this.firstName + '\''
+				+ ", lastName='" + this.lastName + '\'' + ", email='" + this.email + '\'' + ", imageUrl='"
+				+ this.imageUrl + '\'' + ", activated=" + this.activated + ", langKey='" + this.langKey + '\''
+				+ ", createdBy=" + this.createdBy + ", createdDate=" + this.createdDate + ", lastModifiedBy='"
+				+ this.lastModifiedBy + '\'' + ", lastModifiedDate=" + this.lastModifiedDate
+				+ ", authorities=" + this.authorities + ", grantAccessDate=" + this.grantAccessDate
+				+ ", revokeAccessDate=" + this.revokeAccessDate + "}";
+	}
 }

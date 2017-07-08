@@ -24,81 +24,99 @@ import logia.quanlyso.domain.PersistentAuditEvent;
 @Repository
 public class CustomAuditEventRepository implements AuditEventRepository {
 
-    /** The Constant AUTHORIZATION_FAILURE. */
-    private static final String AUTHORIZATION_FAILURE = "AUTHORIZATION_FAILURE";
+	/** The Constant AUTHORIZATION_FAILURE. */
+	private static final String						AUTHORIZATION_FAILURE	= "AUTHORIZATION_FAILURE";
 
-    /** The persistence audit event repository. */
-    private final PersistenceAuditEventRepository persistenceAuditEventRepository;
+	/** The persistence audit event repository. */
+	private final PersistenceAuditEventRepository	persistenceAuditEventRepository;
 
-    /** The audit event converter. */
-    private final AuditEventConverter auditEventConverter;
+	/** The audit event converter. */
+	private final AuditEventConverter				auditEventConverter;
 
-    /**
-     * Instantiates a new custom audit event repository.
-     *
-     * @param persistenceAuditEventRepository the persistence audit event repository
-     * @param auditEventConverter the audit event converter
-     */
-    public CustomAuditEventRepository(PersistenceAuditEventRepository persistenceAuditEventRepository,
-            AuditEventConverter auditEventConverter) {
+	/**
+	 * Instantiates a new custom audit event repository.
+	 *
+	 * @param persistenceAuditEventRepository the persistence audit event repository
+	 * @param auditEventConverter the audit event converter
+	 */
+	public CustomAuditEventRepository(
+			PersistenceAuditEventRepository persistenceAuditEventRepository,
+			AuditEventConverter auditEventConverter) {
 
-        this.persistenceAuditEventRepository = persistenceAuditEventRepository;
-        this.auditEventConverter = auditEventConverter;
-    }
+		this.persistenceAuditEventRepository = persistenceAuditEventRepository;
+		this.auditEventConverter = auditEventConverter;
+	}
 
-    /* (non-Javadoc)
-     * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.util.Date)
-     */
-    @Override
-    public List<AuditEvent> find(Date after) {
-        Iterable<PersistentAuditEvent> persistentAuditEvents =
-            persistenceAuditEventRepository.findByAuditEventDateAfter(LocalDateTime.from(after.toInstant()));
-        return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.util.Date)
+	 */
+	@Override
+	public List<AuditEvent> find(Date after) {
+		Iterable<PersistentAuditEvent> persistentAuditEvents = this.persistenceAuditEventRepository
+				.findByAuditEventDateAfter(LocalDateTime.from(after.toInstant()));
+		return this.auditEventConverter.convertToAuditEvent(persistentAuditEvents);
+	}
 
-    /* (non-Javadoc)
-     * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String, java.util.Date)
-     */
-    @Override
-    public List<AuditEvent> find(String principal, Date after) {
-        Iterable<PersistentAuditEvent> persistentAuditEvents;
-        if (principal == null && after == null) {
-            persistentAuditEvents = persistenceAuditEventRepository.findAll();
-        } else if (after == null) {
-            persistentAuditEvents = persistenceAuditEventRepository.findByPrincipal(principal);
-        } else {
-            persistentAuditEvents =
-                persistenceAuditEventRepository.findByPrincipalAndAuditEventDateAfter(principal, LocalDateTime.from(after.toInstant()));
-        }
-        return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String,
+	 * java.util.Date)
+	 */
+	@Override
+	public List<AuditEvent> find(String principal, Date after) {
+		Iterable<PersistentAuditEvent> persistentAuditEvents;
+		if (principal == null && after == null) {
+			persistentAuditEvents = this.persistenceAuditEventRepository.findAll();
+		}
+		else if (after == null) {
+			persistentAuditEvents = this.persistenceAuditEventRepository.findByPrincipal(principal);
+		}
+		else {
+			persistentAuditEvents = this.persistenceAuditEventRepository
+					.findByPrincipalAndAuditEventDateAfter(principal,
+							LocalDateTime.from(after.toInstant()));
+		}
+		return this.auditEventConverter.convertToAuditEvent(persistentAuditEvents);
+	}
 
-    /* (non-Javadoc)
-     * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String, java.util.Date, java.lang.String)
-     */
-    @Override
-    public List<AuditEvent> find(String principal, Date after, String type) {
-        Iterable<PersistentAuditEvent> persistentAuditEvents =
-            persistenceAuditEventRepository.findByPrincipalAndAuditEventDateAfterAndAuditEventType(principal, LocalDateTime.from(after.toInstant()), type);
-        return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String,
+	 * java.util.Date, java.lang.String)
+	 */
+	@Override
+	public List<AuditEvent> find(String principal, Date after, String type) {
+		Iterable<PersistentAuditEvent> persistentAuditEvents = this.persistenceAuditEventRepository
+				.findByPrincipalAndAuditEventDateAfterAndAuditEventType(principal,
+						LocalDateTime.from(after.toInstant()), type);
+		return this.auditEventConverter.convertToAuditEvent(persistentAuditEvents);
+	}
 
-    /* (non-Javadoc)
-     * @see org.springframework.boot.actuate.audit.AuditEventRepository#add(org.springframework.boot.actuate.audit.AuditEvent)
-     */
-    @Override
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void add(AuditEvent event) {
-        if (!AUTHORIZATION_FAILURE.equals(event.getType()) &&
-            !Constants.ANONYMOUS_USER.equals(event.getPrincipal())) {
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.boot.actuate.audit.AuditEventRepository#add(org.springframework.boot.
+	 * actuate.audit.AuditEvent)
+	 */
+	@Override
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void add(AuditEvent event) {
+		if (!CustomAuditEventRepository.AUTHORIZATION_FAILURE.equals(event.getType())
+				&& !Constants.ANONYMOUS_USER.equals(event.getPrincipal())) {
 
-            PersistentAuditEvent persistentAuditEvent = new PersistentAuditEvent();
-            persistentAuditEvent.setPrincipal(event.getPrincipal());
-            persistentAuditEvent.setAuditEventType(event.getType());
-            Instant instant = Instant.ofEpochMilli(event.getTimestamp().getTime());
-            persistentAuditEvent.setAuditEventDate(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()));
-            persistentAuditEvent.setData(auditEventConverter.convertDataToStrings(event.getData()));
-            persistenceAuditEventRepository.save(persistentAuditEvent);
-        }
-    }
+			PersistentAuditEvent persistentAuditEvent = new PersistentAuditEvent();
+			persistentAuditEvent.setPrincipal(event.getPrincipal());
+			persistentAuditEvent.setAuditEventType(event.getType());
+			Instant instant = Instant.ofEpochMilli(event.getTimestamp().getTime());
+			persistentAuditEvent
+			.setAuditEventDate(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()));
+			persistentAuditEvent.setData(this.auditEventConverter.convertDataToStrings(event.getData()));
+			this.persistenceAuditEventRepository.save(persistentAuditEvent);
+		}
+	}
 }

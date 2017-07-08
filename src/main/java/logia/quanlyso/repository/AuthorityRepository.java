@@ -10,7 +10,7 @@ import logia.quanlyso.domain.Authority;
  * @author Dai Mai
  */
 public interface AuthorityRepository extends JpaRepository<Authority, String> {
-	
+
 	/**
 	 * Gets the one by name.
 	 *

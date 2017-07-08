@@ -18,15 +18,15 @@ import logia.quanlyso.aop.logging.LoggingAspect;
 @EnableAspectJAutoProxy
 public class LoggingAspectConfiguration {
 
-    /**
-     * Logging aspect.
-     *
-     * @param env the env
-     * @return the logging aspect
-     */
-    @Bean
-    @Profile(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
-    public LoggingAspect loggingAspect(Environment env) {
-        return new LoggingAspect(env);
-    }
+	/**
+	 * Logging aspect.
+	 *
+	 * @param env the env
+	 * @return the logging aspect
+	 */
+	@Bean
+	@Profile(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT)
+	public LoggingAspect loggingAspect(Environment env) {
+		return new LoggingAspect(env);
+	}
 }

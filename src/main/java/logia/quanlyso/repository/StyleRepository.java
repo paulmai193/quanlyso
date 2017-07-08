@@ -10,6 +10,6 @@ import logia.quanlyso.domain.Style;
  * @author Dai Mai
  */
 @SuppressWarnings("unused")
-public interface StyleRepository extends JpaRepository<Style,Long> {
+public interface StyleRepository extends JpaRepository<Style, Long> {
 
 }

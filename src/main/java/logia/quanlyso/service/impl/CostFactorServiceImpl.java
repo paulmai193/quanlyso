@@ -22,82 +22,82 @@ import logia.quanlyso.service.mapper.CostFactorMapper;
  */
 @Service
 @Transactional
-public class CostFactorServiceImpl implements CostFactorService{
+public class CostFactorServiceImpl implements CostFactorService {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(CostFactorServiceImpl.class);
-    
-    /** The cost factor repository. */
-    private final CostFactorRepository costFactorRepository;
+	/** The log. */
+	private final Logger				log	= LoggerFactory.getLogger(CostFactorServiceImpl.class);
 
-    /** The cost factor mapper. */
-    private final CostFactorMapper costFactorMapper;
+	/** The cost factor repository. */
+	private final CostFactorRepository	costFactorRepository;
 
-    /**
-     * Instantiates a new cost factor service impl.
-     *
-     * @param costFactorRepository the cost factor repository
-     * @param costFactorMapper the cost factor mapper
-     */
-    public CostFactorServiceImpl(CostFactorRepository costFactorRepository, CostFactorMapper costFactorMapper) {
-        this.costFactorRepository = costFactorRepository;
-        this.costFactorMapper = costFactorMapper;
-    }
+	/** The cost factor mapper. */
+	private final CostFactorMapper		costFactorMapper;
 
-    /**
-     * Save a costFactor.
-     *
-     * @param costFactorDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public CostFactorDTO save(CostFactorDTO costFactorDTO) {
-        log.debug("Request to save CostFactor : {}", costFactorDTO);
-        CostFactor costFactor = costFactorMapper.toEntity(costFactorDTO);
-        costFactor = costFactorRepository.save(costFactor);
-        CostFactorDTO result = costFactorMapper.toDto(costFactor);
-        return result;
-    }
+	/**
+	 * Instantiates a new cost factor service impl.
+	 *
+	 * @param costFactorRepository the cost factor repository
+	 * @param costFactorMapper the cost factor mapper
+	 */
+	public CostFactorServiceImpl(CostFactorRepository costFactorRepository,
+			CostFactorMapper costFactorMapper) {
+		this.costFactorRepository = costFactorRepository;
+		this.costFactorMapper = costFactorMapper;
+	}
 
-    /**
-     *  Get all the costFactors.
-     *  
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<CostFactorDTO> findAll() {
-        log.debug("Request to get all CostFactors");
-        List<CostFactorDTO> result = costFactorRepository.findAll().stream()
-            .map(costFactorMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+	/**
+	 * Save a costFactor.
+	 *
+	 * @param costFactorDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public CostFactorDTO save(CostFactorDTO costFactorDTO) {
+		this.log.debug("Request to save CostFactor : {}", costFactorDTO);
+		CostFactor costFactor = this.costFactorMapper.toEntity(costFactorDTO);
+		costFactor = this.costFactorRepository.save(costFactor);
+		CostFactorDTO result = this.costFactorMapper.toDto(costFactor);
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Get all the costFactors.
+	 * 
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<CostFactorDTO> findAll() {
+		this.log.debug("Request to get all CostFactors");
+		List<CostFactorDTO> result = this.costFactorRepository.findAll().stream()
+				.map(this.costFactorMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
 
-    /**
-     *  Get one costFactor by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public CostFactorDTO findOne(Long id) {
-        log.debug("Request to get CostFactor : {}", id);
-        CostFactor costFactor = costFactorRepository.findOne(id);
-        CostFactorDTO costFactorDTO = costFactorMapper.toDto(costFactor);
-        return costFactorDTO;
-    }
+		return result;
+	}
 
-    /**
-     *  Delete the  costFactor by id.
-     *
-     *  @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete CostFactor : {}", id);
-        costFactorRepository.delete(id);
-    }
+	/**
+	 * Get one costFactor by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public CostFactorDTO findOne(Long id) {
+		this.log.debug("Request to get CostFactor : {}", id);
+		CostFactor costFactor = this.costFactorRepository.findOne(id);
+		CostFactorDTO costFactorDTO = this.costFactorMapper.toDto(costFactor);
+		return costFactorDTO;
+	}
+
+	/**
+	 * Delete the costFactor by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		this.log.debug("Request to delete CostFactor : {}", id);
+		this.costFactorRepository.delete(id);
+	}
 }

@@ -30,30 +30,30 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Transactions extends AbstractAuditingEntity implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = 1L;
+	private static final long		serialVersionUID	= 1L;
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long					id;
 
 	/** The chosen number. */
 	@Column(name = "chosen_number")
-	private String chosenNumber;
+	private String					chosenNumber;
 
 	/** The net value. */
 	@Column(name = "net_value")
-	private Float netValue;
+	private Float					netValue;
 
 	/** The transaction details. */
 	@OneToMany(mappedBy = "transactions")
 	@JsonIgnore
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<TransactionDetails> transactionDetails = new HashSet<>();
+	private Set<TransactionDetails>	transactionDetails	= new HashSet<>();
 
 	/** The users. */
 	@ManyToOne()
-	private User users;
+	private User					users;
 
 	/**
 	 * Gets the id.
@@ -61,7 +61,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the id
 	 */
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	/**
@@ -79,7 +79,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the chosen number
 	 */
 	public String getChosenNumber() {
-		return chosenNumber;
+		return this.chosenNumber;
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the net value
 	 */
 	public Float getNetValue() {
-		return netValue;
+		return this.netValue;
 	}
 
 	/**
@@ -137,7 +137,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the transaction details
 	 */
 	public Set<TransactionDetails> getTransactionDetails() {
-		return transactionDetails;
+		return this.transactionDetails;
 	}
 
 	/**
@@ -160,7 +160,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	public Transactions addTransactionDetails(TransactionDetails transactionDetails) {
 		return this.addTransactionDetails(transactionDetails, true);
 	}
-	
+
 	/**
 	 * Adds the transaction details.
 	 *
@@ -168,11 +168,12 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @param isSetToTarget the is set to target detail
 	 * @return the transactions
 	 */
-	Transactions addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
+	Transactions addTransactionDetails(TransactionDetails transactionDetails,
+			boolean isSetToTarget) {
 		this.transactionDetails.add(transactionDetails);
 		if (isSetToTarget) {
-			transactionDetails.setTransactions(this, false);	
-		}		
+			transactionDetails.setTransactions(this, false);
+		}
 		return this;
 	}
 
@@ -185,7 +186,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	public Transactions removeTransactionDetails(TransactionDetails transactionDetails) {
 		return this.removeTransactionDetails(transactionDetails, true);
 	}
-	
+
 	/**
 	 * Removes the transaction details.
 	 *
@@ -193,11 +194,12 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @param isSetToTarget the is set to target detail
 	 * @return the transactions
 	 */
-	Transactions removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
+	Transactions removeTransactionDetails(TransactionDetails transactionDetails,
+			boolean isSetToTarget) {
 		this.transactionDetails.remove(transactionDetails);
 		if (isSetToTarget) {
-			transactionDetails.setTransactions(null, false);	
-		}		
+			transactionDetails.setTransactions(null, false);
+		}
 		return this;
 	}
 
@@ -226,7 +228,8 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the transactions
 	 */
 	public Transactions users(User user) {
-		this.setUsers(user);;
+		this.setUsers(user);
+		;
 		return this;
 	}
 
@@ -238,7 +241,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	public void setUsers(User user) {
 		this.setUsers(user, true);
 	}
-	
+
 	/**
 	 * Sets the users.
 	 *
@@ -252,7 +255,9 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -260,33 +265,34 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 		if (this == o) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (o == null || this.getClass() != o.getClass()) {
 			return false;
 		}
 		Transactions transactions = (Transactions) o;
-		if (transactions.getId() == null || getId() == null) {
+		if (transactions.getId() == null || this.getId() == null) {
 			return false;
 		}
-		return Objects.equals(getId(), transactions.getId());
+		return Objects.equals(this.getId(), transactions.getId());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return Objects.hashCode(getId());
+		return Objects.hashCode(this.getId());
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		return "Transactions{" +
-				"id=" + getId() +
-				", chosenNumber='" + getChosenNumber() + "'" +
-				", netValue='" + getNetValue() + "'" +
-				"}";
+		return "Transactions{" + "id=" + this.getId() + ", chosenNumber='" + this.getChosenNumber() + "'"
+				+ ", netValue='" + this.getNetValue() + "'" + "}";
 	}
 }

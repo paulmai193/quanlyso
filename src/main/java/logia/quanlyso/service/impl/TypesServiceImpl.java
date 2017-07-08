@@ -22,82 +22,81 @@ import logia.quanlyso.service.mapper.TypesMapper;
  */
 @Service
 @Transactional
-public class TypesServiceImpl implements TypesService{
+public class TypesServiceImpl implements TypesService {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(TypesServiceImpl.class);
-    
-    /** The types repository. */
-    private final TypesRepository typesRepository;
+	/** The log. */
+	private final Logger			log	= LoggerFactory.getLogger(TypesServiceImpl.class);
 
-    /** The types mapper. */
-    private final TypesMapper typesMapper;
+	/** The types repository. */
+	private final TypesRepository	typesRepository;
 
-    /**
-     * Instantiates a new types service impl.
-     *
-     * @param typesRepository the types repository
-     * @param typesMapper the types mapper
-     */
-    public TypesServiceImpl(TypesRepository typesRepository, TypesMapper typesMapper) {
-        this.typesRepository = typesRepository;
-        this.typesMapper = typesMapper;
-    }
+	/** The types mapper. */
+	private final TypesMapper		typesMapper;
 
-    /**
-     * Save a types.
-     *
-     * @param typesDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public TypesDTO save(TypesDTO typesDTO) {
-        log.debug("Request to save Types : {}", typesDTO);
-        Types types = typesMapper.toEntity(typesDTO);
-        types = typesRepository.save(types);
-        TypesDTO result = typesMapper.toDto(types);
-        return result;
-    }
+	/**
+	 * Instantiates a new types service impl.
+	 *
+	 * @param typesRepository the types repository
+	 * @param typesMapper the types mapper
+	 */
+	public TypesServiceImpl(TypesRepository typesRepository, TypesMapper typesMapper) {
+		this.typesRepository = typesRepository;
+		this.typesMapper = typesMapper;
+	}
 
-    /**
-     *  Get all the types.
-     *  
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<TypesDTO> findAll() {
-        log.debug("Request to get all Types");
-        List<TypesDTO> result = typesRepository.findAll().stream()
-            .map(typesMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+	/**
+	 * Save a types.
+	 *
+	 * @param typesDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public TypesDTO save(TypesDTO typesDTO) {
+		this.log.debug("Request to save Types : {}", typesDTO);
+		Types types = this.typesMapper.toEntity(typesDTO);
+		types = this.typesRepository.save(types);
+		TypesDTO result = this.typesMapper.toDto(types);
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Get all the types.
+	 * 
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<TypesDTO> findAll() {
+		this.log.debug("Request to get all Types");
+		List<TypesDTO> result = this.typesRepository.findAll().stream().map(this.typesMapper::toDto)
+				.collect(Collectors.toCollection(LinkedList::new));
 
-    /**
-     *  Get one types by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public TypesDTO findOne(Long id) {
-        log.debug("Request to get Types : {}", id);
-        Types types = typesRepository.findOne(id);
-        TypesDTO typesDTO = typesMapper.toDto(types);
-        return typesDTO;
-    }
+		return result;
+	}
 
-    /**
-     *  Delete the  types by id.
-     *
-     *  @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Types : {}", id);
-        typesRepository.delete(id);
-    }
+	/**
+	 * Get one types by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public TypesDTO findOne(Long id) {
+		this.log.debug("Request to get Types : {}", id);
+		Types types = this.typesRepository.findOne(id);
+		TypesDTO typesDTO = this.typesMapper.toDto(types);
+		return typesDTO;
+	}
+
+	/**
+	 * Delete the types by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		this.log.debug("Request to delete Types : {}", id);
+		this.typesRepository.delete(id);
+	}
 }

@@ -13,12 +13,14 @@ import logia.quanlyso.config.Constants;
 @Component
 public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
-    /* (non-Javadoc)
-     * @see org.springframework.data.domain.AuditorAware#getCurrentAuditor()
-     */
-    @Override
-    public String getCurrentAuditor() {
-        String userName = SecurityUtils.getCurrentUserLogin();
-        return userName != null ? userName : Constants.SYSTEM_ACCOUNT;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.data.domain.AuditorAware#getCurrentAuditor()
+	 */
+	@Override
+	public String getCurrentAuditor() {
+		String userName = SecurityUtils.getCurrentUserLogin();
+		return userName != null ? userName : Constants.SYSTEM_ACCOUNT;
+	}
 }

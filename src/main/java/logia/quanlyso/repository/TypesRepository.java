@@ -10,6 +10,6 @@ import logia.quanlyso.domain.Types;
  * @author Dai Mai
  */
 @SuppressWarnings("unused")
-public interface TypesRepository extends JpaRepository<Types,Long> {
+public interface TypesRepository extends JpaRepository<Types, Long> {
 
 }

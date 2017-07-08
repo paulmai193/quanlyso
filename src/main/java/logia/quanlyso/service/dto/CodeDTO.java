@@ -1,6 +1,5 @@
 package logia.quanlyso.service.dto;
 
-
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Objects;
@@ -10,73 +9,75 @@ import java.util.Objects;
  */
 public class CodeDTO implements Serializable {
 
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    private String code;
+	private Long			id;
 
-    private ZonedDateTime openDate;
+	private String			code;
 
-    private Long channelsId;
+	private ZonedDateTime	openDate;
 
-    public Long getId() {
-        return id;
-    }
+	private Long			channelsId;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    public String getCode() {
-        return code;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setCode(String code) {
-        this.code = code;
-    }
+	public String getCode() {
+		return this.code;
+	}
 
-    public ZonedDateTime getOpenDate() {
-        return openDate;
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void setOpenDate(ZonedDateTime openDate) {
-        this.openDate = openDate;
-    }
+	public ZonedDateTime getOpenDate() {
+		return this.openDate;
+	}
 
-    public Long getChannelsId() {
-        return channelsId;
-    }
+	public void setOpenDate(ZonedDateTime openDate) {
+		this.openDate = openDate;
+	}
 
-    public void setChannelsId(Long channelId) {
-        this.channelsId = channelId;
-    }
+	public Long getChannelsId() {
+		return this.channelsId;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	public void setChannelsId(Long channelId) {
+		this.channelsId = channelId;
+	}
 
-        CodeDTO codeDTO = (CodeDTO) o;
-        if(codeDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), codeDTO.getId());
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+		CodeDTO codeDTO = (CodeDTO) o;
+		if (codeDTO.getId() == null || this.getId() == null) {
+			return false;
+		}
+		return Objects.equals(this.getId(), codeDTO.getId());
+	}
 
-    @Override
-    public String toString() {
-        return "CodeDTO{" +
-            "id=" + getId() +
-            ", code='" + getCode() + "'" +
-            ", openDate='" + getOpenDate() + "'" +
-            "}";
-    }
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getId());
+	}
+
+	@Override
+	public String toString() {
+		return "CodeDTO{" + "id=" + this.getId() + ", code='" + this.getCode() + "'" + ", openDate='"
+				+ this.getOpenDate() + "'" + "}";
+	}
 }

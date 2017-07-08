@@ -20,80 +20,84 @@ import logia.quanlyso.service.mapper.TransactionDetailsMapper;
  */
 @Service
 @Transactional
-public class TransactionDetailsServiceImpl implements TransactionDetailsService{
+public class TransactionDetailsServiceImpl implements TransactionDetailsService {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(TransactionDetailsServiceImpl.class);
-    
-    /** The transaction details repository. */
-    private final TransactionDetailsRepository transactionDetailsRepository;
+	/** The log. */
+	private final Logger						log	= LoggerFactory
+			.getLogger(TransactionDetailsServiceImpl.class);
 
-    /** The transaction details mapper. */
-    private final TransactionDetailsMapper transactionDetailsMapper;
+	/** The transaction details repository. */
+	private final TransactionDetailsRepository	transactionDetailsRepository;
 
-    /**
-     * Instantiates a new transaction details service impl.
-     *
-     * @param transactionDetailsRepository the transaction details repository
-     * @param transactionDetailsMapper the transaction details mapper
-     */
-    public TransactionDetailsServiceImpl(TransactionDetailsRepository transactionDetailsRepository, TransactionDetailsMapper transactionDetailsMapper) {
-        this.transactionDetailsRepository = transactionDetailsRepository;
-        this.transactionDetailsMapper = transactionDetailsMapper;
-    }
+	/** The transaction details mapper. */
+	private final TransactionDetailsMapper		transactionDetailsMapper;
 
-    /**
-     * Save a transactionDetails.
-     *
-     * @param transactionDetailsDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public TransactionDetailsDTO save(TransactionDetailsDTO transactionDetailsDTO) {
-        log.debug("Request to save TransactionDetails : {}", transactionDetailsDTO);
-        TransactionDetails transactionDetails = transactionDetailsMapper.toEntity(transactionDetailsDTO);
-        transactionDetails = transactionDetailsRepository.save(transactionDetails);
-        TransactionDetailsDTO result = transactionDetailsMapper.toDto(transactionDetails);
-        return result;
-    }
+	/**
+	 * Instantiates a new transaction details service impl.
+	 *
+	 * @param transactionDetailsRepository the transaction details repository
+	 * @param transactionDetailsMapper the transaction details mapper
+	 */
+	public TransactionDetailsServiceImpl(TransactionDetailsRepository transactionDetailsRepository,
+			TransactionDetailsMapper transactionDetailsMapper) {
+		this.transactionDetailsRepository = transactionDetailsRepository;
+		this.transactionDetailsMapper = transactionDetailsMapper;
+	}
 
-    /**
-     *  Get all the transactionDetails.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<TransactionDetailsDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all TransactionDetails");
-        Page<TransactionDetails> result = transactionDetailsRepository.findAll(pageable);
-        return result.map(transactionDetails -> transactionDetailsMapper.toDto(transactionDetails));
-    }
+	/**
+	 * Save a transactionDetails.
+	 *
+	 * @param transactionDetailsDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public TransactionDetailsDTO save(TransactionDetailsDTO transactionDetailsDTO) {
+		this.log.debug("Request to save TransactionDetails : {}", transactionDetailsDTO);
+		TransactionDetails transactionDetails = this.transactionDetailsMapper
+				.toEntity(transactionDetailsDTO);
+		transactionDetails = this.transactionDetailsRepository.save(transactionDetails);
+		TransactionDetailsDTO result = this.transactionDetailsMapper.toDto(transactionDetails);
+		return result;
+	}
 
-    /**
-     *  Get one transactionDetails by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public TransactionDetailsDTO findOne(Long id) {
-        log.debug("Request to get TransactionDetails : {}", id);
-        TransactionDetails transactionDetails = transactionDetailsRepository.findOne(id);
-        TransactionDetailsDTO transactionDetailsDTO = transactionDetailsMapper.toDto(transactionDetails);
-        return transactionDetailsDTO;
-    }
+	/**
+	 * Get all the transactionDetails.
+	 * 
+	 * @param pageable the pagination information
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Page<TransactionDetailsDTO> findAll(Pageable pageable) {
+		this.log.debug("Request to get all TransactionDetails");
+		Page<TransactionDetails> result = this.transactionDetailsRepository.findAll(pageable);
+		return result.map(transactionDetails -> this.transactionDetailsMapper.toDto(transactionDetails));
+	}
 
-    /**
-     *  Delete the  transactionDetails by id.
-     *
-     *  @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete TransactionDetails : {}", id);
-        transactionDetailsRepository.delete(id);
-    }
+	/**
+	 * Get one transactionDetails by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public TransactionDetailsDTO findOne(Long id) {
+		this.log.debug("Request to get TransactionDetails : {}", id);
+		TransactionDetails transactionDetails = this.transactionDetailsRepository.findOne(id);
+		TransactionDetailsDTO transactionDetailsDTO = this.transactionDetailsMapper
+				.toDto(transactionDetails);
+		return transactionDetailsDTO;
+	}
+
+	/**
+	 * Delete the transactionDetails by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		this.log.debug("Request to delete TransactionDetails : {}", id);
+		this.transactionDetailsRepository.delete(id);
+	}
 }

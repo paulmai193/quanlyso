@@ -6,17 +6,17 @@ package logia.quanlyso.domain;
  * @author Dai Mai
  */
 public enum StyleConstants {
-	
+
 	/** The two num. */
-	TWO_NUM(1), 
+	TWO_NUM(1),
 	/** The three num. */
-	THREE_NUM(2), 
+	THREE_NUM(2),
 	/** The four num. */
 	FOUR_NUM(3);
-	
+
 	/** The style id. */
 	long styleId;
-	
+
 	/**
 	 * Instantiates a new style constants.
 	 *
@@ -25,13 +25,13 @@ public enum StyleConstants {
 	StyleConstants(long id) {
 		this.styleId = id;
 	}
-	
+
 	/**
 	 * Gets the style id.
 	 *
 	 * @return the style id
 	 */
 	public Long getId() {
-		return styleId;
+		return this.styleId;
 	}
 }

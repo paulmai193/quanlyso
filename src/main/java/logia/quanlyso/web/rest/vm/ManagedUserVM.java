@@ -16,14 +16,14 @@ import logia.quanlyso.service.dto.UserDTO;
 public class ManagedUserVM extends UserDTO {
 
 	/** The Constant PASSWORD_MIN_LENGTH. */
-	public static final int PASSWORD_MIN_LENGTH = 4;
+	public static final int	PASSWORD_MIN_LENGTH	= 4;
 
 	/** The Constant PASSWORD_MAX_LENGTH. */
-	public static final int PASSWORD_MAX_LENGTH = 100;
+	public static final int	PASSWORD_MAX_LENGTH	= 100;
 
 	/** The password. */
-	@Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
-	private String password;
+	@Size(min = ManagedUserVM.PASSWORD_MIN_LENGTH, max = ManagedUserVM.PASSWORD_MAX_LENGTH)
+	private String			password;
 
 	/**
 	 * Instantiates a new managed user VM.
@@ -51,13 +51,15 @@ public class ManagedUserVM extends UserDTO {
 	 * @param authorities the authorities
 	 * @param grantAccessDate the grant access date
 	 * @param revokeAccessDate the revoke access date
-	 */    
-	public ManagedUserVM(Long id, String login, String password, String firstName, String lastName, String email, boolean activated,
-			String imageUrl, String langKey, String createdBy, Instant createdDate, String lastModifiedBy,
-			Instant lastModifiedDate, Set<String> authorities, ZonedDateTime grantAccessDate,
+	 */
+	public ManagedUserVM(Long id, String login, String password, String firstName, String lastName,
+			String email, boolean activated, String imageUrl, String langKey, String createdBy,
+			Instant createdDate, String lastModifiedBy, Instant lastModifiedDate,
+			Set<String> authorities, ZonedDateTime grantAccessDate,
 			ZonedDateTime revokeAccessDate) {
-		super(id, login, firstName, lastName, email, activated, imageUrl, langKey, createdBy, createdDate,
-				lastModifiedBy, lastModifiedDate, authorities, grantAccessDate, revokeAccessDate);
+		super(id, login, firstName, lastName, email, activated, imageUrl, langKey, createdBy,
+				createdDate, lastModifiedBy, lastModifiedDate, authorities, grantAccessDate,
+				revokeAccessDate);
 		this.password = password;
 	}
 
@@ -67,15 +69,16 @@ public class ManagedUserVM extends UserDTO {
 	 * @return the password
 	 */
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logia.quanlyso.service.dto.UserDTO#toString()
 	 */
 	@Override
 	public String toString() {
-		return "ManagedUserVM{" +
-				"} " + super.toString();
+		return "ManagedUserVM{" + "} " + super.toString();
 	}
 }

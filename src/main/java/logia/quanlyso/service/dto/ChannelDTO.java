@@ -1,6 +1,5 @@
 package logia.quanlyso.service.dto;
 
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,259 +10,263 @@ import java.util.Objects;
  */
 public class ChannelDTO implements Serializable {
 
-    /** The id. */
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /** The name. */
-    private String name;
+	/** The id. */
+	private Long	id;
 
-    /** The code. */
-    private String code;
+	/** The name. */
+	private String	name;
 
-    /** The sunday. */
-    private Boolean sunday;
+	/** The code. */
+	private String	code;
 
-    /** The monday. */
-    private Boolean monday;
+	/** The sunday. */
+	private Boolean	sunday;
 
-    /** The tuesday. */
-    private Boolean tuesday;
+	/** The monday. */
+	private Boolean	monday;
 
-    /** The wednesday. */
-    private Boolean wednesday;
+	/** The tuesday. */
+	private Boolean	tuesday;
 
-    /** The thursday. */
-    private Boolean thursday;
+	/** The wednesday. */
+	private Boolean	wednesday;
 
-    /** The friday. */
-    private Boolean friday;
+	/** The thursday. */
+	private Boolean	thursday;
 
-    /** The saturday. */
-    private Boolean saturday;
+	/** The friday. */
+	private Boolean	friday;
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
+	/** The saturday. */
+	private Boolean	saturday;
 
-    /**
-     * Sets the id.
-     *
-     * @param id the new id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * Gets the name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * Sets the name.
-     *
-     * @param name the new name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * Gets the code.
-     *
-     * @return the code
-     */
-    public String getCode() {
-        return code;
-    }
+	/**
+	 * Sets the name.
+	 *
+	 * @param name the new name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /**
-     * Sets the code.
-     *
-     * @param code the new code
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+	/**
+	 * Gets the code.
+	 *
+	 * @return the code
+	 */
+	public String getCode() {
+		return this.code;
+	}
 
-    /**
-     * Checks if is sunday.
-     *
-     * @return the boolean
-     */
-    public Boolean isSunday() {
-        return sunday;
-    }
+	/**
+	 * Sets the code.
+	 *
+	 * @param code the new code
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /**
-     * Sets the sunday.
-     *
-     * @param sunday the new sunday
-     */
-    public void setSunday(Boolean sunday) {
-        this.sunday = sunday;
-    }
+	/**
+	 * Checks if is sunday.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isSunday() {
+		return this.sunday;
+	}
 
-    /**
-     * Checks if is monday.
-     *
-     * @return the boolean
-     */
-    public Boolean isMonday() {
-        return monday;
-    }
+	/**
+	 * Sets the sunday.
+	 *
+	 * @param sunday the new sunday
+	 */
+	public void setSunday(Boolean sunday) {
+		this.sunday = sunday;
+	}
 
-    /**
-     * Sets the monday.
-     *
-     * @param monday the new monday
-     */
-    public void setMonday(Boolean monday) {
-        this.monday = monday;
-    }
+	/**
+	 * Checks if is monday.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isMonday() {
+		return this.monday;
+	}
 
-    /**
-     * Checks if is tuesday.
-     *
-     * @return the boolean
-     */
-    public Boolean isTuesday() {
-        return tuesday;
-    }
+	/**
+	 * Sets the monday.
+	 *
+	 * @param monday the new monday
+	 */
+	public void setMonday(Boolean monday) {
+		this.monday = monday;
+	}
 
-    /**
-     * Sets the tuesday.
-     *
-     * @param tuesday the new tuesday
-     */
-    public void setTuesday(Boolean tuesday) {
-        this.tuesday = tuesday;
-    }
+	/**
+	 * Checks if is tuesday.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isTuesday() {
+		return this.tuesday;
+	}
 
-    /**
-     * Checks if is wednesday.
-     *
-     * @return the boolean
-     */
-    public Boolean isWednesday() {
-        return wednesday;
-    }
+	/**
+	 * Sets the tuesday.
+	 *
+	 * @param tuesday the new tuesday
+	 */
+	public void setTuesday(Boolean tuesday) {
+		this.tuesday = tuesday;
+	}
 
-    /**
-     * Sets the wednesday.
-     *
-     * @param wednesday the new wednesday
-     */
-    public void setWednesday(Boolean wednesday) {
-        this.wednesday = wednesday;
-    }
+	/**
+	 * Checks if is wednesday.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isWednesday() {
+		return this.wednesday;
+	}
 
-    /**
-     * Checks if is thursday.
-     *
-     * @return the boolean
-     */
-    public Boolean isThursday() {
-        return thursday;
-    }
+	/**
+	 * Sets the wednesday.
+	 *
+	 * @param wednesday the new wednesday
+	 */
+	public void setWednesday(Boolean wednesday) {
+		this.wednesday = wednesday;
+	}
 
-    /**
-     * Sets the thursday.
-     *
-     * @param thursday the new thursday
-     */
-    public void setThursday(Boolean thursday) {
-        this.thursday = thursday;
-    }
+	/**
+	 * Checks if is thursday.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isThursday() {
+		return this.thursday;
+	}
 
-    /**
-     * Checks if is friday.
-     *
-     * @return the boolean
-     */
-    public Boolean isFriday() {
-        return friday;
-    }
+	/**
+	 * Sets the thursday.
+	 *
+	 * @param thursday the new thursday
+	 */
+	public void setThursday(Boolean thursday) {
+		this.thursday = thursday;
+	}
 
-    /**
-     * Sets the friday.
-     *
-     * @param friday the new friday
-     */
-    public void setFriday(Boolean friday) {
-        this.friday = friday;
-    }
+	/**
+	 * Checks if is friday.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isFriday() {
+		return this.friday;
+	}
 
-    /**
-     * Checks if is saturday.
-     *
-     * @return the boolean
-     */
-    public Boolean isSaturday() {
-        return saturday;
-    }
+	/**
+	 * Sets the friday.
+	 *
+	 * @param friday the new friday
+	 */
+	public void setFriday(Boolean friday) {
+		this.friday = friday;
+	}
 
-    /**
-     * Sets the saturday.
-     *
-     * @param saturday the new saturday
-     */
-    public void setSaturday(Boolean saturday) {
-        this.saturday = saturday;
-    }
+	/**
+	 * Checks if is saturday.
+	 *
+	 * @return the boolean
+	 */
+	public Boolean isSaturday() {
+		return this.saturday;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	/**
+	 * Sets the saturday.
+	 *
+	 * @param saturday the new saturday
+	 */
+	public void setSaturday(Boolean saturday) {
+		this.saturday = saturday;
+	}
 
-        ChannelDTO channelDTO = (ChannelDTO) o;
-        if(channelDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), channelDTO.getId());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+		ChannelDTO channelDTO = (ChannelDTO) o;
+		if (channelDTO.getId() == null || this.getId() == null) {
+			return false;
+		}
+		return Objects.equals(this.getId(), channelDTO.getId());
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "ChannelDTO{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", code='" + getCode() + "'" +
-            ", sunday='" + isSunday() + "'" +
-            ", monday='" + isMonday() + "'" +
-            ", tuesday='" + isTuesday() + "'" +
-            ", wednesday='" + isWednesday() + "'" +
-            ", thursday='" + isThursday() + "'" +
-            ", friday='" + isFriday() + "'" +
-            ", saturday='" + isSaturday() + "'" +
-            "}";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getId());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ChannelDTO{" + "id=" + this.getId() + ", name='" + this.getName() + "'" + ", code='"
+				+ this.getCode() + "'" + ", sunday='" + this.isSunday() + "'" + ", monday='" + this.isMonday()
+				+ "'" + ", tuesday='" + this.isTuesday() + "'" + ", wednesday='" + this.isWednesday() + "'"
+				+ ", thursday='" + this.isThursday() + "'" + ", friday='" + this.isFriday() + "'"
+				+ ", saturday='" + this.isSaturday() + "'" + "}";
+	}
 }

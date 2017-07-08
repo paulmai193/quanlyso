@@ -26,41 +26,46 @@ import io.github.jhipster.config.JHipsterProperties;
 @EnableScheduling
 public class AsyncConfiguration implements AsyncConfigurer {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
+	/** The log. */
+	private final Logger				log	= LoggerFactory.getLogger(AsyncConfiguration.class);
 
-    /** The j hipster properties. */
-    private final JHipsterProperties jHipsterProperties;
+	/** The j hipster properties. */
+	private final JHipsterProperties	jHipsterProperties;
 
-    /**
-     * Instantiates a new async configuration.
-     *
-     * @param jHipsterProperties the j hipster properties
-     */
-    public AsyncConfiguration(JHipsterProperties jHipsterProperties) {
-        this.jHipsterProperties = jHipsterProperties;
-    }
+	/**
+	 * Instantiates a new async configuration.
+	 *
+	 * @param jHipsterProperties the j hipster properties
+	 */
+	public AsyncConfiguration(JHipsterProperties jHipsterProperties) {
+		this.jHipsterProperties = jHipsterProperties;
+	}
 
-    /* (non-Javadoc)
-     * @see org.springframework.scheduling.annotation.AsyncConfigurer#getAsyncExecutor()
-     */
-    @Override
-    @Bean(name = "taskExecutor")
-    public Executor getAsyncExecutor() {
-        log.debug("Creating Async Task Executor");
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(jHipsterProperties.getAsync().getCorePoolSize());
-        executor.setMaxPoolSize(jHipsterProperties.getAsync().getMaxPoolSize());
-        executor.setQueueCapacity(jHipsterProperties.getAsync().getQueueCapacity());
-        executor.setThreadNamePrefix("quanlyso-Executor-");
-        return new ExceptionHandlingAsyncTaskExecutor(executor);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.scheduling.annotation.AsyncConfigurer#getAsyncExecutor()
+	 */
+	@Override
+	@Bean(name = "taskExecutor")
+	public Executor getAsyncExecutor() {
+		this.log.debug("Creating Async Task Executor");
+		ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+		executor.setCorePoolSize(this.jHipsterProperties.getAsync().getCorePoolSize());
+		executor.setMaxPoolSize(this.jHipsterProperties.getAsync().getMaxPoolSize());
+		executor.setQueueCapacity(this.jHipsterProperties.getAsync().getQueueCapacity());
+		executor.setThreadNamePrefix("quanlyso-Executor-");
+		return new ExceptionHandlingAsyncTaskExecutor(executor);
+	}
 
-    /* (non-Javadoc)
-     * @see org.springframework.scheduling.annotation.AsyncConfigurer#getAsyncUncaughtExceptionHandler()
-     */
-    @Override
-    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-        return new SimpleAsyncUncaughtExceptionHandler();
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.springframework.scheduling.annotation.AsyncConfigurer#getAsyncUncaughtExceptionHandler()
+	 */
+	@Override
+	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+		return new SimpleAsyncUncaughtExceptionHandler();
+	}
 }

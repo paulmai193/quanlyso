@@ -1,6 +1,5 @@
 package logia.quanlyso.service.dto;
 
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,83 +10,91 @@ import java.util.Objects;
  */
 public class StyleDTO implements Serializable {
 
-    /** The id. */
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /** The name. */
-    private String name;
+	/** The id. */
+	private Long	id;
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
+	/** The name. */
+	private String	name;
 
-    /**
-     * Sets the id.
-     *
-     * @param id the new id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * Gets the name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * Sets the name.
-     *
-     * @param name the new name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	/**
+	 * Sets the name.
+	 *
+	 * @param name the new name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        StyleDTO styleDTO = (StyleDTO) o;
-        if(styleDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), styleDTO.getId());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+		StyleDTO styleDTO = (StyleDTO) o;
+		if (styleDTO.getId() == null || this.getId() == null) {
+			return false;
+		}
+		return Objects.equals(this.getId(), styleDTO.getId());
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "StyleDTO{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getId());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "StyleDTO{" + "id=" + this.getId() + ", name='" + this.getName() + "'" + "}";
+	}
 }

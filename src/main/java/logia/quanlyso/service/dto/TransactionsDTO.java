@@ -1,6 +1,5 @@
 package logia.quanlyso.service.dto;
 
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
@@ -13,98 +12,103 @@ import java.util.Set;
  */
 public class TransactionsDTO implements Serializable {
 
-    /** The id. */
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /** The chosen number. */
-    private String chosenNumber;
+	/** The id. */
+	private Long						id;
 
-    /** The net value. */
-    private Float netValue;
+	/** The chosen number. */
+	private String						chosenNumber;
 
-    /** The clients id. */
-    private Long clientsId;
-    
-    /** The details DTOs. */
-    private Set<TransactionDetailsDTO> transactionDetailsDTOs = new HashSet<>();
+	/** The net value. */
+	private Float						netValue;
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
+	/** The clients id. */
+	private Long						clientsId;
 
-    /**
-     * Sets the id.
-     *
-     * @param id the new id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/** The details DTOs. */
+	private Set<TransactionDetailsDTO>	transactionDetailsDTOs	= new HashSet<>();
 
-    /**
-     * Gets the chosen number.
-     *
-     * @return the chosen number
-     */
-    public String getChosenNumber() {
-        return chosenNumber;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * Sets the chosen number.
-     *
-     * @param chosenNumber the new chosen number
-     */
-    public void setChosenNumber(String chosenNumber) {
-        this.chosenNumber = chosenNumber;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * Gets the net value.
-     *
-     * @return the net value
-     */
-    public Float getNetValue() {
-        return netValue;
-    }
+	/**
+	 * Gets the chosen number.
+	 *
+	 * @return the chosen number
+	 */
+	public String getChosenNumber() {
+		return this.chosenNumber;
+	}
 
-    /**
-     * Sets the net value.
-     *
-     * @param netValue the new net value
-     */
-    public void setNetValue(Float netValue) {
-        this.netValue = netValue;
-    }
+	/**
+	 * Sets the chosen number.
+	 *
+	 * @param chosenNumber the new chosen number
+	 */
+	public void setChosenNumber(String chosenNumber) {
+		this.chosenNumber = chosenNumber;
+	}
 
-    /**
-     * Gets the clients id.
-     *
-     * @return the clients id
-     */
-    public Long getClientsId() {
-        return clientsId;
-    }
+	/**
+	 * Gets the net value.
+	 *
+	 * @return the net value
+	 */
+	public Float getNetValue() {
+		return this.netValue;
+	}
 
-    /**
-     * Sets the clients id.
-     *
-     * @param clientId the new clients id
-     */
-    public void setClientsId(Long clientId) {
-        this.clientsId = clientId;
-    }    
+	/**
+	 * Sets the net value.
+	 *
+	 * @param netValue the new net value
+	 */
+	public void setNetValue(Float netValue) {
+		this.netValue = netValue;
+	}
+
+	/**
+	 * Gets the clients id.
+	 *
+	 * @return the clients id
+	 */
+	public Long getClientsId() {
+		return this.clientsId;
+	}
+
+	/**
+	 * Sets the clients id.
+	 *
+	 * @param clientId the new clients id
+	 */
+	public void setClientsId(Long clientId) {
+		this.clientsId = clientId;
+	}
 
 	/**
 	 * @return the transactionDetailsDTOs
 	 */
 	public Set<TransactionDetailsDTO> getTransactionDetailsDTOs() {
-		return transactionDetailsDTOs;
+		return this.transactionDetailsDTOs;
 	}
 
 	/**
@@ -114,43 +118,46 @@ public class TransactionsDTO implements Serializable {
 		this.transactionDetailsDTOs = transactionDetailsDTOs;
 	}
 
-	/* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
 
-        TransactionsDTO transactionsDTO = (TransactionsDTO) o;
-        if(transactionsDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), transactionsDTO.getId());
-    }
+		TransactionsDTO transactionsDTO = (TransactionsDTO) o;
+		if (transactionsDTO.getId() == null || this.getId() == null) {
+			return false;
+		}
+		return Objects.equals(this.getId(), transactionsDTO.getId());
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getId());
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "TransactionsDTO{" +
-            "id=" + getId() +
-            ", chosenNumber='" + getChosenNumber() + "'" +
-            ", netValue='" + getNetValue() + "'" +
-            ", details='" + getTransactionDetailsDTOs() + "'" +
-            "}";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TransactionsDTO{" + "id=" + this.getId() + ", chosenNumber='" + this.getChosenNumber() + "'"
+				+ ", netValue='" + this.getNetValue() + "'" + ", details='" + this.getTransactionDetailsDTOs()
+				+ "'" + "}";
+	}
 }

@@ -37,99 +37,107 @@ import logia.quanlyso.web.rest.util.PaginationUtil;
 @RequestMapping("/api")
 public class CodeResource {
 
-    private final Logger log = LoggerFactory.getLogger(CodeResource.class);
+	private final Logger		log			= LoggerFactory.getLogger(CodeResource.class);
 
-    private static final String ENTITY_NAME = "code";
-        
-    private final CodeService codeService;
+	private static final String	ENTITY_NAME	= "code";
 
-    public CodeResource(CodeService codeService) {
-        this.codeService = codeService;
-    }
+	private final CodeService	codeService;
 
-    /**
-     * POST  /codes : Create a new code.
-     *
-     * @param codeDTO the codeDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new codeDTO, or with status 400 (Bad Request) if the code has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/codes")
-    @Timed
-    public ResponseEntity<CodeDTO> createCode(@RequestBody CodeDTO codeDTO) throws URISyntaxException {
-        log.debug("REST request to save Code : {}", codeDTO);
-        if (codeDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new code cannot already have an ID")).body(null);
-        }
-        CodeDTO result = codeService.save(codeDTO);
-        return ResponseEntity.created(new URI("/api/codes/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
+	public CodeResource(CodeService codeService) {
+		this.codeService = codeService;
+	}
 
-    /**
-     * PUT  /codes : Updates an existing code.
-     *
-     * @param codeDTO the codeDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated codeDTO,
-     * or with status 400 (Bad Request) if the codeDTO is not valid,
-     * or with status 500 (Internal Server Error) if the codeDTO couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/codes")
-    @Timed
-    public ResponseEntity<CodeDTO> updateCode(@RequestBody CodeDTO codeDTO) throws URISyntaxException {
-        log.debug("REST request to update Code : {}", codeDTO);
-        if (codeDTO.getId() == null) {
-            return createCode(codeDTO);
-        }
-        CodeDTO result = codeService.save(codeDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, codeDTO.getId().toString()))
-            .body(result);
-    }
+	/**
+	 * POST /codes : Create a new code.
+	 *
+	 * @param codeDTO the codeDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the new codeDTO, or with
+	 *         status 400 (Bad Request) if the code has already an ID
+	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 */
+	@PostMapping("/codes")
+	@Timed
+	public ResponseEntity<CodeDTO> createCode(@RequestBody CodeDTO codeDTO)
+			throws URISyntaxException {
+		this.log.debug("REST request to save Code : {}", codeDTO);
+		if (codeDTO.getId() != null) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(CodeResource.ENTITY_NAME,
+					"idexists", "A new code cannot already have an ID")).body(null);
+		}
+		CodeDTO result = this.codeService.save(codeDTO);
+		return ResponseEntity
+				.created(new URI("/api/codes/" + result.getId())).headers(HeaderUtil
+						.createEntityCreationAlert(CodeResource.ENTITY_NAME, result.getId().toString()))
+				.body(result);
+	}
 
-    /**
-     * GET  /codes : get all the codes.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of codes in body
-     */
-    @GetMapping("/codes")
-    @Timed
-    public ResponseEntity<List<CodeDTO>> getAllCodes(@ApiParam Pageable pageable) {
-        log.debug("REST request to get a page of Codes");
-        Page<CodeDTO> page = codeService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/codes");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
+	/**
+	 * PUT /codes : Updates an existing code.
+	 *
+	 * @param codeDTO the codeDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated codeDTO,
+	 *         or with status 400 (Bad Request) if the codeDTO is not valid,
+	 *         or with status 500 (Internal Server Error) if the codeDTO couldnt be updated
+	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 */
+	@PutMapping("/codes")
+	@Timed
+	public ResponseEntity<CodeDTO> updateCode(@RequestBody CodeDTO codeDTO)
+			throws URISyntaxException {
+		this.log.debug("REST request to update Code : {}", codeDTO);
+		if (codeDTO.getId() == null) {
+			return this.createCode(codeDTO);
+		}
+		CodeDTO result = this.codeService.save(codeDTO);
+		return ResponseEntity.ok()
+				.headers(
+						HeaderUtil.createEntityUpdateAlert(CodeResource.ENTITY_NAME, codeDTO.getId().toString()))
+				.body(result);
+	}
 
-    /**
-     * GET  /codes/:id : get the "id" code.
-     *
-     * @param id the id of the codeDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the codeDTO, or with status 404 (Not Found)
-     */
-    @GetMapping("/codes/{id}")
-    @Timed
-    public ResponseEntity<CodeDTO> getCode(@PathVariable Long id) {
-        log.debug("REST request to get Code : {}", id);
-        CodeDTO codeDTO = codeService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(codeDTO));
-    }
+	/**
+	 * GET /codes : get all the codes.
+	 *
+	 * @param pageable the pagination information
+	 * @return the ResponseEntity with status 200 (OK) and the list of codes in body
+	 */
+	@GetMapping("/codes")
+	@Timed
+	public ResponseEntity<List<CodeDTO>> getAllCodes(@ApiParam Pageable pageable) {
+		this.log.debug("REST request to get a page of Codes");
+		Page<CodeDTO> page = this.codeService.findAll(pageable);
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/codes");
+		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+	}
 
-    /**
-     * DELETE  /codes/:id : delete the "id" code.
-     *
-     * @param id the id of the codeDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @DeleteMapping("/codes/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteCode(@PathVariable Long id) {
-        log.debug("REST request to delete Code : {}", id);
-        codeService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
+	/**
+	 * GET /codes/:id : get the "id" code.
+	 *
+	 * @param id the id of the codeDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the codeDTO, or with status 404
+	 *         (Not Found)
+	 */
+	@GetMapping("/codes/{id}")
+	@Timed
+	public ResponseEntity<CodeDTO> getCode(@PathVariable Long id) {
+		this.log.debug("REST request to get Code : {}", id);
+		CodeDTO codeDTO = this.codeService.findOne(id);
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(codeDTO));
+	}
+
+	/**
+	 * DELETE /codes/:id : delete the "id" code.
+	 *
+	 * @param id the id of the codeDTO to delete
+	 * @return the ResponseEntity with status 200 (OK)
+	 */
+	@DeleteMapping("/codes/{id}")
+	@Timed
+	public ResponseEntity<Void> deleteCode(@PathVariable Long id) {
+		this.log.debug("REST request to delete Code : {}", id);
+		this.codeService.delete(id);
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityDeletionAlert(CodeResource.ENTITY_NAME, id.toString())).build();
+	}
 
 }

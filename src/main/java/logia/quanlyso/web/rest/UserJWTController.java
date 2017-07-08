@@ -40,108 +40,116 @@ import logia.quanlyso.web.rest.vm.LoginVM;
 @RequestMapping("/api")
 public class UserJWTController {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(UserJWTController.class);
+	/** The log. */
+	private final Logger				log	= LoggerFactory.getLogger(UserJWTController.class);
 
-    /** The token provider. */
-    private final TokenProvider tokenProvider;
+	/** The token provider. */
+	private final TokenProvider			tokenProvider;
 
-    /** The authentication manager. */
-    private final AuthenticationManager authenticationManager;
-    
-    /** The user service. */
-    private final UserService userService;
+	/** The authentication manager. */
+	private final AuthenticationManager	authenticationManager;
 
-    /**
-     * Instantiates a new user JWT controller.
-     *
-     * @param tokenProvider the token provider
-     * @param authenticationManager the authentication manager
-     * @param userService the user service
-     */
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager, UserService userService) {
-        this.tokenProvider = tokenProvider;
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-    }
+	/** The user service. */
+	private final UserService			userService;
 
-    /**
-     * Authorize.
-     *
-     * @param loginVM the login VM
-     * @param response the response
-     * @return the response entity
-     */
-    @PostMapping("/authenticate")
-    @Timed
-    public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletResponse response) {
+	/**
+	 * Instantiates a new user JWT controller.
+	 *
+	 * @param tokenProvider the token provider
+	 * @param authenticationManager the authentication manager
+	 * @param userService the user service
+	 */
+	public UserJWTController(TokenProvider tokenProvider,
+			AuthenticationManager authenticationManager, UserService userService) {
+		this.tokenProvider = tokenProvider;
+		this.authenticationManager = authenticationManager;
+		this.userService = userService;
+	}
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
+	/**
+	 * Authorize.
+	 *
+	 * @param loginVM the login VM
+	 * @param response the response
+	 * @return the response entity
+	 */
+	@PostMapping("/authenticate")
+	@Timed
+	public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM,
+			HttpServletResponse response) {
 
-        try {
-            Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-            
-            // Check grand & revoke access date
-            User user = this.userService.getUserWithAuthoritiesByLogin(loginVM.getUsername()).get();
-            ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
-            if (user.getRevokeAccessDate() != null && (user.getGrantAccessDate().isAfter(now) || user.getRevokeAccessDate().isBefore(now))) {
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+				loginVM.getUsername(), loginVM.getPassword());
+
+		try {
+			Authentication authentication = this.authenticationManager
+					.authenticate(authenticationToken);
+
+			// Check grand & revoke access date
+			User user = this.userService.getUserWithAuthoritiesByLogin(loginVM.getUsername()).get();
+			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+			if (user.getRevokeAccessDate() != null && (user.getGrantAccessDate().isAfter(now)
+					|| user.getRevokeAccessDate().isBefore(now))) {
 				throw new UserRevokeAccessException("Account be revoked access by administrator");
 			}
-            
-            // Return if every condition ok
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
-            String jwt = tokenProvider.createToken(authentication, rememberMe);
-            response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-            return ResponseEntity.ok(new JWTToken(jwt));
-        } catch (UserRevokeAccessException ae) {
-            log.trace("Authentication exception trace: {}", ae);
-            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException",
-                ae.getLocalizedMessage()), HttpStatus.PAYMENT_REQUIRED);
-        } catch (AuthenticationException ae) {
-            log.trace("Authentication exception trace: {}", ae);
-            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException",
-                ae.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
-        }
-    }
 
-    /**
-     * Object to return as body in JWT Authentication.
-     *
-     * @author Dai Mai
-     */
-    static class JWTToken {
+			// Return if every condition ok
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
+			String jwt = this.tokenProvider.createToken(authentication, rememberMe);
+			response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
+			return ResponseEntity.ok(new JWTToken(jwt));
+		}
+		catch (UserRevokeAccessException ae) {
+			this.log.trace("Authentication exception trace: {}", ae);
+			return new ResponseEntity<>(
+					Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
+					HttpStatus.PAYMENT_REQUIRED);
+		}
+		catch (AuthenticationException ae) {
+			this.log.trace("Authentication exception trace: {}", ae);
+			return new ResponseEntity<>(
+					Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
+					HttpStatus.UNAUTHORIZED);
+		}
+	}
 
-        /** The id token. */
-        private String idToken;
+	/**
+	 * Object to return as body in JWT Authentication.
+	 *
+	 * @author Dai Mai
+	 */
+	static class JWTToken {
 
-        /**
-         * Instantiates a new JWT token.
-         *
-         * @param idToken the id token
-         */
-        JWTToken(String idToken) {
-            this.idToken = idToken;
-        }
+		/** The id token. */
+		private String idToken;
 
-        /**
-         * Gets the id token.
-         *
-         * @return the id token
-         */
-        @JsonProperty("id_token")
-        String getIdToken() {
-            return idToken;
-        }
+		/**
+		 * Instantiates a new JWT token.
+		 *
+		 * @param idToken the id token
+		 */
+		JWTToken(String idToken) {
+			this.idToken = idToken;
+		}
 
-        /**
-         * Sets the id token.
-         *
-         * @param idToken the new id token
-         */
-        void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
-    }
+		/**
+		 * Gets the id token.
+		 *
+		 * @return the id token
+		 */
+		@JsonProperty("id_token")
+		String getIdToken() {
+			return this.idToken;
+		}
+
+		/**
+		 * Sets the id token.
+		 *
+		 * @param idToken the new id token
+		 */
+		void setIdToken(String idToken) {
+			this.idToken = idToken;
+		}
+	}
 }

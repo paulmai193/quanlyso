@@ -1,6 +1,5 @@
 package logia.quanlyso.service.dto;
 
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,146 +10,154 @@ import java.util.Objects;
  */
 public class CostFactorDTO implements Serializable {
 
-    /** The id. */
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /** The rate. */
-    private Float rate;
+	/** The id. */
+	private Long	id;
 
-    /** The factors id. */
-    private Long factorsId;
+	/** The rate. */
+	private Float	rate;
 
-    /** The styles id. */
-    private Long stylesId;
+	/** The factors id. */
+	private Long	factorsId;
 
-    /** The types id. */
-    private Long typesId;
+	/** The styles id. */
+	private Long	stylesId;
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
+	/** The types id. */
+	private Long	typesId;
 
-    /**
-     * Sets the id.
-     *
-     * @param id the new id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * Gets the rate.
-     *
-     * @return the rate
-     */
-    public Float getRate() {
-        return rate;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * Sets the rate.
-     *
-     * @param rate the new rate
-     */
-    public void setRate(Float rate) {
-        this.rate = rate;
-    }
+	/**
+	 * Gets the rate.
+	 *
+	 * @return the rate
+	 */
+	public Float getRate() {
+		return this.rate;
+	}
 
-    /**
-     * Gets the factors id.
-     *
-     * @return the factors id
-     */
-    public Long getFactorsId() {
-        return factorsId;
-    }
+	/**
+	 * Sets the rate.
+	 *
+	 * @param rate the new rate
+	 */
+	public void setRate(Float rate) {
+		this.rate = rate;
+	}
 
-    /**
-     * Sets the factors id.
-     *
-     * @param factorId the new factors id
-     */
-    public void setFactorsId(Long factorId) {
-        this.factorsId = factorId;
-    }
+	/**
+	 * Gets the factors id.
+	 *
+	 * @return the factors id
+	 */
+	public Long getFactorsId() {
+		return this.factorsId;
+	}
 
-    /**
-     * Gets the styles id.
-     *
-     * @return the styles id
-     */
-    public Long getStylesId() {
-        return stylesId;
-    }
+	/**
+	 * Sets the factors id.
+	 *
+	 * @param factorId the new factors id
+	 */
+	public void setFactorsId(Long factorId) {
+		this.factorsId = factorId;
+	}
 
-    /**
-     * Sets the styles id.
-     *
-     * @param styleId the new styles id
-     */
-    public void setStylesId(Long styleId) {
-        this.stylesId = styleId;
-    }
+	/**
+	 * Gets the styles id.
+	 *
+	 * @return the styles id
+	 */
+	public Long getStylesId() {
+		return this.stylesId;
+	}
 
-    /**
-     * Gets the types id.
-     *
-     * @return the types id
-     */
-    public Long getTypesId() {
-        return typesId;
-    }
+	/**
+	 * Sets the styles id.
+	 *
+	 * @param styleId the new styles id
+	 */
+	public void setStylesId(Long styleId) {
+		this.stylesId = styleId;
+	}
 
-    /**
-     * Sets the types id.
-     *
-     * @param typesId the new types id
-     */
-    public void setTypesId(Long typesId) {
-        this.typesId = typesId;
-    }
+	/**
+	 * Gets the types id.
+	 *
+	 * @return the types id
+	 */
+	public Long getTypesId() {
+		return this.typesId;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	/**
+	 * Sets the types id.
+	 *
+	 * @param typesId the new types id
+	 */
+	public void setTypesId(Long typesId) {
+		this.typesId = typesId;
+	}
 
-        CostFactorDTO costFactorDTO = (CostFactorDTO) o;
-        if(costFactorDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), costFactorDTO.getId());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+		CostFactorDTO costFactorDTO = (CostFactorDTO) o;
+		if (costFactorDTO.getId() == null || this.getId() == null) {
+			return false;
+		}
+		return Objects.equals(this.getId(), costFactorDTO.getId());
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "CostFactorDTO{" +
-            "id=" + getId() +
-            ", rate='" + getRate() + "'" +
-            "}";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getId());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CostFactorDTO{" + "id=" + this.getId() + ", rate='" + this.getRate() + "'" + "}";
+	}
 }

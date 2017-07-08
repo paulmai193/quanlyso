@@ -13,8 +13,8 @@ import logia.quanlyso.domain.Types;
  * @author Dai Mai
  */
 @SuppressWarnings("unused")
-public interface ProfitFactorRepository extends JpaRepository<ProfitFactor,Long> {
-	
+public interface ProfitFactorRepository extends JpaRepository<ProfitFactor, Long> {
+
 	/**
 	 * Find one by factor and style and types.
 	 *

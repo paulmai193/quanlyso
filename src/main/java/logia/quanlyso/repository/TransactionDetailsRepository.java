@@ -10,6 +10,6 @@ import logia.quanlyso.domain.TransactionDetails;
  * @author Dai Mai
  */
 @SuppressWarnings("unused")
-public interface TransactionDetailsRepository extends JpaRepository<TransactionDetails,Long> {
+public interface TransactionDetailsRepository extends JpaRepository<TransactionDetails, Long> {
 
 }

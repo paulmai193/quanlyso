@@ -35,101 +35,108 @@ import io.github.jhipster.config.JHipsterProperties;
 @EnableMetrics(proxyTargetClass = true)
 public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
-    /** The Constant PROP_METRIC_REG_JVM_MEMORY. */
-    private static final String PROP_METRIC_REG_JVM_MEMORY = "jvm.memory";
-    
-    /** The Constant PROP_METRIC_REG_JVM_GARBAGE. */
-    private static final String PROP_METRIC_REG_JVM_GARBAGE = "jvm.garbage";
-    
-    /** The Constant PROP_METRIC_REG_JVM_THREADS. */
-    private static final String PROP_METRIC_REG_JVM_THREADS = "jvm.threads";
-    
-    /** The Constant PROP_METRIC_REG_JVM_FILES. */
-    private static final String PROP_METRIC_REG_JVM_FILES = "jvm.files";
-    
-    /** The Constant PROP_METRIC_REG_JVM_BUFFERS. */
-    private static final String PROP_METRIC_REG_JVM_BUFFERS = "jvm.buffers";
-    
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(MetricsConfiguration.class);
+	/** The Constant PROP_METRIC_REG_JVM_MEMORY. */
+	private static final String			PROP_METRIC_REG_JVM_MEMORY	= "jvm.memory";
 
-    /** The metric registry. */
-    private MetricRegistry metricRegistry = new MetricRegistry();
+	/** The Constant PROP_METRIC_REG_JVM_GARBAGE. */
+	private static final String			PROP_METRIC_REG_JVM_GARBAGE	= "jvm.garbage";
 
-    /** The health check registry. */
-    private HealthCheckRegistry healthCheckRegistry = new HealthCheckRegistry();
+	/** The Constant PROP_METRIC_REG_JVM_THREADS. */
+	private static final String			PROP_METRIC_REG_JVM_THREADS	= "jvm.threads";
 
-    /** The j hipster properties. */
-    private final JHipsterProperties jHipsterProperties;
+	/** The Constant PROP_METRIC_REG_JVM_FILES. */
+	private static final String			PROP_METRIC_REG_JVM_FILES	= "jvm.files";
 
-    /** The hikari data source. */
-    private HikariDataSource hikariDataSource;
+	/** The Constant PROP_METRIC_REG_JVM_BUFFERS. */
+	private static final String			PROP_METRIC_REG_JVM_BUFFERS	= "jvm.buffers";
 
-    /**
-     * Instantiates a new metrics configuration.
-     *
-     * @param jHipsterProperties the j hipster properties
-     */
-    public MetricsConfiguration(JHipsterProperties jHipsterProperties) {
-        this.jHipsterProperties = jHipsterProperties;
-    }
+	/** The log. */
+	private final Logger				log							= LoggerFactory
+			.getLogger(MetricsConfiguration.class);
 
-    /**
-     * Sets the hikari data source.
-     *
-     * @param hikariDataSource the new hikari data source
-     */
-    @Autowired(required = false)
-    public void setHikariDataSource(HikariDataSource hikariDataSource) {
-        this.hikariDataSource = hikariDataSource;
-    }
+	/** The metric registry. */
+	private MetricRegistry				metricRegistry				= new MetricRegistry();
 
-    /* (non-Javadoc)
-     * @see com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#getMetricRegistry()
-     */
-    @Override
-    @Bean
-    public MetricRegistry getMetricRegistry() {
-        return metricRegistry;
-    }
+	/** The health check registry. */
+	private HealthCheckRegistry			healthCheckRegistry			= new HealthCheckRegistry();
 
-    /* (non-Javadoc)
-     * @see com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#getHealthCheckRegistry()
-     */
-    @Override
-    @Bean
-    public HealthCheckRegistry getHealthCheckRegistry() {
-        return healthCheckRegistry;
-    }
+	/** The j hipster properties. */
+	private final JHipsterProperties	jHipsterProperties;
 
-    /**
-     * Inits the.
-     */
-    @PostConstruct
-    public void init() {
-        log.debug("Registering JVM gauges");
-        metricRegistry.register(PROP_METRIC_REG_JVM_MEMORY, new MemoryUsageGaugeSet());
-        metricRegistry.register(PROP_METRIC_REG_JVM_GARBAGE, new GarbageCollectorMetricSet());
-        metricRegistry.register(PROP_METRIC_REG_JVM_THREADS, new ThreadStatesGaugeSet());
-        metricRegistry.register(PROP_METRIC_REG_JVM_FILES, new FileDescriptorRatioGauge());
-        metricRegistry.register(PROP_METRIC_REG_JVM_BUFFERS, new BufferPoolMetricSet(ManagementFactory.getPlatformMBeanServer()));
-        if (hikariDataSource != null) {
-            log.debug("Monitoring the datasource");
-            hikariDataSource.setMetricRegistry(metricRegistry);
-        }
-        if (jHipsterProperties.getMetrics().getJmx().isEnabled()) {
-            log.debug("Initializing Metrics JMX reporting");
-            JmxReporter jmxReporter = JmxReporter.forRegistry(metricRegistry).build();
-            jmxReporter.start();
-        }
-        if (jHipsterProperties.getMetrics().getLogs().isEnabled()) {
-            log.info("Initializing Metrics Log reporting");
-            final Slf4jReporter reporter = Slf4jReporter.forRegistry(metricRegistry)
-                .outputTo(LoggerFactory.getLogger("metrics"))
-                .convertRatesTo(TimeUnit.SECONDS)
-                .convertDurationsTo(TimeUnit.MILLISECONDS)
-                .build();
-            reporter.start(jHipsterProperties.getMetrics().getLogs().getReportFrequency(), TimeUnit.SECONDS);
-        }
-    }
+	/** The hikari data source. */
+	private HikariDataSource			hikariDataSource;
+
+	/**
+	 * Instantiates a new metrics configuration.
+	 *
+	 * @param jHipsterProperties the j hipster properties
+	 */
+	public MetricsConfiguration(JHipsterProperties jHipsterProperties) {
+		this.jHipsterProperties = jHipsterProperties;
+	}
+
+	/**
+	 * Sets the hikari data source.
+	 *
+	 * @param hikariDataSource the new hikari data source
+	 */
+	@Autowired(required = false)
+	public void setHikariDataSource(HikariDataSource hikariDataSource) {
+		this.hikariDataSource = hikariDataSource;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#getMetricRegistry()
+	 */
+	@Override
+	@Bean
+	public MetricRegistry getMetricRegistry() {
+		return this.metricRegistry;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#
+	 * getHealthCheckRegistry()
+	 */
+	@Override
+	@Bean
+	public HealthCheckRegistry getHealthCheckRegistry() {
+		return this.healthCheckRegistry;
+	}
+
+	/**
+	 * Inits the.
+	 */
+	@PostConstruct
+	public void init() {
+		this.log.debug("Registering JVM gauges");
+		this.metricRegistry.register(MetricsConfiguration.PROP_METRIC_REG_JVM_MEMORY, new MemoryUsageGaugeSet());
+		this.metricRegistry.register(MetricsConfiguration.PROP_METRIC_REG_JVM_GARBAGE, new GarbageCollectorMetricSet());
+		this.metricRegistry.register(MetricsConfiguration.PROP_METRIC_REG_JVM_THREADS, new ThreadStatesGaugeSet());
+		this.metricRegistry.register(MetricsConfiguration.PROP_METRIC_REG_JVM_FILES, new FileDescriptorRatioGauge());
+		this.metricRegistry.register(MetricsConfiguration.PROP_METRIC_REG_JVM_BUFFERS,
+				new BufferPoolMetricSet(ManagementFactory.getPlatformMBeanServer()));
+		if (this.hikariDataSource != null) {
+			this.log.debug("Monitoring the datasource");
+			this.hikariDataSource.setMetricRegistry(this.metricRegistry);
+		}
+		if (this.jHipsterProperties.getMetrics().getJmx().isEnabled()) {
+			this.log.debug("Initializing Metrics JMX reporting");
+			JmxReporter jmxReporter = JmxReporter.forRegistry(this.metricRegistry).build();
+			jmxReporter.start();
+		}
+		if (this.jHipsterProperties.getMetrics().getLogs().isEnabled()) {
+			this.log.info("Initializing Metrics Log reporting");
+			final Slf4jReporter reporter = Slf4jReporter.forRegistry(this.metricRegistry)
+					.outputTo(LoggerFactory.getLogger("metrics")).convertRatesTo(TimeUnit.SECONDS)
+					.convertDurationsTo(TimeUnit.MILLISECONDS).build();
+			reporter.start(this.jHipsterProperties.getMetrics().getLogs().getReportFrequency(),
+					TimeUnit.SECONDS);
+		}
+	}
 }

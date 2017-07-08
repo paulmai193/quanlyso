@@ -10,29 +10,33 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  *
  * @author Dai Mai
  */
-public class JWTConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+public class JWTConfigurer
+extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
 
-    /** The Constant AUTHORIZATION_HEADER. */
-    public static final String AUTHORIZATION_HEADER = "Authorization";
+	/** The Constant AUTHORIZATION_HEADER. */
+	public static final String	AUTHORIZATION_HEADER	= "Authorization";
 
-    /** The token provider. */
-    private TokenProvider tokenProvider;
+	/** The token provider. */
+	private TokenProvider		tokenProvider;
 
-    /**
-     * Instantiates a new JWT configurer.
-     *
-     * @param tokenProvider the token provider
-     */
-    public JWTConfigurer(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
-    }
+	/**
+	 * Instantiates a new JWT configurer.
+	 *
+	 * @param tokenProvider the token provider
+	 */
+	public JWTConfigurer(TokenProvider tokenProvider) {
+		this.tokenProvider = tokenProvider;
+	}
 
-    /* (non-Javadoc)
-     * @see org.springframework.security.config.annotation.SecurityConfigurerAdapter#configure(org.springframework.security.config.annotation.SecurityBuilder)
-     */
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        JWTFilter customFilter = new JWTFilter(tokenProvider);
-        http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.springframework.security.config.annotation.SecurityConfigurerAdapter#configure(org.
+	 * springframework.security.config.annotation.SecurityBuilder)
+	 */
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
+		JWTFilter customFilter = new JWTFilter(this.tokenProvider);
+		http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
+	}
 }

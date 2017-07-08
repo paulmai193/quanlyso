@@ -10,6 +10,6 @@ import logia.quanlyso.domain.Factor;
  * @author Dai Mai
  */
 @SuppressWarnings("unused")
-public interface FactorRepository extends JpaRepository<Factor,Long> {
+public interface FactorRepository extends JpaRepository<Factor, Long> {
 
 }

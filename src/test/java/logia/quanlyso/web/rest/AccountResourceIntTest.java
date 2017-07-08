@@ -1,15 +1,5 @@
 package logia.quanlyso.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.anyObject;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Collections;
@@ -18,11 +8,14 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +25,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,37 +53,37 @@ public class AccountResourceIntTest {
 
 	/** The user repository. */
 	@Autowired
-	private UserRepository userRepository;
+	private UserRepository			userRepository;
 
 	/** The authority repository. */
 	@Autowired
-	private AuthorityRepository authorityRepository;
+	private AuthorityRepository		authorityRepository;
 
 	/** The user service. */
 	@Autowired
-	private UserService userService;
+	private UserService				userService;
 
 	/** The password encoder. */
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private PasswordEncoder			passwordEncoder;
 
 	/** The http message converters. */
 	@Autowired
-	private HttpMessageConverter[] httpMessageConverters;
+	private HttpMessageConverter[]	httpMessageConverters;
 
 	/** The mock user service. */
 	@Mock
-	private UserService mockUserService;
+	private UserService				mockUserService;
 
 	/** The mock mail service. */
 	@Mock
-	private MailService mockMailService;
+	private MailService				mockMailService;
 
 	/** The rest user mock mvc. */
-	private MockMvc restUserMockMvc;
+	private MockMvc					restUserMockMvc;
 
 	/** The rest mvc. */
-	private MockMvc restMvc;
+	private MockMvc					restMvc;
 
 	/**
 	 * Setup.
@@ -96,17 +91,16 @@ public class AccountResourceIntTest {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		doNothing().when(mockMailService).sendActivationEmail(anyObject());
+		Mockito.doNothing().when(this.mockMailService).sendActivationEmail(Matchers.anyObject());
 
-		AccountResource accountResource =
-				new AccountResource(userRepository, userService, mockMailService);
+		AccountResource accountResource = new AccountResource(this.userRepository, this.userService,
+				this.mockMailService);
 
-		AccountResource accountUserMockResource =
-				new AccountResource(userRepository, mockUserService, mockMailService);
+		AccountResource accountUserMockResource = new AccountResource(this.userRepository,
+				this.mockUserService, this.mockMailService);
 
 		this.restMvc = MockMvcBuilders.standaloneSetup(accountResource)
-				.setMessageConverters(httpMessageConverters)
-				.build();
+				.setMessageConverters(this.httpMessageConverters).build();
 		this.restUserMockMvc = MockMvcBuilders.standaloneSetup(accountUserMockResource).build();
 	}
 
@@ -117,10 +111,8 @@ public class AccountResourceIntTest {
 	 */
 	@Test
 	public void testNonAuthenticatedUser() throws Exception {
-		restUserMockMvc.perform(get("/api/authenticate")
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(content().string(""));
+		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/authenticate").accept(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.content().string(""));
 	}
 
 	/**
@@ -130,14 +122,11 @@ public class AccountResourceIntTest {
 	 */
 	@Test
 	public void testAuthenticatedUser() throws Exception {
-		restUserMockMvc.perform(get("/api/authenticate")
-				.with(request -> {
-					request.setRemoteUser("test");
-					return request;
-				})
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(content().string("test"));
+		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/authenticate").with(request -> {
+			request.setRemoteUser("test");
+			return request;
+		}).accept(MediaType.APPLICATION_JSON)).andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().string("test"));
 	}
 
 	/**
@@ -160,19 +149,18 @@ public class AccountResourceIntTest {
 		user.setImageUrl("http://placehold.it/50x50");
 		user.setLangKey("en");
 		user.setAuthorities(authorities);
-		when(mockUserService.getUserWithAuthorities()).thenReturn(user);
+		Mockito.when(this.mockUserService.getUserWithAuthorities()).thenReturn(user);
 
-		restUserMockMvc.perform(get("/api/account")
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isOk())
-		.andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(jsonPath("$.login").value("test"))
-		.andExpect(jsonPath("$.firstName").value("john"))
-		.andExpect(jsonPath("$.lastName").value("doe"))
-		.andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
-		.andExpect(jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
-		.andExpect(jsonPath("$.langKey").value("en"))
-		.andExpect(jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
+		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/account").accept(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.login").value("test"))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value("john"))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value("doe"))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.email").value("john.doe@jhipster.com"))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.imageUrl").value("http://placehold.it/50x50"))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.langKey").value("en"))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.authorities").value(AuthoritiesConstants.ADMIN));
 	}
 
 	/**
@@ -182,11 +170,10 @@ public class AccountResourceIntTest {
 	 */
 	@Test
 	public void testGetUnknownAccount() throws Exception {
-		when(mockUserService.getUserWithAuthorities()).thenReturn(null);
+		Mockito.when(this.mockUserService.getUserWithAuthorities()).thenReturn(null);
 
-		restUserMockMvc.perform(get("/api/account")
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(status().isInternalServerError());
+		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/account").accept(MediaType.APPLICATION_JSON))
+		.andExpect(MockMvcResultMatchers.status().isInternalServerError());
 	}
 
 	/**
@@ -198,32 +185,28 @@ public class AccountResourceIntTest {
 	@Transactional
 	@Ignore
 	public void testRegisterValid() throws Exception {
-		ManagedUserVM validUser = new ManagedUserVM(
-				null,                   // id
-				"joe",                  // login
-				"password",             // password
-				"Joe",                  // firstName
-				"Shmoe",                // lastName
-				"joe@example.com",      // email
-				true,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now());
+		ManagedUserVM validUser = new ManagedUserVM(null, // id
+				"joe", // login
+				"password", // password
+				"Joe", // firstName
+				"Shmoe", // lastName
+				"joe@example.com", // email
+				true, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(validUser)))
-		.andExpect(status().isCreated());
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
-		Optional<User> user = userRepository.findOneByLogin("joe");
-		assertThat(user.isPresent()).isTrue();
+		Optional<User> user = this.userRepository.findOneByLogin("joe");
+		Assertions.assertThat(user.isPresent()).isTrue();
 	}
 
 	/**
@@ -235,32 +218,29 @@ public class AccountResourceIntTest {
 	@Transactional
 	@Ignore
 	public void testRegisterInvalidLogin() throws Exception {
-		ManagedUserVM invalidUser = new ManagedUserVM(
-				null,                   // id
-				"funky-log!n",          // login <-- invalid
-				"password",             // password
-				"Funky",                // firstName
-				"One",                  // lastName
-				"funky@example.com",    // email
-				true,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now());
+		ManagedUserVM invalidUser = new ManagedUserVM(null, // id
+				"funky-log!n", // login <-- invalid
+				"password", // password
+				"Funky", // firstName
+				"One", // lastName
+				"funky@example.com", // email
+				true, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restUserMockMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restUserMockMvc
+		.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-		.andExpect(status().isBadRequest());
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		Optional<User> user = userRepository.findOneByEmail("funky@example.com");
-		assertThat(user.isPresent()).isFalse();
+		Optional<User> user = this.userRepository.findOneByEmail("funky@example.com");
+		Assertions.assertThat(user.isPresent()).isFalse();
 	}
 
 	/**
@@ -272,32 +252,29 @@ public class AccountResourceIntTest {
 	@Transactional
 	@Ignore
 	public void testRegisterInvalidEmail() throws Exception {
-		ManagedUserVM invalidUser = new ManagedUserVM(
-				null,               // id
-				"bob",              // login
-				"password",         // password
-				"Bob",              // firstName
-				"Green",            // lastName
-				"invalid",          // email <-- invalid
-				true,               // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now());
+		ManagedUserVM invalidUser = new ManagedUserVM(null, // id
+				"bob", // login
+				"password", // password
+				"Bob", // firstName
+				"Green", // lastName
+				"invalid", // email <-- invalid
+				true, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restUserMockMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restUserMockMvc
+		.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-		.andExpect(status().isBadRequest());
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		Optional<User> user = userRepository.findOneByLogin("bob");
-		assertThat(user.isPresent()).isFalse();
+		Optional<User> user = this.userRepository.findOneByLogin("bob");
+		Assertions.assertThat(user.isPresent()).isFalse();
 	}
 
 	/**
@@ -309,32 +286,29 @@ public class AccountResourceIntTest {
 	@Transactional
 	@Ignore
 	public void testRegisterInvalidPassword() throws Exception {
-		ManagedUserVM invalidUser = new ManagedUserVM(
-				null,               // id
-				"bob",              // login
-				"123",              // password with only 3 digits
-				"Bob",              // firstName
-				"Green",            // lastName
-				"bob@example.com",  // email
-				true,               // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now());
+		ManagedUserVM invalidUser = new ManagedUserVM(null, // id
+				"bob", // login
+				"123", // password with only 3 digits
+				"Bob", // firstName
+				"Green", // lastName
+				"bob@example.com", // email
+				true, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restUserMockMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restUserMockMvc
+		.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(invalidUser)))
-		.andExpect(status().isBadRequest());
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		Optional<User> user = userRepository.findOneByLogin("bob");
-		assertThat(user.isPresent()).isFalse();
+		Optional<User> user = this.userRepository.findOneByLogin("bob");
+		Assertions.assertThat(user.isPresent()).isFalse();
 	}
 
 	/**
@@ -347,45 +321,42 @@ public class AccountResourceIntTest {
 	@Ignore
 	public void testRegisterDuplicateLogin() throws Exception {
 		// Good
-		ManagedUserVM validUser = new ManagedUserVM(
-				null,                   // id
-				"alice",                // login
-				"password",             // password
-				"Alice",                // firstName
-				"Something",            // lastName
-				"alice@example.com",    // email
-				true,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now());
+		ManagedUserVM validUser = new ManagedUserVM(null, // id
+				"alice", // login
+				"password", // password
+				"Alice", // firstName
+				"Something", // lastName
+				"alice@example.com", // email
+				true, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
 		// Duplicate login, different email
-		ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(), validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
-				"alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), 
-				validUser.getLastModifiedDate(), validUser.getAuthorities(), ZonedDateTime.now(), ZonedDateTime.now());
+		ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), validUser.getLogin(),
+				validUser.getPassword(), validUser.getFirstName(), validUser.getLastName(),
+				"alicejr@example.com", true, validUser.getImageUrl(), validUser.getLangKey(),
+				validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
+				validUser.getLastModifiedDate(), validUser.getAuthorities(), ZonedDateTime.now(),
+				ZonedDateTime.now());
 
 		// Good user
-		restMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(validUser)))
-		.andExpect(status().isCreated());
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Duplicate login
-		restMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
-		.andExpect(status().is4xxClientError());
+		.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-		Optional<User> userDup = userRepository.findOneByEmail("alicejr@example.com");
-		assertThat(userDup.isPresent()).isFalse();
+		Optional<User> userDup = this.userRepository.findOneByEmail("alicejr@example.com");
+		Assertions.assertThat(userDup.isPresent()).isFalse();
 	}
 
 	/**
@@ -398,45 +369,42 @@ public class AccountResourceIntTest {
 	@Ignore
 	public void testRegisterDuplicateEmail() throws Exception {
 		// Good
-		ManagedUserVM validUser = new ManagedUserVM(
-				null,                   // id
-				"john",                 // login
-				"password",             // password
-				"John",                 // firstName
-				"Doe",                  // lastName
-				"john@example.com",     // email
-				true,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now());
+		ManagedUserVM validUser = new ManagedUserVM(null, // id
+				"john", // login
+				"password", // password
+				"John", // firstName
+				"Doe", // lastName
+				"john@example.com", // email
+				true, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.USER)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
 		// Duplicate email, different login
-		ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr", validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
-				validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(), validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(), 
-				validUser.getLastModifiedDate(), validUser.getAuthorities(), ZonedDateTime.now(), ZonedDateTime.now());
+		ManagedUserVM duplicatedUser = new ManagedUserVM(validUser.getId(), "johnjr",
+				validUser.getPassword(), validUser.getLogin(), validUser.getLastName(),
+				validUser.getEmail(), true, validUser.getImageUrl(), validUser.getLangKey(),
+				validUser.getCreatedBy(), validUser.getCreatedDate(), validUser.getLastModifiedBy(),
+				validUser.getLastModifiedDate(), validUser.getAuthorities(), ZonedDateTime.now(),
+				ZonedDateTime.now());
 
 		// Good user
-		restMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(validUser)))
-		.andExpect(status().isCreated());
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Duplicate email
-		restMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(duplicatedUser)))
-		.andExpect(status().is4xxClientError());
+		.andExpect(MockMvcResultMatchers.status().is4xxClientError());
 
-		Optional<User> userDup = userRepository.findOneByLogin("johnjr");
-		assertThat(userDup.isPresent()).isFalse();
+		Optional<User> userDup = this.userRepository.findOneByLogin("johnjr");
+		Assertions.assertThat(userDup.isPresent()).isFalse();
 	}
 
 	/**
@@ -448,34 +416,30 @@ public class AccountResourceIntTest {
 	@Transactional
 	@Ignore
 	public void testRegisterAdminIsIgnored() throws Exception {
-		ManagedUserVM validUser = new ManagedUserVM(
-				null,                   // id
-				"badguy",               // login
-				"password",             // password
-				"Bad",                  // firstName
-				"Guy",                  // lastName
-				"badguy@example.com",   // email
-				true,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now());
+		ManagedUserVM validUser = new ManagedUserVM(null, // id
+				"badguy", // login
+				"password", // password
+				"Bad", // firstName
+				"Guy", // lastName
+				"badguy@example.com", // email
+				true, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restMvc.perform(
-				post("/api/register")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/register").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(validUser)))
-		.andExpect(status().isCreated());
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
-		Optional<User> userDup = userRepository.findOneByLogin("badguy");
-		assertThat(userDup.isPresent()).isTrue();
-		assertThat(userDup.get().getAuthorities()).hasSize(1)
-		.containsExactly(authorityRepository.findOne(AuthoritiesConstants.USER));
+		Optional<User> userDup = this.userRepository.findOneByLogin("badguy");
+		Assertions.assertThat(userDup.isPresent()).isTrue();
+		Assertions.assertThat(userDup.get().getAuthorities()).hasSize(1)
+		.containsExactly(this.authorityRepository.findOne(AuthoritiesConstants.USER));
 	}
 
 	/**
@@ -495,13 +459,13 @@ public class AccountResourceIntTest {
 		user.setActivated(false);
 		user.setActivationKey(activationKey);
 
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		restMvc.perform(get("/api/activate?key={activationKey}", activationKey))
-		.andExpect(status().isOk());
+		this.restMvc.perform(MockMvcRequestBuilders.get("/api/activate?key={activationKey}", activationKey))
+		.andExpect(MockMvcResultMatchers.status().isOk());
 
-		user = userRepository.findOneByLogin(user.getLogin()).orElse(null);
-		assertThat(user.getActivated()).isTrue();
+		user = this.userRepository.findOneByLogin(user.getLogin()).orElse(null);
+		Assertions.assertThat(user.getActivated()).isTrue();
 	}
 
 	/**
@@ -513,8 +477,8 @@ public class AccountResourceIntTest {
 	@Transactional
 	@Ignore
 	public void testActivateAccountWithWrongKey() throws Exception {
-		restMvc.perform(get("/api/activate?key=wrongActivationKey"))
-		.andExpect(status().isInternalServerError());
+		this.restMvc.perform(MockMvcRequestBuilders.get("/api/activate?key=wrongActivationKey"))
+		.andExpect(MockMvcResultMatchers.status().isInternalServerError());
 	}
 
 	/**
@@ -533,41 +497,35 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setActivated(true);
 
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		UserDTO userDTO = new UserDTO(
-				null,                   // id
-				"not-used",          // login
-				"firstname",                // firstName
-				"lastname",                  // lastName
-				"save-account@example.com",    // email
-				false,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 
-				ZonedDateTime.now(), 
-				ZonedDateTime.now()
-				);
+		UserDTO userDTO = new UserDTO(null, // id
+				"not-used", // login
+				"firstname", // firstName
+				"lastname", // lastName
+				"save-account@example.com", // email
+				false, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restMvc.perform(
-				post("/api/account")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(userDTO)))
-		.andExpect(status().isOk());
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(MockMvcResultMatchers.status().isOk());
 
-		User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
-		assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
-		assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
-		assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
-		assertThat(updatedUser.getLangKey()).isEqualTo(userDTO.getLangKey());
-		assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
-		assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
-		assertThat(updatedUser.getActivated()).isEqualTo(true);
-		assertThat(updatedUser.getAuthorities()).isEmpty();
+		User updatedUser = this.userRepository.findOneByLogin(user.getLogin()).orElse(null);
+		Assertions.assertThat(updatedUser.getFirstName()).isEqualTo(userDTO.getFirstName());
+		Assertions.assertThat(updatedUser.getLastName()).isEqualTo(userDTO.getLastName());
+		Assertions.assertThat(updatedUser.getEmail()).isEqualTo(userDTO.getEmail());
+		Assertions.assertThat(updatedUser.getLangKey()).isEqualTo(userDTO.getLangKey());
+		Assertions.assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+		Assertions.assertThat(updatedUser.getImageUrl()).isEqualTo(userDTO.getImageUrl());
+		Assertions.assertThat(updatedUser.getActivated()).isEqualTo(true);
+		Assertions.assertThat(updatedUser.getAuthorities()).isEmpty();
 	}
 
 	/**
@@ -586,32 +544,28 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setActivated(true);
 
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		UserDTO userDTO = new UserDTO(
-				null,                   // id
-				"not-used",          // login
-				"firstname",                // firstName
-				"lastname",                  // lastName
-				"invalid email",    // email
-				false,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 
-	            ZonedDateTime.now(), 
-	            ZonedDateTime.now());
+		UserDTO userDTO = new UserDTO(null, // id
+				"not-used", // login
+				"firstname", // firstName
+				"lastname", // lastName
+				"invalid email", // email
+				false, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restMvc.perform(
-				post("/api/account")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(userDTO)))
-		.andExpect(status().isBadRequest());
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		assertThat(userRepository.findOneByEmail("invalid email")).isNotPresent();
+		Assertions.assertThat(this.userRepository.findOneByEmail("invalid email")).isNotPresent();
 	}
 
 	/**
@@ -630,7 +584,7 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setActivated(true);
 
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
 		User anotherUser = new User();
 		anotherUser.setLogin("save-existing-email2");
@@ -638,33 +592,29 @@ public class AccountResourceIntTest {
 		anotherUser.setPassword(RandomStringUtils.random(60));
 		anotherUser.setActivated(true);
 
-		userRepository.saveAndFlush(anotherUser);
+		this.userRepository.saveAndFlush(anotherUser);
 
-		UserDTO userDTO = new UserDTO(
-				null,                   // id
-				"not-used",          // login
-				"firstname",                // firstName
-				"lastname",                  // lastName
-				"save-existing-email2@example.com",    // email
-				false,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 
-	            ZonedDateTime.now(), 
-	            ZonedDateTime.now());
+		UserDTO userDTO = new UserDTO(null, // id
+				"not-used", // login
+				"firstname", // firstName
+				"lastname", // lastName
+				"save-existing-email2@example.com", // email
+				false, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restMvc.perform(
-				post("/api/account")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(userDTO)))
-		.andExpect(status().isBadRequest());
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		User updatedUser = userRepository.findOneByLogin("save-existing-email").orElse(null);
-		assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email@example.com");
+		User updatedUser = this.userRepository.findOneByLogin("save-existing-email").orElse(null);
+		Assertions.assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email@example.com");
 	}
 
 	/**
@@ -683,7 +633,7 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setActivated(true);
 
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
 		User anotherUser = new User();
 		anotherUser.setLogin("save-existing-email-and-login");
@@ -691,31 +641,27 @@ public class AccountResourceIntTest {
 		anotherUser.setPassword(RandomStringUtils.random(60));
 		anotherUser.setActivated(true);
 
-		UserDTO userDTO = new UserDTO(
-				null,                   // id
-				"not-used",          // login
-				"firstname",                // firstName
-				"lastname",                  // lastName
-				"save-existing-email-and-login@example.com",    // email
-				false,                   // activated
-				"http://placehold.it/50x50", //imageUrl
-				"vi",                   // langKey
-				null,                   // createdBy
-				null,                   // createdDate
-				null,                   // lastModifiedBy
-				null,                   // lastModifiedDate
-				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)), 
-	            ZonedDateTime.now(), 
-	            ZonedDateTime.now());
+		UserDTO userDTO = new UserDTO(null, // id
+				"not-used", // login
+				"firstname", // firstName
+				"lastname", // lastName
+				"save-existing-email-and-login@example.com", // email
+				false, // activated
+				"http://placehold.it/50x50", // imageUrl
+				"vi", // langKey
+				null, // createdBy
+				null, // createdDate
+				null, // lastModifiedBy
+				null, // lastModifiedDate
+				new HashSet<>(Collections.singletonList(AuthoritiesConstants.ADMIN)),
+				ZonedDateTime.now(), ZonedDateTime.now());
 
-		restMvc.perform(
-				post("/api/account")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(userDTO)))
-		.andExpect(status().isOk());
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(userDTO))).andExpect(MockMvcResultMatchers.status().isOk());
 
-		User updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);
-		assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
+		User updatedUser = this.userRepository.findOneByLogin("save-existing-email-and-login")
+				.orElse(null);
+		Assertions.assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
 	}
 
 	/**
@@ -731,13 +677,13 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setLogin("change-password");
 		user.setEmail("change-password@example.com");
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		restMvc.perform(post("/api/account/change_password").content("new password"))
-		.andExpect(status().isOk());
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/change_password").content("new password"))
+		.andExpect(MockMvcResultMatchers.status().isOk());
 
-		User updatedUser = userRepository.findOneByLogin("change-password").orElse(null);
-		assertThat(passwordEncoder.matches("new password", updatedUser.getPassword())).isTrue();
+		User updatedUser = this.userRepository.findOneByLogin("change-password").orElse(null);
+		Assertions.assertThat(this.passwordEncoder.matches("new password", updatedUser.getPassword())).isTrue();
 	}
 
 	/**
@@ -753,13 +699,13 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setLogin("change-password-too-small");
 		user.setEmail("change-password-too-small@example.com");
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		restMvc.perform(post("/api/account/change_password").content("new"))
-		.andExpect(status().isBadRequest());
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/change_password").content("new"))
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		User updatedUser = userRepository.findOneByLogin("change-password-too-small").orElse(null);
-		assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+		User updatedUser = this.userRepository.findOneByLogin("change-password-too-small").orElse(null);
+		Assertions.assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
 	}
 
 	/**
@@ -775,13 +721,13 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setLogin("change-password-too-long");
 		user.setEmail("change-password-too-long@example.com");
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		restMvc.perform(post("/api/account/change_password").content(RandomStringUtils.random(101)))
-		.andExpect(status().isBadRequest());
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/change_password").content(RandomStringUtils.random(101)))
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		User updatedUser = userRepository.findOneByLogin("change-password-too-long").orElse(null);
-		assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+		User updatedUser = this.userRepository.findOneByLogin("change-password-too-long").orElse(null);
+		Assertions.assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
 	}
 
 	/**
@@ -797,13 +743,13 @@ public class AccountResourceIntTest {
 		user.setPassword(RandomStringUtils.random(60));
 		user.setLogin("change-password-empty");
 		user.setEmail("change-password-empty@example.com");
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		restMvc.perform(post("/api/account/change_password").content(RandomStringUtils.random(0)))
-		.andExpect(status().isBadRequest());
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/change_password").content(RandomStringUtils.random(0)))
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		User updatedUser = userRepository.findOneByLogin("change-password-empty").orElse(null);
-		assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
+		User updatedUser = this.userRepository.findOneByLogin("change-password-empty").orElse(null);
+		Assertions.assertThat(updatedUser.getPassword()).isEqualTo(user.getPassword());
 	}
 
 	/**
@@ -819,11 +765,11 @@ public class AccountResourceIntTest {
 		user.setActivated(true);
 		user.setLogin("password-reset");
 		user.setEmail("password-reset@example.com");
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
-		restMvc.perform(post("/api/account/reset_password/init")
-				.content("password-reset@example.com"))
-		.andExpect(status().isOk());
+		this.restMvc.perform(
+				MockMvcRequestBuilders.post("/api/account/reset_password/init").content("password-reset@example.com"))
+		.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 	/**
@@ -833,10 +779,9 @@ public class AccountResourceIntTest {
 	 */
 	@Test
 	public void testRequestPasswordResetWrongEmail() throws Exception {
-		restMvc.perform(
-				post("/api/account/reset_password/init")
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/reset_password/init")
 				.content("password-reset-wrong-email@example.com"))
-		.andExpect(status().isBadRequest());
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
 
 	/**
@@ -853,20 +798,21 @@ public class AccountResourceIntTest {
 		user.setEmail("finish-password-reset@example.com");
 		user.setResetDate(Instant.now().plusSeconds(60));
 		user.setResetKey("reset key");
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
 		KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
 		keyAndPassword.setKey(user.getResetKey());
 		keyAndPassword.setNewPassword("new password");
 
-		restMvc.perform(
-				post("/api/account/reset_password/finish")
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/reset_password/finish")
 				.contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
-		.andExpect(status().isOk());
+		.andExpect(MockMvcResultMatchers.status().isOk());
 
-		User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
-		assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isTrue();
+		User updatedUser = this.userRepository.findOneByLogin(user.getLogin()).orElse(null);
+		Assertions.assertThat(
+				this.passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword()))
+		.isTrue();
 	}
 
 	/**
@@ -883,22 +829,22 @@ public class AccountResourceIntTest {
 		user.setEmail("finish-password-reset-too-small@example.com");
 		user.setResetDate(Instant.now().plusSeconds(60));
 		user.setResetKey("reset key too small");
-		userRepository.saveAndFlush(user);
+		this.userRepository.saveAndFlush(user);
 
 		KeyAndPasswordVM keyAndPassword = new KeyAndPasswordVM();
 		keyAndPassword.setKey(user.getResetKey());
 		keyAndPassword.setNewPassword("foo");
 
-		restMvc.perform(
-				post("/api/account/reset_password/finish")
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/reset_password/finish")
 				.contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
-		.andExpect(status().isBadRequest());
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-		User updatedUser = userRepository.findOneByLogin(user.getLogin()).orElse(null);
-		assertThat(passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword())).isFalse();
+		User updatedUser = this.userRepository.findOneByLogin(user.getLogin()).orElse(null);
+		Assertions.assertThat(
+				this.passwordEncoder.matches(keyAndPassword.getNewPassword(), updatedUser.getPassword()))
+		.isFalse();
 	}
-
 
 	/**
 	 * Test finish password reset wrong key.
@@ -912,10 +858,9 @@ public class AccountResourceIntTest {
 		keyAndPassword.setKey("wrong reset key");
 		keyAndPassword.setNewPassword("new password");
 
-		restMvc.perform(
-				post("/api/account/reset_password/finish")
+		this.restMvc.perform(MockMvcRequestBuilders.post("/api/account/reset_password/finish")
 				.contentType(TestUtil.APPLICATION_JSON_UTF8)
 				.content(TestUtil.convertObjectToJsonBytes(keyAndPassword)))
-		.andExpect(status().isInternalServerError());
+		.andExpect(MockMvcResultMatchers.status().isInternalServerError());
 	}
 }

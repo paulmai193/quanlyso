@@ -1,19 +1,11 @@
 package logia.quanlyso.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,309 +39,306 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class ProfitFactorResourceIntTest {
 
-    /** The Constant DEFAULT_RATE. */
-    private static final Float DEFAULT_RATE = 1F;
-    
-    /** The Constant UPDATED_RATE. */
-    private static final Float UPDATED_RATE = 2F;
+	/** The Constant DEFAULT_RATE. */
+	private static final Float						DEFAULT_RATE	= 1F;
 
-    /** The profit factor repository. */
-    @Autowired
-    private ProfitFactorRepository profitFactorRepository;
+	/** The Constant UPDATED_RATE. */
+	private static final Float						UPDATED_RATE	= 2F;
 
-    /** The profit factor mapper. */
-    @Autowired
-    private ProfitFactorMapper profitFactorMapper;
+	/** The profit factor repository. */
+	@Autowired
+	private ProfitFactorRepository					profitFactorRepository;
 
-    /** The profit factor service. */
-    @Autowired
-    private ProfitFactorService profitFactorService;
+	/** The profit factor mapper. */
+	@Autowired
+	private ProfitFactorMapper						profitFactorMapper;
 
-    /** The jackson message converter. */
-    @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+	/** The profit factor service. */
+	@Autowired
+	private ProfitFactorService						profitFactorService;
 
-    /** The pageable argument resolver. */
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+	/** The jackson message converter. */
+	@Autowired
+	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
 
-    /** The exception translator. */
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
+	/** The pageable argument resolver. */
+	@Autowired
+	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
 
-    /** The em. */
-    @Autowired
-    private EntityManager em;
+	/** The exception translator. */
+	@Autowired
+	private ExceptionTranslator						exceptionTranslator;
 
-    /** The rest profit factor mock mvc. */
-    private MockMvc restProfitFactorMockMvc;
+	/** The em. */
+	@Autowired
+	private EntityManager							em;
 
-    /** The profit factor. */
-    private ProfitFactor profitFactor;
+	/** The rest profit factor mock mvc. */
+	private MockMvc									restProfitFactorMockMvc;
 
-    /**
-     * Setup.
-     */
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        ProfitFactorResource profitFactorResource = new ProfitFactorResource(profitFactorService);
-        this.restProfitFactorMockMvc = MockMvcBuilders.standaloneSetup(profitFactorResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setMessageConverters(jacksonMessageConverter).build();
-    }
+	/** The profit factor. */
+	private ProfitFactor							profitFactor;
 
-    /**
-     * Create an entity for this test.
-     * 
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     *
-     * @param em the em
-     * @return the profit factor
-     */
-    public static ProfitFactor createEntity(EntityManager em) {
-        ProfitFactor profitFactor = new ProfitFactor()
-            .rate(DEFAULT_RATE);
-        return profitFactor;
-    }
+	/**
+	 * Setup.
+	 */
+	@Before
+	public void setup() {
+		MockitoAnnotations.initMocks(this);
+		ProfitFactorResource profitFactorResource = new ProfitFactorResource(this.profitFactorService);
+		this.restProfitFactorMockMvc = MockMvcBuilders.standaloneSetup(profitFactorResource)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver)
+				.setControllerAdvice(this.exceptionTranslator)
+				.setMessageConverters(this.jacksonMessageConverter).build();
+	}
 
-    /**
-     * Inits the test.
-     */
-    @Before
-    public void initTest() {
-        profitFactor = createEntity(em);
-    }
+	/**
+	 * Create an entity for this test.
+	 * 
+	 * This is a static method, as tests for other entities might also need it,
+	 * if they test an entity which requires the current entity.
+	 *
+	 * @param em the em
+	 * @return the profit factor
+	 */
+	public static ProfitFactor createEntity(EntityManager em) {
+		ProfitFactor profitFactor = new ProfitFactor().rate(ProfitFactorResourceIntTest.DEFAULT_RATE);
+		return profitFactor;
+	}
 
-    /**
-     * Creates the profit factor.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void createProfitFactor() throws Exception {
-        int databaseSizeBeforeCreate = profitFactorRepository.findAll().size();
+	/**
+	 * Inits the test.
+	 */
+	@Before
+	public void initTest() {
+		this.profitFactor = ProfitFactorResourceIntTest.createEntity(this.em);
+	}
 
-        // Create the ProfitFactor
-        ProfitFactorDTO profitFactorDTO = profitFactorMapper.toDto(profitFactor);
-        restProfitFactorMockMvc.perform(post("/api/profit-factors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
-            .andExpect(status().isCreated());
+	/**
+	 * Creates the profit factor.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void createProfitFactor() throws Exception {
+		int databaseSizeBeforeCreate = this.profitFactorRepository.findAll().size();
 
-        // Validate the ProfitFactor in the database
-        List<ProfitFactor> profitFactorList = profitFactorRepository.findAll();
-        assertThat(profitFactorList).hasSize(databaseSizeBeforeCreate + 1);
-        ProfitFactor testProfitFactor = profitFactorList.get(profitFactorList.size() - 1);
-        assertThat(testProfitFactor.getRate()).isEqualTo(DEFAULT_RATE);
-    }
+		// Create the ProfitFactor
+		ProfitFactorDTO profitFactorDTO = this.profitFactorMapper.toDto(this.profitFactor);
+		this.restProfitFactorMockMvc
+		.perform(MockMvcRequestBuilders.post("/api/profit-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
-    /**
-     * Creates the profit factor with existing id.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void createProfitFactorWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = profitFactorRepository.findAll().size();
+		// Validate the ProfitFactor in the database
+		List<ProfitFactor> profitFactorList = this.profitFactorRepository.findAll();
+		Assertions.assertThat(profitFactorList).hasSize(databaseSizeBeforeCreate + 1);
+		ProfitFactor testProfitFactor = profitFactorList.get(profitFactorList.size() - 1);
+		Assertions.assertThat(testProfitFactor.getRate()).isEqualTo(ProfitFactorResourceIntTest.DEFAULT_RATE);
+	}
 
-        // Create the ProfitFactor with an existing ID
-        profitFactor.setId(1L);
-        ProfitFactorDTO profitFactorDTO = profitFactorMapper.toDto(profitFactor);
+	/**
+	 * Creates the profit factor with existing id.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void createProfitFactorWithExistingId() throws Exception {
+		int databaseSizeBeforeCreate = this.profitFactorRepository.findAll().size();
 
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restProfitFactorMockMvc.perform(post("/api/profit-factors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
-            .andExpect(status().isBadRequest());
+		// Create the ProfitFactor with an existing ID
+		this.profitFactor.setId(1L);
+		ProfitFactorDTO profitFactorDTO = this.profitFactorMapper.toDto(this.profitFactor);
 
-        // Validate the Alice in the database
-        List<ProfitFactor> profitFactorList = profitFactorRepository.findAll();
-        assertThat(profitFactorList).hasSize(databaseSizeBeforeCreate);
-    }
+		// An entity with an existing ID cannot be created, so this API call must fail
+		this.restProfitFactorMockMvc
+		.perform(MockMvcRequestBuilders.post("/api/profit-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-    /**
-     * Gets the all profit factors.
-     *
-     * @return the all profit factors
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void getAllProfitFactors() throws Exception {
-        // Initialize the database
-        profitFactorRepository.saveAndFlush(profitFactor);
+		// Validate the Alice in the database
+		List<ProfitFactor> profitFactorList = this.profitFactorRepository.findAll();
+		Assertions.assertThat(profitFactorList).hasSize(databaseSizeBeforeCreate);
+	}
 
-        // Get all the profitFactorList
-        restProfitFactorMockMvc.perform(get("/api/profit-factors?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(profitFactor.getId().intValue())))
-            .andExpect(jsonPath("$.[*].rate").value(hasItem(DEFAULT_RATE.doubleValue())));
-    }
+	/**
+	 * Gets the all profit factors.
+	 *
+	 * @return the all profit factors
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void getAllProfitFactors() throws Exception {
+		// Initialize the database
+		this.profitFactorRepository.saveAndFlush(this.profitFactor);
 
-    /**
-     * Gets the profit factor.
-     *
-     * @return the profit factor
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void getProfitFactor() throws Exception {
-        // Initialize the database
-        profitFactorRepository.saveAndFlush(profitFactor);
+		// Get all the profitFactorList
+		this.restProfitFactorMockMvc.perform(MockMvcRequestBuilders.get("/api/profit-factors?sort=id,desc"))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.profitFactor.getId().intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].rate").value(Matchers.hasItem(ProfitFactorResourceIntTest.DEFAULT_RATE.doubleValue())));
+	}
 
-        // Get the profitFactor
-        restProfitFactorMockMvc.perform(get("/api/profit-factors/{id}", profitFactor.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(profitFactor.getId().intValue()))
-            .andExpect(jsonPath("$.rate").value(DEFAULT_RATE.doubleValue()));
-    }
+	/**
+	 * Gets the profit factor.
+	 *
+	 * @return the profit factor
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void getProfitFactor() throws Exception {
+		// Initialize the database
+		this.profitFactorRepository.saveAndFlush(this.profitFactor);
 
-    /**
-     * Gets the non existing profit factor.
-     *
-     * @return the non existing profit factor
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void getNonExistingProfitFactor() throws Exception {
-        // Get the profitFactor
-        restProfitFactorMockMvc.perform(get("/api/profit-factors/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
-    }
+		// Get the profitFactor
+		this.restProfitFactorMockMvc.perform(MockMvcRequestBuilders.get("/api/profit-factors/{id}", this.profitFactor.getId()))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.profitFactor.getId().intValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.rate").value(ProfitFactorResourceIntTest.DEFAULT_RATE.doubleValue()));
+	}
 
-    /**
-     * Update profit factor.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void updateProfitFactor() throws Exception {
-        // Initialize the database
-        profitFactorRepository.saveAndFlush(profitFactor);
-        int databaseSizeBeforeUpdate = profitFactorRepository.findAll().size();
+	/**
+	 * Gets the non existing profit factor.
+	 *
+	 * @return the non existing profit factor
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void getNonExistingProfitFactor() throws Exception {
+		// Get the profitFactor
+		this.restProfitFactorMockMvc.perform(MockMvcRequestBuilders.get("/api/profit-factors/{id}", Long.MAX_VALUE))
+		.andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
 
-        // Update the profitFactor
-        ProfitFactor updatedProfitFactor = profitFactorRepository.findOne(profitFactor.getId());
-        updatedProfitFactor
-            .rate(UPDATED_RATE);
-        ProfitFactorDTO profitFactorDTO = profitFactorMapper.toDto(updatedProfitFactor);
+	/**
+	 * Update profit factor.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void updateProfitFactor() throws Exception {
+		// Initialize the database
+		this.profitFactorRepository.saveAndFlush(this.profitFactor);
+		int databaseSizeBeforeUpdate = this.profitFactorRepository.findAll().size();
 
-        restProfitFactorMockMvc.perform(put("/api/profit-factors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
-            .andExpect(status().isOk());
+		// Update the profitFactor
+		ProfitFactor updatedProfitFactor = this.profitFactorRepository.findOne(this.profitFactor.getId());
+		updatedProfitFactor.rate(ProfitFactorResourceIntTest.UPDATED_RATE);
+		ProfitFactorDTO profitFactorDTO = this.profitFactorMapper.toDto(updatedProfitFactor);
 
-        // Validate the ProfitFactor in the database
-        List<ProfitFactor> profitFactorList = profitFactorRepository.findAll();
-        assertThat(profitFactorList).hasSize(databaseSizeBeforeUpdate);
-        ProfitFactor testProfitFactor = profitFactorList.get(profitFactorList.size() - 1);
-        assertThat(testProfitFactor.getRate()).isEqualTo(UPDATED_RATE);
-    }
+		this.restProfitFactorMockMvc
+		.perform(MockMvcRequestBuilders.put("/api/profit-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
+		.andExpect(MockMvcResultMatchers.status().isOk());
 
-    /**
-     * Update non existing profit factor.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void updateNonExistingProfitFactor() throws Exception {
-        int databaseSizeBeforeUpdate = profitFactorRepository.findAll().size();
+		// Validate the ProfitFactor in the database
+		List<ProfitFactor> profitFactorList = this.profitFactorRepository.findAll();
+		Assertions.assertThat(profitFactorList).hasSize(databaseSizeBeforeUpdate);
+		ProfitFactor testProfitFactor = profitFactorList.get(profitFactorList.size() - 1);
+		Assertions.assertThat(testProfitFactor.getRate()).isEqualTo(ProfitFactorResourceIntTest.UPDATED_RATE);
+	}
 
-        // Create the ProfitFactor
-        ProfitFactorDTO profitFactorDTO = profitFactorMapper.toDto(profitFactor);
+	/**
+	 * Update non existing profit factor.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void updateNonExistingProfitFactor() throws Exception {
+		int databaseSizeBeforeUpdate = this.profitFactorRepository.findAll().size();
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
-        restProfitFactorMockMvc.perform(put("/api/profit-factors")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
-            .andExpect(status().isCreated());
+		// Create the ProfitFactor
+		ProfitFactorDTO profitFactorDTO = this.profitFactorMapper.toDto(this.profitFactor);
 
-        // Validate the ProfitFactor in the database
-        List<ProfitFactor> profitFactorList = profitFactorRepository.findAll();
-        assertThat(profitFactorList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
+		// If the entity doesn't have an ID, it will be created instead of just being updated
+		this.restProfitFactorMockMvc
+		.perform(MockMvcRequestBuilders.put("/api/profit-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(profitFactorDTO)))
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
-    /**
-     * Delete profit factor.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void deleteProfitFactor() throws Exception {
-        // Initialize the database
-        profitFactorRepository.saveAndFlush(profitFactor);
-        int databaseSizeBeforeDelete = profitFactorRepository.findAll().size();
+		// Validate the ProfitFactor in the database
+		List<ProfitFactor> profitFactorList = this.profitFactorRepository.findAll();
+		Assertions.assertThat(profitFactorList).hasSize(databaseSizeBeforeUpdate + 1);
+	}
 
-        // Get the profitFactor
-        restProfitFactorMockMvc.perform(delete("/api/profit-factors/{id}", profitFactor.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk());
+	/**
+	 * Delete profit factor.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void deleteProfitFactor() throws Exception {
+		// Initialize the database
+		this.profitFactorRepository.saveAndFlush(this.profitFactor);
+		int databaseSizeBeforeDelete = this.profitFactorRepository.findAll().size();
 
-        // Validate the database is empty
-        List<ProfitFactor> profitFactorList = profitFactorRepository.findAll();
-        assertThat(profitFactorList).hasSize(databaseSizeBeforeDelete - 1);
-    }
+		// Get the profitFactor
+		this.restProfitFactorMockMvc.perform(MockMvcRequestBuilders.delete("/api/profit-factors/{id}", this.profitFactor.getId())
+				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(MockMvcResultMatchers.status().isOk());
 
-    /**
-     * Equals verifier.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ProfitFactor.class);
-        ProfitFactor profitFactor1 = new ProfitFactor();
-        profitFactor1.setId(1L);
-        ProfitFactor profitFactor2 = new ProfitFactor();
-        profitFactor2.setId(profitFactor1.getId());
-        assertThat(profitFactor1).isEqualTo(profitFactor2);
-        profitFactor2.setId(2L);
-        assertThat(profitFactor1).isNotEqualTo(profitFactor2);
-        profitFactor1.setId(null);
-        assertThat(profitFactor1).isNotEqualTo(profitFactor2);
-    }
+		// Validate the database is empty
+		List<ProfitFactor> profitFactorList = this.profitFactorRepository.findAll();
+		Assertions.assertThat(profitFactorList).hasSize(databaseSizeBeforeDelete - 1);
+	}
 
-    /**
-     * Dto equals verifier.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(ProfitFactorDTO.class);
-        ProfitFactorDTO profitFactorDTO1 = new ProfitFactorDTO();
-        profitFactorDTO1.setId(1L);
-        ProfitFactorDTO profitFactorDTO2 = new ProfitFactorDTO();
-        assertThat(profitFactorDTO1).isNotEqualTo(profitFactorDTO2);
-        profitFactorDTO2.setId(profitFactorDTO1.getId());
-        assertThat(profitFactorDTO1).isEqualTo(profitFactorDTO2);
-        profitFactorDTO2.setId(2L);
-        assertThat(profitFactorDTO1).isNotEqualTo(profitFactorDTO2);
-        profitFactorDTO1.setId(null);
-        assertThat(profitFactorDTO1).isNotEqualTo(profitFactorDTO2);
-    }
+	/**
+	 * Equals verifier.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void equalsVerifier() throws Exception {
+		TestUtil.equalsVerifier(ProfitFactor.class);
+		ProfitFactor profitFactor1 = new ProfitFactor();
+		profitFactor1.setId(1L);
+		ProfitFactor profitFactor2 = new ProfitFactor();
+		profitFactor2.setId(profitFactor1.getId());
+		Assertions.assertThat(profitFactor1).isEqualTo(profitFactor2);
+		profitFactor2.setId(2L);
+		Assertions.assertThat(profitFactor1).isNotEqualTo(profitFactor2);
+		profitFactor1.setId(null);
+		Assertions.assertThat(profitFactor1).isNotEqualTo(profitFactor2);
+	}
 
-    /**
-     * Test entity from id.
-     */
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(profitFactorMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(profitFactorMapper.fromId(null)).isNull();
-    }
+	/**
+	 * Dto equals verifier.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void dtoEqualsVerifier() throws Exception {
+		TestUtil.equalsVerifier(ProfitFactorDTO.class);
+		ProfitFactorDTO profitFactorDTO1 = new ProfitFactorDTO();
+		profitFactorDTO1.setId(1L);
+		ProfitFactorDTO profitFactorDTO2 = new ProfitFactorDTO();
+		Assertions.assertThat(profitFactorDTO1).isNotEqualTo(profitFactorDTO2);
+		profitFactorDTO2.setId(profitFactorDTO1.getId());
+		Assertions.assertThat(profitFactorDTO1).isEqualTo(profitFactorDTO2);
+		profitFactorDTO2.setId(2L);
+		Assertions.assertThat(profitFactorDTO1).isNotEqualTo(profitFactorDTO2);
+		profitFactorDTO1.setId(null);
+		Assertions.assertThat(profitFactorDTO1).isNotEqualTo(profitFactorDTO2);
+	}
+
+	/**
+	 * Test entity from id.
+	 */
+	@Test
+	@Transactional
+	public void testEntityFromId() {
+		Assertions.assertThat(this.profitFactorMapper.fromId(42L).getId()).isEqualTo(42);
+		Assertions.assertThat(this.profitFactorMapper.fromId(null)).isNull();
+	}
 }

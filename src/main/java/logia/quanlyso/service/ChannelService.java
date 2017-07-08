@@ -12,41 +12,41 @@ import logia.quanlyso.service.dto.ChannelOpenDay;
  */
 public interface ChannelService {
 
-    /**
-     * Save a channel.
-     *
-     * @param channelDTO the entity to save
-     * @return the persisted entity
-     */
-    ChannelDTO save(ChannelDTO channelDTO);
+	/**
+	 * Save a channel.
+	 *
+	 * @param channelDTO the entity to save
+	 * @return the persisted entity
+	 */
+	ChannelDTO save(ChannelDTO channelDTO);
 
-    /**
-     *  Get all the channels.
-     *  
-     *  @return the list of entities
-     */
-    List<ChannelDTO> findAll();
-    
-    /**
-     * Find all by open day.
-     *
-     * @param openDay the open day
-     * @return the list
-     */
-    List<ChannelDTO> findAllByOpenDay(ChannelOpenDay openDay);
+	/**
+	 * Get all the channels.
+	 * 
+	 * @return the list of entities
+	 */
+	List<ChannelDTO> findAll();
 
-    /**
-     *  Get the "id" channel.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    ChannelDTO findOne(Long id);
+	/**
+	 * Find all by open day.
+	 *
+	 * @param openDay the open day
+	 * @return the list
+	 */
+	List<ChannelDTO> findAllByOpenDay(ChannelOpenDay openDay);
 
-    /**
-     *  Delete the "id" channel.
-     *
-     *  @param id the id of the entity
-     */
-    void delete(Long id);
+	/**
+	 * Get the "id" channel.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	ChannelDTO findOne(Long id);
+
+	/**
+	 * Delete the "id" channel.
+	 *
+	 * @param id the id of the entity
+	 */
+	void delete(Long id);
 }

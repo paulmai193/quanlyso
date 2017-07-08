@@ -12,8 +12,8 @@ import logia.quanlyso.domain.Code;
  * Spring Data JPA repository for the Code entity.
  */
 @SuppressWarnings("unused")
-public interface CodeRepository extends JpaRepository<Code,Long> {
-	
+public interface CodeRepository extends JpaRepository<Code, Long> {
+
 	/**
 	 * Find all by open day.
 	 *

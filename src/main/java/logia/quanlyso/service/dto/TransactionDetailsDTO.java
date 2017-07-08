@@ -1,6 +1,5 @@
 package logia.quanlyso.service.dto;
 
-
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,232 +10,239 @@ import java.util.Objects;
  */
 public class TransactionDetailsDTO implements Serializable {
 
-    /** The id. */
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    /** The amount. */
-    private Float amount;
+	/** The id. */
+	private Long	id;
 
-    /** The profit. */
-    private Float profit;
+	/** The amount. */
+	private Float	amount;
 
-    /** The costs. */
-    private Float costs;
+	/** The profit. */
+	private Float	profit;
 
-    /** The transactions id. */
-    private Long transactionsId;
+	/** The costs. */
+	private Float	costs;
 
-    /** The channels id. */
-    private Long channelsId;
+	/** The transactions id. */
+	private Long	transactionsId;
 
-    /** The factors id. */
-    private Long factorsId;
+	/** The channels id. */
+	private Long	channelsId;
 
-    /** The styles id. */
-    private Long stylesId;
+	/** The factors id. */
+	private Long	factorsId;
 
-    /** The types id. */
-    private Long typesId;
+	/** The styles id. */
+	private Long	stylesId;
 
-    /**
-     * Gets the id.
-     *
-     * @return the id
-     */
-    public Long getId() {
-        return id;
-    }
+	/** The types id. */
+	private Long	typesId;
 
-    /**
-     * Sets the id.
-     *
-     * @param id the new id
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * Gets the amount.
-     *
-     * @return the amount
-     */
-    public Float getAmount() {
-        return amount;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /**
-     * Sets the amount.
-     *
-     * @param amount the new amount
-     */
-    public void setAmount(Float amount) {
-        this.amount = amount;
-    }
+	/**
+	 * Gets the amount.
+	 *
+	 * @return the amount
+	 */
+	public Float getAmount() {
+		return this.amount;
+	}
 
-    /**
-     * Gets the profit.
-     *
-     * @return the profit
-     */
-    public Float getProfit() {
-        return profit;
-    }
+	/**
+	 * Sets the amount.
+	 *
+	 * @param amount the new amount
+	 */
+	public void setAmount(Float amount) {
+		this.amount = amount;
+	}
 
-    /**
-     * Sets the profit.
-     *
-     * @param profit the new profit
-     */
-    public void setProfit(Float profit) {
-        this.profit = profit;
-    }
+	/**
+	 * Gets the profit.
+	 *
+	 * @return the profit
+	 */
+	public Float getProfit() {
+		return this.profit;
+	}
 
-    /**
-     * Gets the costs.
-     *
-     * @return the costs
-     */
-    public Float getCosts() {
-        return costs;
-    }
+	/**
+	 * Sets the profit.
+	 *
+	 * @param profit the new profit
+	 */
+	public void setProfit(Float profit) {
+		this.profit = profit;
+	}
 
-    /**
-     * Sets the costs.
-     *
-     * @param costs the new costs
-     */
-    public void setCosts(Float costs) {
-        this.costs = costs;
-    }
+	/**
+	 * Gets the costs.
+	 *
+	 * @return the costs
+	 */
+	public Float getCosts() {
+		return this.costs;
+	}
 
-    /**
-     * Gets the transactions id.
-     *
-     * @return the transactions id
-     */
-    public Long getTransactionsId() {
-        return transactionsId;
-    }
+	/**
+	 * Sets the costs.
+	 *
+	 * @param costs the new costs
+	 */
+	public void setCosts(Float costs) {
+		this.costs = costs;
+	}
 
-    /**
-     * Sets the transactions id.
-     *
-     * @param transactionsId the new transactions id
-     */
-    public void setTransactionsId(Long transactionsId) {
-        this.transactionsId = transactionsId;
-    }
+	/**
+	 * Gets the transactions id.
+	 *
+	 * @return the transactions id
+	 */
+	public Long getTransactionsId() {
+		return this.transactionsId;
+	}
 
-    /**
-     * Gets the channels id.
-     *
-     * @return the channels id
-     */
-    public Long getChannelsId() {
-        return channelsId;
-    }
+	/**
+	 * Sets the transactions id.
+	 *
+	 * @param transactionsId the new transactions id
+	 */
+	public void setTransactionsId(Long transactionsId) {
+		this.transactionsId = transactionsId;
+	}
 
-    /**
-     * Sets the channels id.
-     *
-     * @param channelId the new channels id
-     */
-    public void setChannelsId(Long channelId) {
-        this.channelsId = channelId;
-    }
+	/**
+	 * Gets the channels id.
+	 *
+	 * @return the channels id
+	 */
+	public Long getChannelsId() {
+		return this.channelsId;
+	}
 
-    /**
-     * Gets the factors id.
-     *
-     * @return the factors id
-     */
-    public Long getFactorsId() {
-        return factorsId;
-    }
+	/**
+	 * Sets the channels id.
+	 *
+	 * @param channelId the new channels id
+	 */
+	public void setChannelsId(Long channelId) {
+		this.channelsId = channelId;
+	}
 
-    /**
-     * Sets the factors id.
-     *
-     * @param factorId the new factors id
-     */
-    public void setFactorsId(Long factorId) {
-        this.factorsId = factorId;
-    }
+	/**
+	 * Gets the factors id.
+	 *
+	 * @return the factors id
+	 */
+	public Long getFactorsId() {
+		return this.factorsId;
+	}
 
-    /**
-     * Gets the styles id.
-     *
-     * @return the styles id
-     */
-    public Long getStylesId() {
-        return stylesId;
-    }
+	/**
+	 * Sets the factors id.
+	 *
+	 * @param factorId the new factors id
+	 */
+	public void setFactorsId(Long factorId) {
+		this.factorsId = factorId;
+	}
 
-    /**
-     * Sets the styles id.
-     *
-     * @param styleId the new styles id
-     */
-    public void setStylesId(Long styleId) {
-        this.stylesId = styleId;
-    }
+	/**
+	 * Gets the styles id.
+	 *
+	 * @return the styles id
+	 */
+	public Long getStylesId() {
+		return this.stylesId;
+	}
 
-    /**
-     * Gets the types id.
-     *
-     * @return the types id
-     */
-    public Long getTypesId() {
-        return typesId;
-    }
+	/**
+	 * Sets the styles id.
+	 *
+	 * @param styleId the new styles id
+	 */
+	public void setStylesId(Long styleId) {
+		this.stylesId = styleId;
+	}
 
-    /**
-     * Sets the types id.
-     *
-     * @param typesId the new types id
-     */
-    public void setTypesId(Long typesId) {
-        this.typesId = typesId;
-    }
+	/**
+	 * Gets the types id.
+	 *
+	 * @return the types id
+	 */
+	public Long getTypesId() {
+		return this.typesId;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	/**
+	 * Sets the types id.
+	 *
+	 * @param typesId the new types id
+	 */
+	public void setTypesId(Long typesId) {
+		this.typesId = typesId;
+	}
 
-        TransactionDetailsDTO transactionDetailsDTO = (TransactionDetailsDTO) o;
-        if(transactionDetailsDTO.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), transactionDetailsDTO.getId());
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+		TransactionDetailsDTO transactionDetailsDTO = (TransactionDetailsDTO) o;
+		if (transactionDetailsDTO.getId() == null || this.getId() == null) {
+			return false;
+		}
+		return Objects.equals(this.getId(), transactionDetailsDTO.getId());
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "TransactionDetailsDTO{" +
-            "id=" + getId() +
-            ", amount='" + getAmount() + "'" +
-            ", profit='" + getProfit() + "'" +
-            ", costs='" + getCosts() + "'" +
-            "}";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getId());
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "TransactionDetailsDTO{" + "id=" + this.getId() + ", amount='" + this.getAmount() + "'"
+				+ ", profit='" + this.getProfit() + "'" + ", costs='" + this.getCosts() + "'" + "}";
+	}
 }

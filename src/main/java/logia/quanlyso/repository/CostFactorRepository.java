@@ -15,8 +15,8 @@ import logia.quanlyso.domain.Types;
  * @author Dai Mai
  */
 @SuppressWarnings("unused")
-public interface CostFactorRepository extends JpaRepository<CostFactor,Long> {
-	
+public interface CostFactorRepository extends JpaRepository<CostFactor, Long> {
+
 	/**
 	 * Find one by factor and style and types.
 	 *
@@ -26,7 +26,7 @@ public interface CostFactorRepository extends JpaRepository<CostFactor,Long> {
 	 * @return the list
 	 */
 	CostFactor findOneByFactorsAndStylesAndTypes(Factor factor, Style style, Types types);
-	
+
 	/**
 	 * Find all by factors and styles and types.
 	 *

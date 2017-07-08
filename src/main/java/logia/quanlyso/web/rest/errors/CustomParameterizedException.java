@@ -21,52 +21,52 @@ import java.util.Map;
  */
 public class CustomParameterizedException extends RuntimeException {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 1L;
+	/** The Constant serialVersionUID. */
+	private static final long			serialVersionUID	= 1L;
 
-    /** The Constant PARAM. */
-    private static final String PARAM = "param";
+	/** The Constant PARAM. */
+	private static final String			PARAM				= "param";
 
-    /** The message. */
-    private final String message;
+	/** The message. */
+	private final String				message;
 
-    /** The param map. */
-    private final Map<String, String> paramMap = new HashMap<>();
+	/** The param map. */
+	private final Map<String, String>	paramMap			= new HashMap<>();
 
-    /**
-     * Instantiates a new custom parameterized exception.
-     *
-     * @param message the message
-     * @param params the params
-     */
-    public CustomParameterizedException(String message, String... params) {
-        super(message);
-        this.message = message;
-        if (params != null && params.length > 0) {
-            for (int i = 0; i < params.length; i++) {
-                paramMap.put(PARAM + i, params[i]);
-            }
-        }
-    }
+	/**
+	 * Instantiates a new custom parameterized exception.
+	 *
+	 * @param message the message
+	 * @param params the params
+	 */
+	public CustomParameterizedException(String message, String... params) {
+		super(message);
+		this.message = message;
+		if (params != null && params.length > 0) {
+			for (int i = 0; i < params.length; i++) {
+				this.paramMap.put(CustomParameterizedException.PARAM + i, params[i]);
+			}
+		}
+	}
 
-    /**
-     * Instantiates a new custom parameterized exception.
-     *
-     * @param message the message
-     * @param paramMap the param map
-     */
-    public CustomParameterizedException(String message, Map<String, String> paramMap) {
-        super(message);
-        this.message = message;
-        this.paramMap.putAll(paramMap);
-    }
+	/**
+	 * Instantiates a new custom parameterized exception.
+	 *
+	 * @param message the message
+	 * @param paramMap the param map
+	 */
+	public CustomParameterizedException(String message, Map<String, String> paramMap) {
+		super(message);
+		this.message = message;
+		this.paramMap.putAll(paramMap);
+	}
 
-    /**
-     * Gets the error VM.
-     *
-     * @return the error VM
-     */
-    public ParameterizedErrorVM getErrorVM() {
-        return new ParameterizedErrorVM(message, paramMap);
-    }
+	/**
+	 * Gets the error VM.
+	 *
+	 * @return the error VM
+	 */
+	public ParameterizedErrorVM getErrorVM() {
+		return new ParameterizedErrorVM(this.message, this.paramMap);
+	}
 }

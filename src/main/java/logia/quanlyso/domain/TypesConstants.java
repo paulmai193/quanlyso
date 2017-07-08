@@ -6,19 +6,19 @@ package logia.quanlyso.domain;
  * @author Dai Mai
  */
 public enum TypesConstants {
-	
+
 	/** The top. */
-	TOP(1), 
+	TOP(1),
 	/** The bottom. */
-	BOTTOM(2), 
+	BOTTOM(2),
 	/** The both. */
-	BOTH(3), 
+	BOTH(3),
 	/** The roll. */
 	ROLL(4);
-	
+
 	/** The types id. */
 	long typesId;
-	
+
 	/**
 	 * Instantiates a new types constants.
 	 *
@@ -27,13 +27,13 @@ public enum TypesConstants {
 	TypesConstants(long id) {
 		this.typesId = id;
 	}
-	
+
 	/**
 	 * Gets the types id.
 	 *
 	 * @return the types id
 	 */
 	public long getId() {
-		return typesId;
+		return this.typesId;
 	}
 }

@@ -22,82 +22,81 @@ import logia.quanlyso.service.mapper.FactorMapper;
  */
 @Service
 @Transactional
-public class FactorServiceImpl implements FactorService{
+public class FactorServiceImpl implements FactorService {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(FactorServiceImpl.class);
-    
-    /** The factor repository. */
-    private final FactorRepository factorRepository;
+	/** The log. */
+	private final Logger			log	= LoggerFactory.getLogger(FactorServiceImpl.class);
 
-    /** The factor mapper. */
-    private final FactorMapper factorMapper;
+	/** The factor repository. */
+	private final FactorRepository	factorRepository;
 
-    /**
-     * Instantiates a new factor service impl.
-     *
-     * @param factorRepository the factor repository
-     * @param factorMapper the factor mapper
-     */
-    public FactorServiceImpl(FactorRepository factorRepository, FactorMapper factorMapper) {
-        this.factorRepository = factorRepository;
-        this.factorMapper = factorMapper;
-    }
+	/** The factor mapper. */
+	private final FactorMapper		factorMapper;
 
-    /**
-     * Save a factor.
-     *
-     * @param factorDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public FactorDTO save(FactorDTO factorDTO) {
-        log.debug("Request to save Factor : {}", factorDTO);
-        Factor factor = factorMapper.toEntity(factorDTO);
-        factor = factorRepository.save(factor);
-        FactorDTO result = factorMapper.toDto(factor);
-        return result;
-    }
+	/**
+	 * Instantiates a new factor service impl.
+	 *
+	 * @param factorRepository the factor repository
+	 * @param factorMapper the factor mapper
+	 */
+	public FactorServiceImpl(FactorRepository factorRepository, FactorMapper factorMapper) {
+		this.factorRepository = factorRepository;
+		this.factorMapper = factorMapper;
+	}
 
-    /**
-     *  Get all the factors.
-     *  
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public List<FactorDTO> findAll() {
-        log.debug("Request to get all Factors");
-        List<FactorDTO> result = factorRepository.findAll().stream()
-            .map(factorMapper::toDto)
-            .collect(Collectors.toCollection(LinkedList::new));
+	/**
+	 * Save a factor.
+	 *
+	 * @param factorDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public FactorDTO save(FactorDTO factorDTO) {
+		this.log.debug("Request to save Factor : {}", factorDTO);
+		Factor factor = this.factorMapper.toEntity(factorDTO);
+		factor = this.factorRepository.save(factor);
+		FactorDTO result = this.factorMapper.toDto(factor);
+		return result;
+	}
 
-        return result;
-    }
+	/**
+	 * Get all the factors.
+	 * 
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<FactorDTO> findAll() {
+		this.log.debug("Request to get all Factors");
+		List<FactorDTO> result = this.factorRepository.findAll().stream().map(this.factorMapper::toDto)
+				.collect(Collectors.toCollection(LinkedList::new));
 
-    /**
-     *  Get one factor by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public FactorDTO findOne(Long id) {
-        log.debug("Request to get Factor : {}", id);
-        Factor factor = factorRepository.findOne(id);
-        FactorDTO factorDTO = factorMapper.toDto(factor);
-        return factorDTO;
-    }
+		return result;
+	}
 
-    /**
-     *  Delete the  factor by id.
-     *
-     *  @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Factor : {}", id);
-        factorRepository.delete(id);
-    }
+	/**
+	 * Get one factor by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public FactorDTO findOne(Long id) {
+		this.log.debug("Request to get Factor : {}", id);
+		Factor factor = this.factorRepository.findOne(id);
+		FactorDTO factorDTO = this.factorMapper.toDto(factor);
+		return factorDTO;
+	}
+
+	/**
+	 * Delete the factor by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		this.log.debug("Request to delete Factor : {}", id);
+		this.factorRepository.delete(id);
+	}
 }

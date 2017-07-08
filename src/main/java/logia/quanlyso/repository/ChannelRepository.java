@@ -12,8 +12,8 @@ import logia.quanlyso.domain.Channel;
  *
  * @author Dai Mai
  */
-public interface ChannelRepository extends JpaRepository<Channel,Long> {
-	
+public interface ChannelRepository extends JpaRepository<Channel, Long> {
+
 	/**
 	 * Find all by sunday.
 	 *
@@ -21,7 +21,7 @@ public interface ChannelRepository extends JpaRepository<Channel,Long> {
 	 */
 	@Query("from Channel channel where sunday = true")
 	List<Channel> findAllBySunday();
-	
+
 	/**
 	 * Find all by monday.
 	 *
@@ -29,7 +29,7 @@ public interface ChannelRepository extends JpaRepository<Channel,Long> {
 	 */
 	@Query("from Channel channel where monday = true")
 	List<Channel> findAllByMonday();
-	
+
 	/**
 	 * Find all by tuesday.
 	 *
@@ -37,7 +37,7 @@ public interface ChannelRepository extends JpaRepository<Channel,Long> {
 	 */
 	@Query("from Channel channel where tuesday = true")
 	List<Channel> findAllByTuesday();
-	
+
 	/**
 	 * Find all by wednesday.
 	 *
@@ -45,7 +45,7 @@ public interface ChannelRepository extends JpaRepository<Channel,Long> {
 	 */
 	@Query("from Channel channel where wednesday = true")
 	List<Channel> findAllByWednesday();
-	
+
 	/**
 	 * Find all by thursday.
 	 *
@@ -53,7 +53,7 @@ public interface ChannelRepository extends JpaRepository<Channel,Long> {
 	 */
 	@Query("from Channel channel where thursday = true")
 	List<Channel> findAllByThursday();
-	
+
 	/**
 	 * Find all by friday.
 	 *
@@ -61,7 +61,7 @@ public interface ChannelRepository extends JpaRepository<Channel,Long> {
 	 */
 	@Query("from Channel channel where friday = true")
 	List<Channel> findAllByFriday();
-	
+
 	/**
 	 * Find all by saturday.
 	 *
@@ -69,4 +69,12 @@ public interface ChannelRepository extends JpaRepository<Channel,Long> {
 	 */
 	@Query("from Channel channel where saturday = true")
 	List<Channel> findAllBySaturday();
+
+	/**
+	 * Find one by code.
+	 *
+	 * @param __code the code
+	 * @return the list
+	 */
+	Channel findOneByCode(String __code);
 }

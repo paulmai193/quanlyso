@@ -22,66 +22,70 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Authority implements Serializable {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 1L;
+	/** The Constant serialVersionUID. */
+	private static final long	serialVersionUID	= 1L;
 
-    /** The name. */
-    @NotNull
-    @Size(min = 0, max = 50)
-    @Id
-    @Column(length = 50)
-    private String name;
+	/** The name. */
+	@NotNull
+	@Size(min = 0, max = 50)
+	@Id
+	@Column(length = 50)
+	private String				name;
 
-    /**
-     * Gets the name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * Sets the name.
-     *
-     * @param name the new name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * Sets the name.
+	 *
+	 * @param name the new name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || this.getClass() != o.getClass()) {
+			return false;
+		}
 
-        Authority authority = (Authority) o;
+		Authority authority = (Authority) o;
 
-        return !(name != null ? !name.equals(authority.name) : authority.name != null);
-    }
+		return !(this.name != null ? !this.name.equals(authority.name) : authority.name != null);
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode() {
-        return name != null ? name.hashCode() : 0;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		return this.name != null ? this.name.hashCode() : 0;
+	}
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
-    @Override
-    public String toString() {
-        return "Authority{" +
-            "name='" + name + '\'' +
-            "}";
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Authority{" + "name='" + this.name + '\'' + "}";
+	}
 }

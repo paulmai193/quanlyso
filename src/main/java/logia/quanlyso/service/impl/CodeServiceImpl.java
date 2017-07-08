@@ -40,103 +40,109 @@ import logia.quanlyso.service.mapper.CodeMapper;
  */
 @Service
 @Transactional
-public class CodeServiceImpl implements CodeService{
+public class CodeServiceImpl implements CodeService {
 
-    /** The log. */
-    private final Logger log = LoggerFactory.getLogger(CodeServiceImpl.class);
-    
-    /** The code repository. */
-    private final CodeRepository codeRepository;
+	/** The log. */
+	private final Logger						log	= LoggerFactory
+			.getLogger(CodeServiceImpl.class);
 
-    /** The code mapper. */
-    private final CodeMapper codeMapper;
-    
-    /** The cost factor repository. */
-    private final CostFactorRepository costFactorRepository;
-    
-    /** The profit factor repository. */
-    private final ProfitFactorRepository profitFactorRepository;
-    
-    private final TransactionsRepository transactionsRepository;
-    
-    private final TransactionDetailsRepository transactionDetailsRepository;
+	/** The code repository. */
+	private final CodeRepository				codeRepository;
 
-    /**
-     * Instantiates a new code service impl.
-     *
-     * @param codeRepository the code repository
-     * @param codeMapper the code mapper
-     * @param costFactorRepository the cost factor repository
-     * @param profitFactorRepository the profit factor repository
-     * @param transactionsRepository the transactions repository
-     * @param transactionDetailsRepository the transaction details repository
-     */
-    public CodeServiceImpl(CodeRepository codeRepository, CodeMapper codeMapper, CostFactorRepository costFactorRepository, 
-    		ProfitFactorRepository profitFactorRepository, TransactionsRepository transactionsRepository, TransactionDetailsRepository transactionDetailsRepository) {
-        this.codeRepository = codeRepository;
-        this.codeMapper = codeMapper;
-        this.costFactorRepository = costFactorRepository;
-        this.profitFactorRepository = profitFactorRepository;
-        this.transactionsRepository = transactionsRepository;
-        this.transactionDetailsRepository = transactionDetailsRepository;
-    }
+	/** The code mapper. */
+	private final CodeMapper					codeMapper;
 
-    /**
-     * Save a code.
-     *
-     * @param codeDTO the entity to save
-     * @return the persisted entity
-     */
-    @Override
-    public CodeDTO save(CodeDTO codeDTO) {
-        log.debug("Request to save Code : {}", codeDTO);
-        Code code = codeMapper.toEntity(codeDTO);
-        code = codeRepository.save(code);
-        CodeDTO result = codeMapper.toDto(code);
-        return result;
-    }
+	/** The cost factor repository. */
+	private final CostFactorRepository			costFactorRepository;
 
-    /**
-     *  Get all the codes.
-     *  
-     *  @param pageable the pagination information
-     *  @return the list of entities
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public Page<CodeDTO> findAll(Pageable pageable) {
-        log.debug("Request to get all Codes");
-        Page<Code> result = codeRepository.findAll(pageable);
-        return result.map(code -> codeMapper.toDto(code));
-    }
+	/** The profit factor repository. */
+	private final ProfitFactorRepository		profitFactorRepository;
 
-    /**
-     *  Get one code by id.
-     *
-     *  @param id the id of the entity
-     *  @return the entity
-     */
-    @Override
-    @Transactional(readOnly = true)
-    public CodeDTO findOne(Long id) {
-        log.debug("Request to get Code : {}", id);
-        Code code = codeRepository.findOne(id);
-        CodeDTO codeDTO = codeMapper.toDto(code);
-        return codeDTO;
-    }
+	private final TransactionsRepository		transactionsRepository;
 
-    /**
-     *  Delete the  code by id.
-     *
-     *  @param id the id of the entity
-     */
-    @Override
-    public void delete(Long id) {
-        log.debug("Request to delete Code : {}", id);
-        codeRepository.delete(id);
-    }
+	private final TransactionDetailsRepository	transactionDetailsRepository;
 
-	/* (non-Javadoc)
+	/**
+	 * Instantiates a new code service impl.
+	 *
+	 * @param codeRepository the code repository
+	 * @param codeMapper the code mapper
+	 * @param costFactorRepository the cost factor repository
+	 * @param profitFactorRepository the profit factor repository
+	 * @param transactionsRepository the transactions repository
+	 * @param transactionDetailsRepository the transaction details repository
+	 */
+	public CodeServiceImpl(CodeRepository codeRepository, CodeMapper codeMapper,
+			CostFactorRepository costFactorRepository,
+			ProfitFactorRepository profitFactorRepository,
+			TransactionsRepository transactionsRepository,
+			TransactionDetailsRepository transactionDetailsRepository) {
+		this.codeRepository = codeRepository;
+		this.codeMapper = codeMapper;
+		this.costFactorRepository = costFactorRepository;
+		this.profitFactorRepository = profitFactorRepository;
+		this.transactionsRepository = transactionsRepository;
+		this.transactionDetailsRepository = transactionDetailsRepository;
+	}
+
+	/**
+	 * Save a code.
+	 *
+	 * @param codeDTO the entity to save
+	 * @return the persisted entity
+	 */
+	@Override
+	public CodeDTO save(CodeDTO codeDTO) {
+		this.log.debug("Request to save Code : {}", codeDTO);
+		Code code = this.codeMapper.toEntity(codeDTO);
+		code = this.codeRepository.save(code);
+		CodeDTO result = this.codeMapper.toDto(code);
+		return result;
+	}
+
+	/**
+	 * Get all the codes.
+	 * 
+	 * @param pageable the pagination information
+	 * @return the list of entities
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Page<CodeDTO> findAll(Pageable pageable) {
+		this.log.debug("Request to get all Codes");
+		Page<Code> result = this.codeRepository.findAll(pageable);
+		return result.map(code -> this.codeMapper.toDto(code));
+	}
+
+	/**
+	 * Get one code by id.
+	 *
+	 * @param id the id of the entity
+	 * @return the entity
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public CodeDTO findOne(Long id) {
+		this.log.debug("Request to get Code : {}", id);
+		Code code = this.codeRepository.findOne(id);
+		CodeDTO codeDTO = this.codeMapper.toDto(code);
+		return codeDTO;
+	}
+
+	/**
+	 * Delete the code by id.
+	 *
+	 * @param id the id of the entity
+	 */
+	@Override
+	public void delete(Long id) {
+		this.log.debug("Request to delete Code : {}", id);
+		this.codeRepository.delete(id);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see logia.quanlyso.service.CodeService#calculate(logia.quanlyso.domain.Transactions)
 	 */
 	@Override
@@ -149,23 +155,27 @@ public class CodeServiceImpl implements CodeService{
 			Factor factor = details.getFactors();
 			Style style = details.getStyles();
 			Types types = details.getTypes();
-			
+
 			// Assume transactions of current date
 			ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
 			ZonedDateTime formattedDate = today.withHour(0).withMinute(0).withSecond(0).withNano(0);
-			List<Code> listCodes = this.codeRepository.findAllByChannelsAndOpenDate(channel, formattedDate);
+			List<Code> listCodes = this.codeRepository.findAllByChannelsAndOpenDate(channel,
+					formattedDate);
 			boolean isMatchCondition = this.checkCondition(chosenNumber, listCodes, style, types);
 			if (isMatchCondition) {
-				CostFactor costFactor = this.costFactorRepository.findOneByFactorsAndStylesAndTypes(factor, style, types);
-				ProfitFactor profitFactor = this.profitFactorRepository.findOneByFactorsAndStylesAndTypes(factor, style, types);
+				CostFactor costFactor = this.costFactorRepository
+						.findOneByFactorsAndStylesAndTypes(factor, style, types);
+				ProfitFactor profitFactor = this.profitFactorRepository
+						.findOneByFactorsAndStylesAndTypes(factor, style, types);
 				float amount = details.getAmount();
-				details.costs(amount * costFactor.getRate()).profit(amount * profitFactor.getRate());
-				
+				details.costs(amount * costFactor.getRate())
+				.profit(amount * profitFactor.getRate());
+
 				netValue = netValue + details.getProfit() - details.getCosts();
 			}
 		}
 		transactions.setNetValue(netValue);
-		
+
 		return transactions;
 	}
 
@@ -178,12 +188,13 @@ public class CodeServiceImpl implements CodeService{
 	 * @param types the types
 	 * @return true, if successful
 	 */
-	private boolean checkCondition(String chosenNumber, List<Code> listCodes, Style style, Types types) {
+	private boolean checkCondition(String chosenNumber, List<Code> listCodes, Style style,
+			Types types) {
 		List<Code> filtered = new ArrayList<>();
 
 		if (types.getId().equals(TypesConstants.TOP.getId())) {
 			if (style.getId().equals(StyleConstants.TWO_NUM.getId())) {
-				filtered = this.filterCodeOnTop(listCodes, 2);	
+				filtered = this.filterCodeOnTop(listCodes, 2);
 			}
 			else if (style.getId().equals(StyleConstants.THREE_NUM.getId())) {
 				filtered = this.filterCodeOnTop(listCodes, 3);
@@ -191,7 +202,7 @@ public class CodeServiceImpl implements CodeService{
 		}
 		else if (types.getId().equals(TypesConstants.BOTH.getId())) {
 			if (style.getId().equals(StyleConstants.TWO_NUM.getId())) {
-				filtered = this.filterCodeOnTop(listCodes, 2);	
+				filtered = this.filterCodeOnTop(listCodes, 2);
 			}
 			else if (style.getId().equals(StyleConstants.THREE_NUM.getId())) {
 				filtered = this.filterCodeOnTop(listCodes, 3);
@@ -199,28 +210,31 @@ public class CodeServiceImpl implements CodeService{
 			filtered.addAll(this.filterCodeOnBottom(listCodes));
 		}
 		else if (types.getId().equals(TypesConstants.BOTTOM.getId())) {
-			filtered = this.filterCodeOnBottom(listCodes);				
+			filtered = this.filterCodeOnBottom(listCodes);
 		}
 		else if (types.getId().equals(TypesConstants.ROLL.getId())) {
 			filtered = listCodes;
 		}
-		
+
 		for (Code code : filtered) {
-			if (code.getCode().contains(chosenNumber))
+			if (code.getCode().contains(chosenNumber)) {
 				return true;
+			}
 		}
 		return false;
 	}
-	
+
 	private List<Code> filterCodeOnTop(List<Code> codes, int length) {
 		List<Code> filtered = new ArrayList<>();
-		filtered = codes.stream().filter(code -> code.getCode().length() == length).collect(Collectors.toList());
+		filtered = codes.stream().filter(code -> code.getCode().length() == length)
+				.collect(Collectors.toList());
 		return filtered;
 	}
-	
+
 	private List<Code> filterCodeOnBottom(List<Code> codes) {
 		List<Code> filtered = new ArrayList<>();
-		filtered = codes.stream().filter(code -> code.getCode().length() == 6).collect(Collectors.toList()); // 6 is max length of code
+		filtered = codes.stream().filter(code -> code.getCode().length() == 6)
+				.collect(Collectors.toList()); // 6 is max length of code
 		return filtered;
 	}
 }

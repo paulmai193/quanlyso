@@ -27,31 +27,28 @@ import logia.quanlyso.web.rest.vm.LoggerVM;
 @RequestMapping("/management")
 public class LogsResource {
 
-    /**
-     * Gets the list.
-     *
-     * @return the list
-     */
-    @GetMapping("/logs")
-    @Timed
-    public List<LoggerVM> getList() {
-        LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        return context.getLoggerList()
-            .stream()
-            .map(LoggerVM::new)
-            .collect(Collectors.toList());
-    }
+	/**
+	 * Gets the list.
+	 *
+	 * @return the list
+	 */
+	@GetMapping("/logs")
+	@Timed
+	public List<LoggerVM> getList() {
+		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+		return context.getLoggerList().stream().map(LoggerVM::new).collect(Collectors.toList());
+	}
 
-    /**
-     * Change level.
-     *
-     * @param jsonLogger the json logger
-     */
-    @PutMapping("/logs")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Timed
-    public void changeLevel(@RequestBody LoggerVM jsonLogger) {
-        LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
-        context.getLogger(jsonLogger.getName()).setLevel(Level.valueOf(jsonLogger.getLevel()));
-    }
+	/**
+	 * Change level.
+	 *
+	 * @param jsonLogger the json logger
+	 */
+	@PutMapping("/logs")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@Timed
+	public void changeLevel(@RequestBody LoggerVM jsonLogger) {
+		LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+		context.getLogger(jsonLogger.getName()).setLevel(Level.valueOf(jsonLogger.getLevel()));
+	}
 }

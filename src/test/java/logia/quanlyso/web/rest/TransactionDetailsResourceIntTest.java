@@ -1,19 +1,11 @@
 package logia.quanlyso.web.rest;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.hasItem;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import org.assertj.core.api.Assertions;
+import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +17,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,334 +39,346 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class TransactionDetailsResourceIntTest {
 
-    /** The Constant DEFAULT_AMOUNT. */
-    static final Float DEFAULT_AMOUNT = 1F;
-    
-    /** The Constant UPDATED_AMOUNT. */
-    static final Float UPDATED_AMOUNT = 2F;
+	/** The Constant DEFAULT_AMOUNT. */
+	static final Float								DEFAULT_AMOUNT	= 1F;
 
-//    /** The Constant DEFAULT_PROFIT. */
-//    static final Float DEFAULT_PROFIT = 1F;
-//    
-//    /** The Constant UPDATED_PROFIT. */
-//    static final Float UPDATED_PROFIT = 2F;
-//
-//    /** The Constant DEFAULT_COSTS. */
-//    static final Float DEFAULT_COSTS = 1F;
-//    
-//    /** The Constant UPDATED_COSTS. */
-//    static final Float UPDATED_COSTS = 2F;
+	/** The Constant UPDATED_AMOUNT. */
+	static final Float								UPDATED_AMOUNT	= 2F;
 
-    /** The transaction details repository. */
-    @Autowired
-    private TransactionDetailsRepository transactionDetailsRepository;
+	// /** The Constant DEFAULT_PROFIT. */
+	// static final Float DEFAULT_PROFIT = 1F;
+	//
+	// /** The Constant UPDATED_PROFIT. */
+	// static final Float UPDATED_PROFIT = 2F;
+	//
+	// /** The Constant DEFAULT_COSTS. */
+	// static final Float DEFAULT_COSTS = 1F;
+	//
+	// /** The Constant UPDATED_COSTS. */
+	// static final Float UPDATED_COSTS = 2F;
 
-    /** The transaction details mapper. */
-    @Autowired
-    private TransactionDetailsMapper transactionDetailsMapper;
+	/** The transaction details repository. */
+	@Autowired
+	private TransactionDetailsRepository			transactionDetailsRepository;
 
-    /** The transaction details service. */
-    @Autowired
-    private TransactionDetailsService transactionDetailsService;
+	/** The transaction details mapper. */
+	@Autowired
+	private TransactionDetailsMapper				transactionDetailsMapper;
 
-    /** The jackson message converter. */
-    @Autowired
-    private MappingJackson2HttpMessageConverter jacksonMessageConverter;
+	/** The transaction details service. */
+	@Autowired
+	private TransactionDetailsService				transactionDetailsService;
 
-    /** The pageable argument resolver. */
-    @Autowired
-    private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
+	/** The jackson message converter. */
+	@Autowired
+	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
 
-    /** The exception translator. */
-    @Autowired
-    private ExceptionTranslator exceptionTranslator;
+	/** The pageable argument resolver. */
+	@Autowired
+	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
 
-    /** The em. */
-    @Autowired
-    private EntityManager em;
+	/** The exception translator. */
+	@Autowired
+	private ExceptionTranslator						exceptionTranslator;
 
-    /** The rest transaction details mock mvc. */
-    private MockMvc restTransactionDetailsMockMvc;
+	/** The em. */
+	@Autowired
+	private EntityManager							em;
 
-    /** The transaction details. */
-    private TransactionDetails transactionDetails;
+	/** The rest transaction details mock mvc. */
+	private MockMvc									restTransactionDetailsMockMvc;
 
-    /**
-     * Setup.
-     */
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        TransactionDetailsResource transactionDetailsResource = new TransactionDetailsResource(transactionDetailsService);
-        this.restTransactionDetailsMockMvc = MockMvcBuilders.standaloneSetup(transactionDetailsResource)
-            .setCustomArgumentResolvers(pageableArgumentResolver)
-            .setControllerAdvice(exceptionTranslator)
-            .setMessageConverters(jacksonMessageConverter).build();
-    }
+	/** The transaction details. */
+	private TransactionDetails						transactionDetails;
 
-    /**
-     * Create an entity for this test.
-     * 
-     * This is a static method, as tests for other entities might also need it,
-     * if they test an entity which requires the current entity.
-     *
-     * @param em the em
-     * @return the transaction details
-     */
-    public static TransactionDetails createEntity(EntityManager em) {
-        TransactionDetails transactionDetails = new TransactionDetails()
-            .amount(DEFAULT_AMOUNT);
-        return transactionDetails;
-    }
-    
-//    /**
-//     * Creates the and save entity.
-//     *
-//     * @param em the em
-//     * @return the transaction details
-//     */
-//    public static TransactionDetails createAndSaveEntity(EntityManager em) {
-//    	TransactionDetails transactionDetails = createEntity(em);
-//    	em.persist(transactionDetails);
-//    	em.flush();
-//    	return transactionDetails;
-//    }
+	/**
+	 * Setup.
+	 */
+	@Before
+	public void setup() {
+		MockitoAnnotations.initMocks(this);
+		TransactionDetailsResource transactionDetailsResource = new TransactionDetailsResource(
+				this.transactionDetailsService);
+		this.restTransactionDetailsMockMvc = MockMvcBuilders
+				.standaloneSetup(transactionDetailsResource)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver)
+				.setControllerAdvice(this.exceptionTranslator)
+				.setMessageConverters(this.jacksonMessageConverter).build();
+	}
 
-    /**
-     * Inits the test.
-     */
-    @Before
-    public void initTest() {
-        transactionDetails = createEntity(em);
-    }
+	/**
+	 * Create an entity for this test.
+	 * 
+	 * This is a static method, as tests for other entities might also need it,
+	 * if they test an entity which requires the current entity.
+	 *
+	 * @param em the em
+	 * @return the transaction details
+	 */
+	public static TransactionDetails createEntity(EntityManager em) {
+		TransactionDetails transactionDetails = new TransactionDetails().amount(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT);
+		return transactionDetails;
+	}
 
-    /**
-     * Creates the transaction details.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void createTransactionDetails() throws Exception {
-        int databaseSizeBeforeCreate = transactionDetailsRepository.findAll().size();
+	// /**
+	// * Creates the and save entity.
+	// *
+	// * @param em the em
+	// * @return the transaction details
+	// */
+	// public static TransactionDetails createAndSaveEntity(EntityManager em) {
+	// TransactionDetails transactionDetails = createEntity(em);
+	// em.persist(transactionDetails);
+	// em.flush();
+	// return transactionDetails;
+	// }
 
-        // Create the TransactionDetails
-        TransactionDetailsDTO transactionDetailsDTO = transactionDetailsMapper.toDto(transactionDetails);
-        restTransactionDetailsMockMvc.perform(post("/api/transaction-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
-            .andExpect(status().isCreated());
+	/**
+	 * Inits the test.
+	 */
+	@Before
+	public void initTest() {
+		this.transactionDetails = TransactionDetailsResourceIntTest.createEntity(this.em);
+	}
 
-        // Validate the TransactionDetails in the database
-        List<TransactionDetails> transactionDetailsList = transactionDetailsRepository.findAll();
-        assertThat(transactionDetailsList).hasSize(databaseSizeBeforeCreate + 1);
-        TransactionDetails testTransactionDetails = transactionDetailsList.get(transactionDetailsList.size() - 1);
-        assertThat(testTransactionDetails.getAmount()).isEqualTo(DEFAULT_AMOUNT);
-    }
+	/**
+	 * Creates the transaction details.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void createTransactionDetails() throws Exception {
+		int databaseSizeBeforeCreate = this.transactionDetailsRepository.findAll().size();
 
-    /**
-     * Creates the transaction details with existing id.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void createTransactionDetailsWithExistingId() throws Exception {
-        int databaseSizeBeforeCreate = transactionDetailsRepository.findAll().size();
+		// Create the TransactionDetails
+		TransactionDetailsDTO transactionDetailsDTO = this.transactionDetailsMapper
+				.toDto(this.transactionDetails);
+		this.restTransactionDetailsMockMvc
+		.perform(
+				MockMvcRequestBuilders.post("/api/transaction-details").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
-        // Create the TransactionDetails with an existing ID
-        transactionDetails.setId(1L);
-        TransactionDetailsDTO transactionDetailsDTO = transactionDetailsMapper.toDto(transactionDetails);
+		// Validate the TransactionDetails in the database
+		List<TransactionDetails> transactionDetailsList = this.transactionDetailsRepository.findAll();
+		Assertions.assertThat(transactionDetailsList).hasSize(databaseSizeBeforeCreate + 1);
+		TransactionDetails testTransactionDetails = transactionDetailsList
+				.get(transactionDetailsList.size() - 1);
+		Assertions.assertThat(testTransactionDetails.getAmount()).isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT);
+	}
 
-        // An entity with an existing ID cannot be created, so this API call must fail
-        restTransactionDetailsMockMvc.perform(post("/api/transaction-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
-            .andExpect(status().isBadRequest());
+	/**
+	 * Creates the transaction details with existing id.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void createTransactionDetailsWithExistingId() throws Exception {
+		int databaseSizeBeforeCreate = this.transactionDetailsRepository.findAll().size();
 
-        // Validate the Alice in the database
-        List<TransactionDetails> transactionDetailsList = transactionDetailsRepository.findAll();
-        assertThat(transactionDetailsList).hasSize(databaseSizeBeforeCreate);
-    }
+		// Create the TransactionDetails with an existing ID
+		this.transactionDetails.setId(1L);
+		TransactionDetailsDTO transactionDetailsDTO = this.transactionDetailsMapper
+				.toDto(this.transactionDetails);
 
-    /**
-     * Gets the all transaction details.
-     *
-     * @return the all transaction details
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void getAllTransactionDetails() throws Exception {
-        // Initialize the database
-        transactionDetailsRepository.saveAndFlush(transactionDetails);
+		// An entity with an existing ID cannot be created, so this API call must fail
+		this.restTransactionDetailsMockMvc
+		.perform(
+				MockMvcRequestBuilders.post("/api/transaction-details").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
+		.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
-        // Get all the transactionDetailsList
-        restTransactionDetailsMockMvc.perform(get("/api/transaction-details?sort=id,desc"))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(transactionDetails.getId().intValue())))
-            .andExpect(jsonPath("$.[*].amount").value(hasItem(DEFAULT_AMOUNT.doubleValue())));
-    }
+		// Validate the Alice in the database
+		List<TransactionDetails> transactionDetailsList = this.transactionDetailsRepository.findAll();
+		Assertions.assertThat(transactionDetailsList).hasSize(databaseSizeBeforeCreate);
+	}
 
-    /**
-     * Gets the transaction details.
-     *
-     * @return the transaction details
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void getTransactionDetails() throws Exception {
-        // Initialize the database
-        transactionDetailsRepository.saveAndFlush(transactionDetails);
+	/**
+	 * Gets the all transaction details.
+	 *
+	 * @return the all transaction details
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void getAllTransactionDetails() throws Exception {
+		// Initialize the database
+		this.transactionDetailsRepository.saveAndFlush(this.transactionDetails);
 
-        // Get the transactionDetails
-        restTransactionDetailsMockMvc.perform(get("/api/transaction-details/{id}", transactionDetails.getId()))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.id").value(transactionDetails.getId().intValue()))
-            .andExpect(jsonPath("$.amount").value(DEFAULT_AMOUNT.doubleValue()));
-    }
+		// Get all the transactionDetailsList
+		this.restTransactionDetailsMockMvc.perform(MockMvcRequestBuilders.get("/api/transaction-details?sort=id,desc"))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		.andExpect(
+				MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.transactionDetails.getId().intValue())))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].amount").value(Matchers.hasItem(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT.doubleValue())));
+	}
 
-    /**
-     * Gets the non existing transaction details.
-     *
-     * @return the non existing transaction details
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void getNonExistingTransactionDetails() throws Exception {
-        // Get the transactionDetails
-        restTransactionDetailsMockMvc.perform(get("/api/transaction-details/{id}", Long.MAX_VALUE))
-            .andExpect(status().isNotFound());
-    }
+	/**
+	 * Gets the transaction details.
+	 *
+	 * @return the transaction details
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void getTransactionDetails() throws Exception {
+		// Initialize the database
+		this.transactionDetailsRepository.saveAndFlush(this.transactionDetails);
 
-    /**
-     * Update transaction details.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void updateTransactionDetails() throws Exception {
-        // Initialize the database
-        transactionDetailsRepository.saveAndFlush(transactionDetails);
-        int databaseSizeBeforeUpdate = transactionDetailsRepository.findAll().size();
+		// Get the transactionDetails
+		this.restTransactionDetailsMockMvc
+		.perform(MockMvcRequestBuilders.get("/api/transaction-details/{id}", this.transactionDetails.getId()))
+		.andExpect(MockMvcResultMatchers.status().isOk())
+		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.transactionDetails.getId().intValue()))
+		.andExpect(MockMvcResultMatchers.jsonPath("$.amount").value(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT.doubleValue()));
+	}
 
-        // Update the transactionDetails
-        TransactionDetails updatedTransactionDetails = transactionDetailsRepository.findOne(transactionDetails.getId());
-        updatedTransactionDetails
-            .amount(UPDATED_AMOUNT);
-        TransactionDetailsDTO transactionDetailsDTO = transactionDetailsMapper.toDto(updatedTransactionDetails);
+	/**
+	 * Gets the non existing transaction details.
+	 *
+	 * @return the non existing transaction details
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void getNonExistingTransactionDetails() throws Exception {
+		// Get the transactionDetails
+		this.restTransactionDetailsMockMvc.perform(MockMvcRequestBuilders.get("/api/transaction-details/{id}", Long.MAX_VALUE))
+		.andExpect(MockMvcResultMatchers.status().isNotFound());
+	}
 
-        restTransactionDetailsMockMvc.perform(put("/api/transaction-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
-            .andExpect(status().isOk());
+	/**
+	 * Update transaction details.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void updateTransactionDetails() throws Exception {
+		// Initialize the database
+		this.transactionDetailsRepository.saveAndFlush(this.transactionDetails);
+		int databaseSizeBeforeUpdate = this.transactionDetailsRepository.findAll().size();
 
-        // Validate the TransactionDetails in the database
-        List<TransactionDetails> transactionDetailsList = transactionDetailsRepository.findAll();
-        assertThat(transactionDetailsList).hasSize(databaseSizeBeforeUpdate);
-        TransactionDetails testTransactionDetails = transactionDetailsList.get(transactionDetailsList.size() - 1);
-        assertThat(testTransactionDetails.getAmount()).isEqualTo(UPDATED_AMOUNT);
-    }
+		// Update the transactionDetails
+		TransactionDetails updatedTransactionDetails = this.transactionDetailsRepository
+				.findOne(this.transactionDetails.getId());
+		updatedTransactionDetails.amount(TransactionDetailsResourceIntTest.UPDATED_AMOUNT);
+		TransactionDetailsDTO transactionDetailsDTO = this.transactionDetailsMapper
+				.toDto(updatedTransactionDetails);
 
-    /**
-     * Update non existing transaction details.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void updateNonExistingTransactionDetails() throws Exception {
-        int databaseSizeBeforeUpdate = transactionDetailsRepository.findAll().size();
+		this.restTransactionDetailsMockMvc
+		.perform(MockMvcRequestBuilders.put("/api/transaction-details").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
+		.andExpect(MockMvcResultMatchers.status().isOk());
 
-        // Create the TransactionDetails
-        TransactionDetailsDTO transactionDetailsDTO = transactionDetailsMapper.toDto(transactionDetails);
+		// Validate the TransactionDetails in the database
+		List<TransactionDetails> transactionDetailsList = this.transactionDetailsRepository.findAll();
+		Assertions.assertThat(transactionDetailsList).hasSize(databaseSizeBeforeUpdate);
+		TransactionDetails testTransactionDetails = transactionDetailsList
+				.get(transactionDetailsList.size() - 1);
+		Assertions.assertThat(testTransactionDetails.getAmount()).isEqualTo(TransactionDetailsResourceIntTest.UPDATED_AMOUNT);
+	}
 
-        // If the entity doesn't have an ID, it will be created instead of just being updated
-        restTransactionDetailsMockMvc.perform(put("/api/transaction-details")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
-            .andExpect(status().isCreated());
+	/**
+	 * Update non existing transaction details.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void updateNonExistingTransactionDetails() throws Exception {
+		int databaseSizeBeforeUpdate = this.transactionDetailsRepository.findAll().size();
 
-        // Validate the TransactionDetails in the database
-        List<TransactionDetails> transactionDetailsList = transactionDetailsRepository.findAll();
-        assertThat(transactionDetailsList).hasSize(databaseSizeBeforeUpdate + 1);
-    }
+		// Create the TransactionDetails
+		TransactionDetailsDTO transactionDetailsDTO = this.transactionDetailsMapper
+				.toDto(this.transactionDetails);
 
-    /**
-     * Delete transaction details.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void deleteTransactionDetails() throws Exception {
-        // Initialize the database
-        transactionDetailsRepository.saveAndFlush(transactionDetails);
-        int databaseSizeBeforeDelete = transactionDetailsRepository.findAll().size();
+		// If the entity doesn't have an ID, it will be created instead of just being updated
+		this.restTransactionDetailsMockMvc
+		.perform(MockMvcRequestBuilders.put("/api/transaction-details").contentType(TestUtil.APPLICATION_JSON_UTF8)
+				.content(TestUtil.convertObjectToJsonBytes(transactionDetailsDTO)))
+		.andExpect(MockMvcResultMatchers.status().isCreated());
 
-        // Get the transactionDetails
-        restTransactionDetailsMockMvc.perform(delete("/api/transaction-details/{id}", transactionDetails.getId())
-            .accept(TestUtil.APPLICATION_JSON_UTF8))
-            .andExpect(status().isOk());
+		// Validate the TransactionDetails in the database
+		List<TransactionDetails> transactionDetailsList = this.transactionDetailsRepository.findAll();
+		Assertions.assertThat(transactionDetailsList).hasSize(databaseSizeBeforeUpdate + 1);
+	}
 
-        // Validate the database is empty
-        List<TransactionDetails> transactionDetailsList = transactionDetailsRepository.findAll();
-        assertThat(transactionDetailsList).hasSize(databaseSizeBeforeDelete - 1);
-    }
+	/**
+	 * Delete transaction details.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void deleteTransactionDetails() throws Exception {
+		// Initialize the database
+		this.transactionDetailsRepository.saveAndFlush(this.transactionDetails);
+		int databaseSizeBeforeDelete = this.transactionDetailsRepository.findAll().size();
 
-    /**
-     * Equals verifier.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void equalsVerifier() throws Exception {
-        TestUtil.equalsVerifier(TransactionDetails.class);
-        TransactionDetails transactionDetails1 = new TransactionDetails();
-        transactionDetails1.setId(1L);
-        TransactionDetails transactionDetails2 = new TransactionDetails();
-        transactionDetails2.setId(transactionDetails1.getId());
-        assertThat(transactionDetails1).isEqualTo(transactionDetails2);
-        transactionDetails2.setId(2L);
-        assertThat(transactionDetails1).isNotEqualTo(transactionDetails2);
-        transactionDetails1.setId(null);
-        assertThat(transactionDetails1).isNotEqualTo(transactionDetails2);
-    }
+		// Get the transactionDetails
+		this.restTransactionDetailsMockMvc
+		.perform(MockMvcRequestBuilders.delete("/api/transaction-details/{id}", this.transactionDetails.getId())
+				.accept(TestUtil.APPLICATION_JSON_UTF8))
+		.andExpect(MockMvcResultMatchers.status().isOk());
 
-    /**
-     * Dto equals verifier.
-     *
-     * @throws Exception the exception
-     */
-    @Test
-    @Transactional
-    public void dtoEqualsVerifier() throws Exception {
-        TestUtil.equalsVerifier(TransactionDetailsDTO.class);
-        TransactionDetailsDTO transactionDetailsDTO1 = new TransactionDetailsDTO();
-        transactionDetailsDTO1.setId(1L);
-        TransactionDetailsDTO transactionDetailsDTO2 = new TransactionDetailsDTO();
-        assertThat(transactionDetailsDTO1).isNotEqualTo(transactionDetailsDTO2);
-        transactionDetailsDTO2.setId(transactionDetailsDTO1.getId());
-        assertThat(transactionDetailsDTO1).isEqualTo(transactionDetailsDTO2);
-        transactionDetailsDTO2.setId(2L);
-        assertThat(transactionDetailsDTO1).isNotEqualTo(transactionDetailsDTO2);
-        transactionDetailsDTO1.setId(null);
-        assertThat(transactionDetailsDTO1).isNotEqualTo(transactionDetailsDTO2);
-    }
+		// Validate the database is empty
+		List<TransactionDetails> transactionDetailsList = this.transactionDetailsRepository.findAll();
+		Assertions.assertThat(transactionDetailsList).hasSize(databaseSizeBeforeDelete - 1);
+	}
 
-    /**
-     * Test entity from id.
-     */
-    @Test
-    @Transactional
-    public void testEntityFromId() {
-        assertThat(transactionDetailsMapper.fromId(42L).getId()).isEqualTo(42);
-        assertThat(transactionDetailsMapper.fromId(null)).isNull();
-    }
+	/**
+	 * Equals verifier.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void equalsVerifier() throws Exception {
+		TestUtil.equalsVerifier(TransactionDetails.class);
+		TransactionDetails transactionDetails1 = new TransactionDetails();
+		transactionDetails1.setId(1L);
+		TransactionDetails transactionDetails2 = new TransactionDetails();
+		transactionDetails2.setId(transactionDetails1.getId());
+		Assertions.assertThat(transactionDetails1).isEqualTo(transactionDetails2);
+		transactionDetails2.setId(2L);
+		Assertions.assertThat(transactionDetails1).isNotEqualTo(transactionDetails2);
+		transactionDetails1.setId(null);
+		Assertions.assertThat(transactionDetails1).isNotEqualTo(transactionDetails2);
+	}
+
+	/**
+	 * Dto equals verifier.
+	 *
+	 * @throws Exception the exception
+	 */
+	@Test
+	@Transactional
+	public void dtoEqualsVerifier() throws Exception {
+		TestUtil.equalsVerifier(TransactionDetailsDTO.class);
+		TransactionDetailsDTO transactionDetailsDTO1 = new TransactionDetailsDTO();
+		transactionDetailsDTO1.setId(1L);
+		TransactionDetailsDTO transactionDetailsDTO2 = new TransactionDetailsDTO();
+		Assertions.assertThat(transactionDetailsDTO1).isNotEqualTo(transactionDetailsDTO2);
+		transactionDetailsDTO2.setId(transactionDetailsDTO1.getId());
+		Assertions.assertThat(transactionDetailsDTO1).isEqualTo(transactionDetailsDTO2);
+		transactionDetailsDTO2.setId(2L);
+		Assertions.assertThat(transactionDetailsDTO1).isNotEqualTo(transactionDetailsDTO2);
+		transactionDetailsDTO1.setId(null);
+		Assertions.assertThat(transactionDetailsDTO1).isNotEqualTo(transactionDetailsDTO2);
+	}
+
+	/**
+	 * Test entity from id.
+	 */
+	@Test
+	@Transactional
+	public void testEntityFromId() {
+		Assertions.assertThat(this.transactionDetailsMapper.fromId(42L).getId()).isEqualTo(42);
+		Assertions.assertThat(this.transactionDetailsMapper.fromId(null)).isNull();
+	}
 }
