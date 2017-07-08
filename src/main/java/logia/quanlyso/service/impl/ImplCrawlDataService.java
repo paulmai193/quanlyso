@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gargoylesoftware.htmlunit.html.HtmlOption;
@@ -22,12 +23,14 @@ import logia.quanlyso.domain.Code;
 import logia.quanlyso.repository.ChannelRepository;
 import logia.quanlyso.repository.CodeRepository;
 import logia.quanlyso.service.CrawlDataService;
+import logia.quanlyso.service.util.DateFormatterUtil;
 
 /**
  * The Class ImplCrawlDataService.
  *
  * @author Paul Mai
  */
+@Service
 public class ImplCrawlDataService implements CrawlDataService {
 
 	/** The logger. */
@@ -40,7 +43,7 @@ public class ImplCrawlDataService implements CrawlDataService {
 	private final CodeRepository	codeRepository;
 
 	/** The base url. */
-	private String					baseUrl	= "http://www.minhngoc.net.vn/getkqxs";
+	private final String			baseUrl;
 
 	/**
 	 * Instantiates a new impl crawl data service.
@@ -52,6 +55,7 @@ public class ImplCrawlDataService implements CrawlDataService {
 			CodeRepository codeRepository) {
 		this.channelRepository = channelRepository;
 		this.codeRepository = codeRepository;
+		this.baseUrl = "http://www.minhngoc.net.vn/getkqxs";
 	}
 
 	/*
@@ -79,7 +83,7 @@ public class ImplCrawlDataService implements CrawlDataService {
 				HtmlSelect _htmlSelect = _selectTags.get(0);
 				HtmlOption _optionTag = _htmlSelect.getSelectedOptions().get(0);
 				String _lastSubmidDate = _optionTag.getValueAttribute();
-				_openDay = ZonedDateTime.parse(_lastSubmidDate);
+				_openDay = DateFormatterUtil.fromDDMMYYYStringToZonedDateTime(_lastSubmidDate);
 			}
 			else {
 				throw new NullPointerException("ID box_kqxs_ngay not found");
@@ -117,7 +121,7 @@ public class ImplCrawlDataService implements CrawlDataService {
 		Channel _channel = this.findChannelByCode(__channelCode);
 
 		// Check update or insert new code
-		ZonedDateTime _openDay = ZonedDateTime.parse(__date);
+		ZonedDateTime _openDay = DateFormatterUtil.fromDDMMYYYStringToZonedDateTime(__date);
 		List<Code> _codes = this.codeRepository.findAllByChannelsAndOpenDate(_channel, _openDay);
 		if (_codes.size() > 0) {
 			if (__forceUpdate) {

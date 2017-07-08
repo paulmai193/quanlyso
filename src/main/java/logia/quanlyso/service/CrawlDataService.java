@@ -10,19 +10,19 @@ public interface CrawlDataService {
 	/**
 	 * Crawl lotteries from minh ngoc site.
 	 *
-	 * @param __regionCode the region code
+	 * @param __channelCode the channel code
 	 * @throws Exception the exception
 	 */
-	void crawlLotteriesFromMinhNgocSite(String __regionCode) throws Exception;
+	void crawlLotteriesFromMinhNgocSite(String __channelCode) throws Exception;
 
 	/**
 	 * Crawl lotteries from minh ngoc site.
 	 *
-	 * @param __regionCode the region code
-	 * @param __date the date
+	 * @param __channelCode the channel code
+	 * @param __date the open day
 	 * @param __forceUpdate the force update
 	 * @throws Exception the exception
 	 */
-	void crawlLotteriesFromMinhNgocSite(String __regionCode, String __date, boolean __forceUpdate)
+	void crawlLotteriesFromMinhNgocSite(String __channelCode, String __date, boolean __forceUpdate)
 			throws Exception;
 }
