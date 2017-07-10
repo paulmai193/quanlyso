@@ -29,6 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 import logia.quanlyso.QuanlysoApp;
 import logia.quanlyso.domain.Code;
 import logia.quanlyso.repository.CodeRepository;
+import logia.quanlyso.service.ChannelService;
 import logia.quanlyso.service.CodeService;
 import logia.quanlyso.service.dto.CodeDTO;
 import logia.quanlyso.service.mapper.CodeMapper;
@@ -61,6 +62,9 @@ public class CodeResourceIntTest {
 	private CodeService								codeService;
 
 	@Autowired
+	private ChannelService							channelService;
+
+	@Autowired
 	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
 
 	@Autowired
@@ -79,7 +83,7 @@ public class CodeResourceIntTest {
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
-		CodeResource codeResource = new CodeResource(this.codeService);
+		CodeResource codeResource = new CodeResource(this.codeService, this.channelService);
 		this.restCodeMockMvc = MockMvcBuilders.standaloneSetup(codeResource)
 				.setCustomArgumentResolvers(this.pageableArgumentResolver)
 				.setControllerAdvice(this.exceptionTranslator)

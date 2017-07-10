@@ -294,7 +294,8 @@ public class ChannelResourceIntTest {
 		this.channelRepository.saveAndFlush(this.channel);
 
 		// Get the channel
-		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels/day/sunday")).andExpect(MockMvcResultMatchers.status().isOk())
+		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels/day/SUNDAY"))
+		        .andExpect(MockMvcResultMatchers.status().isOk())
 		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.channel.getId().intValue())))
 		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_NAME.toString())))
