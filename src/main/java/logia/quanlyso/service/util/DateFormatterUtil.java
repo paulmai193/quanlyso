@@ -20,8 +20,8 @@ public class DateFormatterUtil {
 	 */
 	public static ZonedDateTime fromDDMMYYYYStringToZonedDateTime(String __stringTime) {
 		DateTimeFormatter _dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate localDate = LocalDate.parse(__stringTime, _dateFormatter);
-		return localDate.atStartOfDay(DateFormatterUtil.systemZoneId());
+		LocalDate _localDate = LocalDate.parse(__stringTime, _dateFormatter);
+		return _localDate.atStartOfDay(DateFormatterUtil.systemZoneId());
 	}
 
 	/**
@@ -32,8 +32,28 @@ public class DateFormatterUtil {
 	 */
 	public static ZonedDateTime fromYYYYMMDDStringToZonedDateTime(String __stringTime) {
 		DateTimeFormatter _dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		LocalDate localDate = LocalDate.parse(__stringTime, _dateFormatter);
-		return localDate.atStartOfDay(DateFormatterUtil.systemZoneId());
+		LocalDate _localDate = LocalDate.parse(__stringTime, _dateFormatter);
+		return _localDate.atStartOfDay(DateFormatterUtil.systemZoneId());
+	}
+
+	/**
+	 * From date time to string DDMMYYYY.
+	 *
+	 * @param __time the time
+	 * @return the string
+	 */
+	public static String fromDateTimeToStringDDMMYYYY(ZonedDateTime __time) {
+		return __time.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+	}
+
+	/**
+	 * From date time to string YYYYMMDD.
+	 *
+	 * @param __time the time
+	 * @return the string
+	 */
+	public static String fromDateTimeToStringYYYYMMDD(ZonedDateTime __time) {
+		return __time.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 	}
 
 	/**

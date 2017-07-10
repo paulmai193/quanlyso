@@ -16,7 +16,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -170,19 +169,27 @@ public class CodeResource {
 	 * @return the response entity with status 201 (Created)
 	 * @throws Exception the exception
 	 */
-	@PostMapping(value = "/codes/crawl", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Flux crawlData(@RequestBody CrawlRequestDTO __crawlRequestDTO) throws Exception {
+	@PostMapping(value = "/codes/crawl")
+	public ResponseEntity<Void> crawlData(@RequestBody CrawlRequestDTO __crawlRequestDTO)
+	        throws Exception {
 		this.log.debug("REST request to crawl code data from other website");
 		if (__crawlRequestDTO == null) {
 			LocalDate _localDate = LocalDate.now(DateFormatterUtil.systemZoneId());
 			DayOfWeek _openDay = _localDate.getDayOfWeek();
 			List<ChannelDTO> channelDTOs = this.channelService.findAllByOpenDay(_openDay);
 			Set<String> _codes = new HashSet<>();
-			_codes = channelDTOs.parallelStream().map(_dto -> _dto.getCode()).collect(Collectors.toSet());
+			_codes.addAll(channelDTOs.parallelStream().map(_dto -> _dto.getCode())
+			        .collect(Collectors.toSet()));
 			
-			__crawlRequestDTO = new CrawlRequestDTO(_codes, _openDay);
+			__crawlRequestDTO = new CrawlRequestDTO(_codes,
+			        _localDate.atStartOfDay(DateFormatterUtil.systemZoneId()));
 		}
-		this.codeService.crawlLotteriesFromMinhNgocSite("tp-hcm", "28-02-2017", true);
+
+		for (String _channelCode : __crawlRequestDTO.getChannelCodes()) {
+			this.codeService.crawlLotteriesFromMinhNgocSite(_channelCode,
+			        DateFormatterUtil.fromDateTimeToStringDDMMYYYY(__crawlRequestDTO.getOpenDay()),
+			        true);
+		}
 		return ResponseEntity.created(new URI("/api/codes")).build();
 	}
 

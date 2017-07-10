@@ -1,7 +1,7 @@
 package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
-import java.time.DayOfWeek;
+import java.time.ZonedDateTime;
 import java.util.Set;
 
 /**
@@ -18,7 +18,7 @@ public class CrawlRequestDTO implements Serializable {
 	private Set<String>			channelCodes;
 
 	/** The open day. */
-	private DayOfWeek			openDay;
+	private ZonedDateTime		openDay;
 
 	/**
 	 * Instantiates a new crawl request DTO.
@@ -32,7 +32,7 @@ public class CrawlRequestDTO implements Serializable {
 	 * @param channelCodes the channel codes
 	 * @param openDay the open day
 	 */
-	public CrawlRequestDTO(Set<String> channelCodes, DayOfWeek openDay) {
+	public CrawlRequestDTO(Set<String> channelCodes, ZonedDateTime openDay) {
 		super();
 		this.channelCodes = channelCodes;
 		this.openDay = openDay;
@@ -64,7 +64,7 @@ public class CrawlRequestDTO implements Serializable {
 	 *
 	 * @return the open day
 	 */
-	public DayOfWeek getOpenDay() {
+	public ZonedDateTime getOpenDay() {
 		return openDay;
 	}
 
@@ -74,8 +74,9 @@ public class CrawlRequestDTO implements Serializable {
 	 *
 	 * @param openDay the new open day
 	 */
-	public void setOpenDay(DayOfWeek openDay) {
+	public void setOpenDay(ZonedDateTime openDay) {
 		this.openDay = openDay;
 	}
+
 
 }
