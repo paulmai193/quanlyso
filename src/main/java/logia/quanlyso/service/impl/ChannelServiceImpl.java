@@ -1,5 +1,6 @@
 package logia.quanlyso.service.impl;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,7 +15,6 @@ import logia.quanlyso.domain.Channel;
 import logia.quanlyso.repository.ChannelRepository;
 import logia.quanlyso.service.ChannelService;
 import logia.quanlyso.service.dto.ChannelDTO;
-import logia.quanlyso.service.dto.ChannelOpenDay;
 import logia.quanlyso.service.mapper.ChannelMapper;
 
 /**
@@ -98,35 +98,35 @@ public class ChannelServiceImpl implements ChannelService {
 	 * ChannelOpenDay)
 	 */
 	@Override
-	public List<ChannelDTO> findAllByOpenDay(ChannelOpenDay openDay) {
+	public List<ChannelDTO> findAllByOpenDay(DayOfWeek openDay) {
 		this.log.debug("Request to get Channel by open day: {}", openDay);
 		List<Channel> result;
 		switch (openDay) {
-			case sunday:
+			case SUNDAY:
 				result = this.channelRepository.findAllBySunday();
 				break;
 
-			case monday:
+			case MONDAY:
 				result = this.channelRepository.findAllByMonday();
 				break;
 
-			case tuesday:
+			case TUESDAY:
 				result = this.channelRepository.findAllByTuesday();
 				break;
 
-			case wednesday:
+			case WEDNESDAY:
 				result = this.channelRepository.findAllByWednesday();
 				break;
 
-			case thursday:
+			case THURSDAY:
 				result = this.channelRepository.findAllByThursday();
 				break;
 
-			case friday:
+			case FRIDAY:
 				result = this.channelRepository.findAllByFriday();
 				break;
 
-			case saturday:
+			case SATURDAY:
 				result = this.channelRepository.findAllBySaturday();
 				break;
 

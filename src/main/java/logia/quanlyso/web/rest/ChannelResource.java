@@ -2,6 +2,7 @@ package logia.quanlyso.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,6 @@ import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import logia.quanlyso.service.ChannelService;
 import logia.quanlyso.service.dto.ChannelDTO;
-import logia.quanlyso.service.dto.ChannelOpenDay;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 
 /**
@@ -134,7 +134,7 @@ public class ChannelResource {
 	 */
 	@GetMapping("/channels/day/{openDay}")
 	@Timed
-	public List<ChannelDTO> getChannelByChannel(@PathVariable ChannelOpenDay openDay) {
+	public List<ChannelDTO> getChannelByChannel(@PathVariable DayOfWeek openDay) {
 		this.log.debug("REST request to get Channels by open day : {}", openDay);
 		return this.channelService.findAllByOpenDay(openDay);
 	}

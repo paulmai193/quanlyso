@@ -2,8 +2,13 @@ package logia.quanlyso.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +16,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +31,12 @@ import com.codahale.metrics.annotation.Timed;
 
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
+import logia.quanlyso.service.ChannelService;
 import logia.quanlyso.service.CodeService;
+import logia.quanlyso.service.dto.ChannelDTO;
 import logia.quanlyso.service.dto.CodeDTO;
+import logia.quanlyso.service.dto.CrawlRequestDTO;
+import logia.quanlyso.service.util.DateFormatterUtil;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 import logia.quanlyso.web.rest.util.PaginationUtil;
 
@@ -37,14 +47,27 @@ import logia.quanlyso.web.rest.util.PaginationUtil;
 @RequestMapping("/api")
 public class CodeResource {
 
+	/** The log. */
 	private final Logger		log			= LoggerFactory.getLogger(CodeResource.class);
 
+	/** The Constant ENTITY_NAME. */
 	private static final String	ENTITY_NAME	= "code";
 
+	/** The code service. */
 	private final CodeService	codeService;
 
-	public CodeResource(CodeService codeService) {
+	/** The channel service. */
+	private final ChannelService	channelService;
+
+	/**
+	 * Instantiates a new code resource.
+	 *
+	 * @param codeService the code service
+	 * @param channelService the channel service
+	 */
+	public CodeResource(CodeService codeService, ChannelService channelService) {
 		this.codeService = codeService;
+		this.channelService = channelService;
 	}
 
 	/**
@@ -138,6 +161,29 @@ public class CodeResource {
 		this.codeService.delete(id);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityDeletionAlert(CodeResource.ENTITY_NAME, id.toString())).build();
+	}
+
+	/**
+	 * POST /codes/crawl : Crawl codes data from other website.
+	 *
+	 * @param __crawlRequestDTO the crawl request DTO
+	 * @return the response entity with status 201 (Created)
+	 * @throws Exception the exception
+	 */
+	@PostMapping(value = "/codes/crawl", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Flux crawlData(@RequestBody CrawlRequestDTO __crawlRequestDTO) throws Exception {
+		this.log.debug("REST request to crawl code data from other website");
+		if (__crawlRequestDTO == null) {
+			LocalDate _localDate = LocalDate.now(DateFormatterUtil.systemZoneId());
+			DayOfWeek _openDay = _localDate.getDayOfWeek();
+			List<ChannelDTO> channelDTOs = this.channelService.findAllByOpenDay(_openDay);
+			Set<String> _codes = new HashSet<>();
+			_codes = channelDTOs.parallelStream().map(_dto -> _dto.getCode()).collect(Collectors.toSet());
+			
+			__crawlRequestDTO = new CrawlRequestDTO(_codes, _openDay);
+		}
+		this.codeService.crawlLotteriesFromMinhNgocSite("tp-hcm", "28-02-2017", true);
+		return ResponseEntity.created(new URI("/api/codes")).build();
 	}
 
 }

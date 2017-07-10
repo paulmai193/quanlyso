@@ -13,14 +13,35 @@ import java.time.format.DateTimeFormatter;
 public class DateFormatterUtil {
 
 	/**
-	 * From DDMMYYY string to zoned date time.
+	 * From DDMMYYYY string to zoned date time.
 	 *
 	 * @param __stringTime the string time
 	 * @return the zoned date time
 	 */
-	public static ZonedDateTime fromDDMMYYYStringToZonedDateTime(String __stringTime) {
+	public static ZonedDateTime fromDDMMYYYYStringToZonedDateTime(String __stringTime) {
 		DateTimeFormatter _dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		LocalDate localDate = LocalDate.parse(__stringTime, _dateFormatter);
-		return localDate.atStartOfDay(ZoneId.systemDefault());
+		return localDate.atStartOfDay(DateFormatterUtil.systemZoneId());
+	}
+
+	/**
+	 * From YYYYMMDD string to zoned date time.
+	 *
+	 * @param __stringTime the string time
+	 * @return the zoned date time
+	 */
+	public static ZonedDateTime fromYYYYMMDDStringToZonedDateTime(String __stringTime) {
+		DateTimeFormatter _dateFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		LocalDate localDate = LocalDate.parse(__stringTime, _dateFormatter);
+		return localDate.atStartOfDay(DateFormatterUtil.systemZoneId());
+	}
+
+	/**
+	 * System zone id.
+	 *
+	 * @return the zone id
+	 */
+	public static ZoneId systemZoneId() {
+		return ZoneId.of("Asia/Ho_Chi_Minh");
 	}
 }

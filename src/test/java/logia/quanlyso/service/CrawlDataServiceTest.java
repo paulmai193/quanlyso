@@ -25,7 +25,7 @@ import logia.quanlyso.service.util.DateFormatterUtil;
 public class CrawlDataServiceTest {
 	
 	@Autowired
-	private CrawlDataService crawlDataService;
+	private CodeService			codeService;
 	
 	@Autowired
 	private ChannelRepository channelRepository;
@@ -42,9 +42,9 @@ public class CrawlDataServiceTest {
 		Channel _channel = channelRepository.findOneByCode("mien-bac");
 		String _channelCode = _channel.getCode();
 		String _date = "01-07-2017";
-		ZonedDateTime _openDate = DateFormatterUtil.fromDDMMYYYStringToZonedDateTime(_date);
+		ZonedDateTime _openDate = DateFormatterUtil.fromDDMMYYYYStringToZonedDateTime(_date);
 		boolean __forceUpdate = true;
-		this.crawlDataService.crawlLotteriesFromMinhNgocSite(_channelCode, _date, __forceUpdate);
+		this.codeService.crawlLotteriesFromMinhNgocSite(_channelCode, _date, __forceUpdate);
 		
 		// Assert value
 		List<Code> _codes = this.codeRepository.findAllByChannelsAndOpenDate(_channel, _openDate);
