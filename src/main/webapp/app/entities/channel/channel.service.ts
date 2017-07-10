@@ -32,7 +32,7 @@ export class ChannelService {
     }
 
     findByOpenDay(day: string): Observable<Channel> {
-        return this.http.get(`${this.resourceUrl}/day/${day}`);
+        return this.http.get(`${this.resourceUrl}/day/${day.toUpperCase()}`);
     }
 
     query(req?: any): Observable<Response> {
