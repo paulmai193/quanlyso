@@ -1,9 +1,23 @@
 name;code;sunday;monday;tuesday;wednesday;thursday;friday;saturday
-Miền bắc;mien-bac;true;true;true;true;true;true;true
-An Giang;an-giang;false;false;false;false;true;false;false
-Bạc Liêu;bac-lieu;false;false;true;false;false;false;false
-Bến Tre;ben-tre;false;false;true;false;false;false;false
-Bình Dương;binh-duong;false;false;false;false;false;true;false
-Bình Phước;binh-phuoc;false;false;false;false;false;false;true
-Bình Thuận;binh-thuan;false;false;false;false;true;false;false
-Cà Mau;ca-mau;false;true;false;false;false;false;false
+Miền bắc;mien-bac;1;1;1;1;1;1;1
+An Giang;an-giang;0;0;0;0;1;0;0
+Bạc Liêu;bac-lieu;0;0;1;0;0;0;0
+Bến Tre;ben-tre;0;0;1;0;0;0;0
+Bình Dương;binh-duong;0;0;0;0;0;1;0
+Bình Phước;binh-phuoc;0;0;0;0;0;0;1
+Bình Thuận;binh-thuan;0;0;0;0;1;0;0
+Cà Mau;ca-mau;0;1;0;0;0;0;0
+Cần Thơ;can-tho;0;0;0;1;0;0;0
+Đà Lạt;da-lat;1;0;0;0;0;0;0
+Đồng Nai;dong-nai;0;0;0;1;0;0;0
+Đồng Tháp;dong-thap;0;1;0;0;0;0;0
+Hậu Giang;hau-giang;0;0;0;0;0;0;1
+Kiên Giang;kien-giang;1;0;0;0;0;0;0
+Long An;long-an;0;0;0;0;0;0;1
+Sóc Trăng;soc-trang;0;0;0;1;0;0;0
+Tây Ninh;tay-ninh;0;0;0;0;1;0;0
+Tiền Giang;tien-giang;1;0;0;0;0;0;0
+TP.HCM;tp-hcm;0;1;0;0;0;0;1
+Trà Vinh;tra-vinh;0;0;0;0;0;1;0
+Vĩnh Long;vinh-long;0;0;0;0;0;1;0
+Vũng Tàu;vung-tau;0;0;1;0;0;0;0
