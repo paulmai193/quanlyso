@@ -22,6 +22,10 @@
     {
       "fieldName": "netValue",
       "fieldType": "Float"
+    },
+		{
+      "fieldName": "openDate",
+      "fieldType": "ZonedDateTime"
     }
   ],
   "changelogDate": "20170522140705",

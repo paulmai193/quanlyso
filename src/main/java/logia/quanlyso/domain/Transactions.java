@@ -1,6 +1,7 @@
 package logia.quanlyso.domain;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -44,6 +45,10 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	/** The net value. */
 	@Column(name = "net_value")
 	private Float					netValue;
+	
+	/** The open day. */
+	@Column(name = "open_day")
+	private ZonedDateTime openDay;
 
 	/** The transaction details. */
 	@OneToMany(mappedBy = "transactions")
@@ -118,7 +123,7 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 * @return the transactions
 	 */
 	public Transactions netValue(Float netValue) {
-		this.netValue = netValue;
+		this.setNetValue(netValue);;
 		return this;
 	}
 
@@ -129,6 +134,35 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	 */
 	public void setNetValue(Float netValue) {
 		this.netValue = netValue;
+	}
+
+	/**
+	 * Gets the open day.
+	 *
+	 * @return the openDay
+	 */
+	public ZonedDateTime getOpenDay() {
+		return openDay;
+	}
+
+	/**
+	 * Sets the open day.
+	 *
+	 * @param openDay the openDay to set
+	 */
+	public void setOpenDay(ZonedDateTime openDay) {
+		this.openDay = openDay;
+	}
+	
+	/**
+	 * Open day.
+	 *
+	 * @param __openDay the open day
+	 * @return the transactions
+	 */
+	public Transactions openDay(ZonedDateTime __openDay) {
+		this.setOpenDay(__openDay);
+		return this;
 	}
 
 	/**

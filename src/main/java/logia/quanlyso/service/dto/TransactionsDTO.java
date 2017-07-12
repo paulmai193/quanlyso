@@ -1,6 +1,7 @@
 package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -12,9 +13,7 @@ import java.util.Set;
  */
 public class TransactionsDTO implements Serializable {
 
-	/**
-	 * 
-	 */
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
@@ -25,6 +24,9 @@ public class TransactionsDTO implements Serializable {
 
 	/** The net value. */
 	private Float						netValue;
+	
+	/** The open date. */
+	private ZonedDateTime	openDate; 
 
 	/** The clients id. */
 	private Long						clientsId;
@@ -87,6 +89,24 @@ public class TransactionsDTO implements Serializable {
 	}
 
 	/**
+	 * Gets the open date.
+	 *
+	 * @return the openDate
+	 */
+	public ZonedDateTime getOpenDate() {
+		return openDate;
+	}
+
+	/**
+	 * Sets the open date.
+	 *
+	 * @param openDate the openDate to set
+	 */
+	public void setOpenDate(ZonedDateTime openDate) {
+		this.openDate = openDate;
+	}
+
+	/**
 	 * Gets the clients id.
 	 *
 	 * @return the clients id
@@ -105,6 +125,8 @@ public class TransactionsDTO implements Serializable {
 	}
 
 	/**
+	 * Gets the transaction details DT os.
+	 *
 	 * @return the transactionDetailsDTOs
 	 */
 	public Set<TransactionDetailsDTO> getTransactionDetailsDTOs() {
@@ -112,6 +134,8 @@ public class TransactionsDTO implements Serializable {
 	}
 
 	/**
+	 * Sets the transaction details DT os.
+	 *
 	 * @param transactionDetailsDTOs the transactionDetailsDTOs to set
 	 */
 	public void setTransactionDetailsDTOs(Set<TransactionDetailsDTO> transactionDetailsDTOs) {

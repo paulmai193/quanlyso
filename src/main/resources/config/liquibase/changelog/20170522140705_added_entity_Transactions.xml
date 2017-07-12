@@ -29,6 +29,10 @@
             <column name="net_value" type="${floatType}">
                 <constraints nullable="true" />
             </column>
+            
+            <column name="open_date" type="timestamp">
+                <constraints nullable="true" />
+            </column>
 
             <column name="users_id" type="bigint">
                 <constraints nullable="true" />
