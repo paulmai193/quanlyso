@@ -46,9 +46,9 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	@Column(name = "net_value")
 	private Float					netValue;
 	
-	/** The open day. */
-	@Column(name = "open_day")
-	private ZonedDateTime openDay;
+	/** The open date. */
+	@Column(name = "open_date")
+	private ZonedDateTime openDate;
 
 	/** The transaction details. */
 	@OneToMany(mappedBy = "transactions")
@@ -137,31 +137,31 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	}
 
 	/**
-	 * Gets the open day.
+	 * Gets the open date.
 	 *
-	 * @return the openDay
+	 * @return the openDate
 	 */
-	public ZonedDateTime getOpenDay() {
-		return openDay;
+	public ZonedDateTime getOpenDate() {
+		return openDate;
 	}
 
 	/**
-	 * Sets the open day.
+	 * Sets the open date.
 	 *
-	 * @param openDay the openDay to set
+	 * @param __openDate the openDate to set
 	 */
-	public void setOpenDay(ZonedDateTime openDay) {
-		this.openDay = openDay;
+	public void setOpenDate(ZonedDateTime __openDate) {
+		this.openDate = __openDate;
 	}
 	
 	/**
-	 * Open day.
+	 * Open date.
 	 *
 	 * @param __openDay the open day
 	 * @return the transactions
 	 */
-	public Transactions openDay(ZonedDateTime __openDay) {
-		this.setOpenDay(__openDay);
+	public Transactions openDate(ZonedDateTime __openDay) {
+		this.setOpenDate(__openDay);
 		return this;
 	}
 

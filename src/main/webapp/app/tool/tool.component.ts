@@ -32,6 +32,7 @@ export class QuanLySoToolComponent implements OnInit {
     types: Types[];
     transactions: Transactions;
     isProcess: boolean;
+    private DATE_FORMAT = 'yyyy-MM-ddT00:00';
 
     constructor(private eventManager: EventManager,
                 private transactionsService: TransactionsService,
@@ -47,15 +48,13 @@ export class QuanLySoToolComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        const openDay: string = this.datePipe.transform(Date.now(), 'EEEE').toLowerCase();
-        this.channelService.findByOpenDay(openDay).subscribe(
-            (res: Response) => { this.channels = res.json(); }, (res: Response) => this.onError(res.json()));
-        this.factorService.query().subscribe(
-            (res: Response) => { this.factors = res.json(); }, (res: Response) => this.onError(res.json()));
-        this.styleService.query().subscribe(
-            (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
-        this.typesService.query().subscribe(
-            (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.transactions.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
+        this.onOpenDateChange();
+    }
+
+    onOpenDateChange(): void {
+        const openDate: string = this.datePipe.transform(this.transactions.openDate, 'EEEE').toLowerCase();
+        this.init(openDate);
     }
 
     addRecord(): void {
@@ -80,6 +79,17 @@ export class QuanLySoToolComponent implements OnInit {
         this.isProcess = true;
         this.subscribeToSaveResponse(
             this.transactionsService.create(this.transactions));
+    }
+
+    private init(openDate: string): void {
+        this.channelService.findByOpenDay(openDate).subscribe(
+            (res: Response) => { this.channels = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.factorService.query().subscribe(
+            (res: Response) => { this.factors = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.styleService.query().subscribe(
+            (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
+        this.typesService.query().subscribe(
+            (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
     }
 
     private subscribeToSaveResponse(result: Observable<Channel>) {

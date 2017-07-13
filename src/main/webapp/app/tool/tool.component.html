@@ -13,7 +13,8 @@
                 <thead>
                     <tr>
                         <th class="must-center must-justify"><span jhiTranslate="quanlysoApp.transactions.chosenNumber">Chosen Number</span> <span class="fa"></span></th>
-                        <th class="must-center must-center"><span jhiTranslate="quanlysoApp.transactions.netValue">Net Value</span> <span class="fa"></span></th>
+                        <th class="must-center"><span jhiTranslate="quanlysoApp.transactions.date">Date</span> <span class="fa"></span></th>
+                        <th class="must-center"><span jhiTranslate="quanlysoApp.transactions.netValue">Net Value</span> <span class="fa"></span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -21,6 +22,9 @@
                         <td>
                             <input type="number" class="form-control" name="chosenNumber" id="field_chosenNumber"
                                    [(ngModel)]="transactions.chosenNumber" required/>
+                        </td>
+                        <td>
+                            <input id="field_openDate" type="datetime-local" class="form-control" name="openDate" [(ngModel)]="transactions.openDate" (change)="onOpenDateChange()" required/>
                         </td>
                         <td class="must-center">{{ transactions.netValue ? transactions.netValue : 'N/A' }}</td>
                     </tr>

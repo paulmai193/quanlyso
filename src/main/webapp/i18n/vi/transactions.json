@@ -18,7 +18,8 @@
             "chosenNumber": "Chosen Number",
             "netValue": "Net Value",
             "transactionDetails": "Transaction Details",
-            "clients": "Clients"
+            "clients": "Clients",
+            "date": "Ngày"
         }
     }
 }

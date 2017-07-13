@@ -4,6 +4,7 @@ export class Transactions {
     constructor(
         public id?: number,
         public chosenNumber?: number,
+        public openDate?: any,
         public netValue?: number,
         public transactionDetailsId?: number,
         public clientsId?: number,
