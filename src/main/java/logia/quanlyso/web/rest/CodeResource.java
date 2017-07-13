@@ -41,6 +41,8 @@ import logia.quanlyso.web.rest.util.PaginationUtil;
 
 /**
  * REST controller for managing Code.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
@@ -56,37 +58,38 @@ public class CodeResource {
 	private final CodeService	codeService;
 
 	/** The channel service. */
-	private final ChannelService	channelService;
+	private final ChannelService	channelService;	
 
 	/**
 	 * Instantiates a new code resource.
 	 *
-	 * @param codeService the code service
-	 * @param channelService the channel service
+	 * @param __codeService the code service
+	 * @param __channelService the channel service
+	 * @param __processingListener the processing listener
 	 */
-	public CodeResource(CodeService codeService, ChannelService channelService) {
-		this.codeService = codeService;
-		this.channelService = channelService;
+	public CodeResource(CodeService __codeService, ChannelService __channelService) {
+		this.codeService = __codeService;
+		this.channelService = __channelService;		
 	}
 
 	/**
 	 * POST /codes : Create a new code.
 	 *
-	 * @param codeDTO the codeDTO to create
+	 * @param __codeDTO the codeDTO to create
 	 * @return the ResponseEntity with status 201 (Created) and with body the new codeDTO, or with
 	 *         status 400 (Bad Request) if the code has already an ID
 	 * @throws URISyntaxException if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/codes")
 	@Timed
-	public ResponseEntity<CodeDTO> createCode(@RequestBody CodeDTO codeDTO)
+	public ResponseEntity<CodeDTO> createCode(@RequestBody CodeDTO __codeDTO)
 			throws URISyntaxException {
-		this.log.debug("REST request to save Code : {}", codeDTO);
-		if (codeDTO.getId() != null) {
+		this.log.debug("REST request to save Code : {}", __codeDTO);
+		if (__codeDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(CodeResource.ENTITY_NAME,
 					"idexists", "A new code cannot already have an ID")).body(null);
 		}
-		CodeDTO result = this.codeService.save(codeDTO);
+		CodeDTO result = this.codeService.save(__codeDTO);
 		return ResponseEntity
 				.created(new URI("/api/codes/" + result.getId())).headers(HeaderUtil
 						.createEntityCreationAlert(CodeResource.ENTITY_NAME, result.getId().toString()))
@@ -185,12 +188,13 @@ public class CodeResource {
 			        _localDate.atStartOfDay(DateFormatterUtil.systemZoneId()));
 		}
 
-		for (String _channelCode : __crawlRequestDTO.getChannelCodes()) {
-			this.codeService.crawlLotteriesFromMinhNgocSite(_channelCode,
-			        DateFormatterUtil.fromDateTimeToStringDDMMYYYY(__crawlRequestDTO.getOpenDay()),
-			        true);
-		}
+		this.codeService.crawlLotteriesFromMinhNgocSite(__crawlRequestDTO.getChannelCodes());
 		return ResponseEntity.created(new URI("/api/codes")).build();
+	}
+	
+	@GetMapping("/codes/crawl/process")
+	public String getCrawlProcessing() {
+		return this.codeService.getCrawlProcessing();
 	}
 
 }

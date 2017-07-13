@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,7 @@ import logia.quanlyso.domain.TransactionDetails;
 import logia.quanlyso.domain.Transactions;
 import logia.quanlyso.domain.Types;
 import logia.quanlyso.domain.TypesConstants;
+import logia.quanlyso.listener.ProcessingListener;
 import logia.quanlyso.repository.ChannelRepository;
 import logia.quanlyso.repository.CodeRepository;
 import logia.quanlyso.repository.CostFactorRepository;
@@ -73,6 +75,9 @@ public class CodeServiceImpl implements CodeService {
 
 	/** The base url. */
 	private final String					baseUrl;
+	
+	/** The processing listener. */
+	private final ProcessingListener processingListener;
 
 	/**
 	 * Instantiates a new code service impl.
@@ -82,16 +87,18 @@ public class CodeServiceImpl implements CodeService {
 	 * @param costFactorRepository the cost factor repository
 	 * @param profitFactorRepository the profit factor repository
 	 * @param channelRepository the channel repository
+	 * @param __processingListener the processing listener
 	 */
 	public CodeServiceImpl(CodeRepository codeRepository, CodeMapper codeMapper,
 			CostFactorRepository costFactorRepository,
-	        ProfitFactorRepository profitFactorRepository, ChannelRepository channelRepository) {
+	        ProfitFactorRepository profitFactorRepository, ChannelRepository channelRepository, ProcessingListener __processingListener) {
 		this.codeRepository = codeRepository;
 		this.codeMapper = codeMapper;
 		this.costFactorRepository = costFactorRepository;
 		this.profitFactorRepository = profitFactorRepository;
 		this.channelRepository = channelRepository;
 		this.baseUrl = "http://www.minhngoc.net.vn/getkqxs";
+		this.processingListener = __processingListener;
 	}
 
 	/**
@@ -256,6 +263,18 @@ public class CodeServiceImpl implements CodeService {
 		return filtered;
 	}
 
+	/* (non-Javadoc)
+	 * @see logia.quanlyso.service.CodeService#crawlLotteriesFromMinhNgocSite(java.util.Collection)
+	 */
+	@Override
+	public void crawlLotteriesFromMinhNgocSite(Collection<String> __channelCodes) throws Exception {
+		this.processingListener.setTotal(__channelCodes.size());
+		for (String _channelCode : __channelCodes) {
+			this.crawlLotteriesFromMinhNgocSite(_channelCode);
+			this.processingListener.nextProcessing();
+		}
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -352,6 +371,15 @@ public class CodeServiceImpl implements CodeService {
 		catch (Exception __ex) {
 			throw __ex;
 		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see logia.quanlyso.service.CodeService#getCrawlProcessing()
+	 */
+	@Override
+	public String getCrawlProcessing() {
+		String _process = (this.processingListener.getProcessing() / this.processingListener.getTotal() * 100) + " %";
+		return _process;
 	}
 
 	/**
