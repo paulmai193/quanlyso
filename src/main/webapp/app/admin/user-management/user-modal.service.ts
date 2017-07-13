@@ -4,10 +4,13 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { User, UserService } from '../../shared';
 import { DatePipe } from '@angular/common';
+import { DateUtil } from '../../shared/utils/date-util';
 
 @Injectable()
 export class UserModalService {
     private isOpen = false;
+    private DATE_FORMAT_INIT = 'yyyy-MM-ddT12:00';
+    private DATE_FORMAT = 'yyyy-MM-ddThh:mm';
     constructor(
         private datePipe: DatePipe,
         private modalService: NgbModal,
@@ -24,13 +27,17 @@ export class UserModalService {
         if (login) {
             this.userService.find(login).subscribe((user) => {
                 user.grantAccessDate = this.datePipe
-                    .transform(user.grantAccessDate, 'yyyy-MM-ddThh:mm');
+                    .transform(user.grantAccessDate, this.DATE_FORMAT);
                 user.revokeAccessDate = this.datePipe
-                    .transform(user.revokeAccessDate, 'yyyy-MM-ddThh:mm');
+                    .transform(user.revokeAccessDate, this.DATE_FORMAT);
                 this.userModalRef(component, user);
             });
         } else {
-            return this.userModalRef(component, new User());
+            const user: User = new User();
+            // Setup default grant & revoke access date
+            user.grantAccessDate = this.datePipe.transform(new Date(), this.DATE_FORMAT_INIT);
+            user.revokeAccessDate = this.datePipe.transform(new DateUtil().addDays(user.grantAccessDate, 30), this.DATE_FORMAT_INIT);
+            return this.userModalRef(component, user);
         }
     }
 
