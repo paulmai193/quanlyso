@@ -16,6 +16,7 @@ import { DatePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { StorageService } from '../shared/storage/storage.service';
 import { CrawlDataModel } from '../entities/crawl-data.model';
+import { CodeService } from '../entities/code/code.service';
 /**
  * Created by Dai Mai on 6/17/17.
  */
@@ -35,7 +36,7 @@ export class QuanLySoToolComponent implements OnInit {
     styles: Style[];
     types: Types[];
     transactions: Transactions;
-    isProcess: boolean;
+    isCalculate: boolean;
     private DATE_FORMAT = 'yyyy-MM-ddT00:00';
 
     constructor(private eventManager: EventManager,
@@ -46,7 +47,8 @@ export class QuanLySoToolComponent implements OnInit {
                 private typesService: TypesService,
                 private alertService: AlertService,
                 private datePipe: DatePipe,
-                private storageService: StorageService
+                private storageService: StorageService,
+                private codeService: CodeService
     ) {
         this.reset();
     }
@@ -87,9 +89,16 @@ export class QuanLySoToolComponent implements OnInit {
     }
 
     check(): void {
-        this.isProcess = true;
+        this.isCalculate = true;
         this.subscribeToSaveResponse(
-            this.transactionsService.create(this.transactions));
+            this.transactionsService.create(this.transactions)
+        );
+    }
+
+    crawl(): void {
+        this.subscribeToSaveResponse(
+            this.codeService.crawl(this.crawlData)
+        );
     }
 
     private initCrawl(openDate: string): void {
@@ -114,14 +123,18 @@ export class QuanLySoToolComponent implements OnInit {
             (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
     }
 
-    private subscribeToSaveResponse(result: Observable<Channel>) {
-        result.subscribe((res: Channel) =>
+    private subscribeToSaveResponse(result: Observable<any>) {
+        result.subscribe((res: any) =>
             this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
     }
 
-    private onSaveSuccess(result: Channel) {
-        this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
-        this.isProcess = false;
+    private onSaveSuccess(result: any) {
+        if (Function.prototype.call.bind(result.prototype.toString()) === 'Channel') {
+            this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
+            this.isCalculate = false;
+        } else {
+            this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
+        }
     }
 
     private onSaveError(error) {
@@ -130,7 +143,7 @@ export class QuanLySoToolComponent implements OnInit {
         } catch (exception) {
             error.message = error.text();
         }
-        this.isProcess = false;
+        this.isCalculate = false;
         this.onError(error);
     }
 

@@ -273,6 +273,7 @@ public class CodeServiceImpl implements CodeService {
 			this.crawlLotteriesFromMinhNgocSite(_channelCode);
 			this.processingListener.nextProcessing();
 		}
+		this.processingListener.resetProcessing();
 	}
 	
 	/*
@@ -378,7 +379,17 @@ public class CodeServiceImpl implements CodeService {
 	 */
 	@Override
 	public String getCrawlProcessing() {
-		String _process = (this.processingListener.getProcessing() / this.processingListener.getTotal() * 100) + " %";
+		String _process;
+		if (this.processingListener.getTotal() == 0) {
+			_process = "None";
+		} else {
+			if (this.processingListener.getProcessing() < this.processingListener.getTotal()) {
+				_process = (this.processingListener.getProcessing() / this.processingListener.getTotal() * 100) + " %";	
+			} else {
+				_process = "Finish";
+			}			
+		}
+		
 		return _process;
 	}
 

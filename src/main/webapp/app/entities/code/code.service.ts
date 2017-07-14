@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/Rx';
 
 import { Code } from './code.model';
 import { DateUtils } from 'ng-jhipster';
+import { CrawlDataModel } from '../crawl-data.model';
 
 @Injectable()
 export class CodeService {
@@ -44,6 +45,10 @@ export class CodeService {
 
     delete(id: number): Observable<Response> {
         return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    crawl(crawlRequest: CrawlDataModel): Observable<Response> {
+        return this.http.post(`${this.resourceUrl}/crawl`, crawlRequest);
     }
 
     private convertResponse(res: Response): Response {

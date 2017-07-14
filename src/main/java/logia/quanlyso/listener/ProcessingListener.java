@@ -44,6 +44,7 @@ public class ProcessingListener {
 	 */
 	public void resetProcessing() {
 		this.processing = 0;
+		this.total = 0;
 	}
 
 	/**

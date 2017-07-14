@@ -5,7 +5,7 @@
     <jhi-alert-error></jhi-alert-error>
     <div class="table-responsive">
         <h4>Update data</h4>
-        <form name="toolForm" role="form" novalidate (ngSubmit)="check()" #toolForm="ngForm">
+        <form name="toolForm" role="form" novalidate (ngSubmit)="crawl()" #crawlForm="ngForm">
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -15,13 +15,12 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        <input id="field_openDate" type="datetime-local" class="form-control" name="openDate" [(ngModel)]="crawlData.openDate" (change)="onCrawlOpenDateChange()"/>
+                    <td class="must-center">
+                        <input id="field_crawl_openDate" type="datetime-local" class="form-control" name="openDate" [(ngModel)]="crawlData.openDate" (change)="onCrawlOpenDateChange()"/>
                     </td>
-                    <td>
-                        <select class="form-control" id="field_channels" name="channels" [(ngModel)]="crawlData.channelsId" required>
-                            <option [ngValue]="null"></option>
-                            <option [ngValue]="channelOption.id" *ngFor="let channelOption of channelsForCrawl; trackBy: trackChannelById">{{ channelOption.name }}</option>
+                    <td class="must-center">
+                        <select class="form-control" id="field_crawl_channels" name="channels" [(ngModel)]="crawlData.channelCodes" multiple>
+                           <option [ngValue]="channelOption.id" *ngFor="let channelOption of channelsForCrawl; trackBy: trackChannelById">{{ channelOption.name }}</option>
                         </select>
                     </td>
                 </tr>
