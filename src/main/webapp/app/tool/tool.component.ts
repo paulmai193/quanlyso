@@ -15,6 +15,7 @@ import { Response } from '@angular/http';
 import { DatePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { StorageService } from '../shared/storage/storage.service';
+import { CrawlDataModel } from '../entities/crawl-data.model';
 /**
  * Created by Dai Mai on 6/17/17.
  */
@@ -26,6 +27,9 @@ import { StorageService } from '../shared/storage/storage.service';
     ]
 })
 export class QuanLySoToolComponent implements OnInit {
+    crawlData: CrawlDataModel;
+    channelsForCrawl: Channel[];
+
     channels: Channel[];
     factors: Factor[];
     styles: Style[];
@@ -48,13 +52,19 @@ export class QuanLySoToolComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.transactions.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
-        this.onOpenDateChange();
+        this.transactions.openDate = this.crawlData.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
+        this.onCrawlOpenDateChange();
+        this.onCalculateOpenDateChange();
     }
 
-    onOpenDateChange(): void {
+    onCrawlOpenDateChange(): void {
+        const openDate: string = this.datePipe.transform(this.crawlData.openDate, 'EEEE').toLowerCase();
+        this.initCrawl(openDate);
+    }
+
+    onCalculateOpenDateChange(): void {
         const openDate: string = this.datePipe.transform(this.transactions.openDate, 'EEEE').toLowerCase();
-        this.init(openDate);
+        this.initCalculate(openDate);
     }
 
     addRecord(): void {
@@ -69,6 +79,7 @@ export class QuanLySoToolComponent implements OnInit {
     }
 
     reset(): void {
+        this.crawlData = new CrawlDataModel();
         this.transactions = new Transactions();
         this.transactions.clientsId = this.storageService.getAccountId();
         this.transactions.transactionDetailsDTOs = [];
@@ -81,9 +92,20 @@ export class QuanLySoToolComponent implements OnInit {
             this.transactionsService.create(this.transactions));
     }
 
-    private init(openDate: string): void {
+    private initCrawl(openDate: string): void {
         this.channelService.findByOpenDay(openDate).subscribe(
-            (res: Response) => { this.channels = res.json(); }, (res: Response) => this.onError(res.json()));
+            (res: Response) => {
+                this.channelsForCrawl = res.json();
+                },
+            (res: Response) => this.onError(res.json()));
+    }
+
+    private initCalculate(openDate: string): void {
+        this.channelService.findByOpenDay(openDate).subscribe(
+            (res: Response) => {
+                this.channels = res.json();
+                },
+            (res: Response) => this.onError(res.json()));
         this.factorService.query().subscribe(
             (res: Response) => { this.factors = res.json(); }, (res: Response) => this.onError(res.json()));
         this.styleService.query().subscribe(

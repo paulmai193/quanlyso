@@ -27,19 +27,6 @@ public class CrawlRequestDTO implements Serializable {
 	}
 
 	/**
-	 * Instantiates a new crawl request DTO.
-	 *
-	 * @param channelCodes the channel codes
-	 * @param openDay the open day
-	 */
-	public CrawlRequestDTO(Set<String> channelCodes, ZonedDateTime openDay) {
-		super();
-		this.channelCodes = channelCodes;
-		this.openDay = openDay;
-	}
-
-
-	/**
 	 * Gets the channel codes.
 	 *
 	 * @return the channel codes

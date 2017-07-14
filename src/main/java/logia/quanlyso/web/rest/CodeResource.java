@@ -177,21 +177,31 @@ public class CodeResource {
 	        throws Exception {
 		this.log.debug("REST request to crawl code data from other website");
 		if (__crawlRequestDTO == null) {
+			__crawlRequestDTO = new CrawlRequestDTO();
+		}
+		
+		if (__crawlRequestDTO.getOpenDay() == null) {
 			LocalDate _localDate = LocalDate.now(DateFormatterUtil.systemZoneId());
 			DayOfWeek _openDay = _localDate.getDayOfWeek();
-			List<ChannelDTO> channelDTOs = this.channelService.findAllByOpenDay(_openDay);
+			__crawlRequestDTO.setOpenDay(_localDate.atStartOfDay(DateFormatterUtil.systemZoneId()));
+		}
+		
+		if (__crawlRequestDTO.getChannelCodes() == null) {
+			List<ChannelDTO> channelDTOs = this.channelService.findAllByOpenDay(__crawlRequestDTO.getOpenDay().getDayOfWeek());
 			Set<String> _codes = new HashSet<>();
 			_codes.addAll(channelDTOs.parallelStream().map(_dto -> _dto.getCode())
 			        .collect(Collectors.toSet()));
-			
-			__crawlRequestDTO = new CrawlRequestDTO(_codes,
-			        _localDate.atStartOfDay(DateFormatterUtil.systemZoneId()));
 		}
 
 		this.codeService.crawlLotteriesFromMinhNgocSite(__crawlRequestDTO.getChannelCodes());
 		return ResponseEntity.created(new URI("/api/codes")).build();
 	}
 	
+	/**
+	 * Gets the crawl processing.
+	 *
+	 * @return the crawl processing
+	 */
 	@GetMapping("/codes/crawl/process")
 	public String getCrawlProcessing() {
 		return this.codeService.getCrawlProcessing();
