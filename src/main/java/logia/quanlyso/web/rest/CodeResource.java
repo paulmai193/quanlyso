@@ -2,7 +2,6 @@ package logia.quanlyso.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -35,6 +34,7 @@ import logia.quanlyso.service.CodeService;
 import logia.quanlyso.service.dto.ChannelDTO;
 import logia.quanlyso.service.dto.CodeDTO;
 import logia.quanlyso.service.dto.CrawlRequestDTO;
+import logia.quanlyso.service.dto.ProcessingDTO;
 import logia.quanlyso.service.util.DateFormatterUtil;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 import logia.quanlyso.web.rest.util.PaginationUtil;
@@ -182,7 +182,6 @@ public class CodeResource {
 		
 		if (__crawlRequestDTO.getOpenDay() == null) {
 			LocalDate _localDate = LocalDate.now(DateFormatterUtil.systemZoneId());
-			DayOfWeek _openDay = _localDate.getDayOfWeek();
 			__crawlRequestDTO.setOpenDay(_localDate.atStartOfDay(DateFormatterUtil.systemZoneId()));
 		}
 		
@@ -203,8 +202,9 @@ public class CodeResource {
 	 * @return the crawl processing
 	 */
 	@GetMapping("/codes/crawl/process")
-	public String getCrawlProcessing() {
-		return this.codeService.getCrawlProcessing();
+	public ResponseEntity<ProcessingDTO> getCrawlProcessing() {
+		ProcessingDTO _result = this.codeService.getCrawlProcessing();
+		return ResponseEntity.ok(_result);
 	}
 
 }

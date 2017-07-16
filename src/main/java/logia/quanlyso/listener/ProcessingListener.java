@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.listener;
 
 import org.springframework.stereotype.Component;
@@ -18,10 +21,10 @@ import org.springframework.stereotype.Component;
 public class ProcessingListener {
 	
 	/** The processing. */
-	private int processing = 0;
-	
+	private int	processing	= 0;
+
 	/** The total. */
-	private int total;
+	private int	total		= 0;
 
 	/**
 	 * Gets the processing.
@@ -29,7 +32,7 @@ public class ProcessingListener {
 	 * @return the processing
 	 */
 	public int getProcessing() {
-		return processing;
+		return this.processing;
 	}
 
 	/**
@@ -43,8 +46,7 @@ public class ProcessingListener {
 	 * Reset processing.
 	 */
 	public void resetProcessing() {
-		this.processing = 0;
-		this.total = 0;
+		this.processing = this.total = 0;
 	}
 
 	/**
@@ -53,16 +55,16 @@ public class ProcessingListener {
 	 * @return the total
 	 */
 	public int getTotal() {
-		return total;
+		return this.total;
 	}
 
 	/**
 	 * Sets the total.
 	 *
-	 * @param total the total to set
+	 * @param __total the total to set
 	 */
-	public void setTotal(int total) {
-		this.total = total;
+	public void setTotal(int __total) {
+		this.total = __total;
 	}	
 	
 }

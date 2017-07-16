@@ -27,11 +27,18 @@
                 </tbody>
             </table>
             <div>
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" [disabled]="progress.total > 0" class="btn btn-primary">
                     <span class="fa fa-refresh"></span>&nbsp;<span>Update</span>
                 </button>
             </div>
         </form>
+        <div class="progress" *ngIf="progress.total > 0">
+			<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" 
+				[attr.aria-valuenow]="progress" aria-valuemin="0" aria-valuemax ="100" 
+				style="min-width: 2em;" [style.width]="(progress.process/progress.total)*100 + '%'">
+				 {{progress}}%
+			</div>
+		</div>
     </div>
     <br/>
     <div class="table-responsive" *jhiHasAnyAuthority="'ROLE_USER'">

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import logia.quanlyso.domain.Transactions;
 import logia.quanlyso.service.dto.CodeDTO;
+import logia.quanlyso.service.dto.ProcessingDTO;
 
 /**
  * Service Interface for managing Code.
@@ -84,6 +85,6 @@ public interface CodeService {
 	 *
 	 * @return the crawl processing in percent
 	 */
-	String getCrawlProcessing();
+	ProcessingDTO getCrawlProcessing();
 
 }

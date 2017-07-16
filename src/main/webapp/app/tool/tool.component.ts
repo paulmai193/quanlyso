@@ -1,3 +1,6 @@
+/**
+ * Created by Dai Mai on 6/17/17.
+ */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Channel } from '../entities/channel/channel.model';
 import { Factor } from '../entities/factor/factor.model';
@@ -16,10 +19,9 @@ import { DatePipe } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { StorageService } from '../shared/storage/storage.service';
 import { CrawlDataModel } from '../entities/crawl-data.model';
+import { ProgressModel } from '../entities/progress.model';
 import { CodeService } from '../entities/code/code.service';
-/**
- * Created by Dai Mai on 6/17/17.
- */
+
 @Component({
     selector: 'jhi-tool',
     templateUrl: './tool.component.html',
@@ -30,15 +32,13 @@ import { CodeService } from '../entities/code/code.service';
 export class QuanLySoToolComponent implements OnInit, OnDestroy {
     crawlData: CrawlDataModel;
     channelsForCrawl: Channel[];
-	processing: string;
-
+	progress: ProgressModel;
     channels: Channel[];
     factors: Factor[];
     styles: Style[];
     types: Types[];
     transactions: Transactions;
     isCalculate: boolean;
-
     private DATE_FORMAT = 'yyyy-MM-ddT00:00';
     private running: any;
 
@@ -53,18 +53,19 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                 private storageService: StorageService,
                 private codeService: CodeService
     ) {
-        this.reset();
-        this.processing = 'None';
+        this.reset();        
     }
 
     ngOnInit(): void {
         this.transactions.openDate = this.crawlData.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
+        this.progress = new ProgressModel(0, 0);
         this.onCrawlOpenDateChange();
         this.onCalculateOpenDateChange();
+        this.checkCrawlProcess();
     }
     
     ngOnDestroy(): void {
-    	this.isRunning = false;
+    	this.stopCheckCrawlProcess();
     }
 
     onCrawlOpenDateChange(): void {
@@ -103,6 +104,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
 
     crawl(): void {
         this.subscribeToSaveResponse(this.codeService.crawl(this.crawlData), 'crawl');
+        this.checkCrawlProcess();
     }
 
     private initCrawl(openDate: string): void {
@@ -127,10 +129,23 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
             (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
     }
     
+    private checkCrawlProcess(): void {
+    	this.running = setInterval(this.getCrawlProcess(), 1000);
+    }
+    
+    private stopCheckCrawlProcess(): void {
+    	clearInterval(this.running);
+    }
+    
     private getCrawlProcess(): void {
-		if (this.processing === 'None') {
-			
-		}
+		this.codeService.crawlProcessing().subscribe((res: Response) => {
+				this.progress = res.json();
+				if (this.progress.total === 0) {
+					this.stopCheckCrawlProcess();
+				}
+			}, 
+			(res: Response) => this.onError(res.json())
+		);
     }
 
     private subscribeToSaveResponse(result: Observable<any>, instance: string) {

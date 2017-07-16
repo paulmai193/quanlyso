@@ -42,6 +42,7 @@ import logia.quanlyso.repository.CostFactorRepository;
 import logia.quanlyso.repository.ProfitFactorRepository;
 import logia.quanlyso.service.CodeService;
 import logia.quanlyso.service.dto.CodeDTO;
+import logia.quanlyso.service.dto.ProcessingDTO;
 import logia.quanlyso.service.mapper.CodeMapper;
 import logia.quanlyso.service.util.DateFormatterUtil;
 
@@ -378,19 +379,10 @@ public class CodeServiceImpl implements CodeService {
 	 * @see logia.quanlyso.service.CodeService#getCrawlProcessing()
 	 */
 	@Override
-	public String getCrawlProcessing() {
-		String _process;
-		if (this.processingListener.getTotal() == 0) {
-			_process = "None";
-		} else {
-			if (this.processingListener.getProcessing() < this.processingListener.getTotal()) {
-				_process = (this.processingListener.getProcessing() / this.processingListener.getTotal() * 100) + " %";	
-			} else {
-				_process = "Finish";
-			}			
-		}
-		
-		return _process;
+	public ProcessingDTO getCrawlProcessing() {
+		ProcessingDTO _dto = new ProcessingDTO(this.processingListener.getProcessing(),
+		        this.processingListener.getTotal());
+		return _dto;
 	}
 
 	/**
