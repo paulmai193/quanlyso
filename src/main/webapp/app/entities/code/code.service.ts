@@ -50,6 +50,10 @@ export class CodeService {
     crawl(crawlRequest: CrawlDataModel): Observable<Response> {
         return this.http.post(`${this.resourceUrl}/crawl`, crawlRequest);
     }
+    
+    crawlProcessing(): Observable<Response> {
+        return this.http.get(`${this.resourceUrl}/crawl/process`);
+    }
 
     private convertResponse(res: Response): Response {
         const jsonResponse = res.json();

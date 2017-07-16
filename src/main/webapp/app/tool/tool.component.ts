@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Channel } from '../entities/channel/channel.model';
 import { Factor } from '../entities/factor/factor.model';
 import { Style } from '../entities/style/style.model';
@@ -27,9 +27,10 @@ import { CodeService } from '../entities/code/code.service';
         'tool.component.scss'
     ]
 })
-export class QuanLySoToolComponent implements OnInit {
+export class QuanLySoToolComponent implements OnInit, OnDestroy {
     crawlData: CrawlDataModel;
     channelsForCrawl: Channel[];
+	processing: string;
 
     channels: Channel[];
     factors: Factor[];
@@ -37,7 +38,9 @@ export class QuanLySoToolComponent implements OnInit {
     types: Types[];
     transactions: Transactions;
     isCalculate: boolean;
+
     private DATE_FORMAT = 'yyyy-MM-ddT00:00';
+    private running: any;
 
     constructor(private eventManager: EventManager,
                 private transactionsService: TransactionsService,
@@ -51,12 +54,17 @@ export class QuanLySoToolComponent implements OnInit {
                 private codeService: CodeService
     ) {
         this.reset();
+        this.processing = 'None';
     }
 
     ngOnInit(): void {
         this.transactions.openDate = this.crawlData.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
         this.onCrawlOpenDateChange();
         this.onCalculateOpenDateChange();
+    }
+    
+    ngOnDestroy(): void {
+    	this.isRunning = false;
     }
 
     onCrawlOpenDateChange(): void {
@@ -90,15 +98,11 @@ export class QuanLySoToolComponent implements OnInit {
 
     check(): void {
         this.isCalculate = true;
-        this.subscribeToSaveResponse(
-            this.transactionsService.create(this.transactions)
-        );
+        this.subscribeToSaveResponse(this.transactionsService.create(this.transactions), 'calculate');
     }
 
     crawl(): void {
-        this.subscribeToSaveResponse(
-            this.codeService.crawl(this.crawlData)
-        );
+        this.subscribeToSaveResponse(this.codeService.crawl(this.crawlData), 'crawl');
     }
 
     private initCrawl(openDate: string): void {
@@ -122,14 +126,20 @@ export class QuanLySoToolComponent implements OnInit {
         this.typesService.query().subscribe(
             (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
     }
-
-    private subscribeToSaveResponse(result: Observable<any>) {
-        result.subscribe((res: any) =>
-            this.onSaveSuccess(res), (res: Response) => this.onSaveError(res));
+    
+    private getCrawlProcess(): void {
+		if (this.processing === 'None') {
+			
+		}
     }
 
-    private onSaveSuccess(result: any) {
-        if (Function.prototype.call.bind(result.prototype.toString()) === 'Channel') {
+    private subscribeToSaveResponse(result: Observable<any>, instance: string) {
+        result.subscribe((res: any) =>
+            this.onSaveSuccess(res, instance), (res: Response) => this.onSaveError(res));
+    }
+
+    private onSaveSuccess(result: any, instance: string) {
+        if (instance === 'calculate') {
             this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
             this.isCalculate = false;
         } else {

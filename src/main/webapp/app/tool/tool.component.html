@@ -3,7 +3,7 @@
         <span jhiTranslate="global.menu.tool">Tool</span>
     </h2>
     <jhi-alert-error></jhi-alert-error>
-    <div class="table-responsive">
+    <div class="table-responsive" *jhiHasAnyAuthority="'ROLE_ADMIN'">
         <h4>Update data</h4>
         <form name="toolForm" role="form" novalidate (ngSubmit)="crawl()" #crawlForm="ngForm">
             <table class="table table-striped">
@@ -20,7 +20,7 @@
                     </td>
                     <td class="must-center">
                         <select class="form-control" id="field_crawl_channels" name="channels" [(ngModel)]="crawlData.channelCodes" multiple>
-                           <option [ngValue]="channelOption.id" *ngFor="let channelOption of channelsForCrawl; trackBy: trackChannelById">{{ channelOption.name }}</option>
+                           <option [ngValue]="channelOption.code" *ngFor="let channelOption of channelsForCrawl; trackBy: trackChannelById">{{ channelOption.name }}</option>
                         </select>
                     </td>
                 </tr>
@@ -34,7 +34,7 @@
         </form>
     </div>
     <br/>
-    <div class="table-responsive">
+    <div class="table-responsive" *jhiHasAnyAuthority="'ROLE_USER'">
         <h4>Calculate</h4>
         <form name="toolForm" role="form" novalidate (ngSubmit)="check()" #toolForm="ngForm">
             <!-- Transaction -->
