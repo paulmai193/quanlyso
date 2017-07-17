@@ -3,13 +3,21 @@ import { Http, Response, URLSearchParams, BaseRequestOptions } from '@angular/ht
 import { Observable } from 'rxjs/Rx';
 
 import { Transactions } from './transactions.model';
+import { DateUtils } from 'ng-jhipster';
 
 @Injectable()
 export class TransactionsService {
 
     private resourceUrl = 'api/transactions';
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private dateUtils: DateUtils) { }
+
+    calculate(transactions: Transactions): Observable<Transactions> {
+        const copy = this.convert(transactions);
+        return this.http.post(this.resourceUrl + '/calculate', copy).map((res: Response) => {
+            return res.json();
+        });
+    }
 
     create(transactions: Transactions): Observable<Transactions> {
         const copy = this.convert(transactions);
@@ -33,8 +41,7 @@ export class TransactionsService {
 
     query(req?: any): Observable<Response> {
         const options = this.createRequestOption(req);
-        return this.http.get(this.resourceUrl, options)
-        ;
+        return this.http.get(this.resourceUrl, options);
     }
 
     delete(id: number): Observable<Response> {
@@ -58,6 +65,9 @@ export class TransactionsService {
 
     private convert(transactions: Transactions): Transactions {
         const copy: Transactions = Object.assign({}, transactions);
+
+        copy.openDate = this.dateUtils.toDate(transactions.openDate);
+
         return copy;
     }
 }

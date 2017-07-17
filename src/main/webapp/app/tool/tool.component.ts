@@ -53,7 +53,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                 private storageService: StorageService,
                 private codeService: CodeService
     ) {
-        this.reset();        
+        this.reset();
     }
 
     ngOnInit(): void {
@@ -63,9 +63,9 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         this.onCalculateOpenDateChange();
         this.checkCrawlProcess();
     }
-    
+
     ngOnDestroy(): void {
-    	this.stopCheckCrawlProcess();
+        this.stopCheckCrawlProcess();
     }
 
     onCrawlOpenDateChange(): void {
@@ -99,7 +99,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
 
     check(): void {
         this.isCalculate = true;
-        this.subscribeToSaveResponse(this.transactionsService.create(this.transactions), 'calculate');
+        this.subscribeToSaveResponse(this.transactionsService.calculate(this.transactions), 'calculate');
     }
 
     crawl(): void {
@@ -128,22 +128,24 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         this.typesService.query().subscribe(
             (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
     }
-    
+
     private checkCrawlProcess(): void {
-    	this.running = setInterval(this.getCrawlProcess(), 1000);
+    	this.running = setInterval(() => {
+    	    this.getCrawlProcess();
+    	    }, 100);
     }
-    
+
     private stopCheckCrawlProcess(): void {
     	clearInterval(this.running);
     }
-    
+
     private getCrawlProcess(): void {
 		this.codeService.crawlProcessing().subscribe((res: Response) => {
 				this.progress = res.json();
 				if (this.progress.total === 0) {
 					this.stopCheckCrawlProcess();
 				}
-			}, 
+			},
 			(res: Response) => this.onError(res.json())
 		);
     }
@@ -155,7 +157,8 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
 
     private onSaveSuccess(result: any, instance: string) {
         if (instance === 'calculate') {
-            this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
+            // this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
+            this.transactions = result;
             this.isCalculate = false;
         } else {
             this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});

@@ -11,7 +11,13 @@ import { LocalStorageService, SessionStorageService } from 'ng2-webstorage';
 
     constructor(private $localStorage: LocalStorageService,
                 private $sessionStorage: SessionStorageService
-    ) {}
+    ) {
+        if (this.$localStorage.retrieve(this.AUTH_TOKEN) !== null) {
+            this.remember = true;
+        } else {
+            this.remember = false;
+        }
+    }
 
     getToken() {
         return this.get(this.AUTH_TOKEN);

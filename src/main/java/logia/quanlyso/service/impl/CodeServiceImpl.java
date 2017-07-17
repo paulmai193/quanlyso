@@ -165,7 +165,7 @@ public class CodeServiceImpl implements CodeService {
 	@Override
 	public Transactions calculate(Transactions transactions) {
 		String chosenNumber = transactions.getChosenNumber();
-		float netValue = transactions.getNetValue();
+		float netValue = 0f;
 		for (TransactionDetails details : transactions.getTransactionDetails()) {
 			// Get all condition
 			Channel channel = details.getChannels();

@@ -9,7 +9,7 @@ import { DateUtil } from '../../shared/utils/date-util';
 @Injectable()
 export class UserModalService {
     private isOpen = false;
-    private DATE_FORMAT_INIT = 'yyyy-MM-ddT12:00';
+    private DATE_FORMAT_INIT = 'yyyy-MM-ddT00:00';
     private DATE_FORMAT = 'yyyy-MM-ddThh:mm';
     constructor(
         private datePipe: DatePipe,
