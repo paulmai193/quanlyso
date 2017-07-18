@@ -5,8 +5,10 @@
     <div class="col-md-9">
         <div [ngSwitch]="isAuthenticated()">
 	         <div class="alert alert-success" *ngSwitchCase="true">
-		          <h1 class="display-4"><span jhiTranslate="home.title">Welcome, </span>{{account.firstName}} {{account.lastName}}!</h1>
-		          <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
+                <h1 class="display-4">
+                    <span jhiTranslate="home.title">Welcome, </span><span *ngIf="account">{{account.firstName}}!</span>
+                </h1>
+                <p class="lead" jhiTranslate="home.subtitle">This is your homepage</p>
                 <span *ngIf="account" jhiTranslate="home.logged.message"
                     translateValues="{username: '{{account.login}}'}"> You are logged in as user "{{account.login}}". </span>
             </div>
