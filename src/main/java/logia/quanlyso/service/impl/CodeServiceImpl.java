@@ -163,37 +163,41 @@ public class CodeServiceImpl implements CodeService {
 	 * @see logia.quanlyso.service.CodeService#calculate(logia.quanlyso.domain.Transactions)
 	 */
 	@Override
-	public Transactions calculate(Transactions transactions) {
-		String chosenNumber = transactions.getChosenNumber();
-		float netValue = 0f;
-		for (TransactionDetails details : transactions.getTransactionDetails()) {
+	public Transactions calculate(Transactions __transactions) {
+		String _chosenNumber = __transactions.getChosenNumber();
+		float _netValue = 0f;
+		for (TransactionDetails _details : __transactions.getTransactionDetails()) {
 			// Get all condition
-			Channel channel = details.getChannels();
-			Factor factor = details.getFactors();
-			Style style = details.getStyles();
-			Types types = details.getTypes();
+			Channel _channel = _details.getChannels();
+			Factor _factor = _details.getFactors();
+			Style _style = _details.getStyles();
+			Types _types = _details.getTypes();
 
-			// Assume transactions of current date
-			ZonedDateTime today = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
-			ZonedDateTime formattedDate = today.withHour(0).withMinute(0).withSecond(0).withNano(0);
-			List<Code> listCodes = this.codeRepository.findAllByChannelsAndOpenDate(channel,
-					formattedDate);
-			listCodes = this.getMatchCondition(chosenNumber, listCodes, style, types);
-			if (listCodes.size() > 0) {
-				CostFactor costFactor = this.costFactorRepository
-						.findOneByFactorsAndStylesAndTypes(factor, style, types);
-				ProfitFactor profitFactor = this.profitFactorRepository
-						.findOneByFactorsAndStylesAndTypes(factor, style, types);
-				float amount = details.getAmount();
-				details.costs(amount * costFactor.getRate())
-				.profit(amount * profitFactor.getRate());
-
-				netValue = netValue + details.getProfit() - details.getCosts();
+			// Get open date
+			ZonedDateTime _openDate = __transactions.getOpenDate();
+			if (_openDate == null) {
+				// If not set, Assume transactions of current date
+				_openDate = ZonedDateTime.now(DateFormatterUtil.systemZoneId());	
 			}
-		}
-		transactions.setNetValue(netValue);
+			else {
+				_openDate = _openDate.withZoneSameInstant(DateFormatterUtil.systemZoneId());
+			}
+			ZonedDateTime _formattedDate = _openDate.withHour(0).withMinute(0).withSecond(0).withNano(0);
+			List<Code> _listCodes = this.codeRepository.findAllByChannelsAndOpenDate(_channel,
+					_formattedDate);
+			_listCodes = this.getMatchCondition(_chosenNumber, _listCodes, _style, _types);
+			CostFactor _costFactor = this.costFactorRepository
+					.findOneByFactorsAndStylesAndTypes(_factor, _style, _types);
+			ProfitFactor _profitFactor = this.profitFactorRepository
+					.findOneByFactorsAndStylesAndTypes(_factor, _style, _types);
+			float _amount = _details.getAmount();
+			_details.costs(_amount * _costFactor.getRate()).profit(_amount * _profitFactor.getRate() * _listCodes.size());
 
-		return transactions;
+			_netValue = _netValue + _details.getProfit() - _details.getCosts();
+		}
+		__transactions.setNetValue(_netValue);
+
+		return __transactions;
 	}
 
 	/**

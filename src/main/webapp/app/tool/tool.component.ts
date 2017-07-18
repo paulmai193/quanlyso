@@ -39,7 +39,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     types: Types[];
     transactions: Transactions;
     isCalculate: boolean;
-    private DATE_FORMAT = 'yyyy-MM-ddT00:00';
+    private DATE_FORMAT = 'yyyy-MM-ddT12:00';
     private running: any;
 
     constructor(private eventManager: EventManager,
@@ -159,6 +159,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         if (instance === 'calculate') {
             // this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
             this.transactions = result;
+            this.transactions.openDate = this.datePipe.transform(this.transactions.openDate, this.DATE_FORMAT);
             this.isCalculate = false;
         } else {
             this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
