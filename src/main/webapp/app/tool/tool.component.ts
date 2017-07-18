@@ -130,24 +130,24 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     }
 
     private checkCrawlProcess(): void {
-    	this.running = setInterval(() => {
-    	    this.getCrawlProcess();
-    	    }, 100);
+        this.running = setInterval(() => {
+            this.getCrawlProcess();
+        }, 100);
     }
 
     private stopCheckCrawlProcess(): void {
-    	clearInterval(this.running);
+        clearInterval(this.running);
     }
 
     private getCrawlProcess(): void {
-		this.codeService.crawlProcessing().subscribe((res: Response) => {
-				this.progress = res.json();
-				if (this.progress.total === 0) {
-					this.stopCheckCrawlProcess();
-				}
-			},
-			(res: Response) => this.onError(res.json())
-		);
+        this.codeService.crawlProcessing().subscribe((res: Response) => {
+            this.progress = res.json();
+                if (this.progress.total === 0) {
+                    this.stopCheckCrawlProcess();
+                }
+            },
+            (res: Response) => this.onError(res.json())
+        );
     }
 
     private subscribeToSaveResponse(result: Observable<any>, instance: string) {
