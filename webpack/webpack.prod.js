@@ -19,7 +19,7 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
                 '/v2/api-docs',
                 '/h2-console'
             ],
-            target: 'http://192.168.0.107:8080',
+            target: 'http://foodmob.vn:8080',
             secure: false,
             changeOrigin: true,
             pathRewrite: {
