@@ -21,14 +21,14 @@ module.exports = webpackMerge(commonConfig({ env: ENV }), {
             ],
             target: 'http://foodmob.vn:8080',
             secure: false,
-            changeOrigin: true,
-            pathRewrite: {
-                '/api': '/quanlyso/api',
-                '/management': '/quanlyso/management',
-                '/swagger-resources': '/quanlyso/swagger-resources',
-                '/v2/api-docs': '/quanlyso/v2/api-docs',
-                '/h2-console': '/quanlyso/h2-console'
-            }
+            // changeOrigin: true,
+            // pathRewrite: {
+            //     '/api': '/quanlyso/api',
+            //     '/management': '/quanlyso/management',
+            //     '/swagger-resources': '/quanlyso/swagger-resources',
+            //     '/v2/api-docs': '/quanlyso/v2/api-docs',
+            //     '/h2-console': '/quanlyso/h2-console'
+            // }
         }]
     },
     output: {
