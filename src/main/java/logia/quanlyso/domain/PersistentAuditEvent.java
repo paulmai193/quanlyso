@@ -1,78 +1,149 @@
 package logia.quanlyso.domain;
 
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.MapKeyColumn;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 /**
- * Persist AuditEvent managed by the Spring Boot actuator
+ * Persist AuditEvent managed by the Spring Boot actuator.
+ *
  * @see org.springframework.boot.actuate.audit.AuditEvent
  */
 @Entity
 @Table(name = "jhi_persistent_audit_event")
 public class PersistentAuditEvent implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_id")
-    private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-    @NotNull
-    @Column(nullable = false)
-    private String principal;
+	/** The id. */
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "event_id")
+	private Long				id;
 
-    @Column(name = "event_date")
-    private LocalDateTime auditEventDate;
-    @Column(name = "event_type")
-    private String auditEventType;
+	/** The principal. */
+	@NotNull
+	@Column(nullable = false)
+	private String				principal;
 
-    @ElementCollection
-    @MapKeyColumn(name = "name")
-    @Column(name = "value")
-    @CollectionTable(name = "jhi_persistent_audit_evt_data", joinColumns=@JoinColumn(name="event_id"))
-    private Map<String, String> data = new HashMap<>();
+	/** The audit event date. */
+	@Column(name = "event_date")
+	private LocalDateTime		auditEventDate;
 
-    public Long getId() {
-        return id;
-    }
+	/** The audit event type. */
+	@Column(name = "event_type")
+	private String				auditEventType;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/** The data. */
+	@ElementCollection
+	@MapKeyColumn(name = "name")
+	@Column(name = "value")
+	@CollectionTable(name = "jhi_persistent_audit_evt_data", joinColumns = @JoinColumn(name = "event_id"))
+	private Map<String, String>	data	= new HashMap<>();
 
-    public String getPrincipal() {
-        return principal;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return the id
+	 */
+	public Long getId() {
+		return this.id;
+	}
 
-    public void setPrincipal(String principal) {
-        this.principal = principal;
-    }
+	/**
+	 * Sets the id.
+	 *
+	 * @param id the new id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public LocalDateTime getAuditEventDate() {
-        return auditEventDate;
-    }
+	/**
+	 * Gets the principal.
+	 *
+	 * @return the principal
+	 */
+	public String getPrincipal() {
+		return this.principal;
+	}
 
-    public void setAuditEventDate(LocalDateTime auditEventDate) {
-        this.auditEventDate = auditEventDate;
-    }
+	/**
+	 * Sets the principal.
+	 *
+	 * @param principal the new principal
+	 */
+	public void setPrincipal(String principal) {
+		this.principal = principal;
+	}
 
-    public String getAuditEventType() {
-        return auditEventType;
-    }
+	/**
+	 * Gets the audit event date.
+	 *
+	 * @return the audit event date
+	 */
+	public LocalDateTime getAuditEventDate() {
+		return this.auditEventDate;
+	}
 
-    public void setAuditEventType(String auditEventType) {
-        this.auditEventType = auditEventType;
-    }
+	/**
+	 * Sets the audit event date.
+	 *
+	 * @param auditEventDate the new audit event date
+	 */
+	public void setAuditEventDate(LocalDateTime auditEventDate) {
+		this.auditEventDate = auditEventDate;
+	}
 
-    public Map<String, String> getData() {
-        return data;
-    }
+	/**
+	 * Gets the audit event type.
+	 *
+	 * @return the audit event type
+	 */
+	public String getAuditEventType() {
+		return this.auditEventType;
+	}
 
-    public void setData(Map<String, String> data) {
-        this.data = data;
-    }
+	/**
+	 * Sets the audit event type.
+	 *
+	 * @param auditEventType the new audit event type
+	 */
+	public void setAuditEventType(String auditEventType) {
+		this.auditEventType = auditEventType;
+	}
+
+	/**
+	 * Gets the data.
+	 *
+	 * @return the data
+	 */
+	public Map<String, String> getData() {
+		return this.data;
+	}
+
+	/**
+	 * Sets the data.
+	 *
+	 * @param data the data
+	 */
+	public void setData(Map<String, String> data) {
+		this.data = data;
+	}
 }

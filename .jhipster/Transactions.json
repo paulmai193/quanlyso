@@ -1,0 +1,36 @@
+{
+  "fluentMethods": true,
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "relationshipName": "transactionDetails",
+      "otherEntityName": "transactionDetails",
+      "otherEntityRelationshipName": "transactions"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "clients",
+      "otherEntityName": "client",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "chosenNumber",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "netValue",
+      "fieldType": "Float"
+    },
+		{
+      "fieldName": "openDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20170522140705",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "entityTableName": "transactions"
+}

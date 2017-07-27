@@ -7,6 +7,16 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Thực thể",
+                "factor": "Factor",
+                "style": "Style",
+                "types": "Types",
+                "channel": "Channel",
+                "profitFactor": "Profit Factor",
+                "costFactor": "Cost Factor",
+                "transactions": "Transactions",
+                "transactionDetails": "Transaction Details",
+                "client": "Client",
+                "code": "Code",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {
@@ -31,7 +41,8 @@
                 "database": "Cơ sở dữ liệu",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
-            "language": "Ngôn ngữ"
+            "language": "Ngôn ngữ",
+            "tool": "Công cụ"
         },
         "form": {
             "username": "Tên tài khoản",
@@ -95,7 +106,9 @@
             "edit": "Sửa",
             "open": "Mở",
             "save": "Lưu",
-            "view": "Xem"
+            "view": "Xem",
+            "check": "Kiểm tra",
+            "add": "Thêm"
         },
         "detail": {
             "field": "Trường",

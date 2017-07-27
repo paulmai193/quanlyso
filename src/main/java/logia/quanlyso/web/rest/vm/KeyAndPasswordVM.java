@@ -2,26 +2,50 @@ package logia.quanlyso.web.rest.vm;
 
 /**
  * View Model object for storing the user's key and password.
+ *
+ * @author Dai Mai
  */
 public class KeyAndPasswordVM {
 
-    private String key;
+	/** The key. */
+	private String	key;
 
-    private String newPassword;
+	/** The new password. */
+	private String	newPassword;
 
-    public String getKey() {
-        return key;
-    }
+	/**
+	 * Gets the key.
+	 *
+	 * @return the key
+	 */
+	public String getKey() {
+		return this.key;
+	}
 
-    public void setKey(String key) {
-        this.key = key;
-    }
+	/**
+	 * Sets the key.
+	 *
+	 * @param key the new key
+	 */
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-    public String getNewPassword() {
-        return newPassword;
-    }
+	/**
+	 * Gets the new password.
+	 *
+	 * @return the new password
+	 */
+	public String getNewPassword() {
+		return this.newPassword;
+	}
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
+	/**
+	 * Sets the new password.
+	 *
+	 * @param newPassword the new new password
+	 */
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
 }

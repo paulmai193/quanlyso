@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity TransactionDetails.
+    -->
+    <changeSet id="20170522141221-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="transactions_id"
+                                 baseTableName="transaction_details"
+                                 constraintName="fk_transaction_details_transactions_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="transactions"/>
+
+        <addForeignKeyConstraint baseColumnNames="channels_id"
+                                 baseTableName="transaction_details"
+                                 constraintName="fk_transaction_details_channels_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="channel"/>
+
+        <addForeignKeyConstraint baseColumnNames="factors_id"
+                                 baseTableName="transaction_details"
+                                 constraintName="fk_transaction_details_factors_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="factor"/>
+
+        <addForeignKeyConstraint baseColumnNames="styles_id"
+                                 baseTableName="transaction_details"
+                                 constraintName="fk_transaction_details_styles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="style"/>
+
+        <addForeignKeyConstraint baseColumnNames="types_id"
+                                 baseTableName="transaction_details"
+                                 constraintName="fk_transaction_details_types_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="types"/>
+
+    </changeSet>
+</databaseChangeLog>

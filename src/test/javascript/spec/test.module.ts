@@ -18,7 +18,7 @@ import { MockLanguageService } from './helpers/mock-language.service';
                 return new Http(backendInstance, defaultOptions);
             },
             deps: [MockBackend, BaseRequestOptions]
-        }
+        },
     ]
 })
 export class QuanlysoTestModule {}

@@ -1,0 +1,25 @@
+{
+    "quanlysoApp": {
+        "transactions" : {
+            "home": {
+                "title": "Transactions",
+                "createLabel": "Thêm mới một Transactions",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Transactions"
+            },
+            "created": "Một Transactions mới được tạo với định danh {{ param }}",
+            "updated": "Một Transactions cập nhật với định danh {{ param }}",
+            "deleted": "Một Transactions đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Transactions {{ id }}?"
+            },
+            "detail": {
+                "title": "Transactions"
+            },
+            "chosenNumber": "Chosen Number",
+            "netValue": "Net Value",
+            "transactionDetails": "Transaction Details",
+            "clients": "Clients",
+            "date": "Ngày"
+        }
+    }
+}

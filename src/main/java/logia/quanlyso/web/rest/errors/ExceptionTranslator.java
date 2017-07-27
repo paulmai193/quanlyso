@@ -14,70 +14,118 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * Controller advice to translate the server side exceptions to client-friendly json structures.
+ *
+ * @author Dai Mai
  */
 @ControllerAdvice
 public class ExceptionTranslator {
 
-    private final Logger log = LoggerFactory.getLogger(ExceptionTranslator.class);
+	/** The log. */
+	private final Logger log = LoggerFactory.getLogger(ExceptionTranslator.class);
 
-    @ExceptionHandler(ConcurrencyFailureException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ResponseBody
-    public ErrorVM processConcurrencyError(ConcurrencyFailureException ex) {
-        return new ErrorVM(ErrorConstants.ERR_CONCURRENCY_FAILURE);
-    }
+	/**
+	 * Process concurrency error.
+	 *
+	 * @param ex the ex
+	 * @return the error VM
+	 */
+	@ExceptionHandler(ConcurrencyFailureException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	@ResponseBody
+	public ErrorVM processConcurrencyError(ConcurrencyFailureException ex) {
+		return new ErrorVM(ErrorConstants.ERR_CONCURRENCY_FAILURE);
+	}
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ErrorVM processValidationError(MethodArgumentNotValidException ex) {
-        BindingResult result = ex.getBindingResult();
-        List<FieldError> fieldErrors = result.getFieldErrors();
-        ErrorVM dto = new ErrorVM(ErrorConstants.ERR_VALIDATION);
-        for (FieldError fieldError : fieldErrors) {
-            dto.add(fieldError.getObjectName(), fieldError.getField(), fieldError.getCode());
-        }
-        return dto;
-    }
+	/**
+	 * Process validation error.
+	 *
+	 * @param ex the ex
+	 * @return the error VM
+	 */
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorVM processValidationError(MethodArgumentNotValidException ex) {
+		BindingResult result = ex.getBindingResult();
+		List<FieldError> fieldErrors = result.getFieldErrors();
+		ErrorVM dto = new ErrorVM(ErrorConstants.ERR_VALIDATION);
+		for (FieldError fieldError : fieldErrors) {
+			dto.add(fieldError.getObjectName(), fieldError.getField(), fieldError.getCode());
+		}
+		return dto;
+	}
 
-    @ExceptionHandler(CustomParameterizedException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ParameterizedErrorVM processParameterizedValidationError(CustomParameterizedException ex) {
-        return ex.getErrorVM();
-    }
+	/**
+	 * Process parameterized validation error.
+	 *
+	 * @param ex the ex
+	 * @return the parameterized error VM
+	 */
+	@ExceptionHandler(CustomParameterizedException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ParameterizedErrorVM processParameterizedValidationError(
+			CustomParameterizedException ex) {
+		return ex.getErrorVM();
+	}
 
-    @ExceptionHandler(AccessDeniedException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    @ResponseBody
-    public ErrorVM processAccessDeniedException(AccessDeniedException e) {
-        return new ErrorVM(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
-    }
+	/**
+	 * Process access denied exception.
+	 *
+	 * @param e the e
+	 * @return the error VM
+	 */
+	@ExceptionHandler(AccessDeniedException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	@ResponseBody
+	public ErrorVM processAccessDeniedException(AccessDeniedException e) {
+		return new ErrorVM(ErrorConstants.ERR_ACCESS_DENIED, e.getMessage());
+	}
 
-    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    @ResponseBody
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ErrorVM processMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
-        return new ErrorVM(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
-    }
+	/**
+	 * Process method not supported exception.
+	 *
+	 * @param exception the exception
+	 * @return the error VM
+	 */
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	@ResponseBody
+	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+	public ErrorVM processMethodNotSupportedException(
+			HttpRequestMethodNotSupportedException exception) {
+		return new ErrorVM(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
+	}
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorVM> processException(Exception ex) {
-        log.error(ex.getMessage(), ex);
-        BodyBuilder builder;
-        ErrorVM errorVM;
-        ResponseStatus responseStatus = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
-        if (responseStatus != null) {
-            builder = ResponseEntity.status(responseStatus.value());
-            errorVM = new ErrorVM("error." + responseStatus.value().value(), responseStatus.reason());
-        } else {
-            builder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-            errorVM = new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error");
-        }
-        return builder.body(errorVM);
-    }
+	/**
+	 * Process exception.
+	 *
+	 * @param ex the ex
+	 * @return the response entity
+	 */
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ErrorVM> processException(Exception ex) {
+		this.log.error(ex.getMessage(), ex);
+		BodyBuilder builder;
+		ErrorVM errorVM;
+		ResponseStatus responseStatus = AnnotationUtils.findAnnotation(ex.getClass(),
+				ResponseStatus.class);
+		if (responseStatus != null) {
+			builder = ResponseEntity.status(responseStatus.value());
+			errorVM = new ErrorVM("error." + responseStatus.value().value(),
+					responseStatus.reason());
+		}
+		else {
+			builder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+			errorVM = new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR,
+					"Internal server error");
+		}
+		return builder.body(errorVM);
+	}
 }

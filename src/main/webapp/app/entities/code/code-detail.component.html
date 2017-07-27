@@ -1,0 +1,35 @@
+
+<div *ngIf="code">
+    <h2><span jhiTranslate="quanlysoApp.code.detail.title">Code</span> {{code.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="quanlysoApp.code.code">Code</span></dt>
+        <dd>
+            <span>{{code.code}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.code.openDate">Open Date</span></dt>
+        <dd>
+            <span>{{code.openDate | date:'medium'}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.code.channels">Channels</span></dt>
+        <dd>
+            <div *ngIf="code.channelsId">
+                <a [routerLink]="['/channel', code.channelsId]">{{code.channelsName}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'code/'+ code.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

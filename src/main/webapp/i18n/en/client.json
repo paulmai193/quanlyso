@@ -1,0 +1,38 @@
+{
+    "quanlysoApp": {
+        "client" : {
+            "home": {
+                "title": "Clients",
+                "createLabel": "Create a new Client",
+                "createOrEditLabel": "Create or edit a Client"
+            },
+            "created": "A new Client is created with identifier {{ param }}",
+            "updated": "A Client is updated with identifier {{ param }}",
+            "deleted": "A Client is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Client {{ id }}?"
+            },
+            "detail": {
+                "title": "Client"
+            },
+            "grantAccessDate": "Grant Access Date",
+            "revokeAccessDate": "Revoke Access Date",
+            "transactionss": "Transactionss",
+            "firstName": "First Name",
+            "lastName": "Last Name",
+            "email": "Email",
+            "message": {
+                "validate": {
+                    "firstName": {
+                        "required": "First name is required",
+                        "maxlength": "First name cannot be longer than 50 characters."
+                    },
+                    "lastName": {
+                        "required": "Last name is required",
+                        "maxlength": "Last name cannot be longer than 50 characters."
+                    }
+                }
+            }
+        }
+    }
+}

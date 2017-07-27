@@ -11,7 +11,7 @@
 
     <groupId>logia.quanlyso</groupId>
     <artifactId>quanlyso</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <packaging>war</packaging>
     <name>Quanlyso</name>
 
@@ -349,6 +349,13 @@
             <artifactId>spring-security-data</artifactId>
         </dependency>
         <!-- jhipster-needle-maven-add-dependency -->
+        
+        <!--  HTML Unit, to crawl data from website  -->
+		<dependency>
+			<groupId>net.sourceforge.htmlunit</groupId>
+			<artifactId>htmlunit</artifactId>
+			<version>2.27</version>
+		</dependency>
     </dependencies>
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
@@ -757,7 +764,7 @@
                                     <arguments>rebuild node-sass</arguments>
                                 </configuration>
                             </execution>
-                            <execution>
+                            <!--<execution>
                                 <id>webpack build test</id>
                                 <goals>
                                     <goal>npm</goal>
@@ -766,7 +773,7 @@
                                 <configuration>
                                     <arguments>run webpack:test</arguments>
                                 </configuration>
-                            </execution>
+                            </execution>-->
                             <execution>
                                 <id>webpack build prod</id>
                                 <goals>

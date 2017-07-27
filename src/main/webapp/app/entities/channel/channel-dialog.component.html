@@ -1,0 +1,79 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myChannelLabel" jhiTranslate="quanlysoApp.channel.home.createOrEditLabel">Create or edit a Channel</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!channel.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="channel.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                [(ngModel)]="channel.name"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.code" for="field_code">Code</label>
+            <input type="text" class="form-control" name="code" id="field_code"
+                [(ngModel)]="channel.code"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.sunday" for="field_sunday">Sunday</label>
+            <input type="checkbox" class="form-control" name="sunday" id="field_sunday"
+                [(ngModel)]="channel.sunday"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.monday" for="field_monday">Monday</label>
+            <input type="checkbox" class="form-control" name="monday" id="field_monday"
+                [(ngModel)]="channel.monday"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.tuesday" for="field_tuesday">Tuesday</label>
+            <input type="checkbox" class="form-control" name="tuesday" id="field_tuesday"
+                [(ngModel)]="channel.tuesday"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.wednesday" for="field_wednesday">Wednesday</label>
+            <input type="checkbox" class="form-control" name="wednesday" id="field_wednesday"
+                [(ngModel)]="channel.wednesday"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.thursday" for="field_thursday">Thursday</label>
+            <input type="checkbox" class="form-control" name="thursday" id="field_thursday"
+                [(ngModel)]="channel.thursday"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.friday" for="field_friday">Friday</label>
+            <input type="checkbox" class="form-control" name="friday" id="field_friday"
+                [(ngModel)]="channel.friday"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.channel.saturday" for="field_saturday">Saturday</label>
+            <input type="checkbox" class="form-control" name="saturday" id="field_saturday"
+                [(ngModel)]="channel.saturday"
+             />
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

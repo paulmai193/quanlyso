@@ -12,6 +12,8 @@ export class User {
     public lastModifiedBy?: string;
     public lastModifiedDate?: Date;
     public password?: string;
+    public grantAccessDate?: any;
+    public revokeAccessDate?: any;
 
     constructor(
         id?: any,

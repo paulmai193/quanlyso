@@ -1,0 +1,26 @@
+{
+  "fluentMethods": true,
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "relationshipName": "transactionss",
+      "otherEntityName": "transactions",
+      "otherEntityRelationshipName": "clients"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "grantAccessDate",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "revokeAccessDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20170522150455",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "entityTableName": "client"
+}

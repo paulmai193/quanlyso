@@ -6,47 +6,94 @@ import java.util.List;
 
 /**
  * View Model for transferring error message with a list of field errors.
+ *
+ * @author Dai Mai
  */
 public class ErrorVM implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	/** The Constant serialVersionUID. */
+	private static final long	serialVersionUID	= 1L;
 
-    private final String message;
-    private final String description;
+	/** The message. */
+	private final String		message;
 
-    private List<FieldErrorVM> fieldErrors;
+	/** The description. */
+	private final String		description;
 
-    public ErrorVM(String message) {
-        this(message, null);
-    }
+	/** The field errors. */
+	private List<FieldErrorVM>	fieldErrors;
 
-    public ErrorVM(String message, String description) {
-        this.message = message;
-        this.description = description;
-    }
+	/**
+	 * Instantiates a new error VM.
+	 *
+	 * @param message the message
+	 */
+	public ErrorVM(String message) {
+		this(message, null);
+	}
 
-    public ErrorVM(String message, String description, List<FieldErrorVM> fieldErrors) {
-        this.message = message;
-        this.description = description;
-        this.fieldErrors = fieldErrors;
-    }
+	/**
+	 * Instantiates a new error VM.
+	 *
+	 * @param message the message
+	 * @param description the description
+	 */
+	public ErrorVM(String message, String description) {
+		this.message = message;
+		this.description = description;
+	}
 
-    public void add(String objectName, String field, String message) {
-        if (fieldErrors == null) {
-            fieldErrors = new ArrayList<>();
-        }
-        fieldErrors.add(new FieldErrorVM(objectName, field, message));
-    }
+	/**
+	 * Instantiates a new error VM.
+	 *
+	 * @param message the message
+	 * @param description the description
+	 * @param fieldErrors the field errors
+	 */
+	public ErrorVM(String message, String description, List<FieldErrorVM> fieldErrors) {
+		this.message = message;
+		this.description = description;
+		this.fieldErrors = fieldErrors;
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	/**
+	 * Adds the.
+	 *
+	 * @param objectName the object name
+	 * @param field the field
+	 * @param message the message
+	 */
+	public void add(String objectName, String field, String message) {
+		if (this.fieldErrors == null) {
+			this.fieldErrors = new ArrayList<>();
+		}
+		this.fieldErrors.add(new FieldErrorVM(objectName, field, message));
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	/**
+	 * Gets the message.
+	 *
+	 * @return the message
+	 */
+	public String getMessage() {
+		return this.message;
+	}
 
-    public List<FieldErrorVM> getFieldErrors() {
-        return fieldErrors;
-    }
+	/**
+	 * Gets the description.
+	 *
+	 * @return the description
+	 */
+	public String getDescription() {
+		return this.description;
+	}
+
+	/**
+	 * Gets the field errors.
+	 *
+	 * @return the field errors
+	 */
+	public List<FieldErrorVM> getFieldErrors() {
+		return this.fieldErrors;
+	}
 }

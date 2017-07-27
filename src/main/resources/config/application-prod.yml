@@ -22,8 +22,8 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/quanlyso?useUnicode=true&characterEncoding=utf8&useSSL=false
-        username: root
-        password:
+        username: quanlyso
+        password: qu@nlys0
         hikari:
             data-source-properties:
                 cachePrepStmts: true
@@ -44,10 +44,16 @@ spring:
             hibernate.cache.use_minimal_puts: true
             hibernate.cache.hazelcast.use_lite_member: true
     mail:
-        host: localhost
-        port: 25
-        username:
-        password:
+        host: smtp.gmail.com
+        port: 587
+        username: logia193@gmail.com  #Replace this field with your Gmail username.
+        password: mfyutysggvsavyho           #Replace this field with your Gmail password.
+        protocol: smtp
+        tls: true
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     thymeleaf:
         cache: true
 

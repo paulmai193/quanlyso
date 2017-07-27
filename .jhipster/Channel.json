@@ -1,0 +1,54 @@
+{
+  "fluentMethods": true,
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "relationshipName": "transactionDetails",
+      "otherEntityName": "transactionDetails",
+      "otherEntityRelationshipName": "channels"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "code",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "sunday",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "monday",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "tuesday",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "wednesday",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "thursday",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "friday",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "saturday",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20170522140702",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "entityTableName": "channel"
+}

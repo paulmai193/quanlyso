@@ -1,11 +1,11 @@
 package logia.quanlyso.web.rest;
 
-import logia.quanlyso.security.jwt.JWTConfigurer;
-import logia.quanlyso.security.jwt.TokenProvider;
-import logia.quanlyso.web.rest.vm.LoginVM;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Collections;
 
-import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,69 +16,140 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-import java.util.Collections;
+import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import logia.quanlyso.domain.User;
+import logia.quanlyso.security.UserRevokeAccessException;
+import logia.quanlyso.security.jwt.JWTConfigurer;
+import logia.quanlyso.security.jwt.TokenProvider;
+import logia.quanlyso.service.UserService;
+import logia.quanlyso.web.rest.vm.LoginVM;
 
 /**
  * Controller to authenticate users.
+ *
+ * @author Dai Mai
  */
 @RestController
 @RequestMapping("/api")
 public class UserJWTController {
 
-    private final Logger log = LoggerFactory.getLogger(UserJWTController.class);
+	/** The log. */
+	private final Logger				log	= LoggerFactory.getLogger(UserJWTController.class);
 
-    private final TokenProvider tokenProvider;
+	/** The token provider. */
+	private final TokenProvider			tokenProvider;
 
-    private final AuthenticationManager authenticationManager;
+	/** The authentication manager. */
+	private final AuthenticationManager	authenticationManager;
 
-    public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager) {
-        this.tokenProvider = tokenProvider;
-        this.authenticationManager = authenticationManager;
-    }
+	/** The user service. */
+	private final UserService			userService;
 
-    @PostMapping("/authenticate")
-    @Timed
-    public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletResponse response) {
+	/**
+	 * Instantiates a new user JWT controller.
+	 *
+	 * @param tokenProvider the token provider
+	 * @param authenticationManager the authentication manager
+	 * @param userService the user service
+	 */
+	public UserJWTController(TokenProvider tokenProvider,
+			AuthenticationManager authenticationManager, UserService userService) {
+		this.tokenProvider = tokenProvider;
+		this.authenticationManager = authenticationManager;
+		this.userService = userService;
+	}
 
-        UsernamePasswordAuthenticationToken authenticationToken =
-            new UsernamePasswordAuthenticationToken(loginVM.getUsername(), loginVM.getPassword());
+	/**
+	 * Authorize.
+	 *
+	 * @param loginVM the login VM
+	 * @param response the response
+	 * @return the response entity
+	 */
+	@PostMapping("/authenticate")
+	@Timed
+	public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM,
+			HttpServletResponse response) {
 
-        try {
-            Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
-            String jwt = tokenProvider.createToken(authentication, rememberMe);
-            response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
-            return ResponseEntity.ok(new JWTToken(jwt));
-        } catch (AuthenticationException ae) {
-            log.trace("Authentication exception trace: {}", ae);
-            return new ResponseEntity<>(Collections.singletonMap("AuthenticationException",
-                ae.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
-        }
-    }
+		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+				loginVM.getUsername(), loginVM.getPassword());
 
-    /**
-     * Object to return as body in JWT Authentication.
-     */
-    static class JWTToken {
+		try {
+			Authentication authentication = this.authenticationManager
+					.authenticate(authenticationToken);
 
-        private String idToken;
+			// Check grand & revoke access date
+			User user = this.userService.getUserWithAuthoritiesByLogin(loginVM.getUsername()).get();
+			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+			if (user.getRevokeAccessDate() != null && (user.getGrantAccessDate().isAfter(now)
+					|| user.getRevokeAccessDate().isBefore(now))) {
+				throw new UserRevokeAccessException("Account be revoked access by administrator");
+			}
 
-        JWTToken(String idToken) {
-            this.idToken = idToken;
-        }
+			// Return if every condition ok
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+			boolean rememberMe = (loginVM.isRememberMe() == null) ? false : loginVM.isRememberMe();
+			String jwt = this.tokenProvider.createToken(authentication, rememberMe);
+			response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
+			return ResponseEntity.ok(new JWTToken(jwt));
+		}
+		catch (UserRevokeAccessException ae) {
+			this.log.trace("Authentication exception trace: {}", ae);
+			return new ResponseEntity<>(
+					Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
+					HttpStatus.PAYMENT_REQUIRED);
+		}
+		catch (AuthenticationException ae) {
+			this.log.trace("Authentication exception trace: {}", ae);
+			return new ResponseEntity<>(
+					Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
+					HttpStatus.UNAUTHORIZED);
+		}
+	}
 
-        @JsonProperty("id_token")
-        String getIdToken() {
-            return idToken;
-        }
+	/**
+	 * Object to return as body in JWT Authentication.
+	 *
+	 * @author Dai Mai
+	 */
+	static class JWTToken {
 
-        void setIdToken(String idToken) {
-            this.idToken = idToken;
-        }
-    }
+		/** The id token. */
+		private String idToken;
+
+		/**
+		 * Instantiates a new JWT token.
+		 *
+		 * @param idToken the id token
+		 */
+		JWTToken(String idToken) {
+			this.idToken = idToken;
+		}
+
+		/**
+		 * Gets the id token.
+		 *
+		 * @return the id token
+		 */
+		@JsonProperty("id_token")
+		String getIdToken() {
+			return this.idToken;
+		}
+
+		/**
+		 * Sets the id token.
+		 *
+		 * @param idToken the new id token
+		 */
+		void setIdToken(String idToken) {
+			this.idToken = idToken;
+		}
+	}
 }

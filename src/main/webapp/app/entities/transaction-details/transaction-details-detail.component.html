@@ -1,0 +1,63 @@
+
+<div *ngIf="transactionDetails">
+    <h2><span jhiTranslate="quanlysoApp.transactionDetails.detail.title">Transaction Details</span> {{transactionDetails.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.amount">Amount</span></dt>
+        <dd>
+            <span>{{transactionDetails.amount}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.profit">Profit</span></dt>
+        <dd>
+            <span>{{transactionDetails.profit}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.costs">Costs</span></dt>
+        <dd>
+            <span>{{transactionDetails.costs}}</span>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.transactions">Transactions</span></dt>
+        <dd>
+            <div *ngIf="transactionDetails.transactionsId">
+                <a [routerLink]="['/transactions', transactionDetails.transactionsId]">{{transactionDetails.transactionsId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.channels">Channels</span></dt>
+        <dd>
+            <div *ngIf="transactionDetails.channelsId">
+                <a [routerLink]="['/channel', transactionDetails.channelsId]">{{transactionDetails.channelsId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.factors">Factors</span></dt>
+        <dd>
+            <div *ngIf="transactionDetails.factorsId">
+                <a [routerLink]="['/factor', transactionDetails.factorsId]">{{transactionDetails.factorsId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.styles">Styles</span></dt>
+        <dd>
+            <div *ngIf="transactionDetails.stylesId">
+                <a [routerLink]="['/style', transactionDetails.stylesId]">{{transactionDetails.stylesId}}</a>
+            </div>
+        </dd>
+        <dt><span jhiTranslate="quanlysoApp.transactionDetails.types">Types</span></dt>
+        <dd>
+            <div *ngIf="transactionDetails.typesId">
+                <a [routerLink]="['/types', transactionDetails.typesId]">{{transactionDetails.typesId}}</a>
+            </div>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            (click)="previousState()"
+            class="btn btn-info">
+        <span class="fa fa-arrow-left"></span>&nbsp;<span jhiTranslate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button"
+            [routerLink]="['/', { outlets: { popup: 'transaction-details/'+ transactionDetails.id + '/edit'} }]"
+            replaceUrl="true"
+            class="btn btn-primary">
+        <span class="fa fa-pencil"></span>&nbsp;<span jhiTranslate="entity.action.edit"> Edit</span>
+    </button>
+</div>

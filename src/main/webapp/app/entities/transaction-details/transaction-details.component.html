@@ -1,0 +1,98 @@
+<div>
+    <h2>
+        <span jhiTranslate="quanlysoApp.transactionDetails.home.title">Transaction Details</span>
+        <button class="btn btn-primary float-right create-transaction-details" [routerLink]="['/', { outlets: { popup: ['transaction-details-new'] } }]">
+            <span class="fa fa-plus"></span>
+            <span  jhiTranslate="quanlysoApp.transactionDetails.home.createLabel">
+            Create new Transaction Details
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+    </div>
+    <br/>
+    <div class="table-responsive" *ngIf="transactionDetails">
+        <table class="table table-striped">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
+            <th jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="amount"><span jhiTranslate="quanlysoApp.transactionDetails.amount">Amount</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="profit"><span jhiTranslate="quanlysoApp.transactionDetails.profit">Profit</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="costs"><span jhiTranslate="quanlysoApp.transactionDetails.costs">Costs</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="transactionsId"><span jhiTranslate="quanlysoApp.transactionDetails.transactions">Transactions</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="channelsId"><span jhiTranslate="quanlysoApp.transactionDetails.channels">Channels</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="factorsId"><span jhiTranslate="quanlysoApp.transactionDetails.factors">Factors</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="stylesId"><span jhiTranslate="quanlysoApp.transactionDetails.styles">Styles</span> <span class="fa fa-sort"></span></th>
+            <th jhiSortBy="typesId"><span jhiTranslate="quanlysoApp.transactionDetails.types">Types</span> <span class="fa fa-sort"></span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let transactionDetails of transactionDetails ;trackBy: trackId">
+                <td><a [routerLink]="['../transaction-details', transactionDetails.id ]">{{transactionDetails.id}}</a></td>
+                <td>{{transactionDetails.amount}}</td>
+                <td>{{transactionDetails.profit}}</td>
+                <td>{{transactionDetails.costs}}</td>
+                <td>
+                    <div *ngIf="transactionDetails.transactionsId">
+                        <a [routerLink]="['../transactions', transactionDetails.transactionsId  ]" >{{transactionDetails.transactionsId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="transactionDetails.channelsId">
+                        <a [routerLink]="['../channel', transactionDetails.channelsId  ]" >{{transactionDetails.channelsId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="transactionDetails.factorsId">
+                        <a [routerLink]="['../factor', transactionDetails.factorsId  ]" >{{transactionDetails.factorsId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="transactionDetails.stylesId">
+                        <a [routerLink]="['../style', transactionDetails.stylesId  ]" >{{transactionDetails.stylesId}}</a>
+                    </div>
+                </td>
+                <td>
+                    <div *ngIf="transactionDetails.typesId">
+                        <a [routerLink]="['../types', transactionDetails.typesId  ]" >{{transactionDetails.typesId}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['../transaction-details', transactionDetails.id ]"
+                                class="btn btn-info btn-sm">
+                            <span class="fa fa-eye"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.view">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'transaction-details/'+ transactionDetails.id + '/edit'} }]"
+                                replaceUrl="true"
+                                class="btn btn-primary btn-sm">
+                            <span class="fa fa-pencil"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'transaction-details/'+ transactionDetails.id + '/delete'} }]"
+                                replaceUrl="true"
+                                class="btn btn-danger btn-sm">
+                            <span class="fa fa-remove"></span>
+                            <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+        <div *ngIf="transactionDetails && transactionDetails.length">
+            <div class="row justify-content-center">
+                <jhi-item-count [page]="page" [total]="queryCount" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+            </div>
+            <div class="row justify-content-center">
+                <ngb-pagination [collectionSize]="totalItems" [(page)]="page" (pageChange)="loadPage(page)"></ngb-pagination>
+            </div>
+        </div>
+</div>

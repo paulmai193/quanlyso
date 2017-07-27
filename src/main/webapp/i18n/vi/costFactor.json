@@ -1,0 +1,24 @@
+{
+    "quanlysoApp": {
+        "costFactor" : {
+            "home": {
+                "title": "Cost Factors",
+                "createLabel": "Thêm mới một Cost Factor",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Cost Factor"
+            },
+            "created": "Một Cost Factor mới được tạo với định danh {{ param }}",
+            "updated": "Một Cost Factor cập nhật với định danh {{ param }}",
+            "deleted": "Một Cost Factor đã xóa với định danh {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Cost Factor {{ id }}?"
+            },
+            "detail": {
+                "title": "Cost Factor"
+            },
+            "rate": "Rate",
+            "factors": "Factors",
+            "styles": "Styles",
+            "types": "Types"
+        }
+    }
+}

@@ -1,7 +1,11 @@
 package logia.quanlyso.security.jwt;
 
 import java.io.IOException;
-import javax.servlet.*;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,44 +19,67 @@ import org.springframework.web.filter.GenericFilterBean;
 import io.jsonwebtoken.ExpiredJwtException;
 
 /**
- * Filters incoming requests and installs a Spring Security principal if a header corresponding to a valid user is
+ * Filters incoming requests and installs a Spring Security principal if a header corresponding to a
+ * valid user is
  * found.
+ *
+ * @author Dai Mai
  */
 public class JWTFilter extends GenericFilterBean {
 
-    private final Logger log = LoggerFactory.getLogger(JWTFilter.class);
+	/** The log. */
+	private final Logger	log	= LoggerFactory.getLogger(JWTFilter.class);
 
-    private TokenProvider tokenProvider;
+	/** The token provider. */
+	private TokenProvider	tokenProvider;
 
-    public JWTFilter(TokenProvider tokenProvider) {
-        this.tokenProvider = tokenProvider;
-    }
+	/**
+	 * Instantiates a new JWT filter.
+	 *
+	 * @param tokenProvider the token provider
+	 */
+	public JWTFilter(TokenProvider tokenProvider) {
+		this.tokenProvider = tokenProvider;
+	}
 
-    @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
-        throws IOException, ServletException {
-        try {
-            HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
-            String jwt = resolveToken(httpServletRequest);
-            if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
-                Authentication authentication = this.tokenProvider.getAuthentication(jwt);
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-            filterChain.doFilter(servletRequest, servletResponse);
-        } catch (ExpiredJwtException eje) {
-            log.info("Security exception for user {} - {}",
-                eje.getClaims().getSubject(), eje.getMessage());
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest,
+	 * javax.servlet.ServletResponse, javax.servlet.FilterChain)
+	 */
+	@Override
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
+			FilterChain filterChain) throws IOException, ServletException {
+		try {
+			HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+			String jwt = this.resolveToken(httpServletRequest);
+			if (StringUtils.hasText(jwt) && this.tokenProvider.validateToken(jwt)) {
+				Authentication authentication = this.tokenProvider.getAuthentication(jwt);
+				SecurityContextHolder.getContext().setAuthentication(authentication);
+			}
+			filterChain.doFilter(servletRequest, servletResponse);
+		}
+		catch (ExpiredJwtException eje) {
+			this.log.info("Security exception for user {} - {}", eje.getClaims().getSubject(),
+					eje.getMessage());
 
-            log.trace("Security exception trace: {}", eje);
-            ((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        }
-    }
+			this.log.trace("Security exception trace: {}", eje);
+			((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		}
+	}
 
-    private String resolveToken(HttpServletRequest request){
-        String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
-        }
-        return null;
-    }
+	/**
+	 * Resolve token.
+	 *
+	 * @param request the request
+	 * @return the string
+	 */
+	private String resolveToken(HttpServletRequest request) {
+		String bearerToken = request.getHeader(JWTConfigurer.AUTHORIZATION_HEADER);
+		if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
+			return bearerToken.substring(7, bearerToken.length());
+		}
+		return null;
+	}
 }

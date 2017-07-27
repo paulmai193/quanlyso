@@ -1,0 +1,26 @@
+{
+  "fluentMethods": true,
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "relationshipName": "channels",
+      "otherEntityName": "channel",
+      "otherEntityField": "id"
+    }
+  ],
+  "fields": [
+    {
+      "fieldName": "code",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "openDate",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "changelogDate": "20170626012750",
+  "dto": "mapstruct",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "entityTableName": "code"
+}

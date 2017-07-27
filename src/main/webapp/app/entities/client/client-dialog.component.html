@@ -1,0 +1,125 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myClientLabel" jhiTranslate="quanlysoApp.client.home.createOrEditLabel">Create or edit a Client</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <!-- Clone from register form -->
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="global.form.username" for="login">Grant Access Date</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" [(ngModel)]="client.login" id="login" name="login" #login="ngModel" placeholder="{{'global.form.username.placeholder' | translate}}"
+                            required minlength="1" maxlength="50" pattern="^[_'.@A-Za-z0-9-]*$">
+                <div *ngIf="login.dirty && login.invalid">
+                    <small class="form-text text-danger" *ngIf="login.errors.required" jhiTranslate="register.messages.validate.login.required">
+                        Username is required.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.minlength"
+                            jhiTranslate="register.messages.validate.login.minlength">
+                        Username is required to be at least 1 character.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.maxlength"
+                            jhiTranslate="register.messages.validate.login.maxlength">
+                        Username cannot be longer than 50 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="login.errors.pattern"
+                           jhiTranslate="register.messages.validate.login.pattern">
+                        Username can only contain lower-case letters and digits.
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="email" jhiTranslate="global.form.email">Email</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" id="email" name="email" #email="ngModel" placeholder="{{'global.form.email.placeholder' | translate}}"
+                        [(ngModel)]="client.email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                <div *ngIf="email.dirty && email.invalid">
+                    <small class="form-text text-danger" *ngIf="email.errors.required"
+                            jhiTranslate="global.messages.validate.email.required">
+                        Email is required.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="email.errors.invalid"
+                           jhiTranslate="global.messages.validate.email.invalid">
+                        Email is invalid.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="email.errors.minlength"
+                           jhiTranslate="global.messages.validate.email.minlength">
+                        Email is required to be at least 5 characters.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="email.errors.maxlength"
+                           jhiTranslate="global.messages.validate.email.maxlength">
+                        Email cannot be longer than 100 characters.
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="firstName" jhiTranslate="quanlysoApp.client.firstName">First Name</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" id="firstName" name="firstName" #firstName="ngModel" placeholder="{{'quanlysoApp.client.firstName' | translate}}"
+                        [(ngModel)]="client.firstName" maxlength=50 required>
+                <div *ngIf="firstName.dirty && firstName.invalid">
+                    <small class="form-text text-danger" *ngIf="firstName.errors.required"
+                            jhiTranslate="quanlysoApp.client.message.validate.firstName.required">
+                        First name is required.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="firstName.errors.maxlength"
+                            jhiTranslate="quanlysoApp.client.message.validate.firstName.maxlength">
+                        First name cannot be longer than 50 characters.
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" for="lastName" jhiTranslate="quanlysoApp.client.lastName">Last Name</label>
+            <div class="d-flex">
+                <input type="text" class="form-control" id="lastName" name="lastName" #lastName="ngModel" placeholder="{{'quanlysoApp.client.lastName' | translate}}"
+                        [(ngModel)]="client.lastName" maxlength=50 required>
+                <div *ngIf="lastName.dirty && lastName.invalid">
+                    <small class="form-text text-danger" *ngIf="lastName.errors.required"
+                            jhiTranslate="quanlysoApp.client.message.validate.lastName.required">
+                        Last name is required.
+                    </small>
+                    <small class="form-text text-danger" *ngIf="lastName.errors.maxlength"
+                            jhiTranslate="quanlysoApp.client.message.validate.lastName.maxlength">
+                        Last name cannot be longer than 50 characters.
+                    </small>
+                </div>
+            </div>
+        </div>
+        <!-- End clone from register form -->
+
+        <div class="form-group" [hidden]="!client.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="client.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.client.grantAccessDate" for="field_grantAccessDate">Grant Access Date</label>
+            <div class="d-flex">
+                <input id="field_grantAccessDate" type="datetime-local" class="form-control" name="grantAccessDate" [(ngModel)]="client.grantAccessDate"
+                  />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.client.revokeAccessDate" for="field_revokeAccessDate">Revoke Access Date</label>
+            <div class="d-flex">
+                <input id="field_revokeAccessDate" type="datetime-local" class="form-control" name="revokeAccessDate" [(ngModel)]="client.revokeAccessDate"
+                  />
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

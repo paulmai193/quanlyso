@@ -23,6 +23,7 @@ import {
     ActiveMenuDirective,
     ErrorComponent
 } from './layouts';
+import { QuanLySoToolModule } from './tool/tool.module';
 
 @NgModule({
     imports: [
@@ -33,7 +34,8 @@ import {
         QuanlysoHomeModule,
         QuanlysoAdminModule,
         QuanlysoAccountModule,
-        QuanlysoEntityModule
+        QuanlysoEntityModule,
+        QuanLySoToolModule,
     ],
     declarations: [
         JhiMainComponent,

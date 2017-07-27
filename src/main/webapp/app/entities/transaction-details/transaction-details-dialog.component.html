@@ -1,0 +1,78 @@
+<form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="myTransactionDetailsLabel" jhiTranslate="quanlysoApp.transactionDetails.home.createOrEditLabel">Create or edit a Transaction Details</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                (click)="clear()">&times;</button>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" [hidden]="!transactionDetails.id">
+            <label for="id" jhiTranslate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                   [(ngModel)]="transactionDetails.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.transactionDetails.amount" for="field_amount">Amount</label>
+            <input type="number" class="form-control" name="amount" id="field_amount"
+                [(ngModel)]="transactionDetails.amount"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.transactionDetails.profit" for="field_profit">Profit</label>
+            <input type="number" class="form-control" name="profit" id="field_profit"
+                [(ngModel)]="transactionDetails.profit"
+             />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.transactionDetails.costs" for="field_costs">Costs</label>
+            <input type="number" class="form-control" name="costs" id="field_costs"
+                [(ngModel)]="transactionDetails.costs"
+             />
+        </div>
+
+        <div class="form-group">
+            <label jhiTranslate="quanlysoApp.transactionDetails.transactions" for="field_transactions">Transactions</label>
+            <select class="form-control" id="field_transactions" name="transactions" [(ngModel)]="transactionDetails.transactionsId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="transactionsOption.id" *ngFor="let transactionsOption of transactions; trackBy: trackTransactionsById">{{transactionsOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="quanlysoApp.transactionDetails.channels" for="field_channels">Channels</label>
+            <select class="form-control" id="field_channels" name="channels" [(ngModel)]="transactionDetails.channelsId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="channelOption.id" *ngFor="let channelOption of channels; trackBy: trackChannelById">{{channelOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="quanlysoApp.transactionDetails.factors" for="field_factors">Factors</label>
+            <select class="form-control" id="field_factors" name="factors" [(ngModel)]="transactionDetails.factorsId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="factorOption.id" *ngFor="let factorOption of factors; trackBy: trackFactorById">{{factorOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="quanlysoApp.transactionDetails.styles" for="field_styles">Styles</label>
+            <select class="form-control" id="field_styles" name="styles" [(ngModel)]="transactionDetails.stylesId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="styleOption.id" *ngFor="let styleOption of styles; trackBy: trackStyleById">{{styleOption.id}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label jhiTranslate="quanlysoApp.transactionDetails.types" for="field_types">Types</label>
+            <select class="form-control" id="field_types" name="types" [(ngModel)]="transactionDetails.typesId" >
+                <option [ngValue]="null"></option>
+                <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{typesOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" (click)="clear()">
+            <span class="fa fa-ban"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+            <span class="fa fa-save"></span>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

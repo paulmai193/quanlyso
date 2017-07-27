@@ -1,0 +1,30 @@
+{
+    "quanlysoApp": {
+        "channel" : {
+            "home": {
+                "title": "Kênh",
+                "createLabel": "Thêm mới một Kênh",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Kênh"
+            },
+            "created": "Một Kênh mới được tạo với tên {{ param }}",
+            "updated": "Một Kênh cập nhật với tên {{ param }}",
+            "deleted": "Một Kênh đã xóa với tên {{ param }}",
+            "delete": {
+                "question": "Bạn có chắc là muốn xóa Kênh {{ id }}?"
+            },
+            "detail": {
+                "title": "Kênh"
+            },
+            "name": "Tên",
+            "code": "Mã",
+            "sunday": "Chủ nhật",
+            "monday": "Thứ hai",
+            "tuesday": "Thứ ba",
+            "wednesday": "Thứ tư",
+            "thursday": "Thứ năm",
+            "friday": "Thứ sáu",
+            "saturday": "Thứ bảy",
+            "transactionDetails": "Chi tiết giao dịch"
+        }
+    }
+}

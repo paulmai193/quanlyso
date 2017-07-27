@@ -20,18 +20,16 @@ export class HomeComponent implements OnInit {
         private principal: Principal,
         private loginModalService: LoginModalService,
         private eventManager: EventManager
-    ) {
-    }
+    ) {}
 
     ngOnInit() {
         this.principal.identity().then((account) => {
-//            this.account = account;
-        	if (account === null) {
-        		this.login();
-			} else {
-				this.account = account;
-			}
-        });
+            if (account === null) {
+                this.login();
+            } else {
+                this.account = account;
+            }
+            });
         this.registerAuthenticationSuccess();
     }
 

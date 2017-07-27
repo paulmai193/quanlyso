@@ -106,6 +106,20 @@
                 <option *ngFor="let authority of authorities" [value]="authority">{{authority}}</option>
             </select>
         </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="userManagement.grantAccessDate" for="field_grantAccessDate">Grant Access Date</label>
+            <div class="d-flex">
+                <input id="field_grantAccessDate" type="datetime-local" class="form-control" name="grantAccessDate" [(ngModel)]="user.grantAccessDate"
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="userManagement.revokeAccessDate" for="field_revokeAccessDate">Revoke Access Date</label>
+            <div class="d-flex">
+                <input id="field_revokeAccessDate" type="datetime-local" class="form-control" name="revokeAccessDate" [(ngModel)]="user.revokeAccessDate"
+                />
+            </div>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity CostFactor.
+    -->
+    <changeSet id="20170522140704-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="factors_id"
+                                 baseTableName="cost_factor"
+                                 constraintName="fk_cost_factor_factors_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="factor"/>
+
+        <addForeignKeyConstraint baseColumnNames="styles_id"
+                                 baseTableName="cost_factor"
+                                 constraintName="fk_cost_factor_styles_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="style"/>
+
+        <addForeignKeyConstraint baseColumnNames="types_id"
+                                 baseTableName="cost_factor"
+                                 constraintName="fk_cost_factor_types_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="types"/>
+                                 
+		  <addUniqueConstraint columnNames="factors_id, styles_id, types_id" tableName="cost_factor" constraintName="unique_cost_factor"/>
+        
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/cost_factor.csv"
+                  separator=";"
+                  tableName="cost_factor">
+                  <!-- <column name="rate" type="float"/> -->
+        </loadData>
+
+    </changeSet>
+</databaseChangeLog>
