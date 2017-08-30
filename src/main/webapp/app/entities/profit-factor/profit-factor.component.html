@@ -18,7 +18,6 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="quanlysoApp.profitFactor.rate">Rate</span></th>
-            <th><span jhiTranslate="quanlysoApp.profitFactor.factors">Factors</span></th>
             <th><span jhiTranslate="quanlysoApp.profitFactor.styles">Styles</span></th>
             <th><span jhiTranslate="quanlysoApp.profitFactor.types">Types</span></th>
             <th></th>
@@ -28,11 +27,6 @@
             <tr *ngFor="let profitFactor of profitFactors ;trackBy: trackId">
                 <td><a [routerLink]="['../profit-factor', profitFactor.id ]">{{profitFactor.id}}</a></td>
                 <td>{{profitFactor.rate}}</td>
-                <td>
-                    <div *ngIf="profitFactor.factorsId">
-                        <a [routerLink]="['../factor', profitFactor.factorsId  ]" >{{ profitFactor.factorsName }}</a>
-                    </div>
-                </td>
                 <td>
                     <div *ngIf="profitFactor.stylesId">
                         <a [routerLink]="['../style', profitFactor.stylesId  ]" >{{ profitFactor.stylesName }}</a>

@@ -1,8 +1,8 @@
 package logia.quanlyso.service;
 
-import java.util.List;
-
 import logia.quanlyso.service.dto.FactorDTO;
+
+import java.util.List;
 
 /**
  * Service Interface for managing Factor.
@@ -21,7 +21,7 @@ public interface FactorService {
 
 	/**
 	 * Get all the factors.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	List<FactorDTO> findAll();

@@ -1,8 +1,7 @@
 package logia.quanlyso.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import logia.quanlyso.domain.Authority;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * Spring Data JPA repository for the Authority entity.

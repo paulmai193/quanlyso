@@ -1,9 +1,7 @@
 package logia.quanlyso.service;
 
-import java.util.Locale;
-
-import javax.mail.internet.MimeMessage;
-
+import io.github.jhipster.config.JHipsterProperties;
+import logia.quanlyso.domain.User;
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +13,8 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
-import io.github.jhipster.config.JHipsterProperties;
-import logia.quanlyso.domain.User;
+import javax.mail.internet.MimeMessage;
+import java.util.Locale;
 
 /**
  * Service for sending emails.

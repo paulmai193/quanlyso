@@ -1,36 +1,32 @@
 package logia.quanlyso.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import logia.quanlyso.domain.ProfitFactor;
 import logia.quanlyso.service.dto.ProfitFactorDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity ProfitFactor and its DTO ProfitFactorDTO.
  *
  * @author Dai Mai
  */
-@Mapper(componentModel = "spring", uses = { FactorMapper.class, StyleMapper.class,
-		TypesMapper.class, })
+@Mapper(componentModel = "spring", uses = { StyleMapper.class, TypesMapper.class, })
 public interface ProfitFactorMapper extends EntityMapper<ProfitFactorDTO, ProfitFactor> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toDto(java.lang.Object)
 	 */
-	@Mapping(source = "factors.id", target = "factorsId")
 	@Mapping(source = "styles.id", target = "stylesId")
 	@Mapping(source = "types.id", target = "typesId")
 	ProfitFactorDTO toDto(ProfitFactor profitFactor);
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
-	@Mapping(source = "factorsId", target = "factors")
 	@Mapping(source = "stylesId", target = "styles")
 	@Mapping(source = "typesId", target = "types")
 	ProfitFactor toEntity(ProfitFactorDTO profitFactorDTO);

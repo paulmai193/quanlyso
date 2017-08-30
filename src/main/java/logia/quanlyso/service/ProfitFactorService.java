@@ -1,8 +1,8 @@
 package logia.quanlyso.service;
 
-import java.util.List;
-
 import logia.quanlyso.service.dto.ProfitFactorDTO;
+
+import java.util.List;
 
 /**
  * Service Interface for managing ProfitFactor.
@@ -21,7 +21,7 @@ public interface ProfitFactorService {
 
 	/**
 	 * Get all the profitFactors.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	List<ProfitFactorDTO> findAll();

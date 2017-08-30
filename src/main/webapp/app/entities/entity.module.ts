@@ -1,6 +1,5 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import { QuanlysoFactorModule } from './factor/factor.module';
 import { QuanlysoStyleModule } from './style/style.module';
 import { QuanlysoTypesModule } from './types/types.module';
 import { QuanlysoChannelModule } from './channel/channel.module';
@@ -14,7 +13,6 @@ import { QuanlysoCodeModule } from './code/code.module';
 
 @NgModule({
     imports: [
-        QuanlysoFactorModule,
         QuanlysoStyleModule,
         QuanlysoTypesModule,
         QuanlysoChannelModule,

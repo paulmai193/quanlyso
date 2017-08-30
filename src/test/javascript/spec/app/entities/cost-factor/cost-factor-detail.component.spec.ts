@@ -11,7 +11,6 @@ import { CostFactorService } from '../../../../../../main/webapp/app/entities/co
 import { CostFactor } from '../../../../../../main/webapp/app/entities/cost-factor/cost-factor.model';
 import { TypesService } from '../../../../../../main/webapp/app/entities/types/types.service';
 import { StyleService } from '../../../../../../main/webapp/app/entities/style/style.service';
-import { FactorService } from '../../../../../../main/webapp/app/entities/factor/factor.service';
 
 describe('Component Tests', () => {
 
@@ -34,7 +33,6 @@ describe('Component Tests', () => {
                     },
                     CostFactorService,
                     AlertService,
-                    FactorService,
                     StyleService,
                     TypesService,
                     EventManager
@@ -52,7 +50,6 @@ describe('Component Tests', () => {
             service = fixture.debugElement.injector.get(CostFactorService);
         });
 
-
         describe('OnInit', () => {
             it('Should call load all on init', () => {
             // GIVEN
@@ -64,7 +61,7 @@ describe('Component Tests', () => {
 
             // THEN
             expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.costFactor).toEqual(jasmine.objectContaining({id:10}));
+            expect(comp.costFactor).toEqual(jasmine.objectContaining({id: 10}));
             });
         });
     });

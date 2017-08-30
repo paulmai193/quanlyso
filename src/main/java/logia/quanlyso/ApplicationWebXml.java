@@ -1,9 +1,8 @@
 package logia.quanlyso;
 
+import logia.quanlyso.config.DefaultProfileUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-
-import logia.quanlyso.config.DefaultProfileUtil;
 
 /**
  * This is a helper Java class that provides an alternative to creating a web.xml.
@@ -16,7 +15,7 @@ public class ApplicationWebXml extends SpringBootServletInitializer {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.springframework.boot.web.support.SpringBootServletInitializer#configure(org.
 	 * springframework.boot.builder.SpringApplicationBuilder)
 	 */

@@ -8,8 +8,6 @@ import { CostFactor } from './cost-factor.model';
 import { CostFactorService } from './cost-factor.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
-import { FactorService } from '../factor/factor.service';
-import { Factor } from '../factor/factor.model';
 import { StyleService } from '../style/style.service';
 import { Style } from '../style/style.model';
 import { TypesService } from '../types/types.service';
@@ -29,7 +27,6 @@ export class CostFactorComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private costFactorService: CostFactorService,
         private alertService: AlertService,
-        private factorService: FactorService,
         private styleService: StyleService,
         private typeService: TypesService
     ) {
@@ -40,7 +37,6 @@ export class CostFactorComponent implements OnInit, OnDestroy {
             (res: Response) => {
                 this.costFactors = res.json();
                 this.costFactors.forEach((el: CostFactor) => {
-                    this.getFactorName(el);
                     this.getStyleName(el);
                     this.getTypeName(el);
                 });
@@ -69,15 +65,6 @@ export class CostFactorComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-
-    private getFactorName(costFactor: CostFactor): void {
-        this.factorService.find(costFactor.factorsId).toPromise()
-            .then((factor: Factor) => costFactor.factorsName = factor.name)
-            .catch((error: any) => {
-                console.error('Cannot retrieve factor', error);
-                this.onError(error);
-            });
     }
 
     private getStyleName(costFactor: CostFactor): void {

@@ -1,15 +1,14 @@
 package logia.quanlyso.service.mapper;
 
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import logia.quanlyso.domain.Authority;
 import logia.quanlyso.domain.User;
 import logia.quanlyso.service.dto.UserDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Mapper for the entity User and its DTO UserDTO.

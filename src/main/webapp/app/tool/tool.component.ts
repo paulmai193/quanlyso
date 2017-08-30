@@ -3,14 +3,12 @@
  */
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Channel } from '../entities/channel/channel.model';
-import { Factor } from '../entities/factor/factor.model';
 import { Style } from '../entities/style/style.model';
 import { Types } from '../entities/types/types.model';
 import { TransactionDetails } from '../entities/transaction-details/transaction-details.model';
 import { Transactions } from '../entities/transactions/transactions.model';
 import { TransactionsService } from '../entities/transactions/transactions.service';
 import { ChannelService } from '../entities/channel/channel.service';
-import { FactorService } from '../entities/factor/factor.service';
 import { StyleService } from '../entities/style/style.service';
 import { TypesService } from '../entities/types/types.service';
 import { AlertService, EventManager } from 'ng-jhipster';
@@ -32,9 +30,8 @@ import { CodeService } from '../entities/code/code.service';
 export class QuanLySoToolComponent implements OnInit, OnDestroy {
     crawlData: CrawlDataModel;
     channelsForCrawl: Channel[];
-	progress: ProgressModel;
+    progress: ProgressModel;
     channels: Channel[];
-    factors: Factor[];
     styles: Style[];
     types: Types[];
     transactions: Transactions;
@@ -45,7 +42,6 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     constructor(private eventManager: EventManager,
                 private transactionsService: TransactionsService,
                 private channelService: ChannelService,
-                private factorService: FactorService,
                 private styleService: StyleService,
                 private typesService: TypesService,
                 private alertService: AlertService,
@@ -121,8 +117,6 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                 this.channels = res.json();
                 },
             (res: Response) => this.onError(res.json()));
-        this.factorService.query().subscribe(
-            (res: Response) => { this.factors = res.json(); }, (res: Response) => this.onError(res.json()));
         this.styleService.query().subscribe(
             (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
         this.typesService.query().subscribe(

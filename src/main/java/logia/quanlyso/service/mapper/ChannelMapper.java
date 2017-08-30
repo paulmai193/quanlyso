@@ -1,10 +1,9 @@
 package logia.quanlyso.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import logia.quanlyso.domain.Channel;
 import logia.quanlyso.service.dto.ChannelDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity Channel and its DTO ChannelDTO.
@@ -16,7 +15,7 @@ public interface ChannelMapper extends EntityMapper<ChannelDTO, Channel> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
 	@Mapping(target = "transactionDetails", ignore = true)

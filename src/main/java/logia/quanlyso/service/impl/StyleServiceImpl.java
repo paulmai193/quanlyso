@@ -1,19 +1,18 @@
 package logia.quanlyso.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import logia.quanlyso.domain.Style;
 import logia.quanlyso.repository.StyleRepository;
 import logia.quanlyso.service.StyleService;
 import logia.quanlyso.service.dto.StyleDTO;
 import logia.quanlyso.service.mapper.StyleMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Style.
@@ -61,7 +60,7 @@ public class StyleServiceImpl implements StyleService {
 
 	/**
 	 * Get all the styles.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	@Override

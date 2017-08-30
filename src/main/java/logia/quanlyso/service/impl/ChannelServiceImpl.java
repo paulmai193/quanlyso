@@ -1,21 +1,20 @@
 package logia.quanlyso.service.impl;
 
-import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import logia.quanlyso.domain.Channel;
 import logia.quanlyso.repository.ChannelRepository;
 import logia.quanlyso.service.ChannelService;
 import logia.quanlyso.service.dto.ChannelDTO;
 import logia.quanlyso.service.mapper.ChannelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Channel.
@@ -63,7 +62,7 @@ public class ChannelServiceImpl implements ChannelService {
 
 	/**
 	 * Get all the channels.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	@Override
@@ -93,7 +92,7 @@ public class ChannelServiceImpl implements ChannelService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.ChannelService#findAllByOpenDay(logia.quanlyso.service.dto.
 	 * ChannelOpenDay)
 	 */

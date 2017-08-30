@@ -1,8 +1,8 @@
 package logia.quanlyso.service;
 
-import java.util.List;
-
 import logia.quanlyso.service.dto.StyleDTO;
+
+import java.util.List;
 
 /**
  * Service Interface for managing Style.
@@ -21,7 +21,7 @@ public interface StyleService {
 
 	/**
 	 * Get all the styles.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	List<StyleDTO> findAll();

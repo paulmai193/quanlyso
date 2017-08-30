@@ -1,10 +1,9 @@
 package logia.quanlyso.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import logia.quanlyso.domain.Transactions;
 import logia.quanlyso.service.dto.TransactionsDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity Transactions and its DTO TransactionsDTO.
@@ -16,7 +15,7 @@ public interface TransactionsMapper extends EntityMapper<TransactionsDTO, Transa
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toDto(java.lang.Object)
 	 */
 	@Mapping(source = "users.id", target = "clientsId")
@@ -25,7 +24,7 @@ public interface TransactionsMapper extends EntityMapper<TransactionsDTO, Transa
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
 	// @Mapping(target = "transactionDetails", ignore = true)

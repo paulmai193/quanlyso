@@ -1,8 +1,8 @@
 package logia.quanlyso.service;
 
-import java.util.List;
-
 import logia.quanlyso.service.dto.CostFactorDTO;
+
+import java.util.List;
 
 /**
  * Service Interface for managing CostFactor.
@@ -21,7 +21,7 @@ public interface CostFactorService {
 
 	/**
 	 * Get all the costFactors.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	List<CostFactorDTO> findAll();

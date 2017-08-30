@@ -1,32 +1,6 @@
 package logia.quanlyso.web.rest;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.codahale.metrics.annotation.Timed;
-
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
 import logia.quanlyso.service.ChannelService;
@@ -38,6 +12,23 @@ import logia.quanlyso.service.dto.ProcessingDTO;
 import logia.quanlyso.service.util.DateFormatterUtil;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 import logia.quanlyso.web.rest.util.PaginationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Code.
@@ -58,7 +49,7 @@ public class CodeResource {
 	private final CodeService	codeService;
 
 	/** The channel service. */
-	private final ChannelService	channelService;	
+	private final ChannelService	channelService;
 
 	/**
 	 * Instantiates a new code resource.
@@ -69,7 +60,7 @@ public class CodeResource {
 	 */
 	public CodeResource(CodeService __codeService, ChannelService __channelService) {
 		this.codeService = __codeService;
-		this.channelService = __channelService;		
+		this.channelService = __channelService;
 	}
 
 	/**
@@ -179,12 +170,12 @@ public class CodeResource {
 		if (__crawlRequestDTO == null) {
 			__crawlRequestDTO = new CrawlRequestDTO();
 		}
-		
+
 		if (__crawlRequestDTO.getOpenDay() == null) {
 			LocalDate _localDate = LocalDate.now(DateFormatterUtil.systemZoneId());
 			__crawlRequestDTO.setOpenDay(_localDate.atStartOfDay(DateFormatterUtil.systemZoneId()));
 		}
-		
+
 		if (__crawlRequestDTO.getChannelCodes() == null) {
 			List<ChannelDTO> channelDTOs = this.channelService.findAllByOpenDay(__crawlRequestDTO.getOpenDay().getDayOfWeek());
 			Set<String> _codes = new HashSet<>();
@@ -195,7 +186,7 @@ public class CodeResource {
 		this.codeService.crawlLotteriesFromMinhNgocSite(__crawlRequestDTO.getChannelCodes());
 		return ResponseEntity.created(new URI("/api/codes")).build();
 	}
-	
+
 	/**
 	 * Gets the crawl processing.
 	 *

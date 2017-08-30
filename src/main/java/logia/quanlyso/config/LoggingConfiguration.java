@@ -1,10 +1,5 @@
 package logia.quanlyso.config;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.LoggerContext;
@@ -13,6 +8,10 @@ import ch.qos.logback.core.spi.ContextAwareBase;
 import io.github.jhipster.config.JHipsterProperties;
 import net.logstash.logback.appender.LogstashSocketAppender;
 import net.logstash.logback.stacktrace.ShortenedThrowableConverter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
 
 /**
  * The Class LoggingConfiguration.
@@ -111,7 +110,7 @@ public class LoggingConfiguration {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see ch.qos.logback.classic.spi.LoggerContextListener#isResetResistant()
 		 */
 		@Override
@@ -121,7 +120,7 @@ public class LoggingConfiguration {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onStart(ch.qos.logback.classic.
 		 * LoggerContext)
 		 */
@@ -132,7 +131,7 @@ public class LoggingConfiguration {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onReset(ch.qos.logback.classic.
 		 * LoggerContext)
 		 */
@@ -143,7 +142,7 @@ public class LoggingConfiguration {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onStop(ch.qos.logback.classic.
 		 * LoggerContext)
 		 */
@@ -154,7 +153,7 @@ public class LoggingConfiguration {
 
 		/*
 		 * (non-Javadoc)
-		 * 
+		 *
 		 * @see
 		 * ch.qos.logback.classic.spi.LoggerContextListener#onLevelChange(ch.qos.logback.classic.
 		 * Logger, ch.qos.logback.classic.Level)

@@ -1,20 +1,19 @@
 package logia.quanlyso.repository;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-
+import logia.quanlyso.config.Constants;
+import logia.quanlyso.config.audit.AuditEventConverter;
+import logia.quanlyso.domain.PersistentAuditEvent;
 import org.springframework.boot.actuate.audit.AuditEvent;
 import org.springframework.boot.actuate.audit.AuditEventRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import logia.quanlyso.config.Constants;
-import logia.quanlyso.config.audit.AuditEventConverter;
-import logia.quanlyso.domain.PersistentAuditEvent;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 
 /**
  * An implementation of Spring Boot's AuditEventRepository.
@@ -49,7 +48,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.util.Date)
 	 */
 	@Override
@@ -61,7 +60,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String,
 	 * java.util.Date)
 	 */
@@ -84,7 +83,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String,
 	 * java.util.Date, java.lang.String)
 	 */
@@ -98,7 +97,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.springframework.boot.actuate.audit.AuditEventRepository#add(org.springframework.boot.
 	 * actuate.audit.AuditEvent)

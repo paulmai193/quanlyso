@@ -1,10 +1,7 @@
 package logia.quanlyso.security;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
+import logia.quanlyso.domain.User;
+import logia.quanlyso.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,8 +12,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import logia.quanlyso.domain.User;
-import logia.quanlyso.repository.UserRepository;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Authenticate a user from the database.
@@ -43,7 +42,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.springframework.security.core.userdetails.UserDetailsService#loadUserByUsername(java.lang
 	 * .String)

@@ -1,10 +1,9 @@
 package logia.quanlyso.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import logia.quanlyso.domain.Types;
 import logia.quanlyso.service.dto.TypesDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity Types and its DTO TypesDTO.
@@ -16,7 +15,7 @@ public interface TypesMapper extends EntityMapper<TypesDTO, Types> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
 	@Mapping(target = "profitFactors", ignore = true)

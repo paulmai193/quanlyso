@@ -1,19 +1,18 @@
 package logia.quanlyso.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import logia.quanlyso.domain.ProfitFactor;
 import logia.quanlyso.repository.ProfitFactorRepository;
 import logia.quanlyso.service.ProfitFactorService;
 import logia.quanlyso.service.dto.ProfitFactorDTO;
 import logia.quanlyso.service.mapper.ProfitFactorMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing ProfitFactor.
@@ -63,7 +62,7 @@ public class ProfitFactorServiceImpl implements ProfitFactorService {
 
 	/**
 	 * Get all the profitFactors.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	@Override

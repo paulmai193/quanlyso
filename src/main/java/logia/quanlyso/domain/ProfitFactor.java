@@ -1,18 +1,11 @@
 package logia.quanlyso.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A ProfitFactor.
@@ -35,10 +28,6 @@ public class ProfitFactor implements Serializable {
 	/** The rate. */
 	@Column(name = "rate")
 	private Float				rate;
-
-	/** The factors. */
-	@ManyToOne
-	private Factor				factors;
 
 	/** The styles. */
 	@ManyToOne
@@ -93,35 +82,6 @@ public class ProfitFactor implements Serializable {
 	 */
 	public void setRate(Float rate) {
 		this.rate = rate;
-	}
-
-	/**
-	 * Gets the factors.
-	 *
-	 * @return the factors
-	 */
-	public Factor getFactors() {
-		return this.factors;
-	}
-
-	/**
-	 * Factors.
-	 *
-	 * @param factor the factor
-	 * @return the profit factor
-	 */
-	public ProfitFactor factors(Factor factor) {
-		this.factors = factor;
-		return this;
-	}
-
-	/**
-	 * Sets the factors.
-	 *
-	 * @param factor the new factors
-	 */
-	public void setFactors(Factor factor) {
-		this.factors = factor;
 	}
 
 	/**
@@ -184,7 +144,7 @@ public class ProfitFactor implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -204,7 +164,7 @@ public class ProfitFactor implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -214,7 +174,7 @@ public class ProfitFactor implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

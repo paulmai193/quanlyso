@@ -5,10 +5,8 @@ import { AlertService, EventManager } from 'ng-jhipster';
 
 import { CostFactor } from './cost-factor.model';
 import { CostFactorService } from './cost-factor.service';
-import { FactorService } from '../factor/factor.service';
 import { StyleService } from '../style/style.service';
 import { TypesService } from '../types/types.service';
-import { Factor } from '../factor/factor.model';
 import { Style } from '../style/style.model';
 import { Types } from '../types/types.model';
 
@@ -26,7 +24,6 @@ export class CostFactorDetailComponent implements OnInit, OnDestroy {
         private eventManager: EventManager,
         private costFactorService: CostFactorService,
         private alertService: AlertService,
-        private factorService: FactorService,
         private styleService: StyleService,
         private typeService: TypesService,
         private route: ActivatedRoute
@@ -43,7 +40,6 @@ export class CostFactorDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.costFactorService.find(id).subscribe((costFactor) => {
             this.costFactor = costFactor;
-            this.getFactorName(this.costFactor);
             this.getTypeName(this.costFactor);
             this.getStyleName(this.costFactor);
         });
@@ -66,15 +62,6 @@ export class CostFactorDetailComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-
-    private getFactorName(costFactor: CostFactor): void {
-        this.factorService.find(costFactor.factorsId).toPromise()
-            .then((factor: Factor) => costFactor.factorsName = factor.name)
-            .catch((error: any) => {
-                console.error('Cannot retrieve factor', error);
-                this.onError(error);
-            });
     }
 
     private getStyleName(costFactor: CostFactor): void {

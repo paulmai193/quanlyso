@@ -1,19 +1,18 @@
 package logia.quanlyso.service.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import logia.quanlyso.domain.Types;
 import logia.quanlyso.repository.TypesRepository;
 import logia.quanlyso.service.TypesService;
 import logia.quanlyso.service.dto.TypesDTO;
 import logia.quanlyso.service.mapper.TypesMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Types.
@@ -61,7 +60,7 @@ public class TypesServiceImpl implements TypesService {
 
 	/**
 	 * Get all the types.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	@Override

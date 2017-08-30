@@ -1,8 +1,8 @@
 package logia.quanlyso.service;
 
-import java.util.List;
-
 import logia.quanlyso.service.dto.TypesDTO;
+
+import java.util.List;
 
 /**
  * Service Interface for managing Types.
@@ -21,7 +21,7 @@ public interface TypesService {
 
 	/**
 	 * Get all the types.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	List<TypesDTO> findAll();

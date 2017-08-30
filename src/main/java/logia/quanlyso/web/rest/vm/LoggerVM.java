@@ -1,8 +1,7 @@
 package logia.quanlyso.web.rest.vm;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-
 import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * View Model object for storing a Logback logger.
@@ -73,7 +72,7 @@ public class LoggerVM {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

@@ -1,13 +1,12 @@
 package logia.quanlyso.service;
 
-import java.util.Collection;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-
 import logia.quanlyso.domain.Transactions;
 import logia.quanlyso.service.dto.CodeDTO;
 import logia.quanlyso.service.dto.ProcessingDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.Collection;
 
 /**
  * Service Interface for managing Code.
@@ -24,7 +23,7 @@ public interface CodeService {
 
 	/**
 	 * Get all the codes.
-	 * 
+	 *
 	 * @param pageable the pagination information
 	 * @return the list of entities
 	 */
@@ -60,7 +59,7 @@ public interface CodeService {
 	 * @throws Exception the exception
 	 */
 	void crawlLotteriesFromMinhNgocSite(Collection<String> __channelCodes) throws Exception;
-	
+
 	/**
 	 * Crawl lotteries from minh ngoc site.
 	 *
@@ -79,7 +78,7 @@ public interface CodeService {
 	 */
 	void crawlLotteriesFromMinhNgocSite(String __channelCode, String __date, boolean __forceUpdate)
 	        throws Exception;
-	
+
 	/**
 	 * Gets the crawl processing.
 	 *

@@ -25,7 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import logia.quanlyso.QuanlysoApp;
 import logia.quanlyso.domain.Channel;
 import logia.quanlyso.domain.Code;
-import logia.quanlyso.domain.Factor;
 import logia.quanlyso.domain.Style;
 import logia.quanlyso.domain.TransactionDetails;
 import logia.quanlyso.domain.Transactions;
@@ -33,7 +32,6 @@ import logia.quanlyso.domain.Types;
 import logia.quanlyso.domain.User;
 import logia.quanlyso.repository.ChannelRepository;
 import logia.quanlyso.repository.CodeRepository;
-import logia.quanlyso.repository.FactorRepository;
 import logia.quanlyso.repository.StyleRepository;
 import logia.quanlyso.repository.TransactionDetailsRepository;
 import logia.quanlyso.repository.TransactionsRepository;
@@ -80,10 +78,6 @@ public class TransactionsResourceIntTest {
 	/** The channel repository. */
 	@Autowired
 	private ChannelRepository						channelRepository;
-
-	/** The factor repository. */
-	@Autowired
-	private FactorRepository						factorRepository;
 
 	/** The style repository. */
 	@Autowired
@@ -142,7 +136,7 @@ public class TransactionsResourceIntTest {
 
 	/**
 	 * Create an entity for this test.
-	 * 
+	 *
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an entity which requires the current entity.
 	 *
@@ -471,10 +465,9 @@ public class TransactionsResourceIntTest {
 		Code code = CodeResourceIntTest.createEntity(this.em);
 		code.openDate(CodeResourceIntTest.UPDATED_OPEN_DATE).channels(channel);
 		this.codeRepository.saveAndFlush(code);
-		Factor factor = this.factorRepository.getOne(1L);
 		Style style = this.styleRepository.getOne(1L);
 		Types types = this.typesRepository.getOne(1L);
-		details.channels(channel).factors(factor).styles(style).types(types);
+		details.channels(channel).styles(style).types(types);
 		transactions.addTransactionDetails(details);
 
 		// Expect net value

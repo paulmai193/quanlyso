@@ -1,9 +1,8 @@
 package logia.quanlyso.service;
 
+import logia.quanlyso.service.dto.TransactionsDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import logia.quanlyso.service.dto.TransactionsDTO;
 
 /**
  * Service Interface for managing Transactions.
@@ -22,7 +21,7 @@ public interface TransactionsService {
 
 	/**
 	 * Get all the transactions.
-	 * 
+	 *
 	 * @param pageable the pagination information
 	 * @return the list of entities
 	 */

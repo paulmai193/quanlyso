@@ -1,18 +1,11 @@
 package logia.quanlyso.domain;
 
-import java.io.Serializable;
-import java.util.Objects;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A TransactionDetails.
@@ -51,10 +44,6 @@ public class TransactionDetails implements Serializable {
 	/** The channels. */
 	@ManyToOne
 	private Channel				channels;
-
-	/** The factors. */
-	@ManyToOne
-	private Factor				factors;
 
 	/** The styles. */
 	@ManyToOne
@@ -254,48 +243,6 @@ public class TransactionDetails implements Serializable {
 	}
 
 	/**
-	 * Gets the factors.
-	 *
-	 * @return the factors
-	 */
-	public Factor getFactors() {
-		return this.factors;
-	}
-
-	/**
-	 * Factors.
-	 *
-	 * @param factor the factor
-	 * @return the transaction details
-	 */
-	public TransactionDetails factors(Factor factor) {
-		this.setFactors(factor);
-		return this;
-	}
-
-	/**
-	 * Sets the factors.
-	 *
-	 * @param factor the new factors
-	 */
-	public void setFactors(Factor factor) {
-		this.setFactors(factor, true);
-	}
-
-	/**
-	 * Sets the factors.
-	 *
-	 * @param factor the factor
-	 * @param isSetToTarget the is set to target factor
-	 */
-	void setFactors(Factor factor, boolean isSetToTarget) {
-		this.factors = factor;
-		if (factor != null && isSetToTarget) {
-			factor.addTransactionDetails(this, false);
-		}
-	}
-
-	/**
 	 * Gets the styles.
 	 *
 	 * @return the styles
@@ -381,7 +328,7 @@ public class TransactionDetails implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -401,7 +348,7 @@ public class TransactionDetails implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -411,7 +358,7 @@ public class TransactionDetails implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

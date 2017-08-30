@@ -1,9 +1,9 @@
 package logia.quanlyso.service;
 
+import logia.quanlyso.service.dto.ChannelDTO;
+
 import java.time.DayOfWeek;
 import java.util.List;
-
-import logia.quanlyso.service.dto.ChannelDTO;
 
 /**
  * Service Interface for managing Channel.
@@ -22,7 +22,7 @@ public interface ChannelService {
 
 	/**
 	 * Get all the channels.
-	 * 
+	 *
 	 * @return the list of entities
 	 */
 	List<ChannelDTO> findAll();

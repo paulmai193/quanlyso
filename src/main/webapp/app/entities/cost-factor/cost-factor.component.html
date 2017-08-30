@@ -18,7 +18,6 @@
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="quanlysoApp.costFactor.rate">Rate</span></th>
-            <th><span jhiTranslate="quanlysoApp.costFactor.factors">Factors</span></th>
             <th><span jhiTranslate="quanlysoApp.costFactor.styles">Styles</span></th>
             <th><span jhiTranslate="quanlysoApp.costFactor.types">Types</span></th>
             <th></th>
@@ -28,11 +27,6 @@
             <tr *ngFor="let costFactor of costFactors ;trackBy: trackId">
                 <td><a [routerLink]="['../cost-factor', costFactor.id ]">{{ costFactor.id }}</a></td>
                 <td>{{costFactor.rate}}</td>
-                <td>
-                    <div *ngIf="costFactor.factorsId">
-                        <a [routerLink]="['../factor', costFactor.factorsId  ]" >{{ costFactor.factorsName }}</a>
-                    </div>
-                </td>
                 <td>
                     <div *ngIf="costFactor.stylesId">
                         <a [routerLink]="['../style', costFactor.stylesId  ]" >{{ costFactor.stylesName }}</a>

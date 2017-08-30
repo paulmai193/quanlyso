@@ -11,7 +11,6 @@ import { TransactionDetailsPopupService } from './transaction-details-popup.serv
 import { TransactionDetailsService } from './transaction-details.service';
 import { Transactions, TransactionsService } from '../transactions';
 import { Channel, ChannelService } from '../channel';
-import { Factor, FactorService } from '../factor';
 import { Style, StyleService } from '../style';
 import { Types, TypesService } from '../types';
 
@@ -29,8 +28,6 @@ export class TransactionDetailsDialogComponent implements OnInit {
 
     channels: Channel[];
 
-    factors: Factor[];
-
     styles: Style[];
 
     types: Types[];
@@ -41,7 +38,6 @@ export class TransactionDetailsDialogComponent implements OnInit {
         private transactionDetailsService: TransactionDetailsService,
         private transactionsService: TransactionsService,
         private channelService: ChannelService,
-        private factorService: FactorService,
         private styleService: StyleService,
         private typesService: TypesService,
         private eventManager: EventManager
@@ -55,8 +51,6 @@ export class TransactionDetailsDialogComponent implements OnInit {
             (res: Response) => { this.transactions = res.json(); }, (res: Response) => this.onError(res.json()));
         this.channelService.query().subscribe(
             (res: Response) => { this.channels = res.json(); }, (res: Response) => this.onError(res.json()));
-        this.factorService.query().subscribe(
-            (res: Response) => { this.factors = res.json(); }, (res: Response) => this.onError(res.json()));
         this.styleService.query().subscribe(
             (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
         this.typesService.query().subscribe(
@@ -107,10 +101,6 @@ export class TransactionDetailsDialogComponent implements OnInit {
     }
 
     trackChannelById(index: number, item: Channel) {
-        return item.id;
-    }
-
-    trackFactorById(index: number, item: Factor) {
         return item.id;
     }
 

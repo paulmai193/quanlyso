@@ -1,12 +1,13 @@
 package logia.quanlyso.web.rest;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Collections;
-
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
-
+import com.codahale.metrics.annotation.Timed;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import logia.quanlyso.domain.User;
+import logia.quanlyso.security.UserRevokeAccessException;
+import logia.quanlyso.security.jwt.JWTConfigurer;
+import logia.quanlyso.security.jwt.TokenProvider;
+import logia.quanlyso.service.UserService;
+import logia.quanlyso.web.rest.vm.LoginVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -21,15 +22,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.codahale.metrics.annotation.Timed;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-import logia.quanlyso.domain.User;
-import logia.quanlyso.security.UserRevokeAccessException;
-import logia.quanlyso.security.jwt.JWTConfigurer;
-import logia.quanlyso.security.jwt.TokenProvider;
-import logia.quanlyso.service.UserService;
-import logia.quanlyso.web.rest.vm.LoginVM;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Collections;
 
 /**
  * Controller to authenticate users.

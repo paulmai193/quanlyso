@@ -1,19 +1,17 @@
 package logia.quanlyso.service.dto;
 
+import logia.quanlyso.config.Constants;
+import logia.quanlyso.domain.Authority;
+import logia.quanlyso.domain.User;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
-
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotBlank;
-
-import logia.quanlyso.config.Constants;
-import logia.quanlyso.domain.Authority;
-import logia.quanlyso.domain.User;
 
 /**
  * A DTO representing a user, with his authorities.
@@ -290,7 +288,7 @@ public class UserDTO {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

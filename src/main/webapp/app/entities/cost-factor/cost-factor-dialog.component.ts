@@ -9,7 +9,6 @@ import { EventManager, AlertService } from 'ng-jhipster';
 import { CostFactor } from './cost-factor.model';
 import { CostFactorPopupService } from './cost-factor-popup.service';
 import { CostFactorService } from './cost-factor.service';
-import { Factor, FactorService } from '../factor';
 import { Style, StyleService } from '../style';
 import { Types, TypesService } from '../types';
 
@@ -23,8 +22,6 @@ export class CostFactorDialogComponent implements OnInit {
     authorities: any[];
     isSaving: boolean;
 
-    factors: Factor[];
-
     styles: Style[];
 
     types: Types[];
@@ -33,7 +30,6 @@ export class CostFactorDialogComponent implements OnInit {
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
         private costFactorService: CostFactorService,
-        private factorService: FactorService,
         private styleService: StyleService,
         private typesService: TypesService,
         private eventManager: EventManager
@@ -43,8 +39,6 @@ export class CostFactorDialogComponent implements OnInit {
     ngOnInit() {
         this.isSaving = false;
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        this.factorService.query().subscribe(
-            (res: Response) => { this.factors = res.json(); }, (res: Response) => this.onError(res.json()));
         this.styleService.query().subscribe(
             (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
         this.typesService.query().subscribe(
@@ -88,10 +82,6 @@ export class CostFactorDialogComponent implements OnInit {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-
-    trackFactorById(index: number, item: Factor) {
-        return item.id;
     }
 
     trackStyleById(index: number, item: Style) {

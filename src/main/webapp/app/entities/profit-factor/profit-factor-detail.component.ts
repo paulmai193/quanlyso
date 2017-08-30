@@ -5,10 +5,8 @@ import { AlertService, EventManager } from 'ng-jhipster';
 
 import { ProfitFactor } from './profit-factor.model';
 import { ProfitFactorService } from './profit-factor.service';
-import { FactorService } from '../factor/factor.service';
 import { StyleService } from '../style/style.service';
 import { TypesService } from '../types/types.service';
-import { Factor } from '../factor/factor.model';
 import { Style } from '../style/style.model';
 import { Types } from '../types/types.model';
 
@@ -26,7 +24,6 @@ export class ProfitFactorDetailComponent implements OnInit, OnDestroy {
         private eventManager: EventManager,
         private profitFactorService: ProfitFactorService,
         private alertService: AlertService,
-        private factorService: FactorService,
         private styleService: StyleService,
         private typeService: TypesService,
         private route: ActivatedRoute
@@ -43,7 +40,6 @@ export class ProfitFactorDetailComponent implements OnInit, OnDestroy {
     load(id) {
         this.profitFactorService.find(id).subscribe((profitFactor) => {
             this.profitFactor = profitFactor;
-            this.getFactorName(this.profitFactor);
             this.getStyleName(this.profitFactor);
             this.getTypeName(this.profitFactor);
         });
@@ -66,15 +62,6 @@ export class ProfitFactorDetailComponent implements OnInit, OnDestroy {
 
     private onError(error) {
         this.alertService.error(error.message, null, null);
-    }
-
-    private getFactorName(profitFactor: ProfitFactor): void {
-        this.factorService.find(profitFactor.factorsId).toPromise()
-            .then((factor: Factor) => profitFactor.factorsName = factor.name)
-            .catch((error: any) => {
-                console.error('Cannot retrieve factor', error);
-                this.onError(error);
-            });
     }
 
     private getStyleName(profitFactor: ProfitFactor): void {

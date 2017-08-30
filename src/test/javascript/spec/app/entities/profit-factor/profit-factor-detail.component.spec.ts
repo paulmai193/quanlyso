@@ -9,7 +9,6 @@ import { MockActivatedRoute } from '../../../helpers/mock-route.service';
 import { ProfitFactorDetailComponent } from '../../../../../../main/webapp/app/entities/profit-factor/profit-factor-detail.component';
 import { ProfitFactorService } from '../../../../../../main/webapp/app/entities/profit-factor/profit-factor.service';
 import { ProfitFactor } from '../../../../../../main/webapp/app/entities/profit-factor/profit-factor.model';
-import { FactorService } from '../../../../../../main/webapp/app/entities/factor/factor.service';
 import { StyleService } from '../../../../../../main/webapp/app/entities/style/style.service';
 import { TypesService } from '../../../../../../main/webapp/app/entities/types/types.service';
 
@@ -34,7 +33,6 @@ describe('Component Tests', () => {
                     },
                     ProfitFactorService,
                     AlertService,
-                    FactorService,
                     StyleService,
                     TypesService,
                     EventManager
@@ -52,7 +50,6 @@ describe('Component Tests', () => {
             service = fixture.debugElement.injector.get(ProfitFactorService);
         });
 
-
         describe('OnInit', () => {
             it('Should call load all on init', () => {
             // GIVEN
@@ -64,7 +61,7 @@ describe('Component Tests', () => {
 
             // THEN
             expect(service.find).toHaveBeenCalledWith(123);
-            expect(comp.profitFactor).toEqual(jasmine.objectContaining({id:10}));
+            expect(comp.profitFactor).toEqual(jasmine.objectContaining({id: 10}));
             });
         });
     });

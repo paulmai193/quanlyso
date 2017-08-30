@@ -1,10 +1,9 @@
 package logia.quanlyso.service.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-
 import logia.quanlyso.domain.Code;
 import logia.quanlyso.service.dto.CodeDTO;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 /**
  * Mapper for the entity Code and its DTO CodeDTO.

@@ -1,17 +1,16 @@
 package logia.quanlyso.service.impl;
 
+import logia.quanlyso.domain.TransactionDetails;
+import logia.quanlyso.repository.TransactionDetailsRepository;
+import logia.quanlyso.service.TransactionDetailsService;
+import logia.quanlyso.service.dto.TransactionDetailsDTO;
+import logia.quanlyso.service.mapper.TransactionDetailsMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import logia.quanlyso.domain.TransactionDetails;
-import logia.quanlyso.repository.TransactionDetailsRepository;
-import logia.quanlyso.service.TransactionDetailsService;
-import logia.quanlyso.service.dto.TransactionDetailsDTO;
-import logia.quanlyso.service.mapper.TransactionDetailsMapper;
 
 /**
  * Service Implementation for managing TransactionDetails.
@@ -62,7 +61,7 @@ public class TransactionDetailsServiceImpl implements TransactionDetailsService 
 
 	/**
 	 * Get all the transactionDetails.
-	 * 
+	 *
 	 * @param pageable the pagination information
 	 * @return the list of entities
 	 */

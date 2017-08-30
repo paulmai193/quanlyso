@@ -8,12 +8,6 @@
         <dd>
             <span>{{profitFactor.rate}}</span>
         </dd>
-        <dt><span jhiTranslate="quanlysoApp.profitFactor.factors">Factors</span></dt>
-        <dd>
-            <div *ngIf="profitFactor.factorsId">
-                <a [routerLink]="['/factor', profitFactor.factorsId]">{{profitFactor.factorsName}}</a>
-            </div>
-        </dd>
         <dt><span jhiTranslate="quanlysoApp.profitFactor.styles">Styles</span></dt>
         <dd>
             <div *ngIf="profitFactor.stylesId">

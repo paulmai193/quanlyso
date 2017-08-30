@@ -1,12 +1,8 @@
 package logia.quanlyso;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.annotation.PostConstruct;
-
+import io.github.jhipster.config.JHipsterConstants;
+import logia.quanlyso.config.ApplicationProperties;
+import logia.quanlyso.config.DefaultProfileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -18,9 +14,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
-import io.github.jhipster.config.JHipsterConstants;
-import logia.quanlyso.config.ApplicationProperties;
-import logia.quanlyso.config.DefaultProfileUtil;
+import javax.annotation.PostConstruct;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
  * The Class QuanlysoApp.

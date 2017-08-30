@@ -1,7 +1,9 @@
 package logia.quanlyso.config;
 
-import javax.annotation.PostConstruct;
-
+import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
+import logia.quanlyso.security.AuthoritiesConstants;
+import logia.quanlyso.security.jwt.JWTConfigurer;
+import logia.quanlyso.security.jwt.TokenProvider;
 import org.springframework.beans.factory.BeanInitializationException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +22,7 @@ import org.springframework.security.data.repository.query.SecurityEvaluationCont
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.filter.CorsFilter;
 
-import io.github.jhipster.security.Http401UnauthorizedEntryPoint;
-import logia.quanlyso.security.AuthoritiesConstants;
-import logia.quanlyso.security.jwt.JWTConfigurer;
-import logia.quanlyso.security.jwt.TokenProvider;
+import javax.annotation.PostConstruct;
 
 /**
  * The Class SecurityConfiguration.
@@ -101,7 +100,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 	 * #configure(org.springframework.security.config.annotation.web.builders.WebSecurity)
@@ -116,7 +115,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 	 * #configure(org.springframework.security.config.annotation.web.builders.HttpSecurity)

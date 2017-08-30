@@ -1,10 +1,10 @@
 package logia.quanlyso.web.rest.vm;
 
+import logia.quanlyso.config.Constants;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import logia.quanlyso.config.Constants;
 
 /**
  * View Model object for storing a user's credentials.
@@ -83,7 +83,7 @@ public class LoginVM {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

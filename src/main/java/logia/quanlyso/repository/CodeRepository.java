@@ -1,12 +1,11 @@
 package logia.quanlyso.repository;
 
-import java.time.ZonedDateTime;
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import logia.quanlyso.domain.Channel;
 import logia.quanlyso.domain.Code;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.time.ZonedDateTime;
+import java.util.List;
 
 /**
  * Spring Data JPA repository for the Code entity.

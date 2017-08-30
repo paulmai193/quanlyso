@@ -1,11 +1,10 @@
 package logia.quanlyso.client;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.gargoylesoftware.htmlunit.BrowserVersion;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The Class HttpUnitRequest.
@@ -42,7 +41,7 @@ public final class HttpUnitRequest implements AutoCloseable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.AutoCloseable#close()
 	 */
 	@Override

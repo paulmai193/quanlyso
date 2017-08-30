@@ -1,40 +1,8 @@
 package logia.quanlyso.service.impl;
 
-import java.text.MessageFormat;
-import java.text.ParseException;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.gargoylesoftware.htmlunit.html.HtmlOption;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlSelect;
-import com.gargoylesoftware.htmlunit.html.HtmlTable;
-import com.gargoylesoftware.htmlunit.html.HtmlTableCell;
-import com.gargoylesoftware.htmlunit.html.HtmlTableRow;
-
+import com.gargoylesoftware.htmlunit.html.*;
 import logia.quanlyso.client.HttpUnitRequest;
-import logia.quanlyso.domain.Channel;
-import logia.quanlyso.domain.Code;
-import logia.quanlyso.domain.CostFactor;
-import logia.quanlyso.domain.Factor;
-import logia.quanlyso.domain.ProfitFactor;
-import logia.quanlyso.domain.Style;
-import logia.quanlyso.domain.StyleConstants;
-import logia.quanlyso.domain.TransactionDetails;
-import logia.quanlyso.domain.Transactions;
-import logia.quanlyso.domain.Types;
-import logia.quanlyso.domain.TypesConstants;
+import logia.quanlyso.domain.*;
 import logia.quanlyso.listener.ProcessingListener;
 import logia.quanlyso.repository.ChannelRepository;
 import logia.quanlyso.repository.CodeRepository;
@@ -45,6 +13,20 @@ import logia.quanlyso.service.dto.CodeDTO;
 import logia.quanlyso.service.dto.ProcessingDTO;
 import logia.quanlyso.service.mapper.CodeMapper;
 import logia.quanlyso.service.util.DateFormatterUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.text.MessageFormat;
+import java.text.ParseException;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing Code.
@@ -76,7 +58,7 @@ public class CodeServiceImpl implements CodeService {
 
 	/** The base url. */
 	private final String					baseUrl;
-	
+
 	/** The processing listener. */
 	private final ProcessingListener processingListener;
 
@@ -119,7 +101,7 @@ public class CodeServiceImpl implements CodeService {
 
 	/**
 	 * Get all the codes.
-	 * 
+	 *
 	 * @param pageable the pagination information
 	 * @return the list of entities
 	 */
@@ -159,7 +141,7 @@ public class CodeServiceImpl implements CodeService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see logia.quanlyso.service.CodeService#calculate(logia.quanlyso.domain.Transactions)
 	 */
 	@Override
@@ -169,7 +151,6 @@ public class CodeServiceImpl implements CodeService {
 		for (TransactionDetails _details : __transactions.getTransactionDetails()) {
 			// Get all condition
 			Channel _channel = _details.getChannels();
-			Factor _factor = _details.getFactors();
 			Style _style = _details.getStyles();
 			Types _types = _details.getTypes();
 
@@ -177,7 +158,7 @@ public class CodeServiceImpl implements CodeService {
 			ZonedDateTime _openDate = __transactions.getOpenDate();
 			if (_openDate == null) {
 				// If not set, Assume transactions of current date
-				_openDate = ZonedDateTime.now(DateFormatterUtil.systemZoneId());	
+				_openDate = ZonedDateTime.now(DateFormatterUtil.systemZoneId());
 			}
 			else {
 				_openDate = _openDate.withZoneSameInstant(DateFormatterUtil.systemZoneId());
@@ -187,9 +168,9 @@ public class CodeServiceImpl implements CodeService {
 					_formattedDate);
 			_listCodes = this.getMatchCondition(_chosenNumber, _listCodes, _style, _types);
 			CostFactor _costFactor = this.costFactorRepository
-					.findOneByFactorsAndStylesAndTypes(_factor, _style, _types);
+					.findOneByStylesAndTypes(_style, _types);
 			ProfitFactor _profitFactor = this.profitFactorRepository
-					.findOneByFactorsAndStylesAndTypes(_factor, _style, _types);
+					.findOneByStylesAndTypes(_style, _types);
 			float _amount = _details.getAmount();
 			_details.costs(_amount * _costFactor.getRate()).profit(_amount * _profitFactor.getRate() * _listCodes.size());
 
@@ -280,10 +261,10 @@ public class CodeServiceImpl implements CodeService {
 		}
 		this.processingListener.resetProcessing();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * logia.lottery.center.api.service.CrawlDataService#crawlLotteriesFromMinhNgocSite(java.lang.
 	 * String)
@@ -331,7 +312,7 @@ public class CodeServiceImpl implements CodeService {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * logia.lottery.center.api.service.CrawlDataService#crawlLotteriesFromMinhNgocSite(java.lang.
 	 * String, java.lang.String, boolean)
@@ -378,7 +359,7 @@ public class CodeServiceImpl implements CodeService {
 			throw __ex;
 		}
 	}
-	
+
 	/* (non-Javadoc)
 	 * @see logia.quanlyso.service.CodeService#getCrawlProcessing()
 	 */

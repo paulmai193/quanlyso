@@ -20,13 +20,6 @@
         </div>
 
         <div class="form-group">
-            <label jhiTranslate="quanlysoApp.costFactor.factors" for="field_factors">Factors</label>
-            <select class="form-control" id="field_factors" name="factors" [(ngModel)]="costFactor.factorsId" >
-                <option [ngValue]="null"></option>
-                <option [ngValue]="factorOption.id" *ngFor="let factorOption of factors; trackBy: trackFactorById">{{factorOption.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
             <label jhiTranslate="quanlysoApp.costFactor.styles" for="field_styles">Styles</label>
             <select class="form-control" id="field_styles" name="styles" [(ngModel)]="costFactor.stylesId" >
                 <option [ngValue]="null"></option>
