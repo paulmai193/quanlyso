@@ -18,7 +18,6 @@ public interface TypesMapper extends EntityMapper<TypesDTO, Types> {
 	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
-	@Mapping(target = "profitFactors", ignore = true)
 	@Mapping(target = "costFactors", ignore = true)
 	@Mapping(target = "transactionDetails", ignore = true)
 	Types toEntity(TypesDTO typesDTO);

@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
  *
  * @author Dai Mai
  */
-@Mapper(componentModel = "spring", uses = { StyleMapper.class, TypesMapper.class, })
+@Mapper(componentModel = "spring", uses = { StyleMapper.class, })
 public interface ProfitFactorMapper extends EntityMapper<ProfitFactorDTO, ProfitFactor> {
 
 	/*
@@ -19,7 +19,6 @@ public interface ProfitFactorMapper extends EntityMapper<ProfitFactorDTO, Profit
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toDto(java.lang.Object)
 	 */
 	@Mapping(source = "styles.id", target = "stylesId")
-	@Mapping(source = "types.id", target = "typesId")
 	ProfitFactorDTO toDto(ProfitFactor profitFactor);
 
 	/*
@@ -28,7 +27,6 @@ public interface ProfitFactorMapper extends EntityMapper<ProfitFactorDTO, Profit
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
 	@Mapping(source = "stylesId", target = "styles")
-	@Mapping(source = "typesId", target = "types")
 	ProfitFactor toEntity(ProfitFactorDTO profitFactorDTO);
 
 	/**

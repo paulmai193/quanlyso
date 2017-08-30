@@ -14,11 +14,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface ProfitFactorRepository extends JpaRepository<ProfitFactor, Long> {
 
 	/**
-	 * Find one by style and types.
+	 * Find one by style.
 	 *
 	 * @param style the style
-	 * @param types the types
 	 * @return the list
 	 */
-	ProfitFactor findOneByStylesAndTypes(Style style, Types types);
+	ProfitFactor findOneByStyles(Style style);
 }

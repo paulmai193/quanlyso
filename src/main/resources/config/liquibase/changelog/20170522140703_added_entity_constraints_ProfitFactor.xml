@@ -7,7 +7,7 @@
         Added the constraints for entity ProfitFactor.
     -->
     <changeSet id="20170522140703-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="factors_id"
                                  baseTableName="profit_factor"
                                  constraintName="fk_profit_factor_factors_id"
@@ -20,14 +20,8 @@
                                  referencedColumnNames="id"
                                  referencedTableName="style"/>
 
-        <addForeignKeyConstraint baseColumnNames="types_id"
-                                 baseTableName="profit_factor"
-                                 constraintName="fk_profit_factor_types_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="types"/>
-                                 
-		<addUniqueConstraint columnNames="factors_id, styles_id, types_id" tableName="profit_factor" constraintName="unique_profit_factor"/>
-                                 
+		<addUniqueConstraint columnNames="factors_id, styles_id" tableName="profit_factor" constraintName="unique_profit_factor"/>
+
 		<loadData encoding="UTF-8"
                   file="config/liquibase/profit_factor.csv"
                   separator=";"

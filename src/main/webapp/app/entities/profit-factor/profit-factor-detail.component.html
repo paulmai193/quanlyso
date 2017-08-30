@@ -14,12 +14,6 @@
                 <a [routerLink]="['/style', profitFactor.stylesId]">{{profitFactor.stylesName}}</a>
             </div>
         </dd>
-        <dt><span jhiTranslate="quanlysoApp.profitFactor.types">Types</span></dt>
-        <dd>
-            <div *ngIf="profitFactor.typesId">
-                <a [routerLink]="['/types', profitFactor.typesId]">{{profitFactor.typesName}}</a>
-            </div>
-        </dd>
     </dl>
 
     <button type="submit"

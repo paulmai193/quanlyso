@@ -10,7 +10,6 @@ import { ProfitFactor } from './profit-factor.model';
 import { ProfitFactorPopupService } from './profit-factor-popup.service';
 import { ProfitFactorService } from './profit-factor.service';
 import { Style, StyleService } from '../style';
-import { Types, TypesService } from '../types';
 
 @Component({
     selector: 'jhi-profit-factor-dialog',
@@ -24,14 +23,11 @@ export class ProfitFactorDialogComponent implements OnInit {
 
     styles: Style[];
 
-    types: Types[];
-
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
         private profitFactorService: ProfitFactorService,
         private styleService: StyleService,
-        private typesService: TypesService,
         private eventManager: EventManager
     ) {
     }
@@ -41,8 +37,6 @@ export class ProfitFactorDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.styleService.query().subscribe(
             (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
-        this.typesService.query().subscribe(
-            (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
     }
     clear() {
         this.activeModal.dismiss('cancel');
@@ -85,10 +79,6 @@ export class ProfitFactorDialogComponent implements OnInit {
     }
 
     trackStyleById(index: number, item: Style) {
-        return item.id;
-    }
-
-    trackTypesById(index: number, item: Types) {
         return item.id;
     }
 }

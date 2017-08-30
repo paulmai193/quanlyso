@@ -32,12 +32,6 @@ public class Types implements Serializable {
 	@Column(name = "name")
 	private String					name;
 
-	/** The profit factors. */
-	@OneToMany(mappedBy = "types")
-	@JsonIgnore
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<ProfitFactor>		profitFactors		= new HashSet<>();
-
 	/** The cost factors. */
 	@OneToMany(mappedBy = "types")
 	@JsonIgnore
@@ -95,59 +89,6 @@ public class Types implements Serializable {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * Gets the profit factors.
-	 *
-	 * @return the profit factors
-	 */
-	public Set<ProfitFactor> getProfitFactors() {
-		return this.profitFactors;
-	}
-
-	/**
-	 * Profit factors.
-	 *
-	 * @param profitFactors the profit factors
-	 * @return the types
-	 */
-	public Types profitFactors(Set<ProfitFactor> profitFactors) {
-		this.profitFactors = profitFactors;
-		return this;
-	}
-
-	/**
-	 * Adds the profit factors.
-	 *
-	 * @param profitFactor the profit factor
-	 * @return the types
-	 */
-	public Types addProfitFactors(ProfitFactor profitFactor) {
-		this.profitFactors.add(profitFactor);
-		profitFactor.setTypes(this);
-		return this;
-	}
-
-	/**
-	 * Removes the profit factors.
-	 *
-	 * @param profitFactor the profit factor
-	 * @return the types
-	 */
-	public Types removeProfitFactors(ProfitFactor profitFactor) {
-		this.profitFactors.remove(profitFactor);
-		profitFactor.setTypes(null);
-		return this;
-	}
-
-	/**
-	 * Sets the profit factors.
-	 *
-	 * @param profitFactors the new profit factors
-	 */
-	public void setProfitFactors(Set<ProfitFactor> profitFactors) {
-		this.profitFactors = profitFactors;
 	}
 
 	/**

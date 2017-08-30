@@ -9,9 +9,7 @@ import { ProfitFactorService } from './profit-factor.service';
 import { ITEMS_PER_PAGE, Principal } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 import { Style } from '../style/style.model';
-import { Types } from '../types/types.model';
 import { StyleService } from '../style/style.service';
-import { TypesService } from '../types/types.service';
 
 @Component({
     selector: 'jhi-profit-factor',
@@ -27,8 +25,7 @@ profitFactors: ProfitFactor[];
         private principal: Principal,
         private profitFactorService: ProfitFactorService,
         private alertService: AlertService,
-        private styleService: StyleService,
-        private typeService: TypesService
+        private styleService: StyleService
     ) {
     }
 
@@ -38,7 +35,6 @@ profitFactors: ProfitFactor[];
                 this.profitFactors = res.json();
                 this.profitFactors.forEach((el: ProfitFactor) => {
                     this.getStyleName(el);
-                    this.getTypeName(el);
                 });
             },
             (res: Response) => this.onError(res.json())
@@ -74,15 +70,6 @@ profitFactors: ProfitFactor[];
                 console.error('Cannot retrieve styles', error);
                 this.onError(error);
             });
-    }
-
-    private getTypeName(profitFactor: ProfitFactor): void {
-        this.typeService.find(profitFactor.typesId).toPromise()
-            .then((type: Types) => profitFactor.typesName = type.name)
-            .catch((error: any) => {
-            console.error('Cannot retrieve types', error);
-            this.onError(error);
-        });
     }
 
 }
