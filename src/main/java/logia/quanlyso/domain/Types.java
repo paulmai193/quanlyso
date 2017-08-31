@@ -32,12 +32,6 @@ public class Types implements Serializable {
 	@Column(name = "name")
 	private String					name;
 
-	/** The cost factors. */
-	@OneToMany(mappedBy = "types")
-	@JsonIgnore
-	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<CostFactor>			costFactors			= new HashSet<>();
-
 	/** The transaction details. */
 	@OneToMany(mappedBy = "types")
 	@JsonIgnore
@@ -89,59 +83,6 @@ public class Types implements Serializable {
 	 */
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	/**
-	 * Gets the cost factors.
-	 *
-	 * @return the cost factors
-	 */
-	public Set<CostFactor> getCostFactors() {
-		return this.costFactors;
-	}
-
-	/**
-	 * Cost factors.
-	 *
-	 * @param costFactors the cost factors
-	 * @return the types
-	 */
-	public Types costFactors(Set<CostFactor> costFactors) {
-		this.costFactors = costFactors;
-		return this;
-	}
-
-	/**
-	 * Adds the cost factors.
-	 *
-	 * @param costFactor the cost factor
-	 * @return the types
-	 */
-	public Types addCostFactors(CostFactor costFactor) {
-		this.costFactors.add(costFactor);
-		costFactor.setTypes(this);
-		return this;
-	}
-
-	/**
-	 * Removes the cost factors.
-	 *
-	 * @param costFactor the cost factor
-	 * @return the types
-	 */
-	public Types removeCostFactors(CostFactor costFactor) {
-		this.costFactors.remove(costFactor);
-		costFactor.setTypes(null);
-		return this;
-	}
-
-	/**
-	 * Sets the cost factors.
-	 *
-	 * @param costFactors the new cost factors
-	 */
-	public void setCostFactors(Set<CostFactor> costFactors) {
-		this.costFactors = costFactors;
 	}
 
 	/**

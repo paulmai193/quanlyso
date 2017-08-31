@@ -19,7 +19,6 @@ public interface CostFactorMapper extends EntityMapper<CostFactorDTO, CostFactor
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toDto(java.lang.Object)
 	 */
 	@Mapping(source = "styles.id", target = "stylesId")
-	@Mapping(source = "types.id", target = "typesId")
 	CostFactorDTO toDto(CostFactor costFactor);
 
 	/*
@@ -28,7 +27,6 @@ public interface CostFactorMapper extends EntityMapper<CostFactorDTO, CostFactor
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
 	@Mapping(source = "stylesId", target = "styles")
-	@Mapping(source = "typesId", target = "types")
 	CostFactor toEntity(CostFactorDTO costFactorDTO);
 
 	/**

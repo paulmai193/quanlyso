@@ -33,10 +33,6 @@ public class CostFactor implements Serializable {
 	@ManyToOne
 	private Style				styles;
 
-	/** The types. */
-	@ManyToOne
-	private Types				types;
-
 	/**
 	 * Gets the id.
 	 *
@@ -111,35 +107,6 @@ public class CostFactor implements Serializable {
 	 */
 	public void setStyles(Style style) {
 		this.styles = style;
-	}
-
-	/**
-	 * Gets the types.
-	 *
-	 * @return the types
-	 */
-	public Types getTypes() {
-		return this.types;
-	}
-
-	/**
-	 * Types.
-	 *
-	 * @param types the types
-	 * @return the cost factor
-	 */
-	public CostFactor types(Types types) {
-		this.types = types;
-		return this;
-	}
-
-	/**
-	 * Sets the types.
-	 *
-	 * @param types the new types
-	 */
-	public void setTypes(Types types) {
-		this.types = types;
 	}
 
 	/*

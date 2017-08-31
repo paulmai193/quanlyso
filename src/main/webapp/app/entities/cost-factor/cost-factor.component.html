@@ -19,7 +19,6 @@
             <th><span jhiTranslate="global.field.id">ID</span></th>
             <th><span jhiTranslate="quanlysoApp.costFactor.rate">Rate</span></th>
             <th><span jhiTranslate="quanlysoApp.costFactor.styles">Styles</span></th>
-            <th><span jhiTranslate="quanlysoApp.costFactor.types">Types</span></th>
             <th></th>
             </tr>
             </thead>
@@ -30,11 +29,6 @@
                 <td>
                     <div *ngIf="costFactor.stylesId">
                         <a [routerLink]="['../style', costFactor.stylesId  ]" >{{ costFactor.stylesName }}</a>
-                    </div>
-                </td>
-                <td>
-                    <div *ngIf="costFactor.typesId">
-                        <a [routerLink]="['../types', costFactor.typesId  ]" >{{ costFactor.typesName }}</a>
                     </div>
                 </td>
                 <td class="text-right">

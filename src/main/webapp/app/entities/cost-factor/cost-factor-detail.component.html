@@ -14,12 +14,6 @@
                 <a [routerLink]="['/style', costFactor.stylesId]">{{costFactor.stylesName}}</a>
             </div>
         </dd>
-        <dt><span jhiTranslate="quanlysoApp.costFactor.types">Types</span></dt>
-        <dd>
-            <div *ngIf="costFactor.typesId">
-                <a [routerLink]="['/types', costFactor.typesId]">{{costFactor.typesName}}</a>
-            </div>
-        </dd>
     </dl>
 
     <button type="submit"

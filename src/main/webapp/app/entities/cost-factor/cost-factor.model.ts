@@ -6,8 +6,6 @@ export class CostFactor {
         public factorsName?: string,
         public stylesId?: number,
         public stylesName?: string,
-        public typesId?: number,
-        public typesName?: string,
     ) {
     }
 }

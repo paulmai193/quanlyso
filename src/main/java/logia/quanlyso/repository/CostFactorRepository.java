@@ -16,20 +16,18 @@ import java.util.List;
 public interface CostFactorRepository extends JpaRepository<CostFactor, Long> {
 
 	/**
-	 * Find one by style and types.
+	 * Find one by style.
 	 *
 	 * @param style the style
-	 * @param types the types
 	 * @return the list
 	 */
-	CostFactor findOneByStylesAndTypes(Style style, Types types);
+	CostFactor findOneByStyles(Style style);
 
 	/**
-	 * Find all by styles and types.
+	 * Find all by styles.
 	 *
 	 * @param style the style
-	 * @param types the types
 	 * @return the list
 	 */
-	List<CostFactor> findAllByStylesAndTypes(Style style, Types types);
+	List<CostFactor> findAllByStyles(Style style);
 }

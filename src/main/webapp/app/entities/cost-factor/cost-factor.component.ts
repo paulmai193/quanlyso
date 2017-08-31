@@ -10,7 +10,6 @@ import { ITEMS_PER_PAGE, Principal } from '../../shared';
 import { PaginationConfig } from '../../blocks/config/uib-pagination.config';
 import { StyleService } from '../style/style.service';
 import { Style } from '../style/style.model';
-import { TypesService } from '../types/types.service';
 import { Types } from '../types/types.model';
 
 @Component({
@@ -27,8 +26,7 @@ export class CostFactorComponent implements OnInit, OnDestroy {
         private principal: Principal,
         private costFactorService: CostFactorService,
         private alertService: AlertService,
-        private styleService: StyleService,
-        private typeService: TypesService
+        private styleService: StyleService
     ) {
     }
 
@@ -38,7 +36,6 @@ export class CostFactorComponent implements OnInit, OnDestroy {
                 this.costFactors = res.json();
                 this.costFactors.forEach((el: CostFactor) => {
                     this.getStyleName(el);
-                    this.getTypeName(el);
                 });
             },
             (res: Response) => this.onError(res.json())
@@ -72,15 +69,6 @@ export class CostFactorComponent implements OnInit, OnDestroy {
             .then((style: Style) => costFactor.stylesName = style.name)
             .catch((error: any) => {
                 console.error('Cannot retrieve styles', error);
-                this.onError(error);
-            });
-    }
-
-    private getTypeName(costFactor: CostFactor): void {
-        this.typeService.find(costFactor.typesId).toPromise()
-            .then((type: Types) => costFactor.typesName = type.name)
-            .catch((error: any) => {
-                console.error('Cannot retrieve types', error);
                 this.onError(error);
             });
     }

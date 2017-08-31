@@ -168,7 +168,7 @@ public class CodeServiceImpl implements CodeService {
 					_formattedDate);
 			_listCodes = this.getMatchCondition(_chosenNumber, _listCodes, _style, _types);
 			CostFactor _costFactor = this.costFactorRepository
-					.findOneByStylesAndTypes(_style, _types);
+					.findOneByStyles(_style);
 			ProfitFactor _profitFactor = this.profitFactorRepository
 					.findOneByStyles(_style);
 			float _amount = _details.getAmount();

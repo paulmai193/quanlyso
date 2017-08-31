@@ -10,7 +10,6 @@ import { CostFactor } from './cost-factor.model';
 import { CostFactorPopupService } from './cost-factor-popup.service';
 import { CostFactorService } from './cost-factor.service';
 import { Style, StyleService } from '../style';
-import { Types, TypesService } from '../types';
 
 @Component({
     selector: 'jhi-cost-factor-dialog',
@@ -24,14 +23,11 @@ export class CostFactorDialogComponent implements OnInit {
 
     styles: Style[];
 
-    types: Types[];
-
     constructor(
         public activeModal: NgbActiveModal,
         private alertService: AlertService,
         private costFactorService: CostFactorService,
         private styleService: StyleService,
-        private typesService: TypesService,
         private eventManager: EventManager
     ) {
     }
@@ -41,8 +37,6 @@ export class CostFactorDialogComponent implements OnInit {
         this.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
         this.styleService.query().subscribe(
             (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
-        this.typesService.query().subscribe(
-            (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
     }
     clear() {
         this.activeModal.dismiss('cancel');
@@ -85,10 +79,6 @@ export class CostFactorDialogComponent implements OnInit {
     }
 
     trackStyleById(index: number, item: Style) {
-        return item.id;
-    }
-
-    trackTypesById(index: number, item: Types) {
         return item.id;
     }
 }
