@@ -6,9 +6,11 @@ export class TransactionDetails {
         public costs?: number,
         public transactionsId?: number,
         public channelsId?: number,
-        public factorsId?: number,
         public stylesId?: number,
         public typesId?: number,
+        public costRate?: number,
+        public minRate?: number,
+        public maxRate?: number,
     ) {
     }
 }

@@ -116,6 +116,21 @@ public class CostFactorResource {
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(costFactorDTO));
 	}
 
+    /**
+     * GET /cost-factors/style/:id : get the costFactor by style ID.
+     *
+     * @param id the Style ID of the costFactorDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the costFactorDTO, or with
+     *         status 404 (Not Found)
+     */
+    @GetMapping("/cost-factors/style/{id}")
+    @Timed
+    public ResponseEntity<CostFactorDTO> getCostFactorByStyle(@PathVariable Long id) {
+        this.log.debug("REST request to get CostFactor : {}", id);
+        CostFactorDTO costFactorDTO = this.costFactorService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(costFactorDTO));
+    }
+
 	/**
 	 * DELETE /cost-factors/:id : delete the "id" costFactor.
 	 *

@@ -31,6 +31,12 @@ export class CostFactorService {
         });
     }
 
+    findByStyle(id: number): Observable<CostFactor> {
+        return this.http.get(`${this.resourceUrl}/style/${id}`).map((res: Response) => {
+            return res.json();
+        });
+    }
+
     query(req?: any): Observable<Response> {
         const options = this.createRequestOption(req);
         return this.http.get(this.resourceUrl, options)

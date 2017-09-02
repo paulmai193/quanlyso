@@ -53,284 +53,316 @@ public class TransactionDetails implements Serializable {
 	@ManyToOne
 	private Types				types;
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
+	@Column(name = "cost_rate")
+	private Float costRate;
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
 		return this.id;
 	}
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(Long id) {
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
+    public void setId(Long id) {
 		this.id = id;
 	}
 
-	/**
-	 * Gets the amount.
-	 *
-	 * @return the amount
-	 */
-	public Float getAmount() {
+    /**
+     * Gets the amount.
+     *
+     * @return the amount
+     */
+    public Float getAmount() {
 		return this.amount;
 	}
 
-	/**
-	 * Amount.
-	 *
-	 * @param amount the amount
-	 * @return the transaction details
-	 */
-	public TransactionDetails amount(Float amount) {
+    /**
+     * Amount.
+     *
+     * @param amount the amount
+     * @return the transaction details
+     */
+    public TransactionDetails amount(Float amount) {
 		this.amount = amount;
 		return this;
 	}
 
-	/**
-	 * Sets the amount.
-	 *
-	 * @param amount the new amount
-	 */
-	public void setAmount(Float amount) {
+    /**
+     * Sets the amount.
+     *
+     * @param amount the new amount
+     */
+    public void setAmount(Float amount) {
 		this.amount = amount;
 	}
 
-	/**
-	 * Gets the profit.
-	 *
-	 * @return the profit
-	 */
-	public Float getProfit() {
+    /**
+     * Gets the profit.
+     *
+     * @return the profit
+     */
+    public Float getProfit() {
 		return this.profit;
 	}
 
-	/**
-	 * Profit.
-	 *
-	 * @param profit the profit
-	 * @return the transaction details
-	 */
-	public TransactionDetails profit(Float profit) {
+    /**
+     * Profit.
+     *
+     * @param profit the profit
+     * @return the transaction details
+     */
+    public TransactionDetails profit(Float profit) {
 		this.profit = profit;
 		return this;
 	}
 
-	/**
-	 * Sets the profit.
-	 *
-	 * @param profit the new profit
-	 */
-	public void setProfit(Float profit) {
+    /**
+     * Sets the profit.
+     *
+     * @param profit the new profit
+     */
+    public void setProfit(Float profit) {
 		this.profit = profit;
 	}
 
-	/**
-	 * Gets the costs.
-	 *
-	 * @return the costs
-	 */
-	public Float getCosts() {
+    /**
+     * Gets the costs.
+     *
+     * @return the costs
+     */
+    public Float getCosts() {
 		return this.costs;
 	}
 
-	/**
-	 * Costs.
-	 *
-	 * @param costs the costs
-	 * @return the transaction details
-	 */
-	public TransactionDetails costs(Float costs) {
+    /**
+     * Costs.
+     *
+     * @param costs the costs
+     * @return the transaction details
+     */
+    public TransactionDetails costs(Float costs) {
 		this.costs = costs;
 		return this;
 	}
 
-	/**
-	 * Sets the costs.
-	 *
-	 * @param costs the new costs
-	 */
-	public void setCosts(Float costs) {
+    /**
+     * Sets the costs.
+     *
+     * @param costs the new costs
+     */
+    public void setCosts(Float costs) {
 		this.costs = costs;
 	}
 
-	/**
-	 * Gets the transactions.
-	 *
-	 * @return the transactions
-	 */
-	public Transactions getTransactions() {
+    /**
+     * Gets the transactions.
+     *
+     * @return the transactions
+     */
+    public Transactions getTransactions() {
 		return this.transactions;
 	}
 
-	/**
-	 * Transactions.
-	 *
-	 * @param transactions the transactions
-	 * @return the transaction details
-	 */
-	public TransactionDetails transactions(Transactions transactions) {
+    /**
+     * Transactions.
+     *
+     * @param transactions the transactions
+     * @return the transaction details
+     */
+    public TransactionDetails transactions(Transactions transactions) {
 		this.setTransactions(transactions);
 		return this;
 	}
 
-	/**
-	 * Sets the transactions.
-	 *
-	 * @param transactions the new transactions
-	 */
-	public void setTransactions(Transactions transactions) {
+    /**
+     * Sets the transactions.
+     *
+     * @param transactions the new transactions
+     */
+    public void setTransactions(Transactions transactions) {
 		this.setTransactions(transactions, true);
 	}
 
-	/**
-	 * Sets the transactions.
-	 *
-	 * @param transactions the transactions
-	 * @param isSetToTarget the is set to target transaction
-	 */
-	void setTransactions(Transactions transactions, boolean isSetToTarget) {
+    /**
+     * Sets the transactions.
+     *
+     * @param transactions  the transactions
+     * @param isSetToTarget the is set to target transaction
+     */
+    void setTransactions(Transactions transactions, boolean isSetToTarget) {
 		this.transactions = transactions;
 		if (transactions != null && isSetToTarget) {
 			transactions.addTransactionDetails(this, false);
 		}
 	}
 
-	/**
-	 * Gets the channels.
-	 *
-	 * @return the channels
-	 */
-	public Channel getChannels() {
+    /**
+     * Gets the channels.
+     *
+     * @return the channels
+     */
+    public Channel getChannels() {
 		return this.channels;
 	}
 
-	/**
-	 * Channels.
-	 *
-	 * @param channel the channel
-	 * @return the transaction details
-	 */
-	public TransactionDetails channels(Channel channel) {
+    /**
+     * Channels.
+     *
+     * @param channel the channel
+     * @return the transaction details
+     */
+    public TransactionDetails channels(Channel channel) {
 		this.setChannels(channel);
 		return this;
 	}
 
-	/**
-	 * Sets the channels.
-	 *
-	 * @param channel the new channels
-	 */
-	public void setChannels(Channel channel) {
+    /**
+     * Sets the channels.
+     *
+     * @param channel the new channels
+     */
+    public void setChannels(Channel channel) {
 		this.setChannels(channel, true);
 	}
 
-	/**
-	 * Sets the channels.
-	 *
-	 * @param channel the channel
-	 * @param isSetToTarget the is set to target channel
-	 */
-	void setChannels(Channel channel, boolean isSetToTarget) {
+    /**
+     * Sets the channels.
+     *
+     * @param channel       the channel
+     * @param isSetToTarget the is set to target channel
+     */
+    void setChannels(Channel channel, boolean isSetToTarget) {
 		this.channels = channel;
 		if (channel != null && isSetToTarget) {
 			channel.addTransactionDetails(this, false);
 		}
 	}
 
-	/**
-	 * Gets the styles.
-	 *
-	 * @return the styles
-	 */
-	public Style getStyles() {
+    /**
+     * Gets the styles.
+     *
+     * @return the styles
+     */
+    public Style getStyles() {
 		return this.styles;
 	}
 
-	/**
-	 * Styles.
-	 *
-	 * @param style the style
-	 * @return the transaction details
-	 */
-	public TransactionDetails styles(Style style) {
+    /**
+     * Styles.
+     *
+     * @param style the style
+     * @return the transaction details
+     */
+    public TransactionDetails styles(Style style) {
 		this.setStyles(style);
 		return this;
 	}
 
-	/**
-	 * Sets the styles.
-	 *
-	 * @param style the new styles
-	 */
-	public void setStyles(Style style) {
+    /**
+     * Sets the styles.
+     *
+     * @param style the new styles
+     */
+    public void setStyles(Style style) {
 		this.setStyles(style, true);
 	}
 
-	/**
-	 * Sets the styles.
-	 *
-	 * @param style the style
-	 * @param isSetToTarget the is set to target style
-	 */
-	void setStyles(Style style, boolean isSetToTarget) {
+    /**
+     * Sets the styles.
+     *
+     * @param style         the style
+     * @param isSetToTarget the is set to target style
+     */
+    void setStyles(Style style, boolean isSetToTarget) {
 		this.styles = style;
 		if (style != null && isSetToTarget) {
 			style.addTransactionDetails(this, false);
 		}
 	}
 
-	/**
-	 * Gets the types.
-	 *
-	 * @return the types
-	 */
-	public Types getTypes() {
+    /**
+     * Gets the types.
+     *
+     * @return the types
+     */
+    public Types getTypes() {
 		return this.types;
 	}
 
-	/**
-	 * Types.
-	 *
-	 * @param types the types
-	 * @return the transaction details
-	 */
-	public TransactionDetails types(Types types) {
+    /**
+     * Types.
+     *
+     * @param types the types
+     * @return the transaction details
+     */
+    public TransactionDetails types(Types types) {
 		this.setTypes(types);
 		return this;
 	}
 
-	/**
-	 * Sets the types.
-	 *
-	 * @param types the new types
-	 */
-	public void setTypes(Types types) {
+    /**
+     * Sets the types.
+     *
+     * @param types the new types
+     */
+    public void setTypes(Types types) {
 		this.setTypes(types, true);
 	}
 
-	/**
-	 * Sets the types.
-	 *
-	 * @param types the types
-	 * @param isSetToTarget the is set to target type
-	 */
-	void setTypes(Types types, boolean isSetToTarget) {
+    /**
+     * Sets the types.
+     *
+     * @param types         the types
+     * @param isSetToTarget the is set to target type
+     */
+    void setTypes(Types types, boolean isSetToTarget) {
 		this.types = types;
 		if (types != null && isSetToTarget) {
 			types.addTransactionDetails(this, false);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+    /**
+     * Gets cost rate.
+     *
+     * @return the cost rate
+     */
+    public Float getCostRate() {
+        return costRate;
+    }
+
+    /**
+     * Sets cost rate.
+     *
+     * @param costRate the cost rate
+     */
+    public void setCostRate(Float costRate) {
+        this.costRate = costRate;
+    }
+
+    /**
+     * Cost rate transaction details.
+     *
+     * @param costRate the cost rate
+     * @return the transaction details
+     */
+    public TransactionDetails costRate(Float costRate) {
+	    this.setCostRate(costRate);
+	    return this;
+    }
+
+    /*
+         * (non-Javadoc)
+         *
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -356,14 +388,18 @@ public class TransactionDetails implements Serializable {
 		return Objects.hashCode(this.getId());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "TransactionDetails{" + "id=" + this.getId() + ", amount='" + this.getAmount() + "'"
-				+ ", profit='" + this.getProfit() + "'" + ", costs='" + this.getCosts() + "'" + "}";
-	}
+    @Override
+    public String toString() {
+        return "TransactionDetails{" +
+            "id=" + id +
+            ", amount=" + amount +
+            ", profit=" + profit +
+            ", costs=" + costs +
+            ", transactions=" + transactions +
+            ", channels=" + channels +
+            ", styles=" + styles +
+            ", types=" + types +
+            ", costRate=" + costRate +
+            '}';
+    }
 }

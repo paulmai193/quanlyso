@@ -34,6 +34,14 @@ public interface CostFactorService {
 	 */
 	CostFactorDTO findOne(Long id);
 
+    /**
+     * Get the costFactor by style ID.
+     *
+     * @param id the id of the style entity
+     * @return the entity
+     */
+    CostFactorDTO findOneByStyleId(Long id);
+
 	/**
 	 * Delete the "id" costFactor.
 	 *

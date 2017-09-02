@@ -22,7 +22,8 @@
             "channels": "Channels",
             "factors": "Factors",
             "styles": "Styles",
-            "types": "Types"
+            "types": "Types",
+            "costRate": "Cost rate"
         }
     }
 }

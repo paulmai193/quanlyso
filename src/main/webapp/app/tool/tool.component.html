@@ -73,9 +73,9 @@
                 <tr>
                     <th><span jhiTranslate="quanlysoApp.transactionDetails.amount">Amount</span> <span class="fa"></span></th>
                     <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.channels">Channels</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.factors">Factors</span> <span class="fa"></span></th>
                     <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.styles">Styles</span> <span class="fa"></span></th>
                     <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.types">Types</span> <span class="fa"></span></th>
+                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.costRate">Rate</span> <span class="fa"></span></th>
                     <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.profit">Profit</span> <span class="fa"></span></th>
                     <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.costs">Costs</span> <span class="fa"></span></th>
                     <th class="must-center"></th>
@@ -93,13 +93,7 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" id="field_factors" name="factors" [(ngModel)]="transactionDetails.factorsId" required>
-                            <option [ngValue]="null"></option>
-                            <option [ngValue]="factorOption.id" *ngFor="let factorOption of factors; trackBy: trackFactorById">{{ factorOption.name }}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" id="field_styles" name="styles" [(ngModel)]="transactionDetails.stylesId" required>
+                        <select class="form-control" id="field_styles" name="styles" [(ngModel)]="transactionDetails.stylesId" (change)="onChooseStyle(transactionDetails)" required>
                             <option [ngValue]="null"></option>
                             <option [ngValue]="styleOption.id" *ngFor="let styleOption of styles; trackBy: trackStyleById">{{ styleOption.name }}</option>
                         </select>
@@ -109,6 +103,9 @@
                             <option [ngValue]="null"></option>
                             <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{ typesOption.name }}</option>
                         </select>
+                    </td>
+                    <td>
+                        <input type="number" [(ngModel)]="transactionDetails.costRate" name="cost rate" min="{{transactionDetails.minRate}}" max="{{transactionDetails.maxRate}}" required>
                     </td>
                     <td class="must-center">{{ transactionDetails.profit ? transactionDetails.profit : 'N/A' }}</td>
                     <td class="must-center">{{ transactionDetails.costs ? transactionDetails.costs : 'N/A' }}</td>

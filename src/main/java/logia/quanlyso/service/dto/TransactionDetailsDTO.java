@@ -11,7 +11,7 @@ import java.util.Objects;
 public class TransactionDetailsDTO implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -42,173 +42,193 @@ public class TransactionDetailsDTO implements Serializable {
 	/** The types id. */
 	private Long	typesId;
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
+	private Float costRate;
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
 		return this.id;
 	}
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(Long id) {
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
+    public void setId(Long id) {
 		this.id = id;
 	}
 
-	/**
-	 * Gets the amount.
-	 *
-	 * @return the amount
-	 */
-	public Float getAmount() {
+    /**
+     * Gets the amount.
+     *
+     * @return the amount
+     */
+    public Float getAmount() {
 		return this.amount;
 	}
 
-	/**
-	 * Sets the amount.
-	 *
-	 * @param amount the new amount
-	 */
-	public void setAmount(Float amount) {
+    /**
+     * Sets the amount.
+     *
+     * @param amount the new amount
+     */
+    public void setAmount(Float amount) {
 		this.amount = amount;
 	}
 
-	/**
-	 * Gets the profit.
-	 *
-	 * @return the profit
-	 */
-	public Float getProfit() {
+    /**
+     * Gets the profit.
+     *
+     * @return the profit
+     */
+    public Float getProfit() {
 		return this.profit;
 	}
 
-	/**
-	 * Sets the profit.
-	 *
-	 * @param profit the new profit
-	 */
-	public void setProfit(Float profit) {
+    /**
+     * Sets the profit.
+     *
+     * @param profit the new profit
+     */
+    public void setProfit(Float profit) {
 		this.profit = profit;
 	}
 
-	/**
-	 * Gets the costs.
-	 *
-	 * @return the costs
-	 */
-	public Float getCosts() {
+    /**
+     * Gets the costs.
+     *
+     * @return the costs
+     */
+    public Float getCosts() {
 		return this.costs;
 	}
 
-	/**
-	 * Sets the costs.
-	 *
-	 * @param costs the new costs
-	 */
-	public void setCosts(Float costs) {
+    /**
+     * Sets the costs.
+     *
+     * @param costs the new costs
+     */
+    public void setCosts(Float costs) {
 		this.costs = costs;
 	}
 
-	/**
-	 * Gets the transactions id.
-	 *
-	 * @return the transactions id
-	 */
-	public Long getTransactionsId() {
+    /**
+     * Gets the transactions id.
+     *
+     * @return the transactions id
+     */
+    public Long getTransactionsId() {
 		return this.transactionsId;
 	}
 
-	/**
-	 * Sets the transactions id.
-	 *
-	 * @param transactionsId the new transactions id
-	 */
-	public void setTransactionsId(Long transactionsId) {
+    /**
+     * Sets the transactions id.
+     *
+     * @param transactionsId the new transactions id
+     */
+    public void setTransactionsId(Long transactionsId) {
 		this.transactionsId = transactionsId;
 	}
 
-	/**
-	 * Gets the channels id.
-	 *
-	 * @return the channels id
-	 */
-	public Long getChannelsId() {
+    /**
+     * Gets the channels id.
+     *
+     * @return the channels id
+     */
+    public Long getChannelsId() {
 		return this.channelsId;
 	}
 
-	/**
-	 * Sets the channels id.
-	 *
-	 * @param channelId the new channels id
-	 */
-	public void setChannelsId(Long channelId) {
+    /**
+     * Sets the channels id.
+     *
+     * @param channelId the new channels id
+     */
+    public void setChannelsId(Long channelId) {
 		this.channelsId = channelId;
 	}
 
-	/**
-	 * Gets the factors id.
-	 *
-	 * @return the factors id
-	 */
-	public Long getFactorsId() {
+    /**
+     * Gets the factors id.
+     *
+     * @return the factors id
+     */
+    public Long getFactorsId() {
 		return this.factorsId;
 	}
 
-	/**
-	 * Sets the factors id.
-	 *
-	 * @param factorId the new factors id
-	 */
-	public void setFactorsId(Long factorId) {
+    /**
+     * Sets the factors id.
+     *
+     * @param factorId the new factors id
+     */
+    public void setFactorsId(Long factorId) {
 		this.factorsId = factorId;
 	}
 
-	/**
-	 * Gets the styles id.
-	 *
-	 * @return the styles id
-	 */
-	public Long getStylesId() {
+    /**
+     * Gets the styles id.
+     *
+     * @return the styles id
+     */
+    public Long getStylesId() {
 		return this.stylesId;
 	}
 
-	/**
-	 * Sets the styles id.
-	 *
-	 * @param styleId the new styles id
-	 */
-	public void setStylesId(Long styleId) {
+    /**
+     * Sets the styles id.
+     *
+     * @param styleId the new styles id
+     */
+    public void setStylesId(Long styleId) {
 		this.stylesId = styleId;
 	}
 
-	/**
-	 * Gets the types id.
-	 *
-	 * @return the types id
-	 */
-	public Long getTypesId() {
+    /**
+     * Gets the types id.
+     *
+     * @return the types id
+     */
+    public Long getTypesId() {
 		return this.typesId;
 	}
 
-	/**
-	 * Sets the types id.
-	 *
-	 * @param typesId the new types id
-	 */
-	public void setTypesId(Long typesId) {
+    /**
+     * Sets the types id.
+     *
+     * @param typesId the new types id
+     */
+    public void setTypesId(Long typesId) {
 		this.typesId = typesId;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+    /**
+     * Gets cost rate.
+     *
+     * @return the cost rate
+     */
+    public Float getCostRate() {
+        return costRate;
+    }
+
+    /**
+     * Sets cost rate.
+     *
+     * @param costRate the cost rate
+     */
+    public void setCostRate(Float costRate) {
+        this.costRate = costRate;
+    }
+
+    /*
+         * (non-Javadoc)
+         *
+         * @see java.lang.Object#equals(java.lang.Object)
+         */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -227,7 +247,7 @@ public class TransactionDetailsDTO implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -235,14 +255,19 @@ public class TransactionDetailsDTO implements Serializable {
 		return Objects.hashCode(this.getId());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "TransactionDetailsDTO{" + "id=" + this.getId() + ", amount='" + this.getAmount() + "'"
-				+ ", profit='" + this.getProfit() + "'" + ", costs='" + this.getCosts() + "'" + "}";
-	}
+    @Override
+    public String toString() {
+        return "TransactionDetailsDTO{" +
+            "id=" + id +
+            ", amount=" + amount +
+            ", profit=" + profit +
+            ", costs=" + costs +
+            ", transactionsId=" + transactionsId +
+            ", channelsId=" + channelsId +
+            ", factorsId=" + factorsId +
+            ", stylesId=" + stylesId +
+            ", typesId=" + typesId +
+            ", costRate=" + costRate +
+            '}';
+    }
 }

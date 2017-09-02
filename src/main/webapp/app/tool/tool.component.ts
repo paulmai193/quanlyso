@@ -19,6 +19,8 @@ import { StorageService } from '../shared/storage/storage.service';
 import { CrawlDataModel } from '../entities/crawl-data.model';
 import { ProgressModel } from '../entities/progress.model';
 import { CodeService } from '../entities/code/code.service';
+import {CostFactorService} from '../entities/cost-factor/cost-factor.service';
+import {CostFactor} from '../entities/cost-factor/cost-factor.model';
 
 @Component({
     selector: 'jhi-tool',
@@ -47,7 +49,8 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                 private alertService: AlertService,
                 private datePipe: DatePipe,
                 private storageService: StorageService,
-                private codeService: CodeService
+                private codeService: CodeService,
+                private costFactorService: CostFactorService
     ) {
         this.reset();
     }
@@ -72,6 +75,15 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     onCalculateOpenDateChange(): void {
         const openDate: string = this.datePipe.transform(this.transactions.openDate, 'EEEE').toLowerCase();
         this.initCalculate(openDate);
+    }
+
+    onChooseStyle(transactionDetails: TransactionDetails): void {
+        this.costFactorService.findByStyle(transactionDetails.stylesId).subscribe(
+            (costFactor: CostFactor) => {
+                transactionDetails.minRate = costFactor.minRate;
+                transactionDetails.maxRate = costFactor.maxRate;
+            }
+        );
     }
 
     addRecord(): void {

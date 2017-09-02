@@ -1,7 +1,9 @@
 package logia.quanlyso.service.impl;
 
 import logia.quanlyso.domain.CostFactor;
+import logia.quanlyso.domain.Style;
 import logia.quanlyso.repository.CostFactorRepository;
+import logia.quanlyso.repository.StyleRepository;
 import logia.quanlyso.service.CostFactorService;
 import logia.quanlyso.service.dto.CostFactorDTO;
 import logia.quanlyso.service.mapper.CostFactorMapper;
@@ -29,22 +31,18 @@ public class CostFactorServiceImpl implements CostFactorService {
 	/** The cost factor repository. */
 	private final CostFactorRepository	costFactorRepository;
 
+	private final StyleRepository styleRepository;
+
 	/** The cost factor mapper. */
 	private final CostFactorMapper		costFactorMapper;
 
-	/**
-	 * Instantiates a new cost factor service impl.
-	 *
-	 * @param costFactorRepository the cost factor repository
-	 * @param costFactorMapper the cost factor mapper
-	 */
-	public CostFactorServiceImpl(CostFactorRepository costFactorRepository,
-			CostFactorMapper costFactorMapper) {
-		this.costFactorRepository = costFactorRepository;
-		this.costFactorMapper = costFactorMapper;
-	}
+    public CostFactorServiceImpl(CostFactorRepository costFactorRepository, StyleRepository styleRepository, CostFactorMapper costFactorMapper) {
+        this.costFactorRepository = costFactorRepository;
+        this.styleRepository = styleRepository;
+        this.costFactorMapper = costFactorMapper;
+    }
 
-	/**
+    /**
 	 * Save a costFactor.
 	 *
 	 * @param costFactorDTO the entity to save
@@ -89,7 +87,17 @@ public class CostFactorServiceImpl implements CostFactorService {
 		return costFactorDTO;
 	}
 
-	/**
+    @Override
+    @Transactional(readOnly = true)
+    public CostFactorDTO findOneByStyleId(Long id) {
+        this.log.debug("Request to get CostFactor by Style : {}", id);
+        Style style = this.styleRepository.getOne(id);
+        CostFactor costFactor = this.costFactorRepository.findOneByStyles(style);
+        CostFactorDTO costFactorDTO = this.costFactorMapper.toDto(costFactor);
+        return costFactorDTO;
+    }
+
+    /**
 	 * Delete the costFactor by id.
 	 *
 	 * @param id the id of the entity
