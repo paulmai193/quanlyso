@@ -487,7 +487,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.obeonetwork.dsl.uml2.design/description/uml2.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Class%20Diagram']/@defaultLayer/@containerMappings[name='CD_Class']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.obeonetwork.dsl.uml2.design/description/uml2.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Class%20Diagram']/@defaultLayer/@containerMappings[name='CD_Class']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_K1b0ED6JEee46pHn84Ty0Q" name="rate : float [1]">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_K1b0ED6JEee46pHn84Ty0Q" name="minRate : float [1]">
         <target xmi:type="uml:Property" href="my.uml#_IRyyoD6JEee46pHn84Ty0Q"/>
         <semanticElements xmi:type="uml:Property" href="my.uml#_IRyyoD6JEee46pHn84Ty0Q"/>
         <ownedStyle xmi:type="diagram:Square" xmi:id="_K1dCMD6JEee46pHn84Ty0Q" labelAlignment="LEFT">
@@ -507,7 +507,7 @@
         <description xmi:type="style:FlatContainerStyleDescription" href="platform:/plugin/org.obeonetwork.dsl.uml2.design/description/uml2.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Class%20Diagram']/@defaultLayer/@containerMappings[name='CD_Class']/@style"/>
       </ownedStyle>
       <actualMapping xmi:type="description_1:ContainerMapping" href="platform:/plugin/org.obeonetwork.dsl.uml2.design/description/uml2.odesign#//@ownedViewpoints[name='Design']/@ownedRepresentations[name='Class%20Diagram']/@defaultLayer/@containerMappings[name='CD_Class']"/>
-      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_WAIK4T6JEee46pHn84Ty0Q" name="rate : float [1]">
+      <ownedElements xmi:type="diagram:DNodeListElement" xmi:id="_WAIK4T6JEee46pHn84Ty0Q" name="minRate : float [1]">
         <target xmi:type="uml:Property" href="my.uml#_V_ht9D6JEee46pHn84Ty0Q"/>
         <semanticElements xmi:type="uml:Property" href="my.uml#_V_ht9D6JEee46pHn84Ty0Q"/>
         <ownedStyle xmi:type="diagram:Square" xmi:id="_WAIx8D6JEee46pHn84Ty0Q" labelAlignment="LEFT">

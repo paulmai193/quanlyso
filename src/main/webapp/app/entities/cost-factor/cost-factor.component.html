@@ -17,7 +17,8 @@
             <thead>
             <tr>
             <th><span jhiTranslate="global.field.id">ID</span></th>
-            <th><span jhiTranslate="quanlysoApp.costFactor.rate">Rate</span></th>
+            <th><span jhiTranslate="quanlysoApp.costFactor.minRate">Min Rate</span></th>
+            <th><span jhiTranslate="quanlysoApp.costFactor.maxRate">Max Rate</span></th>
             <th><span jhiTranslate="quanlysoApp.costFactor.styles">Styles</span></th>
             <th></th>
             </tr>
@@ -25,7 +26,8 @@
             <tbody>
             <tr *ngFor="let costFactor of costFactors ;trackBy: trackId">
                 <td><a [routerLink]="['../cost-factor', costFactor.id ]">{{ costFactor.id }}</a></td>
-                <td>{{costFactor.rate}}</td>
+                <td>{{costFactor.minRate}}</td>
+                <td>{{costFactor.maxRate}}</td>
                 <td>
                     <div *ngIf="costFactor.stylesId">
                         <a [routerLink]="['../style', costFactor.stylesId  ]" >{{ costFactor.stylesName }}</a>

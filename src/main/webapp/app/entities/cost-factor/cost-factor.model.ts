@@ -1,9 +1,8 @@
 export class CostFactor {
     constructor(
         public id?: number,
-        public rate?: number,
-        public factorsId?: number,
-        public factorsName?: string,
+        public minRate?: number,
+        public maxRate?: number,
         public stylesId?: number,
         public stylesName?: string,
     ) {

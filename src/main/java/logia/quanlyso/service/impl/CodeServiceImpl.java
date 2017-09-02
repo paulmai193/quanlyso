@@ -172,7 +172,7 @@ public class CodeServiceImpl implements CodeService {
 			ProfitFactor _profitFactor = this.profitFactorRepository
 					.findOneByStyles(_style);
 			float _amount = _details.getAmount();
-			_details.costs(_amount * _costFactor.getRate()).profit(_amount * _profitFactor.getRate() * _listCodes.size());
+			_details.costs(_amount * _costFactor.getMinRate()).profit(_amount * _profitFactor.getRate() * _listCodes.size());
 
 			_netValue = _netValue + _details.getProfit() - _details.getCosts();
 		}

@@ -16,7 +16,7 @@ import { StyleService } from '../style/style.service';
     templateUrl: './profit-factor.component.html'
 })
 export class ProfitFactorComponent implements OnInit, OnDestroy {
-profitFactors: ProfitFactor[];
+    profitFactors: ProfitFactor[];
     currentAccount: any;
     eventSubscriber: Subscription;
 

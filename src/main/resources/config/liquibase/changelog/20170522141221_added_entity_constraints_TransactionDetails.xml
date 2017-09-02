@@ -7,7 +7,7 @@
         Added the constraints for entity TransactionDetails.
     -->
     <changeSet id="20170522141221-2" author="jhipster">
-        
+
         <addForeignKeyConstraint baseColumnNames="transactions_id"
                                  baseTableName="transaction_details"
                                  constraintName="fk_transaction_details_transactions_id"
@@ -19,12 +19,6 @@
                                  constraintName="fk_transaction_details_channels_id"
                                  referencedColumnNames="id"
                                  referencedTableName="channel"/>
-
-        <addForeignKeyConstraint baseColumnNames="factors_id"
-                                 baseTableName="transaction_details"
-                                 constraintName="fk_transaction_details_factors_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="factor"/>
 
         <addForeignKeyConstraint baseColumnNames="styles_id"
                                  baseTableName="transaction_details"

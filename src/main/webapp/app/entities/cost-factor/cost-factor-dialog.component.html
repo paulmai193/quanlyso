@@ -13,10 +13,16 @@
                    [(ngModel)]="costFactor.id" readonly />
         </div>
         <div class="form-group">
-            <label class="form-control-label" jhiTranslate="quanlysoApp.costFactor.rate" for="field_rate">Rate</label>
-            <input type="number" class="form-control" name="rate" id="field_rate"
-                [(ngModel)]="costFactor.rate"
+            <label class="form-control-label" jhiTranslate="quanlysoApp.costFactor.minRate" for="field_min_rate">Min Rate</label>
+            <input type="number" class="form-control" name="minRate" id="field_min_rate"
+                [(ngModel)]="costFactor.minRate"
              />
+        </div>
+        <div class="form-group">
+            <label class="form-control-label" jhiTranslate="quanlysoApp.costFactor.maxRate" for="field_max_rate">Max Rate</label>
+            <input type="number" class="form-control" name="maxRate" id="field_max_rate"
+                   [(ngModel)]="costFactor.maxRate"
+            />
         </div>
 
         <div class="form-group">

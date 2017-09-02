@@ -25,9 +25,13 @@ public class CostFactor implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long				id;
 
-	/** The rate. */
-	@Column(name = "rate")
-	private Float				rate;
+	/** The minRate. */
+	@Column(name = "maxRate")
+	private Float maxRate;
+
+    /** The maxRate. */
+    @Column(name = "minRate")
+    private Float minRate;
 
 	/** The styles. */
 	@ManyToOne
@@ -52,35 +56,48 @@ public class CostFactor implements Serializable {
 	}
 
 	/**
-	 * Gets the rate.
+	 * Gets the minRate.
 	 *
-	 * @return the rate
+	 * @return the minRate
 	 */
-	public Float getRate() {
-		return this.rate;
+	public Float getMinRate() {
+		return this.minRate;
 	}
 
 	/**
-	 * Rate.
+	 * Min rate.
 	 *
-	 * @param rate the rate
+	 * @param rate the minRate
 	 * @return the cost factor
 	 */
-	public CostFactor rate(Float rate) {
-		this.rate = rate;
+	public CostFactor minRate(Float rate) {
+		this.setMinRate(rate);
 		return this;
 	}
 
 	/**
-	 * Sets the rate.
+	 * Sets the minRate.
 	 *
-	 * @param rate the new rate
+	 * @param minRate the new minRate
 	 */
-	public void setRate(Float rate) {
-		this.rate = rate;
+	public void setMinRate(Float minRate) {
+		this.minRate = minRate;
 	}
 
-	/**
+    public Float getMaxRate() {
+        return maxRate;
+    }
+
+    public CostFactor maxRate(Float rate) {
+	    this.setMaxRate(rate);
+	    return this;
+    }
+
+    public void setMaxRate(Float maxRate) {
+        this.maxRate = maxRate;
+    }
+
+    /**
 	 * Gets the styles.
 	 *
 	 * @return the styles
@@ -146,6 +163,6 @@ public class CostFactor implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "CostFactor{" + "id=" + this.getId() + ", rate='" + this.getRate() + "'" + "}";
+		return "CostFactor{" + "id=" + this.getId() + ", minRate='" + this.getMinRate() + "'" + "}";
 	}
 }

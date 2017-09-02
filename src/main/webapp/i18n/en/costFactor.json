@@ -15,7 +15,8 @@
             "detail": {
                 "title": "Cost Factor"
             },
-            "rate": "Rate",
+            "minRate": "Min Rate",
+            "maxRate": "Max Rate",
             "factors": "Factors",
             "styles": "Styles",
             "types": "Types"

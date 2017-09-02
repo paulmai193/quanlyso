@@ -8,25 +8,19 @@
     -->
     <changeSet id="20170522140703-2" author="jhipster">
 
-        <addForeignKeyConstraint baseColumnNames="factors_id"
-                                 baseTableName="profit_factor"
-                                 constraintName="fk_profit_factor_factors_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="factor" />
-
         <addForeignKeyConstraint baseColumnNames="styles_id"
                                  baseTableName="profit_factor"
                                  constraintName="fk_profit_factor_styles_id"
                                  referencedColumnNames="id"
                                  referencedTableName="style"/>
 
-		<addUniqueConstraint columnNames="factors_id, styles_id" tableName="profit_factor" constraintName="unique_profit_factor"/>
+		<addUniqueConstraint columnNames="styles_id" tableName="profit_factor" constraintName="unique_profit_factor"/>
 
 		<loadData encoding="UTF-8"
                   file="config/liquibase/profit_factor.csv"
                   separator=";"
                   tableName="profit_factor">
-                  <!-- <column name="rate" type="REAL"/> -->
+                  <!-- <column naminRaterate" type="REAL"/> -->
 		</loadData>
 
     </changeSet>

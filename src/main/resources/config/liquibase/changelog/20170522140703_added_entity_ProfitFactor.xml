@@ -26,10 +26,6 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="factors_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-
             <column name="styles_id" type="bigint">
                 <constraints nullable="true" />
             </column>

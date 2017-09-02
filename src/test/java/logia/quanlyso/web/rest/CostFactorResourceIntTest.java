@@ -94,7 +94,7 @@ public class CostFactorResourceIntTest {
 
 	/**
 	 * Create an entity for this test.
-	 * 
+	 *
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an entity which requires the current entity.
 	 *
@@ -102,7 +102,7 @@ public class CostFactorResourceIntTest {
 	 * @return the cost factor
 	 */
 	public static CostFactor createEntity(EntityManager em) {
-		CostFactor costFactor = new CostFactor().rate(CostFactorResourceIntTest.DEFAULT_RATE);
+		CostFactor costFactor = new CostFactor().minRate(CostFactorResourceIntTest.DEFAULT_RATE);
 		return costFactor;
 	}
 
@@ -135,7 +135,7 @@ public class CostFactorResourceIntTest {
 		List<CostFactor> costFactorList = this.costFactorRepository.findAll();
 		Assertions.assertThat(costFactorList).hasSize(databaseSizeBeforeCreate + 1);
 		CostFactor testCostFactor = costFactorList.get(costFactorList.size() - 1);
-		Assertions.assertThat(testCostFactor.getRate()).isEqualTo(CostFactorResourceIntTest.DEFAULT_RATE);
+		Assertions.assertThat(testCostFactor.getMinRate()).isEqualTo(CostFactorResourceIntTest.DEFAULT_RATE);
 	}
 
 	/**
@@ -231,7 +231,7 @@ public class CostFactorResourceIntTest {
 
 		// Update the costFactor
 		CostFactor updatedCostFactor = this.costFactorRepository.findOne(this.costFactor.getId());
-		updatedCostFactor.rate(CostFactorResourceIntTest.UPDATED_RATE);
+		updatedCostFactor.minRate(CostFactorResourceIntTest.UPDATED_RATE);
 		CostFactorDTO costFactorDTO = this.costFactorMapper.toDto(updatedCostFactor);
 
 		this.restCostFactorMockMvc
@@ -243,7 +243,7 @@ public class CostFactorResourceIntTest {
 		List<CostFactor> costFactorList = this.costFactorRepository.findAll();
 		Assertions.assertThat(costFactorList).hasSize(databaseSizeBeforeUpdate);
 		CostFactor testCostFactor = costFactorList.get(costFactorList.size() - 1);
-		Assertions.assertThat(testCostFactor.getRate()).isEqualTo(CostFactorResourceIntTest.UPDATED_RATE);
+		Assertions.assertThat(testCostFactor.getMinRate()).isEqualTo(CostFactorResourceIntTest.UPDATED_RATE);
 	}
 
 	/**

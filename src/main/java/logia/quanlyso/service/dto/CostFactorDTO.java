@@ -11,24 +11,20 @@ import java.util.Objects;
 public class CostFactorDTO implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	private Long	id;
 
-	/** The rate. */
-	private Float	rate;
+	/** The minRate. */
+	private Float minRate;
 
-	/** The factors id. */
-	private Long	factorsId;
+	private Float maxRate;
 
 	/** The styles id. */
 	private Long	stylesId;
-
-	/** The types id. */
-	private Long	typesId;
 
 	/**
 	 * Gets the id.
@@ -49,42 +45,32 @@ public class CostFactorDTO implements Serializable {
 	}
 
 	/**
-	 * Gets the rate.
+	 * Gets the minRate.
 	 *
-	 * @return the rate
+	 * @return the minRate
 	 */
-	public Float getRate() {
-		return this.rate;
+	public Float getMinRate() {
+		return this.minRate;
 	}
 
 	/**
-	 * Sets the rate.
+	 * Sets the minRate.
 	 *
-	 * @param rate the new rate
+	 * @param minRate the new minRate
 	 */
-	public void setRate(Float rate) {
-		this.rate = rate;
+	public void setMinRate(Float minRate) {
+		this.minRate = minRate;
 	}
 
-	/**
-	 * Gets the factors id.
-	 *
-	 * @return the factors id
-	 */
-	public Long getFactorsId() {
-		return this.factorsId;
-	}
+    public Float getMaxRate() {
+        return maxRate;
+    }
 
-	/**
-	 * Sets the factors id.
-	 *
-	 * @param factorId the new factors id
-	 */
-	public void setFactorsId(Long factorId) {
-		this.factorsId = factorId;
-	}
+    public void setMaxRate(Float maxRate) {
+        this.maxRate = maxRate;
+    }
 
-	/**
+    /**
 	 * Gets the styles id.
 	 *
 	 * @return the styles id
@@ -102,27 +88,9 @@ public class CostFactorDTO implements Serializable {
 		this.stylesId = styleId;
 	}
 
-	/**
-	 * Gets the types id.
-	 *
-	 * @return the types id
-	 */
-	public Long getTypesId() {
-		return this.typesId;
-	}
-
-	/**
-	 * Sets the types id.
-	 *
-	 * @param typesId the new types id
-	 */
-	public void setTypesId(Long typesId) {
-		this.typesId = typesId;
-	}
-
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -143,7 +111,7 @@ public class CostFactorDTO implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -151,13 +119,13 @@ public class CostFactorDTO implements Serializable {
 		return Objects.hashCode(this.getId());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "CostFactorDTO{" + "id=" + this.getId() + ", rate='" + this.getRate() + "'" + "}";
-	}
+    @Override
+    public String toString() {
+        return "CostFactorDTO{" +
+            "id=" + id +
+            ", minRate=" + minRate +
+            ", maxRate=" + maxRate +
+            ", stylesId=" + stylesId +
+            '}';
+    }
 }
