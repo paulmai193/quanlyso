@@ -23,7 +23,8 @@
             "factors": "Factors",
             "styles": "Styles",
             "types": "Types",
-            "costRate": "Cost rate"
+            "costRate": "Cost rate",
+            "profitRate": "Profit rate"
         }
     }
 }

@@ -49,10 +49,6 @@
             <table class="form-group table table-striped">
                 <thead>
                 <tr>
-                    <th class="must-center must-justify">
-                        <span jhiTranslate="quanlysoApp.transactions.chosenNumber">Chosen Number</span>
-                        <span class="fa"></span>
-                    </th>
                     <th class="must-center">
                         <span jhiTranslate="quanlysoApp.transactions.date">Date</span>
                         <span class="fa"></span>
@@ -66,67 +62,90 @@
                 <tbody>
                 <tr>
                     <td>
-                        <input type="number" class="form-control" name="chosenNumber" id="field_chosenNumber"
-                               [(ngModel)]="transactions.chosenNumber" required/>
+                        <input id="field_openDate" type="datetime-local" class="form-control" name="openDate"
+                               [(ngModel)]="openDate" (change)="onCalculateOpenDateChange()" required/>
                     </td>
-                    <td>
-                        <input id="field_openDate" type="datetime-local" class="form-control" name="openDate" [(ngModel)]="transactions.openDate" (change)="onCalculateOpenDateChange()" required/>
-                    </td>
-                    <td class="must-center">{{ transactions.netValue ? transactions.netValue : 'N/A' }}</td>
+                    <td class="must-center">N/A</td>
                 </tr>
                 </tbody>
             </table>
             <!-- Transaction detail -->
-            <table class="form-group table table-striped">
+            <table class="form-group table table-striped" id="tbBet">
                 <thead>
                 <tr>
-                    <th><span jhiTranslate="quanlysoApp.transactionDetails.amount">Amount</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.channels">Channels</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.styles">Styles</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.types">Types</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.costRate">Rate</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.profit">Profit</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactionDetails.costs">Costs</span> <span class="fa"></span></th>
-                    <th class="must-center"></th>
+                    <th>
+                    </th>
+                    <th colspan="4" class="form-group must-center">2D</th>
+                    <th colspan="4" class="must-center">3D</th>
+                    <th colspan="2" class="must-center">4D</th>
+                    <th class="must-center" rowspan="4">Channels</th>
+                    <th class="must-center" rowspan="4">Net Amount</th>
+                </tr>
+                <tr>
+                    <th class="must-center" jhiTranslate="quanlysoApp.transactionDetails.costRate"></th>
+                    <th colspan="4" class="must-center">
+                        <input style="text-align: center" type="number" name="cost-rate-2d" id="cost-rate-2d" *ngIf="costFactor2d"
+                               min="{{ costFactor2d.minRate }}" max="{{ costFactor2d.maxRate }}" step="0.01"
+                               [(ngModel)]="costFactor2d.rate" (volumechange)="onChangeCost2d()" (change)="onChangeCost2d()">
+                    </th>
+                    <th colspan="4" class="must-center">
+                        <input style="text-align: center" type="number" name="cost-rate-3d" id="cost-rate-3d" *ngIf="costFactor3d"
+                               min="{{ costFactor3d.minRate }}" max="{{ costFactor3d.maxRate }}" step="0.01"
+                               [(ngModel)]="costFactor3d.rate" (change)="onChangeCost3d()">
+                    </th>
+                    <th colspan="2" class="must-center">
+                        <input style="text-align: center" type="number" name="cost-rate-4d" id="cost-rate-4d" *ngIf="costFactor4d"
+                               min="{{ costFactor4d.minRate }}" max="{{ costFactor4d.maxRate }}" step="0.01"
+                               [(ngModel)]="costFactor4d.rate" (change)="onChangeCost4d()">
+                    </th>
+                </tr>
+                <tr>
+                    <th class="must-center" jhiTranslate="quanlysoApp.transactionDetails.profitRate"></th>
+                    <th colspan="4" class="form-group must-center">
+                        <input style="text-align: center; max-width: 83px" type="number" name="profit-rate-2d" id="profit-rate-2d"
+                               *ngIf="profitFactor2d" [(ngModel)]="profitFactor2d.rate" disabled>
+                    </th>
+                    <th colspan="4" class="must-center">
+                        <input style="text-align: center; max-width: 83px" type="number" name="profit-rate-3d" id="profit-rate-3d"
+                               *ngIf="profitFactor3d" [(ngModel)]="profitFactor3d.rate" disabled>
+                    </th>
+                    <th colspan="2" class="must-center">
+                        <input style="text-align: center; max-width: 83px" type="number" name="profit-rate-4d" id="profit-rate-4d"
+                               *ngIf="profitFactor4d" [(ngModel)]="profitFactor4d.rate" disabled>
+                    </th>
+                </tr>
+                <tr id="sub_title">
+                    <th class="must-center">Number</th>
+                    <th class="must-center">Top</th>
+                    <th class="must-center">Bottom</th>
+                    <th class="must-center">Both</th>
+                    <th class="must-center">Roll</th>
+                    <th class="must-center">Top</th>
+                    <th class="must-center">Bottom</th>
+                    <th class="must-center">Both</th>
+                    <th class="must-center">Roll</th>
+                    <th class="must-center">Bottom</th>
+                    <th class="must-center">Roll</th>
                 </tr>
                 </thead>
-                <tbody *ngIf="transactions">
-                <tr *ngFor="let transactionDetails of transactions.transactionDetailsDTOs">
-                    <td>
-                        <input id="field_amount_{{transactionDetails.uuid}}" type="number" [(ngModel)]="transactionDetails.amount" name="amount" required>
+                <tbody>
+                <tr *ngFor="let tran of transactions; trackTransactionsById">
+                    <td class="must-center">
+                        <input type="number" class="form-control" name="chosenNumber_{{ tran.uuid }}" id="chosenNumber_{{ tran.uuid }}"
+                               [(ngModel)]="tran.chosenNumber" required/>
                     </td>
-                    <td>
-                        <select class="form-control" id="field_channels_{{transactionDetails.uuid}}" name="channels" [(ngModel)]="transactionDetails.channelsId" required>
-                            <option [ngValue]="null"></option>
-                            <option [ngValue]="channelOption.id" *ngFor="let channelOption of channels; trackBy: trackChannelById">{{ channelOption.name }}</option>
+                    <td class="must-center" *ngFor="let detail of tran.transactionDetailsDTOs; trackBy: trackTransactionDetailsById">
+                        <input type="number" class="form-control" *ngIf="detail" name="amount_{{ detail.uuid }}"
+                               id="amount_{{ detail.uuid }}" [(ngModel)]="detail.amount"/>
+                    </td>
+                    <td class="must-center">
+                        <select class="form-control" multiple *ngIf="channels">
+                            <option *ngFor="let channel of channels; trackBy: trackChannelById">{{ channel.name }}</option>
                         </select>
                     </td>
-                    <td>
-                        <select class="form-control" id="field_styles_{{transactionDetails.uuid}}" name="styles" [(ngModel)]="transactionDetails.stylesId" (change)="onChooseStyle(transactionDetails)" required>
-                            <option [ngValue]="null"></option>
-                            <option [ngValue]="styleOption.id" *ngFor="let styleOption of styles; trackBy: trackStyleById">{{ styleOption.name }}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" id="field_types_{{transactionDetails.uuid}}" name="types" [(ngModel)]="transactionDetails.typesId" required>
-                            <option [ngValue]="null"></option>
-                            <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{ typesOption.name }}</option>
-                        </select>
-                    </td>
-                    <td>
-                        <input type="number" [(ngModel)]="transactionDetails.costRate" name="cost-rate"
-                               min="{{transactionDetails.minRate}}" max="{{transactionDetails.maxRate}}"
-                               step="0.01" required>
-                    </td>
-                    <td class="must-center">{{ transactionDetails.profit ? transactionDetails.profit : 'N/A' }}</td>
-                    <td class="must-center">{{ transactionDetails.costs ? transactionDetails.costs : 'N/A' }}</td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button class="btn btn-danger btn-sm" *ngIf="transactions.transactionDetailsDTOs.length > 1" (click)="removeRecord(transactionDetails)">
-                                <span class="fa fa-remove"></span>
-                                <span class="hidden-md-down" jhiTranslate="entity.action.delete">Delete</span>
-                            </button>
-                        </div>
+                    <td class="must-center">
+                        <input type="number" class="form-control" name="net_amount_{{ tran.uuid }}" id="net_amount_{{ tran.uuid }}"
+                               [(ngModel)]="tran.netValue" disabled/>
                     </td>
                 </tr>
                 </tbody>
@@ -147,34 +166,49 @@
         </form>
 
         <!-- New form -->
-        <table class="table table-striped" id="tbBet" style="margin-Top: 5px;">
+        <!--<table class="table table-striped" id="tbBet">
             <thead>
             <tr>
                 <th>
-                    <br>
-                    <label jhiTranslate="quanlysoApp.transactionDetails.costRate"></label>
                 </th>
-                <th colspan="4" class="form-group must-center">
-                    <label for="cost-rate-2d">2D</label><br>
-                    <input type="number" id="cost-rate-2d" *ngIf="costFactor2d"
+                <th colspan="4" class="form-group must-center">2D</th>
+                <th colspan="4" class="must-center">3D</th>
+                <th colspan="2" class="must-center">4D</th>
+                <th class="must-center" rowspan="4">Channels</th>
+                <th class="must-center" rowspan="4">Net Amount</th>
+            </tr>
+            <tr>
+                <th class="must-center" jhiTranslate="quanlysoApp.transactionDetails.costRate"></th>
+                <th colspan="4" class="must-center">
+                    <input style="text-align: center" type="number" id="cost-rate-2d" *ngIf="costFactor2d"
                            min="{{ costFactor2d.minRate }}" max="{{ costFactor2d.maxRate }}" step="0.01"
-                           [(ngModel)]="costFactor2d.rate">
+                           [(ngModel)]="costFactor2d.rate" (volumechange)="onChangeCost2d()" (change)="onChangeCost2d()">
                 </th>
                 <th colspan="4" class="must-center">
-                    <label for="cost-rate-3d">3D</label><br>
-                    <input type="number" id="cost-rate-3d" *ngIf="costFactor3d"
+                    <input style="text-align: center" type="number" id="cost-rate-3d" *ngIf="costFactor3d"
                            min="{{ costFactor3d.minRate }}" max="{{ costFactor3d.maxRate }}" step="0.01"
-                           [(ngModel)]="costFactor3d.rate">
+                           [(ngModel)]="costFactor3d.rate" (change)="onChangeCost3d()">
                 </th>
                 <th colspan="2" class="must-center">
-                    <label for="cost-rate-4d">4D</label><br>
-                    <input type="number" id="cost-rate-4d" *ngIf="costFactor4d"
-                           min="{{ costFactor4d.minRate }}"
-                           max="{{ costFactor4d.maxRate }}" step="0.01"
-                           [(ngModel)]="costFactor4d.rate">
+                    <input style="text-align: center" type="number" id="cost-rate-4d" *ngIf="costFactor4d"
+                           min="{{ costFactor4d.minRate }}" max="{{ costFactor4d.maxRate }}" step="0.01"
+                           [(ngModel)]="costFactor4d.rate" (change)="onChangeCost4d()">
                 </th>
-                <th class="must-center" rowspan="2">Channels</th>
-                <th class="must-center" rowspan="2">Amount</th>
+            </tr>
+            <tr>
+                <th class="must-center" jhiTranslate="quanlysoApp.transactionDetails.profitRate"></th>
+                <th colspan="4" class="form-group must-center">
+                    <input style="text-align: center; max-width: 83px" type="number" id="profit-rate-2d"
+                           *ngIf="profitFactor2d" [(ngModel)]="profitFactor2d.rate" disabled>
+                </th>
+                <th colspan="4" class="must-center">
+                    <input style="text-align: center; max-width: 83px" type="number" id="profit-rate-3d"
+                           *ngIf="profitFactor3d" [(ngModel)]="profitFactor3d.rate" disabled>
+                </th>
+                <th colspan="2" class="must-center">
+                    <input style="text-align: center; max-width: 83px" type="number" id="profit-rate-4d"
+                           *ngIf="profitFactor4d" [(ngModel)]="profitFactor4d.rate" disabled>
+                </th>
             </tr>
             <tr id="sub_title">
                 <th class="must-center">Number</th>
@@ -191,38 +225,25 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>
-                    <input type="number" class="form-control" name="chosenNumber" id="field_chosenNumber"
-                           [(ngModel)]="transactions.chosenNumber" required/>
+            <tr *ngFor="let tran of transactions; trackTransactionsById">
+                <td class="must-center">
+                    <input type="number" class="form-control" id="chosenNumber_{{ tran.uuid }}"
+                           [(ngModel)]="tran.chosenNumber" required/>
                 </td>
-                <td>Top</td>
-                <td>Bottom</td>
-                <td>Both</td>
-                <td>Roll</td>
-                <td>Top</td>
-                <td>Bottom</td>
-                <td>Both</td>
-                <td>Roll</td>
-                <td>Bottom</td>
-                <td>Roll</td>
-                <td>Channels</td>
-                <td>Amount</td>
+                <td class="must-center" *ngFor="let detail of tran.transactionDetailsDTOs; trackBy: trackTransactionDetailsById">
+                    <input type="number" class="form-control" *ngIf="detail"
+                           id="amount_{{ detail.uuid }}" [(ngModel)]="detail.amount"/>
+                </td>
+                <td class="must-center">
+                    <select multiple *ngIf="channels">
+                        <option *ngFor="let channel of channels; trackBy: trackChannelById">{{ channel.name }}</option>
+                    </select>
+                </td>
+                <td class="must-center">
+                    <input type="number" class="form-control" id="net_amount_{{ tran.uuid }}" [(ngModel)]="tran.netValue" disabled/>
+                </td>
             </tr>
             </tbody>
-        </table>
-        <!-- Submit button -->
-        <div>
-            <button type="button" class="btn btn-primary float-right" (click)="addRecord()">
-                <span class="fa fa-plus"></span>
-                <span  jhiTranslate="entity.action.add">Add</span>
-            </button>
-            <button type="reset" class="btn btn-default" (click)="reset()">
-                <span class="fa fa-refresh"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Reset</span>
-            </button>
-            <button type="submit" [disabled]="toolForm.form.invalid || isProcess" class="btn btn-primary">
-                <span class="fa fa-calculator"></span>&nbsp;<span jhiTranslate="entity.action.check">Check</span>
-            </button>
-        </div>
+        </table>-->
     </div>
 </div>

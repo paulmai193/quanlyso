@@ -30,7 +30,7 @@ export class TransactionsPopupService {
 
     transactionsModalRef(component: Component, transactions: Transactions): NgbModalRef {
         const modalRef = this.modalService.open(component, { size: 'lg', backdrop: 'static'});
-        modalRef.componentInstance.transactions = transactions;
+        modalRef.componentInstance.transaction = transactions;
         modalRef.result.then((result) => {
             this.router.navigate([{ outlets: { popup: null }}], { replaceUrl: true });
             this.isOpen = false;

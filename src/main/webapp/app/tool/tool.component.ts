@@ -21,6 +21,8 @@ import { ProgressModel } from '../entities/progress.model';
 import { CodeService } from '../entities/code/code.service';
 import {CostFactorService} from '../entities/cost-factor/cost-factor.service';
 import {CostFactor} from '../entities/cost-factor/cost-factor.model';
+import { ProfitFactor } from '../entities/profit-factor/profit-factor.model';
+import { ProfitFactorService } from '../entities/profit-factor/profit-factor.service';
 
 @Component({
     selector: 'jhi-tool',
@@ -36,14 +38,22 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     channels: Channel[];
     styles: Style[];
     types: Types[];
-    transactions: Transactions;
+    // transaction: Transactions;
     isCalculate: boolean;
+
+    // New form model
+    openDate: string;
+    transactions: Transactions[];
 
     // Min - Max cost rate of each style
     costFactor2d: CostFactor;
     costFactor3d: CostFactor;
     costFactor4d: CostFactor;
-    test: any;
+
+    // Profit rate of each style
+    profitFactor2d: ProfitFactor;
+    profitFactor3d: ProfitFactor;
+    profitFactor4d: ProfitFactor;
 
     private DATE_FORMAT = 'yyyy-MM-ddT12:00';
     private running: any;
@@ -57,15 +67,14 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                 private datePipe: DatePipe,
                 private storageService: StorageService,
                 private codeService: CodeService,
-                private costFactorService: CostFactorService
-    ) {
-
+                private costFactorService: CostFactorService,
+                private profitFactorService: ProfitFactorService) {
     }
 
     ngOnInit(): void {
         this.reset();
 
-        this.transactions.openDate = this.crawlData.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
+        this.openDate = this.crawlData.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
         this.progress = new ProgressModel(0, 0);
         this.onCrawlOpenDateChange();
         this.onCalculateOpenDateChange();
@@ -82,8 +91,11 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     }
 
     onCalculateOpenDateChange(): void {
-        const openDate: string = this.datePipe.transform(this.transactions.openDate, 'EEEE').toLowerCase();
+        const openDate = this.datePipe.transform(this.openDate, 'EEEE').toLowerCase();
         this.initCalculate(openDate);
+        for (const tran of this.transactions) {
+            tran.openDate = this.openDate;
+        }
     }
 
     onChooseStyle(transactionDetails: TransactionDetails): void {
@@ -95,33 +107,133 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         );
     }
 
-    addRecord(): void {
-        this.transactions.transactionDetailsDTOs.push(new TransactionDetails());
-    }
-
-    removeRecord(target: TransactionDetails): void {
-        const idx: number = this.transactions.transactionDetailsDTOs.findIndex((t: TransactionDetails) => t === target);
-        if (idx > -1) {
-            this.transactions.transactionDetailsDTOs.splice(idx, 1);
+    onChangeCost2d(): void {
+        for (const tran of this.transactions) {
+            tran.transactionDetailsDTOs.filter((detail) => detail.stylesId === 1).forEach((detail) => {
+                detail.costRate = this.costFactor2d.rate;
+            });
         }
     }
 
+    onChangeCost3d(): void {
+        for (const tran of this.transactions) {
+            tran.transactionDetailsDTOs.filter((detail) => detail.stylesId === 2).forEach((detail) => {
+                detail.costRate = this.costFactor3d.rate;
+            });
+        }
+    }
+
+    onChangeCost4d(): void {
+        for (const tran of this.transactions) {
+            tran.transactionDetailsDTOs.filter((detail) => detail.stylesId === 3).forEach((detail) => {
+                detail.costRate = this.costFactor4d.rate;
+            });
+        }
+    }
+
+    addRecord(): void {
+
+        // New model
+        for (let i = 0; i < 1; i++) {
+            const trans: Transactions = new Transactions();
+            trans.clientsId = this.storageService.getAccountId();
+            if (this.openDate) {
+                trans.openDate = this.openDate;
+            } else {
+                trans.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
+            }
+            trans.transactionDetailsDTOs = [];
+
+            const detail1 = new TransactionDetails().style(1).type(1);
+            const detail2 = new TransactionDetails().style(1).type(2);
+            const detail3 = new TransactionDetails().style(1).type(3);
+            const detail4 = new TransactionDetails().style(1).type(4);
+            if (this.costFactor2d && this.costFactor2d.rate) {
+                detail1.costRate = detail2.costRate = detail3.costRate = detail4.costRate = this.costFactor2d.rate;
+            }
+            const detail5 = new TransactionDetails().style(2).type(1);
+            const detail6 = new TransactionDetails().style(2).type(2);
+            const detail7 = new TransactionDetails().style(2).type(3);
+            const detail8 = new TransactionDetails().style(2).type(4);
+            if (this.costFactor3d && this.costFactor3d.rate) {
+                detail5.costRate = detail6.costRate = detail7.costRate = detail8.costRate = this.costFactor3d.rate;
+            }
+            const detail9 = new TransactionDetails().style(3).type(2);
+            const detail10 = new TransactionDetails().style(3).type(4);
+            if (this.costFactor4d && this.costFactor4d.rate) {
+                detail9.costRate = detail10.costRate = this.costFactor4d.rate;
+            }
+            // 2D - top
+            trans.transactionDetailsDTOs.push(detail1);
+            // 2D - bottom
+            trans.transactionDetailsDTOs.push(detail2);
+            // 2D - both
+            trans.transactionDetailsDTOs.push(detail3);
+            // 2D - roll
+            trans.transactionDetailsDTOs.push(detail4);
+            // 3D - top
+            trans.transactionDetailsDTOs.push(detail5);
+            // 3D - bottom
+            trans.transactionDetailsDTOs.push(detail6);
+            // 3D - both
+            trans.transactionDetailsDTOs.push(detail7);
+            // 3D - roll
+            trans.transactionDetailsDTOs.push(detail8);
+            // 4D - bottom
+            trans.transactionDetailsDTOs.push(detail9);
+            // 4D - roll
+            trans.transactionDetailsDTOs.push(detail10);
+
+            this.transactions.push(trans);
+        }
+    }
+
+    // removeRecord(target: TransactionDetails): void {
+    //     const idx: number = this.transaction.transactionDetailsDTOs.findIndex((t: TransactionDetails) => t === target);
+    //     if (idx > -1) {
+    //         this.transaction.transactionDetailsDTOs.splice(idx, 1);
+    //     }
+    // }
+
     reset(): void {
         this.crawlData = new CrawlDataModel();
-        this.transactions = new Transactions();
-        this.transactions.clientsId = this.storageService.getAccountId();
-        this.transactions.transactionDetailsDTOs = [];
+        // this.transaction = new Transactions();
+        // this.transaction.clientsId = this.storageService.getAccountId();
+        // this.transaction.transactionDetailsDTOs = [];
+
+        // New model
+        this.transactions = [];
         this.addRecord();
     }
 
     check(): void {
         this.isCalculate = true;
-        this.subscribeToSaveResponse(this.transactionsService.calculate(this.transactions), 'calculate');
+        this.subscribeToSaveResponse(this.transactionsService.calculate(this.transactions[0]), 'calculate');
     }
 
     crawl(): void {
         this.subscribeToSaveResponse(this.codeService.crawl(this.crawlData), 'crawl');
         this.checkCrawlProcess();
+    }
+
+    trackTransactionsById(index: number, item: Transactions) {
+        return item.id;
+    }
+
+    trackChannelById(index: number, item: Channel) {
+        return item.id;
+    }
+
+    trackStyleById(index: number, item: Style) {
+        return item.id;
+    }
+
+    trackTypesById(index: number, item: Types) {
+        return item.id;
+    }
+
+    trackTransactionDetailsById(index: number, item: TransactionDetails) {
+        return item.id;
     }
 
     private initCrawl(openDate: string): void {
@@ -166,6 +278,30 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
             },
             (res: Response) => this.onError(res.json())
         );
+
+        // Profit factor 2d
+        this.profitFactorService.findByStyle(1).subscribe(
+            (res: ProfitFactor) => {
+                this.profitFactor2d = res;
+            },
+            (res: Response) => this.onError(res.json())
+        );
+
+        // Profit factor 3d
+        this.profitFactorService.findByStyle(2).subscribe(
+            (res: ProfitFactor) => {
+                this.profitFactor3d = res;
+            },
+            (res: Response) => this.onError(res.json())
+        );
+
+        // Profit factor 4d
+        this.profitFactorService.findByStyle(2).subscribe(
+            (res: ProfitFactor) => {
+                this.profitFactor4d = res;
+            },
+            (res: Response) => this.onError(res.json())
+        );
     }
 
     private checkCrawlProcess(): void {
@@ -197,8 +333,8 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     private onSaveSuccess(result: any, instance: string) {
         if (instance === 'calculate') {
             // this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
-            this.transactions = result;
-            this.transactions.openDate = this.datePipe.transform(this.transactions.openDate, this.DATE_FORMAT);
+            // this.transaction = result;
+            // this.transaction.openDate = this.datePipe.transform(this.transaction.openDate, this.DATE_FORMAT);
             this.isCalculate = false;
         } else {
             this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});

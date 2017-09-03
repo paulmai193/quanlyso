@@ -1,6 +1,7 @@
 import construct = Reflect.construct;
 import { TransactionDetails } from '../transaction-details/transaction-details.model';
 export class Transactions {
+    public uuid: number = Date.now();
     constructor(
         public id?: number,
         public chosenNumber?: number,

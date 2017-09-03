@@ -14,6 +14,7 @@ import { TypesService } from '../entities/types/types.service';
 import { StorageService } from '../shared/storage/storage.service';
 import { CodeService } from '../entities/code/code.service';
 import { CostFactorService } from '../entities/cost-factor/cost-factor.service';
+import { ProfitFactorService } from '../entities/profit-factor/profit-factor.service';
 const ENTITY_STATES = [
     ...toolRoute
 ];
@@ -33,7 +34,8 @@ const ENTITY_STATES = [
         TypesService,
         StorageService,
         CodeService,
-        CostFactorService
+        CostFactorService,
+        ProfitFactorService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

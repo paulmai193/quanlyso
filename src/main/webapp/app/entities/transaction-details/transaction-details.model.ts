@@ -14,4 +14,14 @@ export class TransactionDetails {
         public maxRate?: number,
     ) {
     }
+
+    public style(id): TransactionDetails {
+        this.stylesId = id;
+        return this;
+    }
+
+    public type(id): TransactionDetails {
+        this.typesId = id;
+        return this;
+    }
 }
