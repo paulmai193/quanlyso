@@ -2,7 +2,9 @@ package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
+import logia.quanlyso.domain.ProfitFactor;
 import logia.quanlyso.service.ProfitFactorService;
+import logia.quanlyso.service.dto.CostFactorDTO;
 import logia.quanlyso.service.dto.ProfitFactorDTO;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -116,6 +118,21 @@ public class ProfitFactorResource {
 		ProfitFactorDTO profitFactorDTO = this.profitFactorService.findOne(id);
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(profitFactorDTO));
 	}
+
+    /**
+     * GET /profit-factors/style/:id : get the profitFactor by style ID.
+     *
+     * @param id the Style ID of the profitFactorDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the profitFactorDTO, or with
+     *         status 404 (Not Found)
+     */
+    @GetMapping("/profit-factors/style/{id}")
+    @Timed
+    public ResponseEntity<ProfitFactorDTO> getProfitFactorByStyle(@PathVariable Long id) {
+        this.log.debug("REST request to get ProfitFactor : {}", id);
+        ProfitFactorDTO profitFactorDTO = this.profitFactorService.findOneByStyleId(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(profitFactorDTO));
+    }
 
 	/**
 	 * DELETE /profit-factors/:id : delete the "id" profitFactor.

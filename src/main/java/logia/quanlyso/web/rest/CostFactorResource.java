@@ -127,7 +127,7 @@ public class CostFactorResource {
     @Timed
     public ResponseEntity<CostFactorDTO> getCostFactorByStyle(@PathVariable Long id) {
         this.log.debug("REST request to get CostFactor : {}", id);
-        CostFactorDTO costFactorDTO = this.costFactorService.findOne(id);
+        CostFactorDTO costFactorDTO = this.costFactorService.findOneByStyleId(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(costFactorDTO));
     }
 

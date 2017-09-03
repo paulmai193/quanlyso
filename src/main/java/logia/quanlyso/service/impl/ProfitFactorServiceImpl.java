@@ -1,8 +1,12 @@
 package logia.quanlyso.service.impl;
 
+import logia.quanlyso.domain.CostFactor;
 import logia.quanlyso.domain.ProfitFactor;
+import logia.quanlyso.domain.Style;
 import logia.quanlyso.repository.ProfitFactorRepository;
+import logia.quanlyso.repository.StyleRepository;
 import logia.quanlyso.service.ProfitFactorService;
+import logia.quanlyso.service.dto.CostFactorDTO;
 import logia.quanlyso.service.dto.ProfitFactorDTO;
 import logia.quanlyso.service.mapper.ProfitFactorMapper;
 import org.slf4j.Logger;
@@ -30,22 +34,18 @@ public class ProfitFactorServiceImpl implements ProfitFactorService {
 	/** The profit factor repository. */
 	private final ProfitFactorRepository	profitFactorRepository;
 
+	private final StyleRepository styleRepository;
+
 	/** The profit factor mapper. */
 	private final ProfitFactorMapper		profitFactorMapper;
 
-	/**
-	 * Instantiates a new profit factor service impl.
-	 *
-	 * @param profitFactorRepository the profit factor repository
-	 * @param profitFactorMapper the profit factor mapper
-	 */
-	public ProfitFactorServiceImpl(ProfitFactorRepository profitFactorRepository,
-			ProfitFactorMapper profitFactorMapper) {
-		this.profitFactorRepository = profitFactorRepository;
-		this.profitFactorMapper = profitFactorMapper;
-	}
+    public ProfitFactorServiceImpl(ProfitFactorRepository profitFactorRepository, StyleRepository styleRepository, ProfitFactorMapper profitFactorMapper) {
+        this.profitFactorRepository = profitFactorRepository;
+        this.styleRepository = styleRepository;
+        this.profitFactorMapper = profitFactorMapper;
+    }
 
-	/**
+    /**
 	 * Save a profitFactor.
 	 *
 	 * @param profitFactorDTO the entity to save
@@ -90,7 +90,17 @@ public class ProfitFactorServiceImpl implements ProfitFactorService {
 		return profitFactorDTO;
 	}
 
-	/**
+    @Override
+    @Transactional(readOnly = true)
+    public ProfitFactorDTO findOneByStyleId(Long id) {
+        this.log.debug("Request to get ProfitFactor by Style : {}", id);
+        Style style = this.styleRepository.getOne(id);
+        ProfitFactor costFactor = this.profitFactorRepository.findOneByStyles(style);
+        ProfitFactorDTO profitFactorDTO = this.profitFactorMapper.toDto(costFactor);
+        return profitFactorDTO;
+    }
+
+    /**
 	 * Delete the profitFactor by id.
 	 *
 	 * @param id the id of the entity
