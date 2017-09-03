@@ -46,12 +46,21 @@
         <h4>Calculate</h4>
         <form name="toolForm" role="form" novalidate (ngSubmit)="check()" #toolForm="ngForm">
             <!-- Transaction -->
-            <table class="table table-striped">
+            <table class="form-group table table-striped">
                 <thead>
                 <tr>
-                    <th class="must-center must-justify"><span jhiTranslate="quanlysoApp.transactions.chosenNumber">Chosen Number</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactions.date">Date</span> <span class="fa"></span></th>
-                    <th class="must-center"><span jhiTranslate="quanlysoApp.transactions.netValue">Net Value</span> <span class="fa"></span></th>
+                    <th class="must-center must-justify">
+                        <span jhiTranslate="quanlysoApp.transactions.chosenNumber">Chosen Number</span>
+                        <span class="fa"></span>
+                    </th>
+                    <th class="must-center">
+                        <span jhiTranslate="quanlysoApp.transactions.date">Date</span>
+                        <span class="fa"></span>
+                    </th>
+                    <th class="must-center">
+                        <span jhiTranslate="quanlysoApp.transactions.netValue">Net Value</span>
+                        <span class="fa"></span>
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,7 +77,7 @@
                 </tbody>
             </table>
             <!-- Transaction detail -->
-            <table class="table table-striped">
+            <table class="form-group table table-striped">
                 <thead>
                 <tr>
                     <th><span jhiTranslate="quanlysoApp.transactionDetails.amount">Amount</span> <span class="fa"></span></th>
@@ -84,28 +93,30 @@
                 <tbody>
                 <tr *ngFor="let transactionDetails of transactions.transactionDetailsDTOs">
                     <td>
-                        <input type="number" [(ngModel)]="transactionDetails.amount" name="amount" required>
+                        <input id="field_amount_{{transactionDetails.uuid}}" type="number" [(ngModel)]="transactionDetails.amount" name="amount" required>
                     </td>
                     <td>
-                        <select class="form-control" id="field_channels" name="channels" [(ngModel)]="transactionDetails.channelsId" required>
+                        <select class="form-control" id="field_channels_{{transactionDetails.uuid}}" name="channels" [(ngModel)]="transactionDetails.channelsId" required>
                             <option [ngValue]="null"></option>
                             <option [ngValue]="channelOption.id" *ngFor="let channelOption of channels; trackBy: trackChannelById">{{ channelOption.name }}</option>
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" id="field_styles" name="styles" [(ngModel)]="transactionDetails.stylesId" (change)="onChooseStyle(transactionDetails)" required>
+                        <select class="form-control" id="field_styles_{{transactionDetails.uuid}}" name="styles" [(ngModel)]="transactionDetails.stylesId" (change)="onChooseStyle(transactionDetails)" required>
                             <option [ngValue]="null"></option>
                             <option [ngValue]="styleOption.id" *ngFor="let styleOption of styles; trackBy: trackStyleById">{{ styleOption.name }}</option>
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" id="field_types" name="types" [(ngModel)]="transactionDetails.typesId" required>
+                        <select class="form-control" id="field_types_{{transactionDetails.uuid}}" name="types" [(ngModel)]="transactionDetails.typesId" required>
                             <option [ngValue]="null"></option>
                             <option [ngValue]="typesOption.id" *ngFor="let typesOption of types; trackBy: trackTypesById">{{ typesOption.name }}</option>
                         </select>
                     </td>
                     <td>
-                        <input type="number" [(ngModel)]="transactionDetails.costRate" name="cost rate" min="{{transactionDetails.minRate}}" max="{{transactionDetails.maxRate}}" required>
+                        <input type="number" [(ngModel)]="transactionDetails.costRate" name="cost-rate"
+                               min="{{transactionDetails.minRate}}" max="{{transactionDetails.maxRate}}"
+                               step="0.01" required>
                     </td>
                     <td class="must-center">{{ transactionDetails.profit ? transactionDetails.profit : 'N/A' }}</td>
                     <td class="must-center">{{ transactionDetails.costs ? transactionDetails.costs : 'N/A' }}</td>
@@ -134,5 +145,58 @@
                 </button>
             </div>
         </form>
+
+        <!-- New form -->
+        <table class="form-group table table-striped" id="tbBet" style="margin-Top: 5px;">
+            <thead>
+            <tr>
+                <th></th>
+                <th colspan="4" class="must-center">2D</th>
+                <th colspan="4" class="must-center">3D</th>
+                <th colspan="2" class="must-center">4D</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr id="sub_title">
+                <th class="must-center">Number</th>
+                <th class="must-center">Top</th>
+                <th class="must-center">Bottom</th>
+                <th class="must-center">Both</th>
+                <th class="must-center">Roll</th>
+                <th class="must-center">Top</th>
+                <th class="must-center">Bottom</th>
+                <th class="must-center">Both</th>
+                <th class="must-center">Roll</th>
+                <th class="must-center">Bottom</th>
+                <th class="must-center">Roll</th>
+                <th class="must-center">Channels</th>
+                <th class="must-center">Cost rate</th>
+                <th class="must-center">Amount</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <input type="number" class="form-control" name="chosenNumber" id="field_chosenNumber"
+                           [(ngModel)]="transactions.chosenNumber" required/>
+                </td>
+                <td>Top</td>
+                <td>Bottom</td>
+                <td>Both</td>
+                <td>Roll</td>
+                <td>Top</td>
+                <td>Bottom</td>
+                <td>Both</td>
+                <td>Roll</td>
+                <td>Bottom</td>
+                <td>Roll</td>
+                <td>Channels</td>
+                <td>Cost rate</td>
+                <td>Amount</td>
+            </tr>
+            </tbody>
+        </table>
+
     </div>
 </div>

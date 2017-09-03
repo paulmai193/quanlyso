@@ -1,4 +1,5 @@
 export class TransactionDetails {
+    public uuid: number = Date.now();
     constructor(
         public id?: number,
         public amount?: number,
