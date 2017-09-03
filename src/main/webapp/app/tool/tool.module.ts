@@ -8,6 +8,12 @@ import { RouterModule } from '@angular/router';
 import { QuanLySoToolComponent } from './tool.component';
 import { TransactionsService } from '../entities/transactions/transactions.service';
 import { toolRoute } from './tool.route';
+import { ChannelService } from '../entities/channel/channel.service';
+import { StyleService } from '../entities/style/style.service';
+import { TypesService } from '../entities/types/types.service';
+import { StorageService } from '../shared/storage/storage.service';
+import { CodeService } from '../entities/code/code.service';
+import { CostFactorService } from '../entities/cost-factor/cost-factor.service';
 const ENTITY_STATES = [
     ...toolRoute
 ];
@@ -22,6 +28,12 @@ const ENTITY_STATES = [
     ],
     providers: [
         TransactionsService,
+        ChannelService,
+        StyleService,
+        TypesService,
+        StorageService,
+        CodeService,
+        CostFactorService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

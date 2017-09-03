@@ -90,7 +90,7 @@
                     <th class="must-center"></th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody *ngIf="transactions">
                 <tr *ngFor="let transactionDetails of transactions.transactionDetailsDTOs">
                     <td>
                         <input id="field_amount_{{transactionDetails.uuid}}" type="number" [(ngModel)]="transactionDetails.amount" name="amount" required>
@@ -147,28 +147,34 @@
         </form>
 
         <!-- New form -->
-        <table class="form-group table table-striped" id="tbBet" style="margin-Top: 5px;">
+        <table class="table table-striped" id="tbBet" style="margin-Top: 5px;">
             <thead>
             <tr>
                 <th>
                     <br>
-                    <label class="normal" jhiTranslate="quanlysoApp.transactionDetails.costRate"></label>
+                    <label jhiTranslate="quanlysoApp.transactionDetails.costRate"></label>
+                </th>
+                <th colspan="4" class="form-group must-center">
+                    <label for="cost-rate-2d">2D</label><br>
+                    <input type="number" id="cost-rate-2d" *ngIf="costFactor2d"
+                           min="{{ costFactor2d.minRate }}" max="{{ costFactor2d.maxRate }}" step="0.01"
+                           [(ngModel)]="costFactor2d.rate">
                 </th>
                 <th colspan="4" class="must-center">
-                    2D<br>
-                    <input type="number" id="cost-rate-2d">
-                </th>
-                <th colspan="4" class="must-center">
-                    3D<br>
-                    <input type="number" id="cost-rate-3d">
+                    <label for="cost-rate-3d">3D</label><br>
+                    <input type="number" id="cost-rate-3d" *ngIf="costFactor3d"
+                           min="{{ costFactor3d.minRate }}" max="{{ costFactor3d.maxRate }}" step="0.01"
+                           [(ngModel)]="costFactor3d.rate">
                 </th>
                 <th colspan="2" class="must-center">
-                    4D<br>
-                    <input type="number" id="cost-rate-4d">
+                    <label for="cost-rate-4d">4D</label><br>
+                    <input type="number" id="cost-rate-4d" *ngIf="costFactor4d"
+                           min="{{ costFactor4d.minRate }}"
+                           max="{{ costFactor4d.maxRate }}" step="0.01"
+                           [(ngModel)]="costFactor4d.rate">
                 </th>
-                <th></th>
-                <th></th>
-                <th></th>
+                <th class="must-center" rowspan="2">Channels</th>
+                <th class="must-center" rowspan="2">Amount</th>
             </tr>
             <tr id="sub_title">
                 <th class="must-center">Number</th>
@@ -182,9 +188,6 @@
                 <th class="must-center">Roll</th>
                 <th class="must-center">Bottom</th>
                 <th class="must-center">Roll</th>
-                <th class="must-center">Channels</th>
-                <th class="must-center">Cost rate</th>
-                <th class="must-center">Amount</th>
             </tr>
             </thead>
             <tbody>
@@ -204,11 +207,22 @@
                 <td>Bottom</td>
                 <td>Roll</td>
                 <td>Channels</td>
-                <td>Cost rate</td>
                 <td>Amount</td>
             </tr>
             </tbody>
         </table>
-
+        <!-- Submit button -->
+        <div>
+            <button type="button" class="btn btn-primary float-right" (click)="addRecord()">
+                <span class="fa fa-plus"></span>
+                <span  jhiTranslate="entity.action.add">Add</span>
+            </button>
+            <button type="reset" class="btn btn-default" (click)="reset()">
+                <span class="fa fa-refresh"></span>&nbsp;<span jhiTranslate="entity.action.cancel">Reset</span>
+            </button>
+            <button type="submit" [disabled]="toolForm.form.invalid || isProcess" class="btn btn-primary">
+                <span class="fa fa-calculator"></span>&nbsp;<span jhiTranslate="entity.action.check">Check</span>
+            </button>
+        </div>
     </div>
 </div>

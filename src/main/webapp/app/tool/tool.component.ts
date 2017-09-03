@@ -38,6 +38,13 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     types: Types[];
     transactions: Transactions;
     isCalculate: boolean;
+
+    // Min - Max cost rate of each style
+    costFactor2d: CostFactor;
+    costFactor3d: CostFactor;
+    costFactor4d: CostFactor;
+    test: any;
+
     private DATE_FORMAT = 'yyyy-MM-ddT12:00';
     private running: any;
 
@@ -52,10 +59,12 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                 private codeService: CodeService,
                 private costFactorService: CostFactorService
     ) {
-        this.reset();
+
     }
 
     ngOnInit(): void {
+        this.reset();
+
         this.transactions.openDate = this.crawlData.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
         this.progress = new ProgressModel(0, 0);
         this.onCrawlOpenDateChange();
@@ -133,6 +142,30 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
             (res: Response) => { this.styles = res.json(); }, (res: Response) => this.onError(res.json()));
         this.typesService.query().subscribe(
             (res: Response) => { this.types = res.json(); }, (res: Response) => this.onError(res.json()));
+
+        // Cost factor 2d
+        this.costFactorService.findByStyle(1).subscribe(
+            (res: CostFactor) => {
+                this.costFactor2d = res;
+            },
+            (res: Response) => this.onError(res.json())
+        );
+
+        // Cost factor 3d
+        this.costFactorService.findByStyle(2).subscribe(
+            (res: CostFactor) => {
+                this.costFactor3d = res;
+            },
+            (res: Response) => this.onError(res.json())
+        );
+
+        // Cost factor 4d
+        this.costFactorService.findByStyle(3).subscribe(
+            (res: CostFactor) => {
+                this.costFactor4d = res;
+            },
+            (res: Response) => this.onError(res.json())
+        );
     }
 
     private checkCrawlProcess(): void {

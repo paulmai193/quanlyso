@@ -5,6 +5,7 @@ export class CostFactor {
         public maxRate?: number,
         public stylesId?: number,
         public stylesName?: string,
+        public rate?: number
     ) {
     }
 }
