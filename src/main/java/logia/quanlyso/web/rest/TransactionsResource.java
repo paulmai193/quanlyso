@@ -3,6 +3,7 @@ package logia.quanlyso.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
+import logia.quanlyso.domain.Transactions;
 import logia.quanlyso.service.TransactionsService;
 import logia.quanlyso.service.dto.TransactionsDTO;
 import logia.quanlyso.web.rest.util.HeaderUtil;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -152,11 +154,33 @@ public class TransactionsResource {
 	 */
 	@PostMapping("/transactions/calculate")
 	@Timed
-	public ResponseEntity<TransactionsDTO> calculateTransactions(
+	public ResponseEntity<TransactionsDTO> calculateTransaction(
 			@RequestBody TransactionsDTO transactionsDTO) throws URISyntaxException {
-		this.log.debug("REST request to calculate value of Transactions : {}", transactionsDTO);
+		this.log.debug("REST request to calculate value of Transaction : {}", transactionsDTO);
 		TransactionsDTO result = this.transactionsService.calculate(transactionsDTO);
 		return ResponseEntity.ok(result);
 	}
+
+    /**
+     * POST /transactions/calculate/list : Calculate value of transactions.
+     *
+     * @param __transactionsDTO the transactionsDTO to calculate
+     * @return the ResponseEntity with status 200 (Success) and with body the transactionsDTO has
+     *         been calculating value
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/transactions/calculate/list")
+    @Timed
+    public ResponseEntity<List<TransactionsDTO>> calculateListTransaction(
+        @RequestBody List<TransactionsDTO> __transactionsDTO) throws URISyntaxException {
+        this.log.debug("REST request to calculate value of List Transaction");
+        List<TransactionsDTO> _results = new ArrayList<>();
+        for (TransactionsDTO _dto: __transactionsDTO) {
+            TransactionsDTO _result = this.transactionsService.calculate(_dto);
+            _results.add(_result);
+        }
+
+        return ResponseEntity.ok(_results);
+    }
 
 }

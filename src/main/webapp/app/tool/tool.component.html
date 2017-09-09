@@ -61,8 +61,8 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
-                        <input id="field_openDate" type="datetime-local" class="form-control" name="openDate"
+                    <td class="must-center">
+                        <input id="field_openDate" type="datetime-local" name="openDate"
                                [(ngModel)]="openDate" (change)="onCalculateOpenDateChange()" required/>
                     </td>
                     <td class="must-center">N/A</td>
@@ -131,20 +131,25 @@
                 <tbody>
                 <tr *ngFor="let tran of transactions; trackTransactionsById">
                     <td class="must-center">
-                        <input type="number" class="form-control" name="chosenNumber_{{ tran.uuid }}" id="chosenNumber_{{ tran.uuid }}"
+                        <input type="number" class="form-control" name="chosenNumber_{{ tran.id ? tran.id : tran.uuid }}"
+                               id="chosenNumber_{{ tran.id ? tran.id : tran.uuid }}"
                                [(ngModel)]="tran.chosenNumber" required/>
                     </td>
                     <td class="must-center" *ngFor="let detail of tran.transactionDetailsDTOs; trackBy: trackTransactionDetailsById">
-                        <input type="number" class="form-control" *ngIf="detail" name="amount_{{ detail.uuid }}"
-                               id="amount_{{ detail.uuid }}" [(ngModel)]="detail.amount"/>
+                        <input type="number" class="form-control" *ngIf="detail" name="amount_{{ detail.id ? detail.id : detail.uuid }}"
+                               id="amount_{{ detail.id ? detail.id : detail.uuid }}" [(ngModel)]="detail.amount"/>
                     </td>
                     <td class="must-center">
-                        <select class="form-control" multiple *ngIf="channels">
-                            <option *ngFor="let channel of channels; trackBy: trackChannelById">{{ channel.name }}</option>
+                        <select class="form-control" name="trans-channel" *ngIf="channels" [(ngModel)]="chooseChannel"
+                                (change)="onChangeChannel(tran)">
+                            <option *ngFor="let channel of channels; trackBy: trackChannelById" [ngValue]="channel">
+                                {{ channel.name }}
+                            </option>
                         </select>
                     </td>
                     <td class="must-center">
-                        <input type="number" class="form-control" name="net_amount_{{ tran.uuid }}" id="net_amount_{{ tran.uuid }}"
+                        <input type="number" class="form-control" name="net_amount_{{ tran.id ? tran.id : tran.uuid }}"
+                               id="net_amount_{{ tran.id ? tran.id : tran.uuid }}"
                                [(ngModel)]="tran.netValue" disabled/>
                     </td>
                 </tr>

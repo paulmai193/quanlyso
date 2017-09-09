@@ -19,6 +19,18 @@ export class TransactionsService {
         });
     }
 
+    calculateList(transactions: Transactions[]): Observable<Transactions[]> {
+        const copies: Transactions[] = [];
+        for (const i of transactions) {
+            const copy = this.convert(i);
+            copies.push(copy);
+        }
+
+        return this.http.post(this.resourceUrl + '/calculate/list', copies).map((res: Response) => {
+            return res.json();
+        });
+    }
+
     create(transactions: Transactions): Observable<Transactions> {
         const copy = this.convert(transactions);
         return this.http.post(this.resourceUrl, copy).map((res: Response) => {

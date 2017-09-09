@@ -44,6 +44,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     // New form model
     openDate: string;
     transactions: Transactions[];
+    chooseChannel: Channel;
 
     // Min - Max cost rate of each style
     costFactor2d: CostFactor;
@@ -110,7 +111,17 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     onChangeCost2d(): void {
         for (const tran of this.transactions) {
             tran.transactionDetailsDTOs.filter((detail) => detail.stylesId === 1).forEach((detail) => {
-                detail.costRate = this.costFactor2d.rate;
+                switch (detail.typesId) {
+                    case 1:
+                    case 2:
+                        detail.costRate = this.costFactor2d.rate;
+                        break;
+                    case 3:
+                        detail.costRate = this.costFactor2d.rate * 2;
+                        break;
+                    case 4:
+                        detail.costRate = this.costFactor2d.rate * 18;
+                }
             });
         }
     }
@@ -119,6 +130,17 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         for (const tran of this.transactions) {
             tran.transactionDetailsDTOs.filter((detail) => detail.stylesId === 2).forEach((detail) => {
                 detail.costRate = this.costFactor3d.rate;
+                switch (detail.typesId) {
+                    case 1:
+                    case 2:
+                        detail.costRate = this.costFactor3d.rate;
+                        break;
+                    case 3:
+                        detail.costRate = this.costFactor3d.rate * 2;
+                        break;
+                    case 4:
+                        detail.costRate = this.costFactor3d.rate * 18;
+                }
             });
         }
     }
@@ -128,6 +150,15 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
             tran.transactionDetailsDTOs.filter((detail) => detail.stylesId === 3).forEach((detail) => {
                 detail.costRate = this.costFactor4d.rate;
             });
+        }
+    }
+
+    onChangeChannel(chooseTransaction: Transactions): void {
+        // chooseTransaction.transactionDetailsDTOs.forEach((detail) => {
+        //     detail.channelsId = this.chooseChannel.id;
+        // });
+        for (const detail of chooseTransaction.transactionDetailsDTOs) {
+            detail.channelsId = this.chooseChannel.id;
         }
     }
 
@@ -208,7 +239,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
 
     check(): void {
         this.isCalculate = true;
-        this.subscribeToSaveResponse(this.transactionsService.calculate(this.transactions[0]), 'calculate');
+        this.subscribeToSaveResponse(this.transactionsService.calculateList(this.transactions), 'calculate');
     }
 
     crawl(): void {
@@ -248,6 +279,10 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         this.channelService.findByOpenDay(openDate).subscribe(
             (res: Response) => {
                 this.channels = res.json();
+                this.chooseChannel = this.channels[0];
+                for (const tran of this.transactions) {
+                    this.onChangeChannel(tran);
+                }
                 },
             (res: Response) => this.onError(res.json()));
         this.styleService.query().subscribe(
@@ -259,6 +294,8 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         this.costFactorService.findByStyle(1).subscribe(
             (res: CostFactor) => {
                 this.costFactor2d = res;
+                this.costFactor2d.rate = this.costFactor2d.minRate;
+                this.onChangeCost2d();
             },
             (res: Response) => this.onError(res.json())
         );
@@ -267,6 +304,8 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         this.costFactorService.findByStyle(2).subscribe(
             (res: CostFactor) => {
                 this.costFactor3d = res;
+                this.costFactor3d.rate = this.costFactor3d.minRate;
+                this.onChangeCost3d();
             },
             (res: Response) => this.onError(res.json())
         );
@@ -275,6 +314,8 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         this.costFactorService.findByStyle(3).subscribe(
             (res: CostFactor) => {
                 this.costFactor4d = res;
+                this.costFactor4d.rate = this.costFactor4d.minRate;
+                this.onChangeCost4d();
             },
             (res: Response) => this.onError(res.json())
         );
@@ -332,9 +373,11 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
 
     private onSaveSuccess(result: any, instance: string) {
         if (instance === 'calculate') {
-            // this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
-            // this.transaction = result;
-            // this.transaction.openDate = this.datePipe.transform(this.transaction.openDate, this.DATE_FORMAT);
+            this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});
+            this.transactions = result;
+            for (const tran of this.transactions) {
+                tran.openDate = this.datePipe.transform(tran.openDate, this.DATE_FORMAT);
+            }
             this.isCalculate = false;
         } else {
             this.eventManager.broadcast({ name: 'channelListModification', content: 'OK'});

@@ -167,14 +167,16 @@ public class CodeServiceImpl implements CodeService {
 			List<Code> _listCodes = this.codeRepository.findAllByChannelsAndOpenDate(_channel,
 					_formattedDate);
 			_listCodes = this.getMatchCondition(_chosenNumber, _listCodes, _style, _types);
-			CostFactor _costFactor = this.costFactorRepository
-					.findOneByStyles(_style);
+//			CostFactor _costFactor = this.costFactorRepository
+//					.findOneByStyles(_style);
+			Float _costRate = _details.getCostRate();
 			ProfitFactor _profitFactor = this.profitFactorRepository
 					.findOneByStyles(_style);
-			float _amount = _details.getAmount();
-			_details.costs(_amount * _costFactor.getMinRate()).profit(_amount * _profitFactor.getRate() * _listCodes.size());
-
-			_netValue = _netValue + _details.getProfit() - _details.getCosts();
+			Float _amount = _details.getAmount();
+			if (_amount != null) {
+                _details.costs(_amount * _costRate).profit(_amount * _profitFactor.getRate() * _listCodes.size());
+                _netValue = _netValue + _details.getProfit() - _details.getCosts();
+			}
 		}
 		__transactions.setNetValue(_netValue);
 

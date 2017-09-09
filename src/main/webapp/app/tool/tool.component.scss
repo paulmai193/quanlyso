@@ -17,5 +17,10 @@ th.must-justify {
             background-color: darkseagreen;
         }
     }
-    font-size: 14px;
+    //font-size: .8em;
+    .form-control {
+        font-size: .8em;
+        overflow-y: auto;
+        padding-left: 0;
+    }
 }

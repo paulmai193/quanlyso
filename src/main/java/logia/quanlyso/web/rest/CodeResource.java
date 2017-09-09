@@ -181,6 +181,7 @@ public class CodeResource {
 			Set<String> _codes = new HashSet<>();
 			_codes.addAll(channelDTOs.parallelStream().map(_dto -> _dto.getCode())
 			        .collect(Collectors.toSet()));
+			__crawlRequestDTO.setChannelCodes(_codes);
 		}
 
 		this.codeService.crawlLotteriesFromMinhNgocSite(__crawlRequestDTO.getChannelCodes());

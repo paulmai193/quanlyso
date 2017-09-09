@@ -33,9 +33,6 @@ public class TransactionDetailsDTO implements Serializable {
 	/** The channels id. */
 	private Long	channelsId;
 
-	/** The factors id. */
-	private Long	factorsId;
-
 	/** The styles id. */
 	private Long	stylesId;
 
@@ -153,24 +150,6 @@ public class TransactionDetailsDTO implements Serializable {
 	}
 
     /**
-     * Gets the factors id.
-     *
-     * @return the factors id
-     */
-    public Long getFactorsId() {
-		return this.factorsId;
-	}
-
-    /**
-     * Sets the factors id.
-     *
-     * @param factorId the new factors id
-     */
-    public void setFactorsId(Long factorId) {
-		this.factorsId = factorId;
-	}
-
-    /**
      * Gets the styles id.
      *
      * @return the styles id
@@ -264,7 +243,6 @@ public class TransactionDetailsDTO implements Serializable {
             ", costs=" + costs +
             ", transactionsId=" + transactionsId +
             ", channelsId=" + channelsId +
-            ", factorsId=" + factorsId +
             ", stylesId=" + stylesId +
             ", typesId=" + typesId +
             ", costRate=" + costRate +
