@@ -139,7 +139,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                         detail.costRate = this.costFactor3d.rate * 2;
                         break;
                     case 4:
-                        detail.costRate = this.costFactor3d.rate * 18;
+                        detail.costRate = this.costFactor3d.rate * 17;
                 }
             });
         }
@@ -149,6 +149,13 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         for (const tran of this.transactions) {
             tran.transactionDetailsDTOs.filter((detail) => detail.stylesId === 3).forEach((detail) => {
                 detail.costRate = this.costFactor4d.rate;
+                switch (detail.typesId) {
+                    case 2:
+                        detail.costRate = this.costFactor4d.rate;
+                        break;
+                    case 4:
+                        detail.costRate = this.costFactor4d.rate * 16;
+                }
             });
         }
     }
@@ -180,19 +187,24 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
             const detail3 = new TransactionDetails().style(1).type(3);
             const detail4 = new TransactionDetails().style(1).type(4);
             if (this.costFactor2d && this.costFactor2d.rate) {
-                detail1.costRate = detail2.costRate = detail3.costRate = detail4.costRate = this.costFactor2d.rate;
+                detail1.costRate = detail2.costRate = this.costFactor2d.rate;
+                detail3.costRate = this.costFactor2d.rate * 2;
+                detail4.costRate = this.costFactor2d.rate * 18
             }
             const detail5 = new TransactionDetails().style(2).type(1);
             const detail6 = new TransactionDetails().style(2).type(2);
             const detail7 = new TransactionDetails().style(2).type(3);
             const detail8 = new TransactionDetails().style(2).type(4);
             if (this.costFactor3d && this.costFactor3d.rate) {
-                detail5.costRate = detail6.costRate = detail7.costRate = detail8.costRate = this.costFactor3d.rate;
+                detail5.costRate = detail6.costRate = this.costFactor3d.rate;
+                detail7.costRate = this.costFactor3d.rate * 2;
+                detail8.costRate = this.costFactor3d.rate * 17;
             }
             const detail9 = new TransactionDetails().style(3).type(2);
             const detail10 = new TransactionDetails().style(3).type(4);
             if (this.costFactor4d && this.costFactor4d.rate) {
-                detail9.costRate = detail10.costRate = this.costFactor4d.rate;
+                detail9.costRate = this.costFactor4d.rate;
+                detail10.costRate = this.costFactor4d.rate * 16;
             }
             // 2D - top
             trans.transactionDetailsDTOs.push(detail1);
