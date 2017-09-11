@@ -47,8 +47,8 @@ public class CodeServiceImpl implements CodeService {
 	/** The code mapper. */
 	private final CodeMapper					codeMapper;
 
-	/** The cost factor repository. */
-	private final CostFactorRepository			costFactorRepository;
+//	/** The cost factor repository. */
+//	private final CostFactorRepository			costFactorRepository;
 
 	/** The profit factor repository. */
 	private final ProfitFactorRepository		profitFactorRepository;
@@ -67,17 +67,17 @@ public class CodeServiceImpl implements CodeService {
 	 *
 	 * @param codeRepository the code repository
 	 * @param codeMapper the code mapper
-	 * @param costFactorRepository the cost factor repository
+//	 * @param costFactorRepository the cost factor repository
 	 * @param profitFactorRepository the profit factor repository
 	 * @param channelRepository the channel repository
 	 * @param __processingListener the processing listener
 	 */
 	public CodeServiceImpl(CodeRepository codeRepository, CodeMapper codeMapper,
-			CostFactorRepository costFactorRepository,
+//			CostFactorRepository costFactorRepository,
 	        ProfitFactorRepository profitFactorRepository, ChannelRepository channelRepository, ProcessingListener __processingListener) {
 		this.codeRepository = codeRepository;
 		this.codeMapper = codeMapper;
-		this.costFactorRepository = costFactorRepository;
+//		this.costFactorRepository = costFactorRepository;
 		this.profitFactorRepository = profitFactorRepository;
 		this.channelRepository = channelRepository;
 		this.baseUrl = "http://www.minhngoc.net.vn/getkqxs";
@@ -149,32 +149,44 @@ public class CodeServiceImpl implements CodeService {
 		String _chosenNumber = __transactions.getChosenNumber();
 		float _netValue = 0f;
 		for (TransactionDetails _details : __transactions.getTransactionDetails()) {
-			// Get all condition
-			Channel _channel = _details.getChannels();
-			Style _style = _details.getStyles();
-			Types _types = _details.getTypes();
+            Float _amount = _details.getAmount();
+            if (_amount != null) {
+                // Get all condition
+                Channel _channel = _details.getChannels();
+                Style _style = _details.getStyles();
+                Types _types = _details.getTypes();
 
-			// Get open date
-			ZonedDateTime _openDate = __transactions.getOpenDate();
-			if (_openDate == null) {
-				// If not set, Assume transactions of current date
-				_openDate = ZonedDateTime.now(DateFormatterUtil.systemZoneId());
-			}
-			else {
-				_openDate = _openDate.withZoneSameInstant(DateFormatterUtil.systemZoneId());
-			}
-			ZonedDateTime _formattedDate = _openDate.withHour(0).withMinute(0).withSecond(0).withNano(0);
-			List<Code> _listCodes = this.codeRepository.findAllByChannelsAndOpenDate(_channel,
-					_formattedDate);
-			_listCodes = this.getMatchCondition(_chosenNumber, _listCodes, _style, _types);
-//			CostFactor _costFactor = this.costFactorRepository
-//					.findOneByStyles(_style);
-			Float _costRate = _details.getCostRate();
-			ProfitFactor _profitFactor = this.profitFactorRepository
-					.findOneByStyles(_style);
-			Float _amount = _details.getAmount();
-			if (_amount != null) {
-                _details.costs(_amount * _costRate).profit(_amount * _profitFactor.getRate() * _listCodes.size());
+                // Get open date
+                ZonedDateTime _openDate = __transactions.getOpenDate();
+                if (_openDate == null) {
+                    // If not set, Assume transactions of current date
+                    _openDate = ZonedDateTime.now(DateFormatterUtil.systemZoneId());
+                }
+                else {
+                    _openDate = _openDate.withZoneSameInstant(DateFormatterUtil.systemZoneId());
+                }
+                ZonedDateTime _formattedDate = _openDate.withHour(0).withMinute(0).withSecond(0).withNano(0);
+                List<Code> _listCodes = this.codeRepository.findAllByChannelsAndOpenDate(_channel,
+                        _formattedDate);
+                _listCodes = this.getMatchCondition(_chosenNumber, _listCodes, _style, _types);
+                Float _costRate = _details.getCostRate();
+                if (_types.getId().equals(TypesConstants.BOTH.getId())) {
+                    _costRate *= 2;
+                }
+                else if (_types.getId().equals(TypesConstants.ROLL.getId())) {
+                    if (_style.getId().equals(StyleConstants.TWO_NUM.getId())) {
+                        _costRate *= 18;
+                    }
+                    else if (_style.getId().equals(StyleConstants.THREE_NUM.getId())) {
+                        _costRate *= 17;
+                    }
+                    else if (_style.getId().equals(StyleConstants.FOUR_NUM.getId())) {
+                        _costRate *= 16;
+                    }
+                }
+                ProfitFactor _profitFactor = this.profitFactorRepository
+                        .findOneByStyles(_style);
+			    _details.costs(_amount * _costRate).profit(_amount * _profitFactor.getRate() * _listCodes.size());
                 _netValue = _netValue + _details.getProfit() - _details.getCosts();
 			}
 		}
