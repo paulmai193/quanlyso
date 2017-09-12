@@ -140,7 +140,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     addRecord(): void {
 
         // New model
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 10; i++) {
             const trans: Transactions = new Transactions();
             trans.clientsId = this.storageService.getAccountId();
             if (this.openDate) {
@@ -203,9 +203,6 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
 
     reset(): void {
         this.crawlData = new CrawlDataModel();
-        // this.transaction = new Transactions();
-        // this.transaction.clientsId = this.storageService.getAccountId();
-        // this.transaction.transactionDetailsDTOs = [];
 
         // New model
         this.transactions = [];

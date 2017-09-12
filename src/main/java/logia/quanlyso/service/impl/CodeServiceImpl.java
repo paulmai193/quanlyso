@@ -232,7 +232,7 @@ public class CodeServiceImpl implements CodeService {
 			filtered = listCodes;
 		}
 
-		return filtered.stream().filter(code -> code.getCode().contains(chosenNumber))
+		return filtered.parallelStream().filter(code -> code.getCode().contains(chosenNumber))
 		        .collect(Collectors.toList());
 	}
 
@@ -245,7 +245,7 @@ public class CodeServiceImpl implements CodeService {
 	 */
 	private List<Code> filterCodeOnTop(List<Code> codes, int length) {
 		List<Code> filtered = new ArrayList<>();
-		filtered = codes.stream().filter(code -> code.getCode().length() == length)
+		filtered = codes.parallelStream().filter(code -> code.getCode().length() == length)
 				.collect(Collectors.toList());
 		return filtered;
 	}
@@ -258,7 +258,7 @@ public class CodeServiceImpl implements CodeService {
 	 */
 	private List<Code> filterCodeOnBottom(List<Code> codes) {
 		List<Code> filtered = new ArrayList<>();
-		filtered = codes.stream().filter(code -> code.getCode().length() == 6)
+		filtered = codes.parallelStream().filter(code -> code.getCode().length() == 6)
 				.collect(Collectors.toList()); // 6 is max length of code
 		return filtered;
 	}
