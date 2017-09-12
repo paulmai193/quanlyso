@@ -171,17 +171,37 @@ public class CodeServiceImpl implements CodeService {
                 _listCodes = this.getMatchCondition(_chosenNumber, _listCodes, _style, _types);
                 Float _costRate = _details.getCostRate();
                 if (_types.getId().equals(TypesConstants.BOTH.getId())) {
-                    _costRate *= 2;
+                    if (_channel.getId().equals(1L)) {
+                        _costRate *= 5;
+                    }
+                    else {
+                        _costRate *= 2;
+                    }
                 }
                 else if (_types.getId().equals(TypesConstants.ROLL.getId())) {
                     if (_style.getId().equals(StyleConstants.TWO_NUM.getId())) {
-                        _costRate *= 18;
+                        if (_channel.getId().equals(1L)) {
+                            _costRate *= 27;
+                        }
+                        else {
+                            _costRate *= 18;
+                        }
                     }
                     else if (_style.getId().equals(StyleConstants.THREE_NUM.getId())) {
-                        _costRate *= 17;
+                        if (_channel.getId().equals(1L)) {
+                            _costRate *= 23;
+                        }
+                        else {
+                            _costRate *= 17;
+                        }
                     }
                     else if (_style.getId().equals(StyleConstants.FOUR_NUM.getId())) {
-                        _costRate *= 16;
+                        if (_channel.getId().equals(1L)) {
+                            _costRate *= 20;
+                        }
+                        else {
+                            _costRate *= 16;
+                        }
                     }
                 }
                 ProfitFactor _profitFactor = this.profitFactorRepository
