@@ -1,7 +1,6 @@
-import construct = Reflect.construct;
 import { TransactionDetails } from '../transaction-details/transaction-details.model';
+import { Channel } from '../channel/channel.model';
 export class Transactions {
-    public uuid: number = Date.now();
     constructor(
         public id?: number,
         public chosenNumber?: number,
@@ -9,7 +8,8 @@ export class Transactions {
         public netValue?: number,
         public clientsId?: number,
         public clientsName?: string,
-        public transactionDetailsDTOs?: TransactionDetails[]
+        public transactionDetailsDTOs?: TransactionDetails[],
+        public chooseChannel?: Channel
     ) {
         this.transactionDetailsDTOs = [];
     }

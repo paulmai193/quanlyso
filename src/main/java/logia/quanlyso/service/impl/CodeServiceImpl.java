@@ -204,6 +204,9 @@ public class CodeServiceImpl implements CodeService {
                         }
                     }
                 }
+                else if (_channel.getId().equals(1L)) {
+                    _costRate *= 4;
+                }
                 ProfitFactor _profitFactor = this.profitFactorRepository
                         .findOneByStyles(_style);
 			    _details.costs(_amount * _costRate).profit(_amount * _profitFactor.getRate() * _listCodes.size());
@@ -252,7 +255,7 @@ public class CodeServiceImpl implements CodeService {
 			filtered = listCodes;
 		}
 
-		return filtered.parallelStream().filter(code -> code.getCode().contains(chosenNumber))
+		return filtered.parallelStream().filter(code -> code.getCode().endsWith(chosenNumber))
 		        .collect(Collectors.toList());
 	}
 

@@ -43,7 +43,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     // New form model
     openDate: string;
     transactions: Transactions[];
-    chooseChannel: Channel;
+    // chooseChannel: Channel;
 
     // Min - Max cost rate of each style
     costFactor2d: CostFactor;
@@ -133,14 +133,14 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
 
     onChangeChannel(chooseTransaction: Transactions): void {
         for (const detail of chooseTransaction.transactionDetailsDTOs) {
-            detail.channelsId = this.chooseChannel.id;
+            detail.channelsId = chooseTransaction.chooseChannel.id;
         }
     }
 
     addRecord(): void {
 
         // New model
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < 1; i++) {
             const trans: Transactions = new Transactions();
             trans.clientsId = this.storageService.getAccountId();
             if (this.openDate) {
@@ -149,6 +149,9 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
                 trans.openDate = this.datePipe.transform(Date.now(), this.DATE_FORMAT);
             }
             trans.transactionDetailsDTOs = [];
+            if (this.channels && this.channels.length > 0) {
+                trans.chooseChannel = this.channels[0];
+            }
 
             const detail1 = new TransactionDetails().style(1).type(1);
             const detail2 = new TransactionDetails().style(1).type(2);
@@ -193,13 +196,6 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
             this.transactions.push(trans);
         }
     }
-
-    // removeRecord(target: TransactionDetails): void {
-    //     const idx: number = this.transaction.transactionDetailsDTOs.findIndex((t: TransactionDetails) => t === target);
-    //     if (idx > -1) {
-    //         this.transaction.transactionDetailsDTOs.splice(idx, 1);
-    //     }
-    // }
 
     reset(): void {
         this.crawlData = new CrawlDataModel();
@@ -251,8 +247,8 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         this.channelService.findByOpenDay(openDate).subscribe(
             (res: Response) => {
                 this.channels = res.json();
-                this.chooseChannel = this.channels[0];
                 for (const tran of this.transactions) {
+                    tran.chooseChannel = this.channels[0];
                     this.onChangeChannel(tran);
                 }
                 },

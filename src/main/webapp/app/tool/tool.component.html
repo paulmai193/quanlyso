@@ -133,15 +133,15 @@
                     <td class="must-center">
                         <input type="number" class="form-control" name="chosenNumber_{{ i }}"
                                id="chosenNumber_{{ i }}"
-                               [(ngModel)]="tran.chosenNumber" required/>
+                               [(ngModel)]="tran.chosenNumber"/>
                     </td>
                     <td class="must-center" *ngFor="let detail of tran.transactionDetailsDTOs; trackBy: trackTransactionDetailsById; let j = index">
                         <input type="number" class="form-control" *ngIf="detail" name="amount_{{ i }}_{{ j }}"
                                id="amount_{{ i }}_{{ j }}" [(ngModel)]="detail.amount"/>
                     </td>
                     <td class="must-center">
-                        <select class="form-control" name="trans_channel_{{ i }}" id="trans_channel_{{ i }}" *ngIf="channels" [(ngModel)]="chooseChannel"
-                                (ngModelChange)="onChangeChannel($event, tran)">
+                        <select class="form-control" name="trans_channel_{{ i }}" id="trans_channel_{{ i }}" *ngIf="channels" [(ngModel)]="tran.chooseChannel"
+                                (ngModelChange)="onChangeChannel(tran)">
                             <option *ngFor="let channel of channels; trackBy: trackChannelById" [ngValue]="channel">
                                 {{ channel.name }}
                             </option>
