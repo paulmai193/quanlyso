@@ -147,7 +147,7 @@ public class CodeServiceImpl implements CodeService {
 	@Override
 	public Transactions calculate(Transactions __transactions) {
 		String _chosenNumber = __transactions.getChosenNumber();
-		float _netValue = 0f;
+		float _netValue = 0f, _cost = 0f;
 		for (TransactionDetails _details : __transactions.getTransactionDetails()) {
             Float _amount = _details.getAmount();
             if (_amount != null) {
@@ -211,9 +211,11 @@ public class CodeServiceImpl implements CodeService {
                         .findOneByStyles(_style);
 			    _details.costs(_amount * _costRate).profit(_amount * _profitFactor.getRate() * _listCodes.size());
                 _netValue = _netValue + _details.getProfit() - _details.getCosts();
+                _cost = _details.getCosts();
 			}
 		}
 		__transactions.setNetValue(_netValue);
+		__transactions.setCost(_cost);
 
 		return __transactions;
 	}

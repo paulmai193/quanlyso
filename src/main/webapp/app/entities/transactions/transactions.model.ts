@@ -9,7 +9,8 @@ export class Transactions {
         public clientsId?: number,
         public clientsName?: string,
         public transactionDetailsDTOs?: TransactionDetails[],
-        public chooseChannel?: Channel
+        public chooseChannel?: Channel,
+        public cost?: number
     ) {
         this.transactionDetailsDTOs = [];
     }

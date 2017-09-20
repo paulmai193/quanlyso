@@ -51,149 +51,151 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 	@ManyToOne()
 	private User					users;
 
-	/**
-	 * Gets the id.
-	 *
-	 * @return the id
-	 */
-	public Long getId() {
+	private transient Float cost;
+
+    /**
+     * Gets the id.
+     *
+     * @return the id
+     */
+    public Long getId() {
 		return this.id;
 	}
 
-	/**
-	 * Sets the id.
-	 *
-	 * @param id the new id
-	 */
-	public void setId(Long id) {
+    /**
+     * Sets the id.
+     *
+     * @param id the new id
+     */
+    public void setId(Long id) {
 		this.id = id;
 	}
 
-	/**
-	 * Gets the chosen number.
-	 *
-	 * @return the chosen number
-	 */
-	public String getChosenNumber() {
+    /**
+     * Gets the chosen number.
+     *
+     * @return the chosen number
+     */
+    public String getChosenNumber() {
 		return this.chosenNumber;
 	}
 
-	/**
-	 * Chosen number.
-	 *
-	 * @param chosenNumber the chosen number
-	 * @return the transactions
-	 */
-	public Transactions chosenNumber(String chosenNumber) {
+    /**
+     * Chosen number.
+     *
+     * @param chosenNumber the chosen number
+     * @return the transactions
+     */
+    public Transactions chosenNumber(String chosenNumber) {
 		this.setChosenNumber(chosenNumber);
 		return this;
 	}
 
-	/**
-	 * Sets the chosen number.
-	 *
-	 * @param chosenNumber the new chosen number
-	 */
-	public void setChosenNumber(String chosenNumber) {
+    /**
+     * Sets the chosen number.
+     *
+     * @param chosenNumber the new chosen number
+     */
+    public void setChosenNumber(String chosenNumber) {
 		this.chosenNumber = chosenNumber;
 	}
 
-	/**
-	 * Gets the net value.
-	 *
-	 * @return the net value
-	 */
-	public Float getNetValue() {
+    /**
+     * Gets the net value.
+     *
+     * @return the net value
+     */
+    public Float getNetValue() {
 		return this.netValue;
 	}
 
-	/**
-	 * Net value.
-	 *
-	 * @param netValue the net value
-	 * @return the transactions
-	 */
-	public Transactions netValue(Float netValue) {
+    /**
+     * Net value.
+     *
+     * @param netValue the net value
+     * @return the transactions
+     */
+    public Transactions netValue(Float netValue) {
 		this.setNetValue(netValue);;
 		return this;
 	}
 
-	/**
-	 * Sets the net value.
-	 *
-	 * @param netValue the new net value
-	 */
-	public void setNetValue(Float netValue) {
+    /**
+     * Sets the net value.
+     *
+     * @param netValue the new net value
+     */
+    public void setNetValue(Float netValue) {
 		this.netValue = netValue;
 	}
 
-	/**
-	 * Gets the open date.
-	 *
-	 * @return the openDate
-	 */
-	public ZonedDateTime getOpenDate() {
+    /**
+     * Gets the open date.
+     *
+     * @return the openDate
+     */
+    public ZonedDateTime getOpenDate() {
 		return openDate;
 	}
 
-	/**
-	 * Sets the open date.
-	 *
-	 * @param __openDate the openDate to set
-	 */
-	public void setOpenDate(ZonedDateTime __openDate) {
+    /**
+     * Sets the open date.
+     *
+     * @param __openDate the openDate to set
+     */
+    public void setOpenDate(ZonedDateTime __openDate) {
 		this.openDate = __openDate;
 	}
 
-	/**
-	 * Open date.
-	 *
-	 * @param __openDay the open day
-	 * @return the transactions
-	 */
-	public Transactions openDate(ZonedDateTime __openDay) {
+    /**
+     * Open date.
+     *
+     * @param __openDay the open day
+     * @return the transactions
+     */
+    public Transactions openDate(ZonedDateTime __openDay) {
 		this.setOpenDate(__openDay);
 		return this;
 	}
 
-	/**
-	 * Gets the transaction details.
-	 *
-	 * @return the transaction details
-	 */
-	public Set<TransactionDetails> getTransactionDetails() {
+    /**
+     * Gets the transaction details.
+     *
+     * @return the transaction details
+     */
+    public Set<TransactionDetails> getTransactionDetails() {
 		return this.transactionDetails;
 	}
 
-	/**
-	 * Transaction details.
-	 *
-	 * @param transactionDetails the transaction details
-	 * @return the transactions
-	 */
-	public Transactions transactionDetails(Set<TransactionDetails> transactionDetails) {
+    /**
+     * Transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @return the transactions
+     */
+    public Transactions transactionDetails(Set<TransactionDetails> transactionDetails) {
 		this.transactionDetails = transactionDetails;
 		return this;
 	}
 
-	/**
-	 * Adds the transaction details.
-	 *
-	 * @param transactionDetails the transaction details
-	 * @return the transactions
-	 */
-	public Transactions addTransactionDetails(TransactionDetails transactionDetails) {
+    /**
+     * Adds the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @return the transactions
+     */
+    public Transactions addTransactionDetails(TransactionDetails transactionDetails) {
 		return this.addTransactionDetails(transactionDetails, true);
 	}
 
-	/**
-	 * Adds the transaction details.
-	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
-	 * @return the transactions
-	 */
-	Transactions addTransactionDetails(TransactionDetails transactionDetails,
+    /**
+     * Adds the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget      the is set to target detail
+     * @return the transactions
+     */
+    Transactions addTransactionDetails(TransactionDetails transactionDetails,
 			boolean isSetToTarget) {
 		this.transactionDetails.add(transactionDetails);
 		if (isSetToTarget) {
@@ -202,24 +204,24 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 		return this;
 	}
 
-	/**
-	 * Removes the transaction details.
-	 *
-	 * @param transactionDetails the transaction details
-	 * @return the transactions
-	 */
-	public Transactions removeTransactionDetails(TransactionDetails transactionDetails) {
+    /**
+     * Removes the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @return the transactions
+     */
+    public Transactions removeTransactionDetails(TransactionDetails transactionDetails) {
 		return this.removeTransactionDetails(transactionDetails, true);
 	}
 
-	/**
-	 * Removes the transaction details.
-	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
-	 * @return the transactions
-	 */
-	Transactions removeTransactionDetails(TransactionDetails transactionDetails,
+    /**
+     * Removes the transaction details.
+     *
+     * @param transactionDetails the transaction details
+     * @param isSetToTarget      the is set to target detail
+     * @return the transactions
+     */
+    Transactions removeTransactionDetails(TransactionDetails transactionDetails,
 			boolean isSetToTarget) {
 		this.transactionDetails.remove(transactionDetails);
 		if (isSetToTarget) {
@@ -228,63 +230,81 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 		return this;
 	}
 
-	/**
-	 * Sets the transaction details.
-	 *
-	 * @param transactionDetails the new transaction details
-	 */
-	public void setTransactionDetails(Set<TransactionDetails> transactionDetails) {
+    /**
+     * Sets the transaction details.
+     *
+     * @param transactionDetails the new transaction details
+     */
+    public void setTransactionDetails(Set<TransactionDetails> transactionDetails) {
 		this.transactionDetails = transactionDetails;
 	}
 
-	/**
-	 * Gets the users.
-	 *
-	 * @return the users
-	 */
-	public User getUsers() {
+    /**
+     * Gets the users.
+     *
+     * @return the users
+     */
+    public User getUsers() {
 		return this.users;
 	}
 
-	/**
-	 * Users.
-	 *
-	 * @param user the user
-	 * @return the transactions
-	 */
-	public Transactions users(User user) {
+    /**
+     * Users.
+     *
+     * @param user the user
+     * @return the transactions
+     */
+    public Transactions users(User user) {
 		this.setUsers(user);
 		;
 		return this;
 	}
 
-	/**
-	 * Sets the users.
-	 *
-	 * @param user the new users
-	 */
-	public void setUsers(User user) {
+    /**
+     * Sets the users.
+     *
+     * @param user the new users
+     */
+    public void setUsers(User user) {
 		this.setUsers(user, true);
 	}
 
-	/**
-	 * Sets the users.
-	 *
-	 * @param user the user
-	 * @param isSetToTarget the is set to target user
-	 */
-	void setUsers(User user, boolean isSetToTarget) {
+    /**
+     * Sets the users.
+     *
+     * @param user          the user
+     * @param isSetToTarget the is set to target user
+     */
+    void setUsers(User user, boolean isSetToTarget) {
 		this.users = user;
 		if (user != null && isSetToTarget) {
 			user.addTransactions(this, false);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+    /**
+     * Gets cost.
+     *
+     * @return the cost
+     */
+    public Float getCost() {
+        return cost;
+    }
+
+    /**
+     * Sets cost.
+     *
+     * @param cost the cost
+     */
+    public void setCost(Float cost) {
+        this.cost = cost;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {
@@ -310,14 +330,16 @@ public class Transactions extends AbstractAuditingEntity implements Serializable
 		return Objects.hashCode(this.getId());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Transactions{" + "id=" + this.getId() + ", chosenNumber='" + this.getChosenNumber() + "'"
-				+ ", netValue='" + this.getNetValue() + "'" + "}";
-	}
+    @Override
+    public String toString() {
+        return "Transactions{" +
+            "id=" + id +
+            ", chosenNumber='" + chosenNumber + '\'' +
+            ", netValue=" + netValue +
+            ", openDate=" + openDate +
+            ", transactionDetails=" + transactionDetails +
+            ", users=" + users +
+            ", cost=" + cost +
+            '}';
+    }
 }

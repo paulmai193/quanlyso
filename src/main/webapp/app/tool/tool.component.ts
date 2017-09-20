@@ -1,7 +1,7 @@
 /**
  * Created by Dai Mai on 6/17/17.
  */
-import {Component, OnInit, OnDestroy, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Channel } from '../entities/channel/channel.model';
 import { Style } from '../entities/style/style.model';
 import { Types } from '../entities/types/types.model';
@@ -19,8 +19,8 @@ import { StorageService } from '../shared/storage/storage.service';
 import { CrawlDataModel } from '../entities/crawl-data.model';
 import { ProgressModel } from '../entities/progress.model';
 import { CodeService } from '../entities/code/code.service';
-import {CostFactorService} from '../entities/cost-factor/cost-factor.service';
-import {CostFactor} from '../entities/cost-factor/cost-factor.model';
+import { CostFactorService } from '../entities/cost-factor/cost-factor.service';
+import { CostFactor} from '../entities/cost-factor/cost-factor.model';
 import { ProfitFactor } from '../entities/profit-factor/profit-factor.model';
 import { ProfitFactorService } from '../entities/profit-factor/profit-factor.service';
 
@@ -43,7 +43,6 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
     // New form model
     openDate: string;
     transactions: Transactions[];
-    // chooseChannel: Channel;
 
     // Min - Max cost rate of each style
     costFactor2d: CostFactor;
@@ -305,7 +304,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
         );
 
         // Profit factor 4d
-        this.profitFactorService.findByStyle(2).subscribe(
+        this.profitFactorService.findByStyle(3).subscribe(
             (res: ProfitFactor) => {
                 this.profitFactor4d = res;
             },

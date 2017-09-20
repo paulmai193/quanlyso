@@ -2,18 +2,18 @@
     "quanlysoApp": {
         "channel" : {
             "home": {
-                "title": "Kênh",
-                "createLabel": "Thêm mới một Kênh",
-                "createOrEditLabel": "Thêm mới hoặc cập nhật Kênh"
+                "title": "Đài",
+                "createLabel": "Thêm mới một Đài",
+                "createOrEditLabel": "Thêm mới hoặc cập nhật Đài"
             },
-            "created": "Một Kênh mới được tạo với tên {{ param }}",
-            "updated": "Một Kênh cập nhật với tên {{ param }}",
-            "deleted": "Một Kênh đã xóa với tên {{ param }}",
+            "created": "Một Đài mới được tạo với tên {{ param }}",
+            "updated": "Một Đài cập nhật với tên {{ param }}",
+            "deleted": "Một Đài đã xóa với tên {{ param }}",
             "delete": {
-                "question": "Bạn có chắc là muốn xóa Kênh {{ id }}?"
+                "question": "Bạn có chắc là muốn xóa Đài {{ id }}?"
             },
             "detail": {
-                "title": "Kênh"
+                "title": "Đài"
             },
             "name": "Tên",
             "code": "Mã",
