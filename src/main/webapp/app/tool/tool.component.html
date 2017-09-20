@@ -53,10 +53,6 @@
                         <span jhiTranslate="quanlysoApp.transactions.date">Date</span>
                         <span class="fa"></span>
                     </th>
-                    <th class="must-center">
-                        <span jhiTranslate="quanlysoApp.transactions.netValue">Net Value</span>
-                        <span class="fa"></span>
-                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,7 +61,6 @@
                         <input id="field_openDate" type="datetime-local" name="openDate"
                                [(ngModel)]="openDate" (change)="onCalculateOpenDateChange()" required/>
                     </td>
-                    <td class="must-center">N/A</td>
                 </tr>
                 </tbody>
             </table>
