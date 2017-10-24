@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.impl;
 
 import logia.quanlyso.domain.TransactionDetails;
@@ -26,36 +29,40 @@ import org.springframework.transaction.annotation.Transactional;
 public class TransactionsServiceImpl implements TransactionsService {
 
 	/** The log. */
-	private final Logger						log	= LoggerFactory
-			.getLogger(TransactionsServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(TransactionsServiceImpl.class);
 
 	/** The transactions repository. */
-	private final TransactionsRepository		transactionsRepository;
+	private final TransactionsRepository transactionsRepository;
 
 	/** The transactions mapper. */
-	private final TransactionsMapper			transactionsMapper;
+	private final TransactionsMapper transactionsMapper;
 
 	/** The user repository. */
-	private final UserRepository				userRepository;
+	private final UserRepository userRepository;
 
 	/** The transaction details repository. */
-	private final TransactionDetailsRepository	transactionDetailsRepository;
+	private final TransactionDetailsRepository transactionDetailsRepository;
 
 	/** The code service. */
-	private final CodeService					codeService;
+	private final CodeService codeService;
 
 	/**
 	 * Instantiates a new transactions service impl.
 	 *
-	 * @param transactionsRepository the transactions repository
-	 * @param transactionsMapper the transactions mapper
-	 * @param userRepository the user repository
-	 * @param transactionDetailsRepository the transaction details repository
-	 * @param codeService the code service
+	 * @param transactionsRepository
+	 *            the transactions repository
+	 * @param transactionsMapper
+	 *            the transactions mapper
+	 * @param userRepository
+	 *            the user repository
+	 * @param transactionDetailsRepository
+	 *            the transaction details repository
+	 * @param codeService
+	 *            the code service
 	 */
-	public TransactionsServiceImpl(TransactionsRepository transactionsRepository,
-			TransactionsMapper transactionsMapper, UserRepository userRepository,
-			TransactionDetailsRepository transactionDetailsRepository, CodeService codeService) {
+	public TransactionsServiceImpl(TransactionsRepository transactionsRepository, TransactionsMapper transactionsMapper,
+			UserRepository userRepository, TransactionDetailsRepository transactionDetailsRepository,
+			CodeService codeService) {
 		this.transactionsRepository = transactionsRepository;
 		this.transactionsMapper = transactionsMapper;
 		this.userRepository = userRepository;
@@ -66,7 +73,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 	/**
 	 * Save a transactions.
 	 *
-	 * @param transactionsDTO the entity to save
+	 * @param transactionsDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	@Override
@@ -94,7 +102,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 	/**
 	 * Get all the transactions.
 	 *
-	 * @param pageable the pagination information
+	 * @param pageable
+	 *            the pagination information
 	 * @return the list of entities
 	 */
 	@Override
@@ -108,7 +117,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 	/**
 	 * Get one transactions by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	@Override
@@ -123,7 +133,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 	/**
 	 * Delete the transactions by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	@Override
 	public void delete(Long id) {
@@ -136,7 +147,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 		}
 
 		// Remove this transaction out of user collection
-		// User user = transactions.getUsers().removeTransactionss(transactions);
+		// User user =
+		// transactions.getUsers().removeTransactionss(transactions);
 		// this.userRepository.save(user);
 
 		// Delete this transaction
@@ -146,8 +158,8 @@ public class TransactionsServiceImpl implements TransactionsService {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see logia.quanlyso.service.TransactionsService#calculate(logia.quanlyso.service.dto.
-	 * TransactionsDTO)
+	 * @see logia.quanlyso.service.TransactionsService#calculate(logia.quanlyso.
+	 * service.dto. TransactionsDTO)
 	 */
 	@Override
 	public TransactionsDTO calculate(TransactionsDTO transactionsDTO) {

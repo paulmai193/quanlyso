@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.mapper;
 
 import logia.quanlyso.domain.Authority;
@@ -21,7 +24,8 @@ public interface UserMapper {
 	/**
 	 * User to user DTO.
 	 *
-	 * @param user the user
+	 * @param user
+	 *            the user
 	 * @return the user DTO
 	 */
 	UserDTO userToUserDTO(User user);
@@ -29,7 +33,8 @@ public interface UserMapper {
 	/**
 	 * Users to user DT os.
 	 *
-	 * @param users the users
+	 * @param users
+	 *            the users
 	 * @return the list
 	 */
 	List<UserDTO> usersToUserDTOs(List<User> users);
@@ -37,7 +42,8 @@ public interface UserMapper {
 	/**
 	 * User DTO to user.
 	 *
-	 * @param userDTO the user DTO
+	 * @param userDTO
+	 *            the user DTO
 	 * @return the user
 	 */
 	@Mapping(target = "createdBy", ignore = true)
@@ -53,7 +59,8 @@ public interface UserMapper {
 	/**
 	 * User DT os to users.
 	 *
-	 * @param userDTOs the user DT os
+	 * @param userDTOs
+	 *            the user DT os
 	 * @return the list
 	 */
 	List<User> userDTOsToUsers(List<UserDTO> userDTOs);
@@ -61,7 +68,8 @@ public interface UserMapper {
 	/**
 	 * User from id.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the user
 	 */
 	default User userFromId(Long id) {
@@ -76,7 +84,8 @@ public interface UserMapper {
 	/**
 	 * Strings from authorities.
 	 *
-	 * @param authorities the authorities
+	 * @param authorities
+	 *            the authorities
 	 * @return the sets the
 	 */
 	default Set<String> stringsFromAuthorities(Set<Authority> authorities) {
@@ -86,7 +95,8 @@ public interface UserMapper {
 	/**
 	 * Authorities from strings.
 	 *
-	 * @param strings the strings
+	 * @param strings
+	 *            the strings
 	 * @return the sets the
 	 */
 	default Set<Authority> authoritiesFromStrings(Set<String> strings) {

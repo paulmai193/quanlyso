@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +20,8 @@ public class DateTimeFormatConfiguration extends WebMvcConfigurerAdapter {
 	 * (non-Javadoc)
 	 * 
 	 * @see
-	 * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addFormatters(org.
-	 * springframework.format.FormatterRegistry)
+	 * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+	 * #addFormatters(org. springframework.format.FormatterRegistry)
 	 */
 	@Override
 	public void addFormatters(FormatterRegistry registry) {

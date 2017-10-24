@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.vm;
 
 /**
@@ -8,10 +11,10 @@ package logia.quanlyso.web.rest.vm;
 public class KeyAndPasswordVM {
 
 	/** The key. */
-	private String	key;
+	private String key;
 
 	/** The new password. */
-	private String	newPassword;
+	private String newPassword;
 
 	/**
 	 * Gets the key.
@@ -25,7 +28,8 @@ public class KeyAndPasswordVM {
 	/**
 	 * Sets the key.
 	 *
-	 * @param key the new key
+	 * @param key
+	 *            the new key
 	 */
 	public void setKey(String key) {
 		this.key = key;
@@ -43,7 +47,8 @@ public class KeyAndPasswordVM {
 	/**
 	 * Sets the new password.
 	 *
-	 * @param newPassword the new new password
+	 * @param newPassword
+	 *            the new new password
 	 */
 	public void setNewPassword(String newPassword) {
 		this.newPassword = newPassword;

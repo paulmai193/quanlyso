@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import io.github.jhipster.config.locale.AngularCookieLocaleResolver;
@@ -21,9 +24,8 @@ public class LocaleConfiguration extends WebMvcConfigurerAdapter implements Envi
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * org.springframework.context.EnvironmentAware#setEnvironment(org.springframework.core.env.
-	 * Environment)
+	 * @see org.springframework.context.EnvironmentAware#setEnvironment(org.
+	 * springframework.core.env. Environment)
 	 */
 	@Override
 	public void setEnvironment(Environment environment) {
@@ -46,7 +48,8 @@ public class LocaleConfiguration extends WebMvcConfigurerAdapter implements Envi
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter#addInterceptors(org
+	 * org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+	 * #addInterceptors(org
 	 * .springframework.web.servlet.config.annotation.InterceptorRegistry)
 	 */
 	@Override

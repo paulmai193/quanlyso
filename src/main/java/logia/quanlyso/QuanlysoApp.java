@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso;
 
 import io.github.jhipster.config.JHipsterConstants;
@@ -26,21 +29,21 @@ import java.util.Collection;
  * @author Dai Mai
  */
 @ComponentScan
-@EnableAutoConfiguration(exclude = { MetricFilterAutoConfiguration.class,
-		MetricRepositoryAutoConfiguration.class })
+@EnableAutoConfiguration(exclude = { MetricFilterAutoConfiguration.class, MetricRepositoryAutoConfiguration.class })
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
 public class QuanlysoApp {
 
 	/** The Constant log. */
-	private static final Logger	log	= LoggerFactory.getLogger(QuanlysoApp.class);
+	private static final Logger log = LoggerFactory.getLogger(QuanlysoApp.class);
 
 	/** The env. */
-	private final Environment	env;
+	private final Environment env;
 
 	/**
 	 * Instantiates a new quanlyso app.
 	 *
-	 * @param env the env
+	 * @param env
+	 *            the env
 	 */
 	public QuanlysoApp(Environment env) {
 		this.env = env;
@@ -53,7 +56,8 @@ public class QuanlysoApp {
 	 * --spring.profiles.active=your-active-profile
 	 * <p>
 	 * You can find more information on how profiles work with JHipster on
-	 * <a href="http://jhipster.github.io/profiles/">http://jhipster.github.io/profiles/</a>.
+	 * <a href=
+	 * "http://jhipster.github.io/profiles/">http://jhipster.github.io/profiles/</a>.
 	 */
 	@PostConstruct
 	public void initApplication() {
@@ -73,8 +77,10 @@ public class QuanlysoApp {
 	/**
 	 * Main method, used to run the application.
 	 *
-	 * @param args the command line arguments
-	 * @throws UnknownHostException if the local host name could not be resolved into an address
+	 * @param args
+	 *            the command line arguments
+	 * @throws UnknownHostException
+	 *             if the local host name could not be resolved into an address
 	 */
 	public static void main(String[] args) throws UnknownHostException {
 		SpringApplication app = new SpringApplication(QuanlysoApp.class);
@@ -86,12 +92,10 @@ public class QuanlysoApp {
 		}
 		QuanlysoApp.log.info(
 				"\n----------------------------------------------------------\n\t"
-						+ "Application '{}' is running! Access URLs:\n\t"
-						+ "Local: \t\t{}://localhost:{}\n\t" + "External: \t{}://{}:{}\n\t"
+						+ "Application '{}' is running! Access URLs:\n\t" + "Local: \t\t{}://localhost:{}\n\t"
+						+ "External: \t{}://{}:{}\n\t"
 						+ "Profile(s): \t{}\n----------------------------------------------------------",
-						env.getProperty("spring.application.name"), protocol,
-						env.getProperty("server.port"), protocol,
-						InetAddress.getLocalHost().getHostAddress(), env.getProperty("server.port"),
-						env.getActiveProfiles());
+				env.getProperty("spring.application.name"), protocol, env.getProperty("server.port"), protocol,
+				InetAddress.getLocalHost().getHostAddress(), env.getProperty("server.port"), env.getActiveProfiles());
 	}
 }

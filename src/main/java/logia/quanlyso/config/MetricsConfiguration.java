@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import com.codahale.metrics.JmxReporter;
@@ -29,40 +32,40 @@ import java.util.concurrent.TimeUnit;
 public class MetricsConfiguration extends MetricsConfigurerAdapter {
 
 	/** The Constant PROP_METRIC_REG_JVM_MEMORY. */
-	private static final String			PROP_METRIC_REG_JVM_MEMORY	= "jvm.memory";
+	private static final String PROP_METRIC_REG_JVM_MEMORY = "jvm.memory";
 
 	/** The Constant PROP_METRIC_REG_JVM_GARBAGE. */
-	private static final String			PROP_METRIC_REG_JVM_GARBAGE	= "jvm.garbage";
+	private static final String PROP_METRIC_REG_JVM_GARBAGE = "jvm.garbage";
 
 	/** The Constant PROP_METRIC_REG_JVM_THREADS. */
-	private static final String			PROP_METRIC_REG_JVM_THREADS	= "jvm.threads";
+	private static final String PROP_METRIC_REG_JVM_THREADS = "jvm.threads";
 
 	/** The Constant PROP_METRIC_REG_JVM_FILES. */
-	private static final String			PROP_METRIC_REG_JVM_FILES	= "jvm.files";
+	private static final String PROP_METRIC_REG_JVM_FILES = "jvm.files";
 
 	/** The Constant PROP_METRIC_REG_JVM_BUFFERS. */
-	private static final String			PROP_METRIC_REG_JVM_BUFFERS	= "jvm.buffers";
+	private static final String PROP_METRIC_REG_JVM_BUFFERS = "jvm.buffers";
 
 	/** The log. */
-	private final Logger				log							= LoggerFactory
-			.getLogger(MetricsConfiguration.class);
+	private final Logger log = LoggerFactory.getLogger(MetricsConfiguration.class);
 
 	/** The metric registry. */
-	private MetricRegistry				metricRegistry				= new MetricRegistry();
+	private MetricRegistry metricRegistry = new MetricRegistry();
 
 	/** The health check registry. */
-	private HealthCheckRegistry			healthCheckRegistry			= new HealthCheckRegistry();
+	private HealthCheckRegistry healthCheckRegistry = new HealthCheckRegistry();
 
 	/** The j hipster properties. */
-	private final JHipsterProperties	jHipsterProperties;
+	private final JHipsterProperties jHipsterProperties;
 
 	/** The hikari data source. */
-	private HikariDataSource			hikariDataSource;
+	private HikariDataSource hikariDataSource;
 
 	/**
 	 * Instantiates a new metrics configuration.
 	 *
-	 * @param jHipsterProperties the j hipster properties
+	 * @param jHipsterProperties
+	 *            the j hipster properties
 	 */
 	public MetricsConfiguration(JHipsterProperties jHipsterProperties) {
 		this.jHipsterProperties = jHipsterProperties;
@@ -71,7 +74,8 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 	/**
 	 * Sets the hikari data source.
 	 *
-	 * @param hikariDataSource the new hikari data source
+	 * @param hikariDataSource
+	 *            the new hikari data source
 	 */
 	@Autowired(required = false)
 	public void setHikariDataSource(HikariDataSource hikariDataSource) {
@@ -82,7 +86,8 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 	 * (non-Javadoc)
 	 *
 	 * @see
-	 * com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#getMetricRegistry()
+	 * com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#
+	 * getMetricRegistry()
 	 */
 	@Override
 	@Bean
@@ -93,7 +98,8 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#
+	 * @see
+	 * com.ryantenney.metrics.spring.config.annotation.MetricsConfigurerAdapter#
 	 * getHealthCheckRegistry()
 	 */
 	@Override
@@ -128,8 +134,7 @@ public class MetricsConfiguration extends MetricsConfigurerAdapter {
 			final Slf4jReporter reporter = Slf4jReporter.forRegistry(this.metricRegistry)
 					.outputTo(LoggerFactory.getLogger("metrics")).convertRatesTo(TimeUnit.SECONDS)
 					.convertDurationsTo(TimeUnit.MILLISECONDS).build();
-			reporter.start(this.jHipsterProperties.getMetrics().getLogs().getReportFrequency(),
-					TimeUnit.SECONDS);
+			reporter.start(this.jHipsterProperties.getMetrics().getLogs().getReportFrequency(), TimeUnit.SECONDS);
 		}
 	}
 }

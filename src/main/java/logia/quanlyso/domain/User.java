@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -29,73 +32,73 @@ import java.util.Set;
 public class User extends AbstractAuditingEntity implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long				id;
+	private Long id;
 
 	/** The login. */
 	@NotNull
 	@Pattern(regexp = Constants.LOGIN_REGEX)
 	@Size(min = 1, max = 50)
 	@Column(length = 50, unique = true, nullable = false)
-	private String				login;
+	private String login;
 
 	/** The password. */
 	@JsonIgnore
 	@NotNull
 	@Size(min = 60, max = 60)
 	@Column(name = "password_hash", length = 60)
-	private String				password;
+	private String password;
 
 	/** The first name. */
 	@Size(max = 50)
 	@Column(name = "first_name", length = 50)
-	private String				firstName;
+	private String firstName;
 
 	/** The last name. */
 	@Size(max = 50)
 	@Column(name = "last_name", length = 50)
-	private String				lastName;
+	private String lastName;
 
 	/** The email. */
 	@Email
 	@Size(min = 5, max = 100)
 	@Column(length = 100, unique = true)
-	private String				email;
+	private String email;
 
 	/** The activated. */
 	@NotNull
 	@Column(nullable = false)
-	private boolean				activated			= false;
+	private boolean activated = false;
 
 	/** The lang key. */
 	@Size(min = 2, max = 5)
 	@Column(name = "lang_key", length = 5)
-	private String				langKey;
+	private String langKey;
 
 	/** The image url. */
 	@Size(max = 256)
 	@Column(name = "image_url", length = 256)
-	private String				imageUrl;
+	private String imageUrl;
 
 	/** The activation key. */
 	@Size(max = 20)
 	@Column(name = "activation_key", length = 20)
 	@JsonIgnore
-	private String				activationKey;
+	private String activationKey;
 
 	/** The reset key. */
 	@Size(max = 20)
 	@Column(name = "reset_key", length = 20)
 	@JsonIgnore
-	private String				resetKey;
+	private String resetKey;
 
 	/** The reset date. */
 	@Column(name = "reset_date")
-	private Instant				resetDate			= null;
+	private Instant resetDate = null;
 
 	/** The authorities. */
 	@JsonIgnore
@@ -105,21 +108,21 @@ public class User extends AbstractAuditingEntity implements Serializable {
 					@JoinColumn(name = "authority_name", referencedColumnName = "name") })
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 	@BatchSize(size = 20)
-	private Set<Authority>		authorities			= new HashSet<>();
+	private Set<Authority> authorities = new HashSet<>();
 
 	/** The grant access date. */
 	@Column(name = "grant_access_date")
-	private ZonedDateTime		grantAccessDate		= ZonedDateTime.now();
+	private ZonedDateTime grantAccessDate = ZonedDateTime.now();
 
 	/** The revoke access date. */
 	@Column(name = "revoke_access_date")
-	private ZonedDateTime		revokeAccessDate	= ZonedDateTime.now();
+	private ZonedDateTime revokeAccessDate = ZonedDateTime.now();
 
 	/** The transactionsses. */
 	@OneToMany(mappedBy = "users")
 	@JsonIgnore
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<Transactions>	transactionsses		= new HashSet<>();
+	private Set<Transactions> transactionsses = new HashSet<>();
 
 	/**
 	 * Gets the id.
@@ -133,7 +136,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -151,7 +155,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the login.
 	 *
-	 * @param login the new login
+	 * @param login
+	 *            the new login
 	 */
 	// Lowercase the login before saving it in database
 	public void setLogin(String login) {
@@ -161,7 +166,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Append login.
 	 *
-	 * @param login the login
+	 * @param login
+	 *            the login
 	 * @return the user
 	 */
 	public User appendLogin(String login) {
@@ -181,7 +187,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the password.
 	 *
-	 * @param password the new password
+	 * @param password
+	 *            the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -190,7 +197,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Append password.
 	 *
-	 * @param password the password
+	 * @param password
+	 *            the password
 	 * @return the user
 	 */
 	public User appendPassword(String password) {
@@ -210,7 +218,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the first name.
 	 *
-	 * @param firstName the new first name
+	 * @param firstName
+	 *            the new first name
 	 */
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -219,7 +228,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Append first name.
 	 *
-	 * @param firstName the first name
+	 * @param firstName
+	 *            the first name
 	 * @return the user
 	 */
 	public User appendFirstName(String firstName) {
@@ -239,7 +249,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the last name.
 	 *
-	 * @param lastName the new last name
+	 * @param lastName
+	 *            the new last name
 	 */
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
@@ -248,7 +259,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Append last name.
 	 *
-	 * @param lastName the last name
+	 * @param lastName
+	 *            the last name
 	 * @return the user
 	 */
 	public User appendLastName(String lastName) {
@@ -268,7 +280,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the email.
 	 *
-	 * @param email the new email
+	 * @param email
+	 *            the new email
 	 */
 	public void setEmail(String email) {
 		this.email = email;
@@ -277,7 +290,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Append email.
 	 *
-	 * @param email the email
+	 * @param email
+	 *            the email
 	 * @return the user
 	 */
 	public User appendEmail(String email) {
@@ -297,7 +311,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the image url.
 	 *
-	 * @param imageUrl the new image url
+	 * @param imageUrl
+	 *            the new image url
 	 */
 	public void setImageUrl(String imageUrl) {
 		this.imageUrl = imageUrl;
@@ -306,7 +321,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Append image url.
 	 *
-	 * @param imageUrl the image url
+	 * @param imageUrl
+	 *            the image url
 	 * @return the user
 	 */
 	public User appendImageUrl(String imageUrl) {
@@ -326,7 +342,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the activated.
 	 *
-	 * @param activated the new activated
+	 * @param activated
+	 *            the new activated
 	 */
 	public void setActivated(boolean activated) {
 		this.activated = activated;
@@ -344,7 +361,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the activation key.
 	 *
-	 * @param activationKey the new activation key
+	 * @param activationKey
+	 *            the new activation key
 	 */
 	public void setActivationKey(String activationKey) {
 		this.activationKey = activationKey;
@@ -362,7 +380,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the reset key.
 	 *
-	 * @param resetKey the new reset key
+	 * @param resetKey
+	 *            the new reset key
 	 */
 	public void setResetKey(String resetKey) {
 		this.resetKey = resetKey;
@@ -380,7 +399,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the reset date.
 	 *
-	 * @param resetDate the new reset date
+	 * @param resetDate
+	 *            the new reset date
 	 */
 	public void setResetDate(Instant resetDate) {
 		this.resetDate = resetDate;
@@ -398,7 +418,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the lang key.
 	 *
-	 * @param langKey the new lang key
+	 * @param langKey
+	 *            the new lang key
 	 */
 	public void setLangKey(String langKey) {
 		this.langKey = langKey;
@@ -407,7 +428,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Append lang key.
 	 *
-	 * @param langKey the lang key
+	 * @param langKey
+	 *            the lang key
 	 * @return the user
 	 */
 	public User appendLangKey(String langKey) {
@@ -427,7 +449,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the authorities.
 	 *
-	 * @param authorities the new authorities
+	 * @param authorities
+	 *            the new authorities
 	 */
 	public void setAuthorities(Set<Authority> authorities) {
 		this.authorities = authorities;
@@ -445,7 +468,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Transactionsses.
 	 *
-	 * @param transactions the transactions
+	 * @param transactions
+	 *            the transactions
 	 * @return the client
 	 */
 	public User transactionsses(Set<Transactions> transactions) {
@@ -456,7 +480,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Adds the transactionss.
 	 *
-	 * @param transactions the transactions
+	 * @param transactions
+	 *            the transactions
 	 * @return the client
 	 */
 	public User addTransactionss(Transactions transactions) {
@@ -466,8 +491,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Adds the transactions.
 	 *
-	 * @param transactions the transactions
-	 * @param isSetToTarget the is set to target transaction
+	 * @param transactions
+	 *            the transactions
+	 * @param isSetToTarget
+	 *            the is set to target transaction
 	 * @return the user
 	 */
 	User addTransactions(Transactions transactions, boolean isSetToTarget) {
@@ -481,7 +508,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Removes the transactionss.
 	 *
-	 * @param transactions the transactions
+	 * @param transactions
+	 *            the transactions
 	 * @return the client
 	 */
 	public User removeTransactionss(Transactions transactions) {
@@ -491,8 +519,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Removes the transactionss.
 	 *
-	 * @param transactions the transactions
-	 * @param isSetToTarget the is set to target transaction
+	 * @param transactions
+	 *            the transactions
+	 * @param isSetToTarget
+	 *            the is set to target transaction
 	 * @return the user
 	 */
 	User removeTransactionss(Transactions transactions, boolean isSetToTarget) {
@@ -510,7 +540,8 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the transactionsses.
 	 *
-	 * @param transactions the new transactionsses
+	 * @param transactions
+	 *            the new transactionsses
 	 */
 	public void setTransactionsses(Set<Transactions> transactions) {
 		this.transactionsses = transactions;
@@ -568,10 +599,10 @@ public class User extends AbstractAuditingEntity implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "User{" + "login='" + this.login + '\'' + ", firstName='" + this.firstName + '\''
-				+ ", lastName='" + this.lastName + '\'' + ", email='" + this.email + '\'' + ", imageUrl='"
-				+ this.imageUrl + '\'' + ", activated='" + this.activated + '\'' + ", langKey='" + this.langKey
-				+ '\'' + ", activationKey='" + this.activationKey + '\'' + ", grantAccessDate='"
-				+ this.grantAccessDate + '\'' + ", revokeAccessDate='" + this.revokeAccessDate + '\'' + "}";
+		return "User{" + "login='" + this.login + '\'' + ", firstName='" + this.firstName + '\'' + ", lastName='"
+				+ this.lastName + '\'' + ", email='" + this.email + '\'' + ", imageUrl='" + this.imageUrl + '\''
+				+ ", activated='" + this.activated + '\'' + ", langKey='" + this.langKey + '\'' + ", activationKey='"
+				+ this.activationKey + '\'' + ", grantAccessDate='" + this.grantAccessDate + '\''
+				+ ", revokeAccessDate='" + this.revokeAccessDate + '\'' + "}";
 	}
 }

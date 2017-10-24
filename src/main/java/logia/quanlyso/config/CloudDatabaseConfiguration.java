@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import io.github.jhipster.config.JHipsterConstants;
@@ -26,7 +29,8 @@ public class CloudDatabaseConfiguration extends AbstractCloudConfig {
 	/**
 	 * Data source.
 	 *
-	 * @param cacheManager the cache manager
+	 * @param cacheManager
+	 *            the cache manager
 	 * @return the data source
 	 */
 	@Bean

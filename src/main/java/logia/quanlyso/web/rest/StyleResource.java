@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -25,18 +28,19 @@ import java.util.Optional;
 public class StyleResource {
 
 	/** The log. */
-	private final Logger		log			= LoggerFactory.getLogger(StyleResource.class);
+	private final Logger log = LoggerFactory.getLogger(StyleResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String	ENTITY_NAME	= "style";
+	private static final String ENTITY_NAME = "style";
 
 	/** The style service. */
-	private final StyleService	styleService;
+	private final StyleService styleService;
 
 	/**
 	 * Instantiates a new style resource.
 	 *
-	 * @param styleService the style service
+	 * @param styleService
+	 *            the style service
 	 */
 	public StyleResource(StyleService styleService) {
 		this.styleService = styleService;
@@ -45,54 +49,58 @@ public class StyleResource {
 	/**
 	 * POST /styles : Create a new style.
 	 *
-	 * @param styleDTO the styleDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new styleDTO, or with
-	 *         status 400 (Bad Request) if the style has already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param styleDTO
+	 *            the styleDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new styleDTO, or with status 400 (Bad Request) if the style has
+	 *         already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/styles")
 	@Timed
-	public ResponseEntity<StyleDTO> createStyle(@RequestBody StyleDTO styleDTO)
-			throws URISyntaxException {
+	public ResponseEntity<StyleDTO> createStyle(@RequestBody StyleDTO styleDTO) throws URISyntaxException {
 		this.log.debug("REST request to save Style : {}", styleDTO);
 		if (styleDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(StyleResource.ENTITY_NAME,
 					"idexists", "A new style cannot already have an ID")).body(null);
 		}
 		StyleDTO result = this.styleService.save(styleDTO);
-		return ResponseEntity
-				.created(new URI("/api/styles/" + result.getId())).headers(HeaderUtil
-						.createEntityCreationAlert(StyleResource.ENTITY_NAME, result.getId().toString()))
+		return ResponseEntity.created(new URI("/api/styles/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert(StyleResource.ENTITY_NAME, result.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * PUT /styles : Updates an existing style.
 	 *
-	 * @param styleDTO the styleDTO to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated styleDTO,
-	 *         or with status 400 (Bad Request) if the styleDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the styleDTO couldnt be updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param styleDTO
+	 *            the styleDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         styleDTO, or with status 400 (Bad Request) if the styleDTO is not
+	 *         valid, or with status 500 (Internal Server Error) if the styleDTO
+	 *         couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/styles")
 	@Timed
-	public ResponseEntity<StyleDTO> updateStyle(@RequestBody StyleDTO styleDTO)
-			throws URISyntaxException {
+	public ResponseEntity<StyleDTO> updateStyle(@RequestBody StyleDTO styleDTO) throws URISyntaxException {
 		this.log.debug("REST request to update Style : {}", styleDTO);
 		if (styleDTO.getId() == null) {
 			return this.createStyle(styleDTO);
 		}
 		StyleDTO result = this.styleService.save(styleDTO);
-		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert(StyleResource.ENTITY_NAME, styleDTO.getId().toString()))
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityUpdateAlert(StyleResource.ENTITY_NAME, styleDTO.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * GET /styles : get all the styles.
 	 *
-	 * @return the ResponseEntity with status 200 (OK) and the list of styles in body
+	 * @return the ResponseEntity with status 200 (OK) and the list of styles in
+	 *         body
 	 */
 	@GetMapping("/styles")
 	@Timed
@@ -104,9 +112,10 @@ public class StyleResource {
 	/**
 	 * GET /styles/:id : get the "id" style.
 	 *
-	 * @param id the id of the styleDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the styleDTO, or with status
-	 *         404 (Not Found)
+	 * @param id
+	 *            the id of the styleDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         styleDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/styles/{id}")
 	@Timed
@@ -119,7 +128,8 @@ public class StyleResource {
 	/**
 	 * DELETE /styles/:id : delete the "id" style.
 	 *
-	 * @param id the id of the styleDTO to delete
+	 * @param id
+	 *            the id of the styleDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/styles/{id}")

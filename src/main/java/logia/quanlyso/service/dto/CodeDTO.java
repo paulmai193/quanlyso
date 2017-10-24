@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
@@ -14,13 +17,13 @@ public class CodeDTO implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Long			id;
+	private Long id;
 
-	private String			code;
+	private String code;
 
-	private ZonedDateTime	openDate;
+	private ZonedDateTime openDate;
 
-	private Long			channelsId;
+	private Long channelsId;
 
 	public Long getId() {
 		return this.id;

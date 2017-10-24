@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import io.github.jhipster.async.ExceptionHandlingAsyncTaskExecutor;
@@ -26,15 +29,16 @@ import java.util.concurrent.Executor;
 public class AsyncConfiguration implements AsyncConfigurer {
 
 	/** The log. */
-	private final Logger				log	= LoggerFactory.getLogger(AsyncConfiguration.class);
+	private final Logger log = LoggerFactory.getLogger(AsyncConfiguration.class);
 
 	/** The j hipster properties. */
-	private final JHipsterProperties	jHipsterProperties;
+	private final JHipsterProperties jHipsterProperties;
 
 	/**
 	 * Instantiates a new async configuration.
 	 *
-	 * @param jHipsterProperties the j hipster properties
+	 * @param jHipsterProperties
+	 *            the j hipster properties
 	 */
 	public AsyncConfiguration(JHipsterProperties jHipsterProperties) {
 		this.jHipsterProperties = jHipsterProperties;
@@ -43,7 +47,8 @@ public class AsyncConfiguration implements AsyncConfigurer {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.springframework.scheduling.annotation.AsyncConfigurer#getAsyncExecutor()
+	 * @see org.springframework.scheduling.annotation.AsyncConfigurer#
+	 * getAsyncExecutor()
 	 */
 	@Override
 	@Bean(name = "taskExecutor")
@@ -60,8 +65,8 @@ public class AsyncConfiguration implements AsyncConfigurer {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * org.springframework.scheduling.annotation.AsyncConfigurer#getAsyncUncaughtExceptionHandler()
+	 * @see org.springframework.scheduling.annotation.AsyncConfigurer#
+	 * getAsyncUncaughtExceptionHandler()
 	 */
 	@Override
 	public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {

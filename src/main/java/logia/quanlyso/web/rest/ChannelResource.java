@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -26,18 +29,19 @@ import java.util.Optional;
 public class ChannelResource {
 
 	/** The log. */
-	private final Logger			log			= LoggerFactory.getLogger(ChannelResource.class);
+	private final Logger log = LoggerFactory.getLogger(ChannelResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String		ENTITY_NAME	= "channel";
+	private static final String ENTITY_NAME = "channel";
 
 	/** The channel service. */
-	private final ChannelService	channelService;
+	private final ChannelService channelService;
 
 	/**
 	 * Instantiates a new channel resource.
 	 *
-	 * @param channelService the channel service
+	 * @param channelService
+	 *            the channel service
 	 */
 	public ChannelResource(ChannelService channelService) {
 		this.channelService = channelService;
@@ -46,54 +50,58 @@ public class ChannelResource {
 	/**
 	 * POST /channels : Create a new channel.
 	 *
-	 * @param channelDTO the channelDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new channelDTO, or
-	 *         with status 400 (Bad Request) if the channel has already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param channelDTO
+	 *            the channelDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new channelDTO, or with status 400 (Bad Request) if the channel
+	 *         has already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/channels")
 	@Timed
-	public ResponseEntity<ChannelDTO> createChannel(@RequestBody ChannelDTO channelDTO)
-			throws URISyntaxException {
+	public ResponseEntity<ChannelDTO> createChannel(@RequestBody ChannelDTO channelDTO) throws URISyntaxException {
 		this.log.debug("REST request to save Channel : {}", channelDTO);
 		if (channelDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ChannelResource.ENTITY_NAME,
 					"idexists", "A new channel cannot already have an ID")).body(null);
 		}
 		ChannelDTO result = this.channelService.save(channelDTO);
-		return ResponseEntity
-				.created(new URI("/api/channels/" + result.getId())).headers(HeaderUtil
-						.createEntityCreationAlert(ChannelResource.ENTITY_NAME, result.getId().toString()))
+		return ResponseEntity.created(new URI("/api/channels/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert(ChannelResource.ENTITY_NAME, result.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * PUT /channels : Updates an existing channel.
 	 *
-	 * @param channelDTO the channelDTO to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated channelDTO,
-	 *         or with status 400 (Bad Request) if the channelDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the channelDTO couldnt be updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param channelDTO
+	 *            the channelDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         channelDTO, or with status 400 (Bad Request) if the channelDTO is
+	 *         not valid, or with status 500 (Internal Server Error) if the
+	 *         channelDTO couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/channels")
 	@Timed
-	public ResponseEntity<ChannelDTO> updateChannel(@RequestBody ChannelDTO channelDTO)
-			throws URISyntaxException {
+	public ResponseEntity<ChannelDTO> updateChannel(@RequestBody ChannelDTO channelDTO) throws URISyntaxException {
 		this.log.debug("REST request to update Channel : {}", channelDTO);
 		if (channelDTO.getId() == null) {
 			return this.createChannel(channelDTO);
 		}
 		ChannelDTO result = this.channelService.save(channelDTO);
-		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert(ChannelResource.ENTITY_NAME, channelDTO.getId().toString()))
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityUpdateAlert(ChannelResource.ENTITY_NAME, channelDTO.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * GET /channels : get all the channels.
 	 *
-	 * @return the ResponseEntity with status 200 (OK) and the list of channels in body
+	 * @return the ResponseEntity with status 200 (OK) and the list of channels
+	 *         in body
 	 */
 	@GetMapping("/channels")
 	@Timed
@@ -105,9 +113,10 @@ public class ChannelResource {
 	/**
 	 * GET /channels/:id : get the "id" channel.
 	 *
-	 * @param id the id of the channelDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the channelDTO, or with status
-	 *         404 (Not Found)
+	 * @param id
+	 *            the id of the channelDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         channelDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/channels/{id}")
 	@Timed
@@ -120,8 +129,10 @@ public class ChannelResource {
 	/**
 	 * GET /channels/day/:openDay : get all channels by open day.
 	 *
-	 * @param openDay the open day of the channelDTOs to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the channelDTOs
+	 * @param openDay
+	 *            the open day of the channelDTOs to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         channelDTOs
 	 */
 	@GetMapping("/channels/day/{openDay}")
 	@Timed
@@ -133,7 +144,8 @@ public class ChannelResource {
 	/**
 	 * DELETE /channels/:id : delete the "id" channel.
 	 *
-	 * @param id the id of the channelDTO to delete
+	 * @param id
+	 *            the id of the channelDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/channels/{id}")

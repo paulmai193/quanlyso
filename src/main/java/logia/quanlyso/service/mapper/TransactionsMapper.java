@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.mapper;
 
 import logia.quanlyso.domain.Transactions;
@@ -18,6 +21,7 @@ public interface TransactionsMapper extends EntityMapper<TransactionsDTO, Transa
 	 *
 	 * @see logia.quanlyso.service.mapper.EntityMapper#toDto(java.lang.Object)
 	 */
+	@Override
 	@Mapping(source = "users.id", target = "clientsId")
 	@Mapping(source = "transactionDetails", target = "transactionDetailsDTOs")
 	TransactionsDTO toDto(Transactions transactions);
@@ -25,9 +29,11 @@ public interface TransactionsMapper extends EntityMapper<TransactionsDTO, Transa
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
+	 * @see
+	 * logia.quanlyso.service.mapper.EntityMapper#toEntity(java.lang.Object)
 	 */
 	// @Mapping(target = "transactionDetails", ignore = true)
+	@Override
 	@Mapping(source = "transactionDetailsDTOs", target = "transactionDetails")
 	@Mapping(source = "clientsId", target = "users")
 	@Mapping(target = "createdBy", ignore = true)
@@ -37,11 +43,13 @@ public interface TransactionsMapper extends EntityMapper<TransactionsDTO, Transa
 	Transactions toEntity(TransactionsDTO transactionsDTO);
 
 	/**
-	 * generating the fromId for all mappers if the databaseType is sql, as the class has
-	 * relationship to it might need it, instead of
-	 * creating a new attribute to know if the entity has any relationship from some other entity.
+	 * generating the fromId for all mappers if the databaseType is sql, as the
+	 * class has relationship to it might need it, instead of creating a new
+	 * attribute to know if the entity has any relationship from some other
+	 * entity.
 	 *
-	 * @param id id of the entity
+	 * @param id
+	 *            id of the entity
 	 * @return the entity instance
 	 */
 

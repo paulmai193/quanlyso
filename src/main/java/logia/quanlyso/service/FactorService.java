@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import logia.quanlyso.service.dto.FactorDTO;
@@ -14,7 +17,8 @@ public interface FactorService {
 	/**
 	 * Save a factor.
 	 *
-	 * @param factorDTO the entity to save
+	 * @param factorDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	FactorDTO save(FactorDTO factorDTO);
@@ -29,7 +33,8 @@ public interface FactorService {
 	/**
 	 * Get the "id" factor.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	FactorDTO findOne(Long id);
@@ -37,7 +42,8 @@ public interface FactorService {
 	/**
 	 * Delete the "id" factor.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	void delete(Long id);
 }

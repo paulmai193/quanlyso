@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.security;
 
 import java.util.ArrayList;
@@ -24,8 +27,7 @@ public class SecurityUtilsUnitTest {
 	@Test
 	public void testgetCurrentUserLogin() {
 		SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-		securityContext
-		.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
+		securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
 		SecurityContextHolder.setContext(securityContext);
 		String login = SecurityUtils.getCurrentUserLogin();
 		Assertions.assertThat(login).isEqualTo("admin");
@@ -37,8 +39,7 @@ public class SecurityUtilsUnitTest {
 	@Test
 	public void testgetCurrentUserJWT() {
 		SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-		securityContext
-		.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "token"));
+		securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "token"));
 		SecurityContextHolder.setContext(securityContext);
 		String jwt = SecurityUtils.getCurrentUserJWT();
 		Assertions.assertThat(jwt).isEqualTo("token");
@@ -50,8 +51,7 @@ public class SecurityUtilsUnitTest {
 	@Test
 	public void testIsAuthenticated() {
 		SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
-		securityContext
-		.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
+		securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("admin", "admin"));
 		SecurityContextHolder.setContext(securityContext);
 		boolean isAuthenticated = SecurityUtils.isAuthenticated();
 		Assertions.assertThat(isAuthenticated).isTrue();
@@ -65,8 +65,8 @@ public class SecurityUtilsUnitTest {
 		SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
 		Collection<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.ANONYMOUS));
-		securityContext.setAuthentication(
-				new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities));
+		securityContext
+				.setAuthentication(new UsernamePasswordAuthenticationToken("anonymous", "anonymous", authorities));
 		SecurityContextHolder.setContext(securityContext);
 		boolean isAuthenticated = SecurityUtils.isAuthenticated();
 		Assertions.assertThat(isAuthenticated).isFalse();

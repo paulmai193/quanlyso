@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.repository;
 
 import logia.quanlyso.domain.Authority;
@@ -21,7 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find one by activation key.
 	 *
-	 * @param activationKey the activation key
+	 * @param activationKey
+	 *            the activation key
 	 * @return the optional
 	 */
 	Optional<User> findOneByActivationKey(String activationKey);
@@ -29,7 +33,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find all by activated is false and created date before.
 	 *
-	 * @param dateTime the date time
+	 * @param dateTime
+	 *            the date time
 	 * @return the list
 	 */
 	List<User> findAllByActivatedIsFalseAndCreatedDateBefore(Instant dateTime);
@@ -37,7 +42,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find one by reset key.
 	 *
-	 * @param resetKey the reset key
+	 * @param resetKey
+	 *            the reset key
 	 * @return the optional
 	 */
 	Optional<User> findOneByResetKey(String resetKey);
@@ -45,7 +51,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find one by email.
 	 *
-	 * @param email the email
+	 * @param email
+	 *            the email
 	 * @return the optional
 	 */
 	Optional<User> findOneByEmail(String email);
@@ -53,7 +60,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find one by login.
 	 *
-	 * @param login the login
+	 * @param login
+	 *            the login
 	 * @return the optional
 	 */
 	Optional<User> findOneByLogin(String login);
@@ -61,7 +69,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find one with authorities by id.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the user
 	 */
 	@EntityGraph(attributePaths = "authorities")
@@ -70,7 +79,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find one with authorities by login.
 	 *
-	 * @param login the login
+	 * @param login
+	 *            the login
 	 * @return the optional
 	 */
 	@EntityGraph(attributePaths = "authorities")
@@ -79,8 +89,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find all by authority.
 	 *
-	 * @param pageable the pageable
-	 * @param authority the authority
+	 * @param pageable
+	 *            the pageable
+	 * @param authority
+	 *            the authority
 	 * @return the page
 	 */
 	@EntityGraph(attributePaths = "authorities")
@@ -89,8 +101,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	/**
 	 * Find all by login not.
 	 *
-	 * @param pageable the pageable
-	 * @param login the login
+	 * @param pageable
+	 *            the pageable
+	 * @param login
+	 *            the login
 	 * @return the page
 	 */
 	Page<User> findAllByLoginNot(Pageable pageable, String login);

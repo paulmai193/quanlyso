@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,54 +24,54 @@ import java.util.Set;
 public class Channel implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long		serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long					id;
+	private Long id;
 
 	/** The name. */
 	@Column(name = "name")
-	private String					name;
+	private String name;
 
 	/** The code. */
 	@Column(name = "code")
-	private String					code;
+	private String code;
 
 	/** The sunday. */
 	@Column(name = "sunday")
-	private Boolean					sunday;
+	private Boolean sunday;
 
 	/** The monday. */
 	@Column(name = "monday")
-	private Boolean					monday;
+	private Boolean monday;
 
 	/** The tuesday. */
 	@Column(name = "tuesday")
-	private Boolean					tuesday;
+	private Boolean tuesday;
 
 	/** The wednesday. */
 	@Column(name = "wednesday")
-	private Boolean					wednesday;
+	private Boolean wednesday;
 
 	/** The thursday. */
 	@Column(name = "thursday")
-	private Boolean					thursday;
+	private Boolean thursday;
 
 	/** The friday. */
 	@Column(name = "friday")
-	private Boolean					friday;
+	private Boolean friday;
 
 	/** The saturday. */
 	@Column(name = "saturday")
-	private Boolean					saturday;
+	private Boolean saturday;
 
 	/** The transaction details. */
 	@OneToMany(mappedBy = "channels")
 	@JsonIgnore
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<TransactionDetails>	transactionDetails	= new HashSet<>();
+	private Set<TransactionDetails> transactionDetails = new HashSet<>();
 
 	/**
 	 * Gets the id.
@@ -82,7 +85,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -100,7 +104,8 @@ public class Channel implements Serializable {
 	/**
 	 * Name.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 * @return the channel
 	 */
 	public Channel name(String name) {
@@ -111,7 +116,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -129,7 +135,8 @@ public class Channel implements Serializable {
 	/**
 	 * Code.
 	 *
-	 * @param code the code
+	 * @param code
+	 *            the code
 	 * @return the channel
 	 */
 	public Channel code(String code) {
@@ -140,7 +147,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the code.
 	 *
-	 * @param code the new code
+	 * @param code
+	 *            the new code
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -158,7 +166,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sunday.
 	 *
-	 * @param sunday the sunday
+	 * @param sunday
+	 *            the sunday
 	 * @return the channel
 	 */
 	public Channel sunday(Boolean sunday) {
@@ -169,7 +178,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the sunday.
 	 *
-	 * @param sunday the new sunday
+	 * @param sunday
+	 *            the new sunday
 	 */
 	public void setSunday(Boolean sunday) {
 		this.sunday = sunday;
@@ -187,7 +197,8 @@ public class Channel implements Serializable {
 	/**
 	 * Monday.
 	 *
-	 * @param monday the monday
+	 * @param monday
+	 *            the monday
 	 * @return the channel
 	 */
 	public Channel monday(Boolean monday) {
@@ -198,7 +209,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the monday.
 	 *
-	 * @param monday the new monday
+	 * @param monday
+	 *            the new monday
 	 */
 	public void setMonday(Boolean monday) {
 		this.monday = monday;
@@ -216,7 +228,8 @@ public class Channel implements Serializable {
 	/**
 	 * Tuesday.
 	 *
-	 * @param tuesday the tuesday
+	 * @param tuesday
+	 *            the tuesday
 	 * @return the channel
 	 */
 	public Channel tuesday(Boolean tuesday) {
@@ -227,7 +240,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the tuesday.
 	 *
-	 * @param tuesday the new tuesday
+	 * @param tuesday
+	 *            the new tuesday
 	 */
 	public void setTuesday(Boolean tuesday) {
 		this.tuesday = tuesday;
@@ -245,7 +259,8 @@ public class Channel implements Serializable {
 	/**
 	 * Wednesday.
 	 *
-	 * @param wednesday the wednesday
+	 * @param wednesday
+	 *            the wednesday
 	 * @return the channel
 	 */
 	public Channel wednesday(Boolean wednesday) {
@@ -256,7 +271,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the wednesday.
 	 *
-	 * @param wednesday the new wednesday
+	 * @param wednesday
+	 *            the new wednesday
 	 */
 	public void setWednesday(Boolean wednesday) {
 		this.wednesday = wednesday;
@@ -274,7 +290,8 @@ public class Channel implements Serializable {
 	/**
 	 * Thursday.
 	 *
-	 * @param thursday the thursday
+	 * @param thursday
+	 *            the thursday
 	 * @return the channel
 	 */
 	public Channel thursday(Boolean thursday) {
@@ -285,7 +302,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the thursday.
 	 *
-	 * @param thursday the new thursday
+	 * @param thursday
+	 *            the new thursday
 	 */
 	public void setThursday(Boolean thursday) {
 		this.thursday = thursday;
@@ -303,7 +321,8 @@ public class Channel implements Serializable {
 	/**
 	 * Friday.
 	 *
-	 * @param friday the friday
+	 * @param friday
+	 *            the friday
 	 * @return the channel
 	 */
 	public Channel friday(Boolean friday) {
@@ -314,7 +333,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the friday.
 	 *
-	 * @param friday the new friday
+	 * @param friday
+	 *            the new friday
 	 */
 	public void setFriday(Boolean friday) {
 		this.friday = friday;
@@ -332,7 +352,8 @@ public class Channel implements Serializable {
 	/**
 	 * Saturday.
 	 *
-	 * @param saturday the saturday
+	 * @param saturday
+	 *            the saturday
 	 * @return the channel
 	 */
 	public Channel saturday(Boolean saturday) {
@@ -343,7 +364,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the saturday.
 	 *
-	 * @param saturday the new saturday
+	 * @param saturday
+	 *            the new saturday
 	 */
 	public void setSaturday(Boolean saturday) {
 		this.saturday = saturday;
@@ -361,7 +383,8 @@ public class Channel implements Serializable {
 	/**
 	 * Transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the channel
 	 */
 	public Channel transactionDetails(Set<TransactionDetails> transactionDetails) {
@@ -372,7 +395,8 @@ public class Channel implements Serializable {
 	/**
 	 * Adds the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the channel
 	 */
 	public Channel addTransactionDetails(TransactionDetails transactionDetails) {
@@ -382,8 +406,10 @@ public class Channel implements Serializable {
 	/**
 	 * Adds the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
+	 * @param transactionDetails
+	 *            the transaction details
+	 * @param isSetToTarget
+	 *            the is set to target detail
 	 * @return the channel
 	 */
 	Channel addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
@@ -397,7 +423,8 @@ public class Channel implements Serializable {
 	/**
 	 * Removes the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the channel
 	 */
 	public Channel removeTransactionDetails(TransactionDetails transactionDetails) {
@@ -407,8 +434,10 @@ public class Channel implements Serializable {
 	/**
 	 * Removes the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
+	 * @param transactionDetails
+	 *            the transaction details
+	 * @param isSetToTarget
+	 *            the is set to target detail
 	 * @return the channel
 	 */
 	Channel removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
@@ -422,7 +451,8 @@ public class Channel implements Serializable {
 	/**
 	 * Sets the transaction details.
 	 *
-	 * @param transactionDetails the new transaction details
+	 * @param transactionDetails
+	 *            the new transaction details
 	 */
 	public void setTransactionDetails(Set<TransactionDetails> transactionDetails) {
 		this.transactionDetails = transactionDetails;
@@ -465,10 +495,10 @@ public class Channel implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "Channel{" + "id=" + this.getId() + ", name='" + this.getName() + "'" + ", code='" + this.getCode()
-		+ "'" + ", sunday='" + this.isSunday() + "'" + ", monday='" + this.isMonday() + "'"
-		+ ", tuesday='" + this.isTuesday() + "'" + ", wednesday='" + this.isWednesday() + "'"
-		+ ", thursday='" + this.isThursday() + "'" + ", friday='" + this.isFriday() + "'"
-		+ ", saturday='" + this.isSaturday() + "'" + "}";
+		return "Channel{" + "id=" + this.getId() + ", name='" + this.getName() + "'" + ", code='" + this.getCode() + "'"
+				+ ", sunday='" + this.isSunday() + "'" + ", monday='" + this.isMonday() + "'" + ", tuesday='"
+				+ this.isTuesday() + "'" + ", wednesday='" + this.isWednesday() + "'" + ", thursday='"
+				+ this.isThursday() + "'" + ", friday='" + this.isFriday() + "'" + ", saturday='" + this.isSaturday()
+				+ "'" + "}";
 	}
 }

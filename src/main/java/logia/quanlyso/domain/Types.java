@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,22 +24,22 @@ import java.util.Set;
 public class Types implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long		serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long					id;
+	private Long id;
 
 	/** The name. */
 	@Column(name = "name")
-	private String					name;
+	private String name;
 
 	/** The transaction details. */
 	@OneToMany(mappedBy = "types")
 	@JsonIgnore
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<TransactionDetails>	transactionDetails	= new HashSet<>();
+	private Set<TransactionDetails> transactionDetails = new HashSet<>();
 
 	/**
 	 * Gets the id.
@@ -50,7 +53,8 @@ public class Types implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -68,7 +72,8 @@ public class Types implements Serializable {
 	/**
 	 * Name.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 * @return the types
 	 */
 	public Types name(String name) {
@@ -79,7 +84,8 @@ public class Types implements Serializable {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -97,7 +103,8 @@ public class Types implements Serializable {
 	/**
 	 * Transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the types
 	 */
 	public Types transactionDetails(Set<TransactionDetails> transactionDetails) {
@@ -108,7 +115,8 @@ public class Types implements Serializable {
 	/**
 	 * Adds the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the types
 	 */
 	public Types addTransactionDetails(TransactionDetails transactionDetails) {
@@ -118,8 +126,10 @@ public class Types implements Serializable {
 	/**
 	 * Adds the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
+	 * @param transactionDetails
+	 *            the transaction details
+	 * @param isSetToTarget
+	 *            the is set to target detail
 	 * @return the types
 	 */
 	Types addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
@@ -133,7 +143,8 @@ public class Types implements Serializable {
 	/**
 	 * Removes the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the types
 	 */
 	public Types removeTransactionDetails(TransactionDetails transactionDetails) {
@@ -143,8 +154,10 @@ public class Types implements Serializable {
 	/**
 	 * Removes the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
+	 * @param transactionDetails
+	 *            the transaction details
+	 * @param isSetToTarget
+	 *            the is set to target detail
 	 * @return the types
 	 */
 	Types removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
@@ -158,7 +171,8 @@ public class Types implements Serializable {
 	/**
 	 * Sets the transaction details.
 	 *
-	 * @param transactionDetails the new transaction details
+	 * @param transactionDetails
+	 *            the new transaction details
 	 */
 	public void setTransactionDetails(Set<TransactionDetails> transactionDetails) {
 		this.transactionDetails = transactionDetails;

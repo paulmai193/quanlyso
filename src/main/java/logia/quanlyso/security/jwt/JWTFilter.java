@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.security.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
@@ -17,24 +20,24 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Filters incoming requests and installs a Spring Security principal if a header corresponding to a
- * valid user is
- * found.
+ * Filters incoming requests and installs a Spring Security principal if a
+ * header corresponding to a valid user is found.
  *
  * @author Dai Mai
  */
 public class JWTFilter extends GenericFilterBean {
 
 	/** The log. */
-	private final Logger	log	= LoggerFactory.getLogger(JWTFilter.class);
+	private final Logger log = LoggerFactory.getLogger(JWTFilter.class);
 
 	/** The token provider. */
-	private TokenProvider	tokenProvider;
+	private TokenProvider tokenProvider;
 
 	/**
 	 * Instantiates a new JWT filter.
 	 *
-	 * @param tokenProvider the token provider
+	 * @param tokenProvider
+	 *            the token provider
 	 */
 	public JWTFilter(TokenProvider tokenProvider) {
 		this.tokenProvider = tokenProvider;
@@ -47,8 +50,8 @@ public class JWTFilter extends GenericFilterBean {
 	 * javax.servlet.ServletResponse, javax.servlet.FilterChain)
 	 */
 	@Override
-	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
-			FilterChain filterChain) throws IOException, ServletException {
+	public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+			throws IOException, ServletException {
 		try {
 			HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
 			String jwt = this.resolveToken(httpServletRequest);
@@ -57,10 +60,8 @@ public class JWTFilter extends GenericFilterBean {
 				SecurityContextHolder.getContext().setAuthentication(authentication);
 			}
 			filterChain.doFilter(servletRequest, servletResponse);
-		}
-		catch (ExpiredJwtException eje) {
-			this.log.info("Security exception for user {} - {}", eje.getClaims().getSubject(),
-					eje.getMessage());
+		} catch (ExpiredJwtException eje) {
+			this.log.info("Security exception for user {} - {}", eje.getClaims().getSubject(), eje.getMessage());
 
 			this.log.trace("Security exception trace: {}", eje);
 			((HttpServletResponse) servletResponse).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -70,7 +71,8 @@ public class JWTFilter extends GenericFilterBean {
 	/**
 	 * Resolve token.
 	 *
-	 * @param request the request
+	 * @param request
+	 *            the request
 	 * @return the string
 	 */
 	private String resolveToken(HttpServletRequest request) {

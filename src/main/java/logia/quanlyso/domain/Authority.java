@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import org.hibernate.annotations.Cache;
@@ -22,14 +25,14 @@ import java.io.Serializable;
 public class Authority implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The name. */
 	@NotNull
 	@Size(min = 0, max = 50)
 	@Id
 	@Column(length = 50)
-	private String				name;
+	private String name;
 
 	/**
 	 * Gets the name.
@@ -43,7 +46,8 @@ public class Authority implements Serializable {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;

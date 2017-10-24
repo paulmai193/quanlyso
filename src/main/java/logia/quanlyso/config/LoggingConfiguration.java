@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import ch.qos.logback.classic.AsyncAppender;
@@ -22,27 +25,29 @@ import org.springframework.context.annotation.Configuration;
 public class LoggingConfiguration {
 
 	/** The log. */
-	private final Logger				log		= LoggerFactory
-			.getLogger(LoggingConfiguration.class);
+	private final Logger log = LoggerFactory.getLogger(LoggingConfiguration.class);
 
 	/** The context. */
-	private LoggerContext				context	= (LoggerContext) LoggerFactory.getILoggerFactory();
+	private LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
 	/** The app name. */
-	private final String				appName;
+	private final String appName;
 
 	/** The server port. */
-	private final String				serverPort;
+	private final String serverPort;
 
 	/** The j hipster properties. */
-	private final JHipsterProperties	jHipsterProperties;
+	private final JHipsterProperties jHipsterProperties;
 
 	/**
 	 * Instantiates a new logging configuration.
 	 *
-	 * @param appName the app name
-	 * @param serverPort the server port
-	 * @param jHipsterProperties the j hipster properties
+	 * @param appName
+	 *            the app name
+	 * @param serverPort
+	 *            the server port
+	 * @param jHipsterProperties
+	 *            the j hipster properties
 	 */
 	public LoggingConfiguration(@Value("${spring.application.name}") String appName,
 			@Value("${server.port}") String serverPort, JHipsterProperties jHipsterProperties) {
@@ -62,7 +67,8 @@ public class LoggingConfiguration {
 	/**
 	 * Adds the logstash appender.
 	 *
-	 * @param context the context
+	 * @param context
+	 *            the context
 	 */
 	public void addLogstashAppender(LoggerContext context) {
 		this.log.info("Initializing Logstash logging");
@@ -70,15 +76,15 @@ public class LoggingConfiguration {
 		LogstashSocketAppender logstashAppender = new LogstashSocketAppender();
 		logstashAppender.setName("LOGSTASH");
 		logstashAppender.setContext(context);
-		String customFields = "{\"app_name\":\"" + this.appName + "\",\"app_port\":\"" + this.serverPort
-				+ "\"}";
+		String customFields = "{\"app_name\":\"" + this.appName + "\",\"app_port\":\"" + this.serverPort + "\"}";
 
 		// Set the Logstash appender config from JHipster properties
 		logstashAppender.setSyslogHost(this.jHipsterProperties.getLogging().getLogstash().getHost());
 		logstashAppender.setPort(this.jHipsterProperties.getLogging().getLogstash().getPort());
 		logstashAppender.setCustomFields(customFields);
 
-		// Limit the maximum length of the forwarded stacktrace so that it won't exceed the 8KB UDP
+		// Limit the maximum length of the forwarded stacktrace so that it won't
+		// exceed the 8KB UDP
 		// limit of logstash
 		ShortenedThrowableConverter throwableConverter = new ShortenedThrowableConverter();
 		throwableConverter.setMaxLength(7500);
@@ -91,8 +97,7 @@ public class LoggingConfiguration {
 		AsyncAppender asyncLogstashAppender = new AsyncAppender();
 		asyncLogstashAppender.setContext(context);
 		asyncLogstashAppender.setName("ASYNC_LOGSTASH");
-		asyncLogstashAppender
-		.setQueueSize(this.jHipsterProperties.getLogging().getLogstash().getQueueSize());
+		asyncLogstashAppender.setQueueSize(this.jHipsterProperties.getLogging().getLogstash().getQueueSize());
 		asyncLogstashAppender.addAppender(logstashAppender);
 		asyncLogstashAppender.start();
 
@@ -100,9 +105,10 @@ public class LoggingConfiguration {
 	}
 
 	/**
-	 * Logback configuration is achieved by configuration file and API.
-	 * When configuration file change is detected, the configuration is reset.
-	 * This listener ensures that the programmatic configuration is also re-applied after reset.
+	 * Logback configuration is achieved by configuration file and API. When
+	 * configuration file change is detected, the configuration is reset. This
+	 * listener ensures that the programmatic configuration is also re-applied
+	 * after reset.
 	 *
 	 * @see LogbackLoggerContextEvent
 	 */
@@ -111,7 +117,8 @@ public class LoggingConfiguration {
 		/*
 		 * (non-Javadoc)
 		 *
-		 * @see ch.qos.logback.classic.spi.LoggerContextListener#isResetResistant()
+		 * @see
+		 * ch.qos.logback.classic.spi.LoggerContextListener#isResetResistant()
 		 */
 		@Override
 		public boolean isResetResistant() {
@@ -121,8 +128,8 @@ public class LoggingConfiguration {
 		/*
 		 * (non-Javadoc)
 		 *
-		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onStart(ch.qos.logback.classic.
-		 * LoggerContext)
+		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onStart(ch.qos.
+		 * logback.classic. LoggerContext)
 		 */
 		@Override
 		public void onStart(LoggerContext context) {
@@ -132,8 +139,8 @@ public class LoggingConfiguration {
 		/*
 		 * (non-Javadoc)
 		 *
-		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onReset(ch.qos.logback.classic.
-		 * LoggerContext)
+		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onReset(ch.qos.
+		 * logback.classic. LoggerContext)
 		 */
 		@Override
 		public void onReset(LoggerContext context) {
@@ -143,8 +150,8 @@ public class LoggingConfiguration {
 		/*
 		 * (non-Javadoc)
 		 *
-		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onStop(ch.qos.logback.classic.
-		 * LoggerContext)
+		 * @see ch.qos.logback.classic.spi.LoggerContextListener#onStop(ch.qos.
+		 * logback.classic. LoggerContext)
 		 */
 		@Override
 		public void onStop(LoggerContext context) {
@@ -155,8 +162,8 @@ public class LoggingConfiguration {
 		 * (non-Javadoc)
 		 *
 		 * @see
-		 * ch.qos.logback.classic.spi.LoggerContextListener#onLevelChange(ch.qos.logback.classic.
-		 * Logger, ch.qos.logback.classic.Level)
+		 * ch.qos.logback.classic.spi.LoggerContextListener#onLevelChange(ch.qos
+		 * .logback.classic. Logger, ch.qos.logback.classic.Level)
 		 */
 		@Override
 		public void onLevelChange(ch.qos.logback.classic.Logger logger, Level level) {

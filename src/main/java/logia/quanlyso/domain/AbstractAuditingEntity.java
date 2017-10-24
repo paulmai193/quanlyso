@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -15,9 +18,8 @@ import java.io.Serializable;
 import java.time.Instant;
 
 /**
- * Base abstract class for entities which will hold definitions for created, last modified by and
- * created,
- * last modified by date.
+ * Base abstract class for entities which will hold definitions for created,
+ * last modified by and created, last modified by date.
  *
  * @author Dai Mai
  */
@@ -27,31 +29,31 @@ import java.time.Instant;
 public abstract class AbstractAuditingEntity implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The created by. */
 	@CreatedBy
 	@Column(name = "created_by", nullable = false, length = 50, updatable = false)
 	@JsonIgnore
-	private String				createdBy;
+	private String createdBy;
 
 	/** The created date. */
 	@CreatedDate
 	@Column(name = "created_date", nullable = false)
 	@JsonIgnore
-	private Instant				createdDate			= Instant.now();
+	private Instant createdDate = Instant.now();
 
 	/** The last modified by. */
 	@LastModifiedBy
 	@Column(name = "last_modified_by", length = 50)
 	@JsonIgnore
-	private String				lastModifiedBy;
+	private String lastModifiedBy;
 
 	/** The last modified date. */
 	@LastModifiedDate
 	@Column(name = "last_modified_date")
 	@JsonIgnore
-	private Instant				lastModifiedDate	= Instant.now();
+	private Instant lastModifiedDate = Instant.now();
 
 	/**
 	 * Gets the created by.
@@ -65,7 +67,8 @@ public abstract class AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the created by.
 	 *
-	 * @param createdBy the new created by
+	 * @param createdBy
+	 *            the new created by
 	 */
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
@@ -83,7 +86,8 @@ public abstract class AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the created date.
 	 *
-	 * @param createdDate the new created date
+	 * @param createdDate
+	 *            the new created date
 	 */
 	public void setCreatedDate(Instant createdDate) {
 		this.createdDate = createdDate;
@@ -101,7 +105,8 @@ public abstract class AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the last modified by.
 	 *
-	 * @param lastModifiedBy the new last modified by
+	 * @param lastModifiedBy
+	 *            the new last modified by
 	 */
 	public void setLastModifiedBy(String lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
@@ -119,7 +124,8 @@ public abstract class AbstractAuditingEntity implements Serializable {
 	/**
 	 * Sets the last modified date.
 	 *
-	 * @param lastModifiedDate the new last modified date
+	 * @param lastModifiedDate
+	 *            the new last modified date
 	 */
 	public void setLastModifiedDate(Instant lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;

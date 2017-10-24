@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
@@ -12,13 +15,13 @@ import java.util.Set;
 public class CrawlRequestDTO implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The channel codes. */
-	private Set<String>			channelCodes;
+	private Set<String> channelCodes;
 
 	/** The open day. */
-	private ZonedDateTime		openDay;
+	private ZonedDateTime openDay;
 
 	/**
 	 * Instantiates a new crawl request DTO.
@@ -35,16 +38,15 @@ public class CrawlRequestDTO implements Serializable {
 		return channelCodes;
 	}
 
-
 	/**
 	 * Sets the channel codes.
 	 *
-	 * @param channelCodes the new channel codes
+	 * @param channelCodes
+	 *            the new channel codes
 	 */
 	public void setChannelCodes(Set<String> channelCodes) {
 		this.channelCodes = channelCodes;
 	}
-
 
 	/**
 	 * Gets the open day.
@@ -55,15 +57,14 @@ public class CrawlRequestDTO implements Serializable {
 		return openDay;
 	}
 
-
 	/**
 	 * Sets the open day.
 	 *
-	 * @param openDay the new open day
+	 * @param openDay
+	 *            the new open day
 	 */
 	public void setOpenDay(ZonedDateTime openDay) {
 		this.openDay = openDay;
 	}
-
 
 }

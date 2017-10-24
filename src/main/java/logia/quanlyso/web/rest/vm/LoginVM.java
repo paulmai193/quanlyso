@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.vm;
 
 import logia.quanlyso.config.Constants;
@@ -17,15 +20,15 @@ public class LoginVM {
 	@Pattern(regexp = Constants.LOGIN_REGEX)
 	@NotNull
 	@Size(min = 1, max = 50)
-	private String	username;
+	private String username;
 
 	/** The password. */
 	@NotNull
 	@Size(min = ManagedUserVM.PASSWORD_MIN_LENGTH, max = ManagedUserVM.PASSWORD_MAX_LENGTH)
-	private String	password;
+	private String password;
 
 	/** The remember me. */
-	private Boolean	rememberMe;
+	private Boolean rememberMe;
 
 	/**
 	 * Gets the username.
@@ -39,7 +42,8 @@ public class LoginVM {
 	/**
 	 * Sets the username.
 	 *
-	 * @param username the new username
+	 * @param username
+	 *            the new username
 	 */
 	public void setUsername(String username) {
 		this.username = username;
@@ -57,7 +61,8 @@ public class LoginVM {
 	/**
 	 * Sets the password.
 	 *
-	 * @param password the new password
+	 * @param password
+	 *            the new password
 	 */
 	public void setPassword(String password) {
 		this.password = password;
@@ -75,7 +80,8 @@ public class LoginVM {
 	/**
 	 * Sets the remember me.
 	 *
-	 * @param rememberMe the new remember me
+	 * @param rememberMe
+	 *            the new remember me
 	 */
 	public void setRememberMe(Boolean rememberMe) {
 		this.rememberMe = rememberMe;

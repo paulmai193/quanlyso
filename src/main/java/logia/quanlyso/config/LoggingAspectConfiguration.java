@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import io.github.jhipster.config.JHipsterConstants;
@@ -20,7 +23,8 @@ public class LoggingAspectConfiguration {
 	/**
 	 * Logging aspect.
 	 *
-	 * @param env the env
+	 * @param env
+	 *            the env
 	 * @return the logging aspect
 	 */
 	@Bean

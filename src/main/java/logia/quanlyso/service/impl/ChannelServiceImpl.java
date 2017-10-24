@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.impl;
 
 import logia.quanlyso.domain.Channel;
@@ -26,19 +29,21 @@ import java.util.stream.Collectors;
 public class ChannelServiceImpl implements ChannelService {
 
 	/** The log. */
-	private final Logger			log	= LoggerFactory.getLogger(ChannelServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(ChannelServiceImpl.class);
 
 	/** The channel repository. */
-	private final ChannelRepository	channelRepository;
+	private final ChannelRepository channelRepository;
 
 	/** The channel mapper. */
-	private final ChannelMapper		channelMapper;
+	private final ChannelMapper channelMapper;
 
 	/**
 	 * Instantiates a new channel service impl.
 	 *
-	 * @param channelRepository the channel repository
-	 * @param channelMapper the channel mapper
+	 * @param channelRepository
+	 *            the channel repository
+	 * @param channelMapper
+	 *            the channel mapper
 	 */
 	public ChannelServiceImpl(ChannelRepository channelRepository, ChannelMapper channelMapper) {
 		this.channelRepository = channelRepository;
@@ -48,7 +53,8 @@ public class ChannelServiceImpl implements ChannelService {
 	/**
 	 * Save a channel.
 	 *
-	 * @param channelDTO the entity to save
+	 * @param channelDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	@Override
@@ -78,7 +84,8 @@ public class ChannelServiceImpl implements ChannelService {
 	/**
 	 * Get one channel by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	@Override
@@ -93,54 +100,55 @@ public class ChannelServiceImpl implements ChannelService {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see logia.quanlyso.service.ChannelService#findAllByOpenDay(logia.quanlyso.service.dto.
-	 * ChannelOpenDay)
+	 * @see
+	 * logia.quanlyso.service.ChannelService#findAllByOpenDay(logia.quanlyso.
+	 * service.dto. ChannelOpenDay)
 	 */
 	@Override
 	public List<ChannelDTO> findAllByOpenDay(DayOfWeek openDay) {
 		this.log.debug("Request to get Channel by open day: {}", openDay);
 		List<Channel> result;
 		switch (openDay) {
-			case SUNDAY:
-				result = this.channelRepository.findAllBySunday();
-				break;
+		case SUNDAY:
+			result = this.channelRepository.findAllBySunday();
+			break;
 
-			case MONDAY:
-				result = this.channelRepository.findAllByMonday();
-				break;
+		case MONDAY:
+			result = this.channelRepository.findAllByMonday();
+			break;
 
-			case TUESDAY:
-				result = this.channelRepository.findAllByTuesday();
-				break;
+		case TUESDAY:
+			result = this.channelRepository.findAllByTuesday();
+			break;
 
-			case WEDNESDAY:
-				result = this.channelRepository.findAllByWednesday();
-				break;
+		case WEDNESDAY:
+			result = this.channelRepository.findAllByWednesday();
+			break;
 
-			case THURSDAY:
-				result = this.channelRepository.findAllByThursday();
-				break;
+		case THURSDAY:
+			result = this.channelRepository.findAllByThursday();
+			break;
 
-			case FRIDAY:
-				result = this.channelRepository.findAllByFriday();
-				break;
+		case FRIDAY:
+			result = this.channelRepository.findAllByFriday();
+			break;
 
-			case SATURDAY:
-				result = this.channelRepository.findAllBySaturday();
-				break;
+		case SATURDAY:
+			result = this.channelRepository.findAllBySaturday();
+			break;
 
-			default:
-				result = new ArrayList<>(0);
-				break;
+		default:
+			result = new ArrayList<>(0);
+			break;
 		}
-		return result.stream().map(this.channelMapper::toDto)
-				.collect(Collectors.toCollection(LinkedList::new));
+		return result.stream().map(this.channelMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
 	}
 
 	/**
 	 * Delete the channel by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	@Override
 	public void delete(Long id) {

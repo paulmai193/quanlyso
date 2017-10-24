@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.impl;
 
 import logia.quanlyso.domain.Style;
@@ -24,19 +27,21 @@ import java.util.stream.Collectors;
 public class StyleServiceImpl implements StyleService {
 
 	/** The log. */
-	private final Logger			log	= LoggerFactory.getLogger(StyleServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(StyleServiceImpl.class);
 
 	/** The style repository. */
-	private final StyleRepository	styleRepository;
+	private final StyleRepository styleRepository;
 
 	/** The style mapper. */
-	private final StyleMapper		styleMapper;
+	private final StyleMapper styleMapper;
 
 	/**
 	 * Instantiates a new style service impl.
 	 *
-	 * @param styleRepository the style repository
-	 * @param styleMapper the style mapper
+	 * @param styleRepository
+	 *            the style repository
+	 * @param styleMapper
+	 *            the style mapper
 	 */
 	public StyleServiceImpl(StyleRepository styleRepository, StyleMapper styleMapper) {
 		this.styleRepository = styleRepository;
@@ -46,7 +51,8 @@ public class StyleServiceImpl implements StyleService {
 	/**
 	 * Save a style.
 	 *
-	 * @param styleDTO the entity to save
+	 * @param styleDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	@Override
@@ -76,7 +82,8 @@ public class StyleServiceImpl implements StyleService {
 	/**
 	 * Get one style by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	@Override
@@ -91,7 +98,8 @@ public class StyleServiceImpl implements StyleService {
 	/**
 	 * Delete the style by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	@Override
 	public void delete(Long id) {

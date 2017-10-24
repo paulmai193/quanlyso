@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import logia.quanlyso.service.dto.ChannelDTO;
@@ -15,7 +18,8 @@ public interface ChannelService {
 	/**
 	 * Save a channel.
 	 *
-	 * @param channelDTO the entity to save
+	 * @param channelDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	ChannelDTO save(ChannelDTO channelDTO);
@@ -30,7 +34,8 @@ public interface ChannelService {
 	/**
 	 * Find all by open day.
 	 *
-	 * @param openDay the open day
+	 * @param openDay
+	 *            the open day
 	 * @return the list
 	 */
 	List<ChannelDTO> findAllByOpenDay(DayOfWeek openDay);
@@ -38,7 +43,8 @@ public interface ChannelService {
 	/**
 	 * Get the "id" channel.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	ChannelDTO findOne(Long id);
@@ -46,7 +52,8 @@ public interface ChannelService {
 	/**
 	 * Delete the "id" channel.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	void delete(Long id);
 }

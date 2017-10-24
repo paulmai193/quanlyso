@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import org.junit.Before;
@@ -42,18 +45,21 @@ public class LogsResourceIntTest {
 	 * Gets the all logs.
 	 *
 	 * @return the all logs
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getAllLogs() throws Exception {
-		this.restLogsMockMvc.perform(MockMvcRequestBuilders.get("/management/logs")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+		this.restLogsMockMvc.perform(MockMvcRequestBuilders.get("/management/logs"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
 	}
 
 	/**
 	 * Change logs.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void changeLogs() throws Exception {
@@ -62,8 +68,8 @@ public class LogsResourceIntTest {
 		logger.setName("ROOT");
 
 		this.restLogsMockMvc
-		.perform(MockMvcRequestBuilders.put("/management/logs").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(logger)))
-		.andExpect(MockMvcResultMatchers.status().isNoContent());
+				.perform(MockMvcRequestBuilders.put("/management/logs").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(logger)))
+				.andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
 }

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
@@ -16,34 +19,34 @@ public class ChannelDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	private Long	id;
+	private Long id;
 
 	/** The name. */
-	private String	name;
+	private String name;
 
 	/** The code. */
-	private String	code;
+	private String code;
 
 	/** The sunday. */
-	private Boolean	sunday;
+	private Boolean sunday;
 
 	/** The monday. */
-	private Boolean	monday;
+	private Boolean monday;
 
 	/** The tuesday. */
-	private Boolean	tuesday;
+	private Boolean tuesday;
 
 	/** The wednesday. */
-	private Boolean	wednesday;
+	private Boolean wednesday;
 
 	/** The thursday. */
-	private Boolean	thursday;
+	private Boolean thursday;
 
 	/** The friday. */
-	private Boolean	friday;
+	private Boolean friday;
 
 	/** The saturday. */
-	private Boolean	saturday;
+	private Boolean saturday;
 
 	/**
 	 * Gets the id.
@@ -57,7 +60,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -75,7 +79,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -93,7 +98,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the code.
 	 *
-	 * @param code the new code
+	 * @param code
+	 *            the new code
 	 */
 	public void setCode(String code) {
 		this.code = code;
@@ -111,7 +117,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the sunday.
 	 *
-	 * @param sunday the new sunday
+	 * @param sunday
+	 *            the new sunday
 	 */
 	public void setSunday(Boolean sunday) {
 		this.sunday = sunday;
@@ -129,7 +136,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the monday.
 	 *
-	 * @param monday the new monday
+	 * @param monday
+	 *            the new monday
 	 */
 	public void setMonday(Boolean monday) {
 		this.monday = monday;
@@ -147,7 +155,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the tuesday.
 	 *
-	 * @param tuesday the new tuesday
+	 * @param tuesday
+	 *            the new tuesday
 	 */
 	public void setTuesday(Boolean tuesday) {
 		this.tuesday = tuesday;
@@ -165,7 +174,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the wednesday.
 	 *
-	 * @param wednesday the new wednesday
+	 * @param wednesday
+	 *            the new wednesday
 	 */
 	public void setWednesday(Boolean wednesday) {
 		this.wednesday = wednesday;
@@ -183,7 +193,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the thursday.
 	 *
-	 * @param thursday the new thursday
+	 * @param thursday
+	 *            the new thursday
 	 */
 	public void setThursday(Boolean thursday) {
 		this.thursday = thursday;
@@ -201,7 +212,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the friday.
 	 *
-	 * @param friday the new friday
+	 * @param friday
+	 *            the new friday
 	 */
 	public void setFriday(Boolean friday) {
 		this.friday = friday;
@@ -219,7 +231,8 @@ public class ChannelDTO implements Serializable {
 	/**
 	 * Sets the saturday.
 	 *
-	 * @param saturday the new saturday
+	 * @param saturday
+	 *            the new saturday
 	 */
 	public void setSaturday(Boolean saturday) {
 		this.saturday = saturday;
@@ -263,10 +276,10 @@ public class ChannelDTO implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return "ChannelDTO{" + "id=" + this.getId() + ", name='" + this.getName() + "'" + ", code='"
-				+ this.getCode() + "'" + ", sunday='" + this.isSunday() + "'" + ", monday='" + this.isMonday()
-				+ "'" + ", tuesday='" + this.isTuesday() + "'" + ", wednesday='" + this.isWednesday() + "'"
-				+ ", thursday='" + this.isThursday() + "'" + ", friday='" + this.isFriday() + "'"
-				+ ", saturday='" + this.isSaturday() + "'" + "}";
+		return "ChannelDTO{" + "id=" + this.getId() + ", name='" + this.getName() + "'" + ", code='" + this.getCode()
+				+ "'" + ", sunday='" + this.isSunday() + "'" + ", monday='" + this.isMonday() + "'" + ", tuesday='"
+				+ this.isTuesday() + "'" + ", wednesday='" + this.isWednesday() + "'" + ", thursday='"
+				+ this.isThursday() + "'" + ", friday='" + this.isFriday() + "'" + ", saturday='" + this.isSaturday()
+				+ "'" + "}";
 	}
 }

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.util;
 
 import org.slf4j.Logger;
@@ -12,10 +15,10 @@ import org.springframework.http.HttpHeaders;
 public final class HeaderUtil {
 
 	/** The Constant log. */
-	private static final Logger	log					= LoggerFactory.getLogger(HeaderUtil.class);
+	private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
 
 	/** The Constant APPLICATION_NAME. */
-	private static final String	APPLICATION_NAME	= "quanlysoApp";
+	private static final String APPLICATION_NAME = "quanlysoApp";
 
 	/**
 	 * Instantiates a new header util.
@@ -26,8 +29,10 @@ public final class HeaderUtil {
 	/**
 	 * Creates the alert.
 	 *
-	 * @param message the message
-	 * @param param the param
+	 * @param message
+	 *            the message
+	 * @param param
+	 *            the param
 	 * @return the http headers
 	 */
 	public static HttpHeaders createAlert(String message, String param) {
@@ -40,8 +45,10 @@ public final class HeaderUtil {
 	/**
 	 * Creates the entity creation alert.
 	 *
-	 * @param entityName the entity name
-	 * @param param the param
+	 * @param entityName
+	 *            the entity name
+	 * @param param
+	 *            the param
 	 * @return the http headers
 	 */
 	public static HttpHeaders createEntityCreationAlert(String entityName, String param) {
@@ -51,8 +58,10 @@ public final class HeaderUtil {
 	/**
 	 * Creates the entity update alert.
 	 *
-	 * @param entityName the entity name
-	 * @param param the param
+	 * @param entityName
+	 *            the entity name
+	 * @param param
+	 *            the param
 	 * @return the http headers
 	 */
 	public static HttpHeaders createEntityUpdateAlert(String entityName, String param) {
@@ -62,8 +71,10 @@ public final class HeaderUtil {
 	/**
 	 * Creates the entity deletion alert.
 	 *
-	 * @param entityName the entity name
-	 * @param param the param
+	 * @param entityName
+	 *            the entity name
+	 * @param param
+	 *            the param
 	 * @return the http headers
 	 */
 	public static HttpHeaders createEntityDeletionAlert(String entityName, String param) {
@@ -73,13 +84,15 @@ public final class HeaderUtil {
 	/**
 	 * Creates the failure alert.
 	 *
-	 * @param entityName the entity name
-	 * @param errorKey the error key
-	 * @param defaultMessage the default message
+	 * @param entityName
+	 *            the entity name
+	 * @param errorKey
+	 *            the error key
+	 * @param defaultMessage
+	 *            the default message
 	 * @return the http headers
 	 */
-	public static HttpHeaders createFailureAlert(String entityName, String errorKey,
-			String defaultMessage) {
+	public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
 		HeaderUtil.log.error("Entity processing failed, {}", defaultMessage);
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("X-quanlysoApp-error", "error." + errorKey);

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.vm;
 
 import ch.qos.logback.classic.Logger;
@@ -11,15 +14,16 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 public class LoggerVM {
 
 	/** The name. */
-	private String	name;
+	private String name;
 
 	/** The level. */
-	private String	level;
+	private String level;
 
 	/**
 	 * Instantiates a new logger VM.
 	 *
-	 * @param logger the logger
+	 * @param logger
+	 *            the logger
 	 */
 	public LoggerVM(Logger logger) {
 		this.name = logger.getName();
@@ -46,7 +50,8 @@ public class LoggerVM {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -64,7 +69,8 @@ public class LoggerVM {
 	/**
 	 * Sets the level.
 	 *
-	 * @param level the new level
+	 * @param level
+	 *            the new level
 	 */
 	public void setLevel(String level) {
 		this.level = level;

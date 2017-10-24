@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
@@ -16,19 +19,19 @@ public class ProfitFactorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	private Long	id;
+	private Long id;
 
 	/** The rate. */
-	private Float	rate;
+	private Float rate;
 
 	/** The factors id. */
-	private Long	factorsId;
+	private Long factorsId;
 
 	/** The styles id. */
-	private Long	stylesId;
+	private Long stylesId;
 
 	/** The types id. */
-	private Long	typesId;
+	private Long typesId;
 
 	/**
 	 * Gets the id.
@@ -42,7 +45,8 @@ public class ProfitFactorDTO implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -60,7 +64,8 @@ public class ProfitFactorDTO implements Serializable {
 	/**
 	 * Sets the rate.
 	 *
-	 * @param rate the new rate
+	 * @param rate
+	 *            the new rate
 	 */
 	public void setRate(Float rate) {
 		this.rate = rate;
@@ -78,7 +83,8 @@ public class ProfitFactorDTO implements Serializable {
 	/**
 	 * Sets the factors id.
 	 *
-	 * @param factorId the new factors id
+	 * @param factorId
+	 *            the new factors id
 	 */
 	public void setFactorsId(Long factorId) {
 		this.factorsId = factorId;
@@ -96,7 +102,8 @@ public class ProfitFactorDTO implements Serializable {
 	/**
 	 * Sets the styles id.
 	 *
-	 * @param styleId the new styles id
+	 * @param styleId
+	 *            the new styles id
 	 */
 	public void setStylesId(Long styleId) {
 		this.stylesId = styleId;
@@ -114,7 +121,8 @@ public class ProfitFactorDTO implements Serializable {
 	/**
 	 * Sets the types id.
 	 *
-	 * @param typesId the new types id
+	 * @param typesId
+	 *            the new types id
 	 */
 	public void setTypesId(Long typesId) {
 		this.typesId = typesId;

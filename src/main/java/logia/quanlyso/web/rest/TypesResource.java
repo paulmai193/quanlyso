@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -25,18 +28,19 @@ import java.util.Optional;
 public class TypesResource {
 
 	/** The log. */
-	private final Logger		log			= LoggerFactory.getLogger(TypesResource.class);
+	private final Logger log = LoggerFactory.getLogger(TypesResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String	ENTITY_NAME	= "types";
+	private static final String ENTITY_NAME = "types";
 
 	/** The types service. */
-	private final TypesService	typesService;
+	private final TypesService typesService;
 
 	/**
 	 * Instantiates a new types resource.
 	 *
-	 * @param typesService the types service
+	 * @param typesService
+	 *            the types service
 	 */
 	public TypesResource(TypesService typesService) {
 		this.typesService = typesService;
@@ -45,54 +49,58 @@ public class TypesResource {
 	/**
 	 * POST /types : Create a new types.
 	 *
-	 * @param typesDTO the typesDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new typesDTO, or with
-	 *         status 400 (Bad Request) if the types has already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param typesDTO
+	 *            the typesDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new typesDTO, or with status 400 (Bad Request) if the types has
+	 *         already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/types")
 	@Timed
-	public ResponseEntity<TypesDTO> createTypes(@RequestBody TypesDTO typesDTO)
-			throws URISyntaxException {
+	public ResponseEntity<TypesDTO> createTypes(@RequestBody TypesDTO typesDTO) throws URISyntaxException {
 		this.log.debug("REST request to save Types : {}", typesDTO);
 		if (typesDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(TypesResource.ENTITY_NAME,
 					"idexists", "A new types cannot already have an ID")).body(null);
 		}
 		TypesDTO result = this.typesService.save(typesDTO);
-		return ResponseEntity
-				.created(new URI("/api/types/" + result.getId())).headers(HeaderUtil
-						.createEntityCreationAlert(TypesResource.ENTITY_NAME, result.getId().toString()))
+		return ResponseEntity.created(new URI("/api/types/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert(TypesResource.ENTITY_NAME, result.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * PUT /types : Updates an existing types.
 	 *
-	 * @param typesDTO the typesDTO to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated typesDTO,
-	 *         or with status 400 (Bad Request) if the typesDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the typesDTO couldnt be updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param typesDTO
+	 *            the typesDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         typesDTO, or with status 400 (Bad Request) if the typesDTO is not
+	 *         valid, or with status 500 (Internal Server Error) if the typesDTO
+	 *         couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/types")
 	@Timed
-	public ResponseEntity<TypesDTO> updateTypes(@RequestBody TypesDTO typesDTO)
-			throws URISyntaxException {
+	public ResponseEntity<TypesDTO> updateTypes(@RequestBody TypesDTO typesDTO) throws URISyntaxException {
 		this.log.debug("REST request to update Types : {}", typesDTO);
 		if (typesDTO.getId() == null) {
 			return this.createTypes(typesDTO);
 		}
 		TypesDTO result = this.typesService.save(typesDTO);
-		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert(TypesResource.ENTITY_NAME, typesDTO.getId().toString()))
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityUpdateAlert(TypesResource.ENTITY_NAME, typesDTO.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * GET /types : get all the types.
 	 *
-	 * @return the ResponseEntity with status 200 (OK) and the list of types in body
+	 * @return the ResponseEntity with status 200 (OK) and the list of types in
+	 *         body
 	 */
 	@GetMapping("/types")
 	@Timed
@@ -104,9 +112,10 @@ public class TypesResource {
 	/**
 	 * GET /types/:id : get the "id" types.
 	 *
-	 * @param id the id of the typesDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the typesDTO, or with status
-	 *         404 (Not Found)
+	 * @param id
+	 *            the id of the typesDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         typesDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/types/{id}")
 	@Timed
@@ -119,7 +128,8 @@ public class TypesResource {
 	/**
 	 * DELETE /types/:id : delete the "id" types.
 	 *
-	 * @param id the id of the typesDTO to delete
+	 * @param id
+	 *            the id of the typesDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/types/{id}")

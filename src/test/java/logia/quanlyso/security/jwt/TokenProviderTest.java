@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.security.jwt;
 
 import java.util.ArrayList;
@@ -27,16 +30,16 @@ import logia.quanlyso.security.AuthoritiesConstants;
 public class TokenProviderTest {
 
 	/** The secret key. */
-	private final String		secretKey	= "e5c9ee274ae87bc031adda32e27fa98b9290da83";
+	private final String secretKey = "e5c9ee274ae87bc031adda32e27fa98b9290da83";
 
 	/** The one minute. */
-	private final long			ONE_MINUTE	= 60000;
+	private final long ONE_MINUTE = 60000;
 
 	/** The j hipster properties. */
-	private JHipsterProperties	jHipsterProperties;
+	private JHipsterProperties jHipsterProperties;
 
 	/** The token provider. */
-	private TokenProvider		tokenProvider;
+	private TokenProvider tokenProvider;
 
 	/**
 	 * Setup.
@@ -126,8 +129,7 @@ public class TokenProviderTest {
 	 * @return the string
 	 */
 	private String createUnsupportedToken() {
-		return Jwts.builder().setPayload("payload").signWith(SignatureAlgorithm.HS512, this.secretKey)
-				.compact();
+		return Jwts.builder().setPayload("payload").signWith(SignatureAlgorithm.HS512, this.secretKey).compact();
 	}
 
 	/**

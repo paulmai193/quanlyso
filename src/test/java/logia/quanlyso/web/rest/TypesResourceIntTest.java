@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.util.List;
@@ -40,44 +43,44 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 public class TypesResourceIntTest {
 
 	/** The Constant DEFAULT_NAME. */
-	private static final String						DEFAULT_NAME	= "AAAAAAAAAA";
+	private static final String DEFAULT_NAME = "AAAAAAAAAA";
 
 	/** The Constant UPDATED_NAME. */
-	private static final String						UPDATED_NAME	= "BBBBBBBBBB";
+	private static final String UPDATED_NAME = "BBBBBBBBBB";
 
 	/** The types repository. */
 	@Autowired
-	private TypesRepository							typesRepository;
+	private TypesRepository typesRepository;
 
 	/** The types mapper. */
 	@Autowired
-	private TypesMapper								typesMapper;
+	private TypesMapper typesMapper;
 
 	/** The types service. */
 	@Autowired
-	private TypesService							typesService;
+	private TypesService typesService;
 
 	/** The jackson message converter. */
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	/** The pageable argument resolver. */
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	/** The exception translator. */
 	@Autowired
-	private ExceptionTranslator						exceptionTranslator;
+	private ExceptionTranslator exceptionTranslator;
 
 	/** The em. */
 	@Autowired
-	private EntityManager							em;
+	private EntityManager em;
 
 	/** The rest types mock mvc. */
-	private MockMvc									restTypesMockMvc;
+	private MockMvc restTypesMockMvc;
 
 	/** The types. */
-	private Types									types;
+	private Types types;
 
 	/**
 	 * Setup.
@@ -87,8 +90,7 @@ public class TypesResourceIntTest {
 		MockitoAnnotations.initMocks(this);
 		TypesResource typesResource = new TypesResource(this.typesService);
 		this.restTypesMockMvc = MockMvcBuilders.standaloneSetup(typesResource)
-				.setCustomArgumentResolvers(this.pageableArgumentResolver)
-				.setControllerAdvice(this.exceptionTranslator)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setMessageConverters(this.jacksonMessageConverter).build();
 	}
 
@@ -98,7 +100,8 @@ public class TypesResourceIntTest {
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an entity which requires the current entity.
 	 *
-	 * @param em the em
+	 * @param em
+	 *            the em
 	 * @return the types
 	 */
 	public static Types createEntity(EntityManager em) {
@@ -117,7 +120,8 @@ public class TypesResourceIntTest {
 	/**
 	 * Creates the types.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -127,9 +131,9 @@ public class TypesResourceIntTest {
 		// Create the Types
 		TypesDTO typesDTO = this.typesMapper.toDto(this.types);
 		this.restTypesMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Types in the database
 		List<Types> typesList = this.typesRepository.findAll();
@@ -141,7 +145,8 @@ public class TypesResourceIntTest {
 	/**
 	 * Creates the types with existing id.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -152,11 +157,12 @@ public class TypesResourceIntTest {
 		this.types.setId(1L);
 		TypesDTO typesDTO = this.typesMapper.toDto(this.types);
 
-		// An entity with an existing ID cannot be created, so this API call must fail
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
 		this.restTypesMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the Alice in the database
 		List<Types> typesList = this.typesRepository.findAll();
@@ -167,7 +173,8 @@ public class TypesResourceIntTest {
 	 * Gets the all types.
 	 *
 	 * @return the all types
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -176,17 +183,21 @@ public class TypesResourceIntTest {
 		this.typesRepository.saveAndFlush(this.types);
 
 		// Get all the typesList
-		this.restTypesMockMvc.perform(MockMvcRequestBuilders.get("/api/types?sort=id,desc")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.types.getId().intValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").value(Matchers.hasItem(TypesResourceIntTest.DEFAULT_NAME.toString())));
+		this.restTypesMockMvc.perform(MockMvcRequestBuilders.get("/api/types?sort=id,desc"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id")
+						.value(Matchers.hasItem(this.types.getId().intValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name")
+						.value(Matchers.hasItem(TypesResourceIntTest.DEFAULT_NAME.toString())));
 	}
 
 	/**
 	 * Gets the types.
 	 *
 	 * @return the types
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -195,30 +206,33 @@ public class TypesResourceIntTest {
 		this.typesRepository.saveAndFlush(this.types);
 
 		// Get the types
-		this.restTypesMockMvc.perform(MockMvcRequestBuilders.get("/api/types/{id}", this.types.getId())).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.types.getId().intValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(TypesResourceIntTest.DEFAULT_NAME.toString()));
+		this.restTypesMockMvc.perform(MockMvcRequestBuilders.get("/api/types/{id}", this.types.getId()))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.types.getId().intValue())).andExpect(
+						MockMvcResultMatchers.jsonPath("$.name").value(TypesResourceIntTest.DEFAULT_NAME.toString()));
 	}
 
 	/**
 	 * Gets the non existing types.
 	 *
 	 * @return the non existing types
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
 	public void getNonExistingTypes() throws Exception {
 		// Get the types
 		this.restTypesMockMvc.perform(MockMvcRequestBuilders.get("/api/types/{id}", Long.MAX_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isNotFound());
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	/**
 	 * Update types.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -233,9 +247,9 @@ public class TypesResourceIntTest {
 		TypesDTO typesDTO = this.typesMapper.toDto(updatedTypes);
 
 		this.restTypesMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the Types in the database
 		List<Types> typesList = this.typesRepository.findAll();
@@ -247,7 +261,8 @@ public class TypesResourceIntTest {
 	/**
 	 * Update non existing types.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -257,11 +272,12 @@ public class TypesResourceIntTest {
 		// Create the Types
 		TypesDTO typesDTO = this.typesMapper.toDto(this.types);
 
-		// If the entity doesn't have an ID, it will be created instead of just being updated
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
 		this.restTypesMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.put("/api/types").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(typesDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Types in the database
 		List<Types> typesList = this.typesRepository.findAll();
@@ -271,7 +287,8 @@ public class TypesResourceIntTest {
 	/**
 	 * Delete types.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -281,9 +298,8 @@ public class TypesResourceIntTest {
 		int databaseSizeBeforeDelete = this.typesRepository.findAll().size();
 
 		// Get the types
-		this.restTypesMockMvc.perform(
-				MockMvcRequestBuilders.delete("/api/types/{id}", this.types.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+		this.restTypesMockMvc.perform(MockMvcRequestBuilders.delete("/api/types/{id}", this.types.getId())
+				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the database is empty
 		List<Types> typesList = this.typesRepository.findAll();
@@ -293,7 +309,8 @@ public class TypesResourceIntTest {
 	/**
 	 * Equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -313,7 +330,8 @@ public class TypesResourceIntTest {
 	/**
 	 * Dto equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional

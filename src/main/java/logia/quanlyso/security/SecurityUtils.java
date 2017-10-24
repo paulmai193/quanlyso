@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.security;
 
 import org.springframework.security.core.Authentication;
@@ -31,8 +34,7 @@ public final class SecurityUtils {
 			if (authentication.getPrincipal() instanceof UserDetails) {
 				UserDetails springSecurityUser = (UserDetails) authentication.getPrincipal();
 				userName = springSecurityUser.getUsername();
-			}
-			else if (authentication.getPrincipal() instanceof String) {
+			} else if (authentication.getPrincipal() instanceof String) {
 				userName = (String) authentication.getPrincipal();
 			}
 		}
@@ -62,9 +64,8 @@ public final class SecurityUtils {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Authentication authentication = securityContext.getAuthentication();
 		if (authentication != null) {
-			return authentication.getAuthorities().stream()
-					.noneMatch(grantedAuthority -> grantedAuthority.getAuthority()
-							.equals(AuthoritiesConstants.ANONYMOUS));
+			return authentication.getAuthorities().stream().noneMatch(
+					grantedAuthority -> grantedAuthority.getAuthority().equals(AuthoritiesConstants.ANONYMOUS));
 		}
 		return false;
 	}
@@ -73,18 +74,20 @@ public final class SecurityUtils {
 	 * If the current user has a specific authority (security role).
 	 *
 	 * <p>
-	 * The name of this method comes from the isUserInRole() method in the Servlet API
+	 * The name of this method comes from the isUserInRole() method in the
+	 * Servlet API
 	 * </p>
 	 *
-	 * @param authority the authority to check
+	 * @param authority
+	 *            the authority to check
 	 * @return true if the current user has the authority, false otherwise
 	 */
 	public static boolean isCurrentUserInRole(String authority) {
 		SecurityContext securityContext = SecurityContextHolder.getContext();
 		Authentication authentication = securityContext.getAuthentication();
 		if (authentication != null) {
-			return authentication.getAuthorities().stream().anyMatch(
-					grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
+			return authentication.getAuthorities().stream()
+					.anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals(authority));
 		}
 		return false;
 	}

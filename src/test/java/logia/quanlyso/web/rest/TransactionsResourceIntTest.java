@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.util.List;
@@ -52,71 +55,71 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 public class TransactionsResourceIntTest {
 
 	/** The Constant DEFAULT_CHOSEN_NUMBER. */
-	static final String								DEFAULT_CHOSEN_NUMBER	= "01";
+	static final String DEFAULT_CHOSEN_NUMBER = "01";
 
 	/** The Constant UPDATED_CHOSEN_NUMBER. */
-	static final String								UPDATED_CHOSEN_NUMBER	= "02";
+	static final String UPDATED_CHOSEN_NUMBER = "02";
 
 	/** The Constant DEFAULT_NET_VALUE. */
-	static final Float								DEFAULT_NET_VALUE		= 0F;
+	static final Float DEFAULT_NET_VALUE = 0F;
 
 	// /** The Constant UPDATED_NET_VALUE. */
 	// static final Float UPDATED_NET_VALUE = 2F;
 
 	/** The transactions repository. */
 	@Autowired
-	private TransactionsRepository					transactionsRepository;
+	private TransactionsRepository transactionsRepository;
 
 	/** The transaction details repository. */
 	@Autowired
-	private TransactionDetailsRepository			transactionDetailsRepository;
+	private TransactionDetailsRepository transactionDetailsRepository;
 
 	/** The user repository. */
 	@Autowired
-	private UserRepository							userRepository;
+	private UserRepository userRepository;
 
 	/** The channel repository. */
 	@Autowired
-	private ChannelRepository						channelRepository;
+	private ChannelRepository channelRepository;
 
 	/** The style repository. */
 	@Autowired
-	private StyleRepository							styleRepository;
+	private StyleRepository styleRepository;
 
 	/** The types repository. */
 	@Autowired
-	private TypesRepository							typesRepository;
+	private TypesRepository typesRepository;
 
 	/** The code repository. */
 	@Autowired
-	private CodeRepository							codeRepository;
+	private CodeRepository codeRepository;
 
 	/** The transactions mapper. */
 	@Autowired
-	private TransactionsMapper						transactionsMapper;
+	private TransactionsMapper transactionsMapper;
 
 	/** The transactions service. */
 	@Autowired
-	private TransactionsService						transactionsService;
+	private TransactionsService transactionsService;
 
 	/** The jackson message converter. */
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	/** The pageable argument resolver. */
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	/** The exception translator. */
 	@Autowired
-	private ExceptionTranslator						exceptionTranslator;
+	private ExceptionTranslator exceptionTranslator;
 
 	/** The em. */
 	@Autowired
-	private EntityManager							em;
+	private EntityManager em;
 
 	/** The rest transactions mock mvc. */
-	private MockMvc									restTransactionsMockMvc;
+	private MockMvc restTransactionsMockMvc;
 
 	// /** The transactions. */
 	// private Transactions transactions;
@@ -129,8 +132,7 @@ public class TransactionsResourceIntTest {
 		MockitoAnnotations.initMocks(this);
 		TransactionsResource transactionsResource = new TransactionsResource(this.transactionsService);
 		this.restTransactionsMockMvc = MockMvcBuilders.standaloneSetup(transactionsResource)
-				.setCustomArgumentResolvers(this.pageableArgumentResolver)
-				.setControllerAdvice(this.exceptionTranslator)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setMessageConverters(this.jacksonMessageConverter).build();
 	}
 
@@ -140,7 +142,8 @@ public class TransactionsResourceIntTest {
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an entity which requires the current entity.
 	 *
-	 * @param em the em
+	 * @param em
+	 *            the em
 	 * @return the transactions
 	 */
 	public static Transactions createEntity(EntityManager em) {
@@ -173,7 +176,8 @@ public class TransactionsResourceIntTest {
 	/**
 	 * Creates the transactions.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -188,21 +192,23 @@ public class TransactionsResourceIntTest {
 		// Create the Transactions
 		TransactionsDTO transactionsDTO = this.transactionsMapper.toDto(transactions);
 		this.restTransactionsMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Transactions in the database
 		List<Transactions> transactionsList = this.transactionsRepository.findAll();
 		Assertions.assertThat(transactionsList).hasSize(databaseSizeBeforeCreate + 1);
 		final Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
-		Assertions.assertThat(testTransactions.getChosenNumber()).isEqualTo(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER);
+		Assertions.assertThat(testTransactions.getChosenNumber())
+				.isEqualTo(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER);
 	}
 
 	/**
 	 * Creates the complete transactions.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -219,35 +225,32 @@ public class TransactionsResourceIntTest {
 		// Create the Transactions
 		TransactionsDTO transactionsDTO = this.transactionsMapper.toDto(transactions);
 		this.restTransactionsMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Transactions in the database
 		List<Transactions> transactionsList = this.transactionsRepository.findAll();
 		Assertions.assertThat(transactionsList).hasSize(databaseSizeBeforeCreate + 1);
 		final Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
-		Assertions.assertThat(testTransactions.getChosenNumber()).isEqualTo(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER);
+		Assertions.assertThat(testTransactions.getChosenNumber())
+				.isEqualTo(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER);
 		Assertions.assertThat(testTransactions.getTransactionDetails().size()).isEqualTo(1);
-		Assertions.assertThat(testTransactions.getUsers().getLogin())
-		.isEqualTo(UserResourceIntTest.DEFAULT_LOGIN);
+		Assertions.assertThat(testTransactions.getUsers().getLogin()).isEqualTo(UserResourceIntTest.DEFAULT_LOGIN);
 		Assertions.assertThat(testTransactions.getUsers().getFirstName())
-		.isEqualTo(UserResourceIntTest.DEFAULT_FIRSTNAME);
+				.isEqualTo(UserResourceIntTest.DEFAULT_FIRSTNAME);
 		Assertions.assertThat(testTransactions.getUsers().getLastName())
-		.isEqualTo(UserResourceIntTest.DEFAULT_LASTNAME);
-		Assertions.assertThat(testTransactions.getUsers().getEmail())
-		.isEqualTo(UserResourceIntTest.DEFAULT_EMAIL);
+				.isEqualTo(UserResourceIntTest.DEFAULT_LASTNAME);
+		Assertions.assertThat(testTransactions.getUsers().getEmail()).isEqualTo(UserResourceIntTest.DEFAULT_EMAIL);
 		Assertions.assertThat(testTransactions.getUsers().getImageUrl())
-		.isEqualTo(UserResourceIntTest.DEFAULT_IMAGEURL);
-		Assertions.assertThat(testTransactions.getUsers().getLangKey())
-		.isEqualTo(UserResourceIntTest.DEFAULT_LANGKEY);
+				.isEqualTo(UserResourceIntTest.DEFAULT_IMAGEURL);
+		Assertions.assertThat(testTransactions.getUsers().getLangKey()).isEqualTo(UserResourceIntTest.DEFAULT_LANGKEY);
 		Assertions.assertThat(testTransactions.getTransactionDetails().size()).isEqualTo(1);
 		Long testDetailId = null;
 		for (TransactionDetails testTransactionDetails : testTransactions.getTransactionDetails()) {
-			Assertions.assertThat(testTransactionDetails.getTransactions().getId())
-			.isEqualTo(testTransactions.getId());
+			Assertions.assertThat(testTransactionDetails.getTransactions().getId()).isEqualTo(testTransactions.getId());
 			Assertions.assertThat(testTransactionDetails.getAmount())
-			.isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT);
+					.isEqualTo(TransactionDetailsResourceIntTest.DEFAULT_AMOUNT);
 			testDetailId = testTransactionDetails.getId();
 		}
 		User testUser = this.userRepository.getOne(user.getId());
@@ -261,7 +264,8 @@ public class TransactionsResourceIntTest {
 	/**
 	 * Creates the transactions with existing id.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -274,11 +278,12 @@ public class TransactionsResourceIntTest {
 		transactions.setId(1L);
 		TransactionsDTO transactionsDTO = this.transactionsMapper.toDto(transactions);
 
-		// An entity with an existing ID cannot be created, so this API call must fail
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
 		this.restTransactionsMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the Alice in the database
 		List<Transactions> transactionsList = this.transactionsRepository.findAll();
@@ -289,7 +294,8 @@ public class TransactionsResourceIntTest {
 	 * Gets the all transactions.
 	 *
 	 * @return the all transactions
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -300,17 +306,20 @@ public class TransactionsResourceIntTest {
 
 		// Get all the transactionsList
 		this.restTransactionsMockMvc.perform(MockMvcRequestBuilders.get("/api/transactions?sort=id,desc"))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(transactions.getId().intValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].chosenNumber").value(Matchers.hasItem(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER)));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id")
+						.value(Matchers.hasItem(transactions.getId().intValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].chosenNumber")
+						.value(Matchers.hasItem(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER)));
 	}
 
 	/**
 	 * Gets the transactions.
 	 *
 	 * @return the transactions
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -321,30 +330,33 @@ public class TransactionsResourceIntTest {
 
 		// Get the transactions
 		this.restTransactionsMockMvc.perform(MockMvcRequestBuilders.get("/api/transactions/{id}", transactions.getId()))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(transactions.getId().intValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.chosenNumber").value(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(transactions.getId().intValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.chosenNumber")
+						.value(TransactionsResourceIntTest.DEFAULT_CHOSEN_NUMBER));
 	}
 
 	/**
 	 * Gets the non existing transactions.
 	 *
 	 * @return the non existing transactions
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
 	public void getNonExistingTransactions() throws Exception {
 		// Get the transactions
 		this.restTransactionsMockMvc.perform(MockMvcRequestBuilders.get("/api/transactions/{id}", Long.MAX_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isNotFound());
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	/**
 	 * Update transactions.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -363,21 +375,23 @@ public class TransactionsResourceIntTest {
 		TransactionsDTO transactionsDTO = this.transactionsMapper.toDto(updatedTransactions);
 
 		this.restTransactionsMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the Transactions in the database
 		List<Transactions> transactionsList = this.transactionsRepository.findAll();
 		Assertions.assertThat(transactionsList).hasSize(databaseSizeBeforeUpdate);
 		Transactions testTransactions = transactionsList.get(transactionsList.size() - 1);
-		Assertions.assertThat(testTransactions.getChosenNumber()).isEqualTo(TransactionsResourceIntTest.UPDATED_CHOSEN_NUMBER);
+		Assertions.assertThat(testTransactions.getChosenNumber())
+				.isEqualTo(TransactionsResourceIntTest.UPDATED_CHOSEN_NUMBER);
 	}
 
 	/**
 	 * Update non existing transactions.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -391,11 +405,12 @@ public class TransactionsResourceIntTest {
 		// Create the Transactions
 		TransactionsDTO transactionsDTO = this.transactionsMapper.toDto(transactions);
 
-		// If the entity doesn't have an ID, it will be created instead of just being updated
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
 		this.restTransactionsMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.put("/api/transactions").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Transactions in the database
 		List<Transactions> transactionsList = this.transactionsRepository.findAll();
@@ -405,7 +420,8 @@ public class TransactionsResourceIntTest {
 	/**
 	 * Delete transactions.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -418,8 +434,9 @@ public class TransactionsResourceIntTest {
 
 		// Get the transactions
 		transactions = transactionsList.get(0);
-		this.restTransactionsMockMvc.perform(MockMvcRequestBuilders.delete("/api/transactions/{id}", transactions.getId())
-				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(MockMvcResultMatchers.status().isOk());
+		this.restTransactionsMockMvc.perform(MockMvcRequestBuilders
+				.delete("/api/transactions/{id}", transactions.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the database is empty
 		transactionsList = this.transactionsRepository.findAll();
@@ -442,15 +459,16 @@ public class TransactionsResourceIntTest {
 
 		// Get the transactions
 		transactions = transactionsList.get(0);
-		this.restTransactionsMockMvc.perform(MockMvcRequestBuilders.delete("/api/transactions/{id}", transactions.getId())
-				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(MockMvcResultMatchers.status().isOk());
+		this.restTransactionsMockMvc.perform(MockMvcRequestBuilders
+				.delete("/api/transactions/{id}", transactions.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the database is empty
 		transactionsList = this.transactionsRepository.findAll();
 		Assertions.assertThat(transactionsList).hasSize(dbTransactionSizeBeforeDelete - 1);
 		List<TransactionDetails> transactionDetails = this.transactionDetailsRepository.findAll();
-		Assertions.assertThat(transactionDetails).hasSize(
-				dbTransDetailSizeBeforeDelete == 0 ? 0 : dbTransDetailSizeBeforeDelete - 1);
+		Assertions.assertThat(transactionDetails)
+				.hasSize(dbTransDetailSizeBeforeDelete == 0 ? 0 : dbTransDetailSizeBeforeDelete - 1);
 		// User testUser = this.userRepository.findOne(user.getId());
 		// assertThat(testUser.getTransactionsses()).isEmpty();
 	}
@@ -476,16 +494,18 @@ public class TransactionsResourceIntTest {
 		// Calculate the Transactions
 		TransactionsDTO transactionsDTO = this.transactionsMapper.toDto(transactions);
 		this.restTransactionsMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/transactions/calculate")
-				.contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
-		.andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.jsonPath("$.netValue").value(netValue));
+				.perform(MockMvcRequestBuilders.post("/api/transactions/calculate")
+						.contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(transactionsDTO)))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.netValue").value(netValue));
 	}
 
 	/**
 	 * Equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -505,7 +525,8 @@ public class TransactionsResourceIntTest {
 	/**
 	 * Dto equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional

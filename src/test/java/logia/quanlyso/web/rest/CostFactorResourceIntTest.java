@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.util.List;
@@ -40,44 +43,44 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 public class CostFactorResourceIntTest {
 
 	/** The Constant DEFAULT_RATE. */
-	private static final Float						DEFAULT_RATE	= 1F;
+	private static final Float DEFAULT_RATE = 1F;
 
 	/** The Constant UPDATED_RATE. */
-	private static final Float						UPDATED_RATE	= 2F;
+	private static final Float UPDATED_RATE = 2F;
 
 	/** The cost factor repository. */
 	@Autowired
-	private CostFactorRepository					costFactorRepository;
+	private CostFactorRepository costFactorRepository;
 
 	/** The cost factor mapper. */
 	@Autowired
-	private CostFactorMapper						costFactorMapper;
+	private CostFactorMapper costFactorMapper;
 
 	/** The cost factor service. */
 	@Autowired
-	private CostFactorService						costFactorService;
+	private CostFactorService costFactorService;
 
 	/** The jackson message converter. */
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	/** The pageable argument resolver. */
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	/** The exception translator. */
 	@Autowired
-	private ExceptionTranslator						exceptionTranslator;
+	private ExceptionTranslator exceptionTranslator;
 
 	/** The em. */
 	@Autowired
-	private EntityManager							em;
+	private EntityManager em;
 
 	/** The rest cost factor mock mvc. */
-	private MockMvc									restCostFactorMockMvc;
+	private MockMvc restCostFactorMockMvc;
 
 	/** The cost factor. */
-	private CostFactor								costFactor;
+	private CostFactor costFactor;
 
 	/**
 	 * Setup.
@@ -87,8 +90,7 @@ public class CostFactorResourceIntTest {
 		MockitoAnnotations.initMocks(this);
 		CostFactorResource costFactorResource = new CostFactorResource(this.costFactorService);
 		this.restCostFactorMockMvc = MockMvcBuilders.standaloneSetup(costFactorResource)
-				.setCustomArgumentResolvers(this.pageableArgumentResolver)
-				.setControllerAdvice(this.exceptionTranslator)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setMessageConverters(this.jacksonMessageConverter).build();
 	}
 
@@ -98,7 +100,8 @@ public class CostFactorResourceIntTest {
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an entity which requires the current entity.
 	 *
-	 * @param em the em
+	 * @param em
+	 *            the em
 	 * @return the cost factor
 	 */
 	public static CostFactor createEntity(EntityManager em) {
@@ -117,7 +120,8 @@ public class CostFactorResourceIntTest {
 	/**
 	 * Creates the cost factor.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -127,9 +131,9 @@ public class CostFactorResourceIntTest {
 		// Create the CostFactor
 		CostFactorDTO costFactorDTO = this.costFactorMapper.toDto(this.costFactor);
 		this.restCostFactorMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the CostFactor in the database
 		List<CostFactor> costFactorList = this.costFactorRepository.findAll();
@@ -141,7 +145,8 @@ public class CostFactorResourceIntTest {
 	/**
 	 * Creates the cost factor with existing id.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -152,11 +157,12 @@ public class CostFactorResourceIntTest {
 		this.costFactor.setId(1L);
 		CostFactorDTO costFactorDTO = this.costFactorMapper.toDto(this.costFactor);
 
-		// An entity with an existing ID cannot be created, so this API call must fail
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
 		this.restCostFactorMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the Alice in the database
 		List<CostFactor> costFactorList = this.costFactorRepository.findAll();
@@ -167,7 +173,8 @@ public class CostFactorResourceIntTest {
 	 * Gets the all cost factors.
 	 *
 	 * @return the all cost factors
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -177,17 +184,20 @@ public class CostFactorResourceIntTest {
 
 		// Get all the costFactorList
 		this.restCostFactorMockMvc.perform(MockMvcRequestBuilders.get("/api/cost-factors?sort=id,desc"))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.costFactor.getId().intValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].rate").value(Matchers.hasItem(CostFactorResourceIntTest.DEFAULT_RATE.doubleValue())));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id")
+						.value(Matchers.hasItem(this.costFactor.getId().intValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].rate")
+						.value(Matchers.hasItem(CostFactorResourceIntTest.DEFAULT_RATE.doubleValue())));
 	}
 
 	/**
 	 * Gets the cost factor.
 	 *
 	 * @return the cost factor
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -196,31 +206,35 @@ public class CostFactorResourceIntTest {
 		this.costFactorRepository.saveAndFlush(this.costFactor);
 
 		// Get the costFactor
-		this.restCostFactorMockMvc.perform(MockMvcRequestBuilders.get("/api/cost-factors/{id}", this.costFactor.getId()))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.costFactor.getId().intValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.rate").value(CostFactorResourceIntTest.DEFAULT_RATE.doubleValue()));
+		this.restCostFactorMockMvc
+				.perform(MockMvcRequestBuilders.get("/api/cost-factors/{id}", this.costFactor.getId()))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.costFactor.getId().intValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.rate")
+						.value(CostFactorResourceIntTest.DEFAULT_RATE.doubleValue()));
 	}
 
 	/**
 	 * Gets the non existing cost factor.
 	 *
 	 * @return the non existing cost factor
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
 	public void getNonExistingCostFactor() throws Exception {
 		// Get the costFactor
 		this.restCostFactorMockMvc.perform(MockMvcRequestBuilders.get("/api/cost-factors/{id}", Long.MAX_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isNotFound());
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	/**
 	 * Update cost factor.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -235,9 +249,9 @@ public class CostFactorResourceIntTest {
 		CostFactorDTO costFactorDTO = this.costFactorMapper.toDto(updatedCostFactor);
 
 		this.restCostFactorMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the CostFactor in the database
 		List<CostFactor> costFactorList = this.costFactorRepository.findAll();
@@ -249,7 +263,8 @@ public class CostFactorResourceIntTest {
 	/**
 	 * Update non existing cost factor.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -259,11 +274,12 @@ public class CostFactorResourceIntTest {
 		// Create the CostFactor
 		CostFactorDTO costFactorDTO = this.costFactorMapper.toDto(this.costFactor);
 
-		// If the entity doesn't have an ID, it will be created instead of just being updated
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
 		this.restCostFactorMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.put("/api/cost-factors").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(costFactorDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the CostFactor in the database
 		List<CostFactor> costFactorList = this.costFactorRepository.findAll();
@@ -273,7 +289,8 @@ public class CostFactorResourceIntTest {
 	/**
 	 * Delete cost factor.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -283,8 +300,9 @@ public class CostFactorResourceIntTest {
 		int databaseSizeBeforeDelete = this.costFactorRepository.findAll().size();
 
 		// Get the costFactor
-		this.restCostFactorMockMvc.perform(MockMvcRequestBuilders.delete("/api/cost-factors/{id}", this.costFactor.getId())
-				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(MockMvcResultMatchers.status().isOk());
+		this.restCostFactorMockMvc.perform(MockMvcRequestBuilders
+				.delete("/api/cost-factors/{id}", this.costFactor.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the database is empty
 		List<CostFactor> costFactorList = this.costFactorRepository.findAll();
@@ -294,7 +312,8 @@ public class CostFactorResourceIntTest {
 	/**
 	 * Equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -314,7 +333,8 @@ public class CostFactorResourceIntTest {
 	/**
 	 * Dto equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.errors;
 
 import java.io.Serializable;
@@ -11,19 +14,21 @@ import java.util.Map;
 public class ParameterizedErrorVM implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long			serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The message. */
-	private final String				message;
+	private final String message;
 
 	/** The param map. */
-	private final Map<String, String>	paramMap;
+	private final Map<String, String> paramMap;
 
 	/**
 	 * Instantiates a new parameterized error VM.
 	 *
-	 * @param message the message
-	 * @param paramMap the param map
+	 * @param message
+	 *            the message
+	 * @param paramMap
+	 *            the param map
 	 */
 	public ParameterizedErrorVM(String message, Map<String, String> paramMap) {
 		this.message = message;

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.repository;
 
 import logia.quanlyso.config.Constants;
@@ -24,22 +27,23 @@ import java.util.List;
 public class CustomAuditEventRepository implements AuditEventRepository {
 
 	/** The Constant AUTHORIZATION_FAILURE. */
-	private static final String						AUTHORIZATION_FAILURE	= "AUTHORIZATION_FAILURE";
+	private static final String AUTHORIZATION_FAILURE = "AUTHORIZATION_FAILURE";
 
 	/** The persistence audit event repository. */
-	private final PersistenceAuditEventRepository	persistenceAuditEventRepository;
+	private final PersistenceAuditEventRepository persistenceAuditEventRepository;
 
 	/** The audit event converter. */
-	private final AuditEventConverter				auditEventConverter;
+	private final AuditEventConverter auditEventConverter;
 
 	/**
 	 * Instantiates a new custom audit event repository.
 	 *
-	 * @param persistenceAuditEventRepository the persistence audit event repository
-	 * @param auditEventConverter the audit event converter
+	 * @param persistenceAuditEventRepository
+	 *            the persistence audit event repository
+	 * @param auditEventConverter
+	 *            the audit event converter
 	 */
-	public CustomAuditEventRepository(
-			PersistenceAuditEventRepository persistenceAuditEventRepository,
+	public CustomAuditEventRepository(PersistenceAuditEventRepository persistenceAuditEventRepository,
 			AuditEventConverter auditEventConverter) {
 
 		this.persistenceAuditEventRepository = persistenceAuditEventRepository;
@@ -49,7 +53,9 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.util.Date)
+	 * @see
+	 * org.springframework.boot.actuate.audit.AuditEventRepository#find(java.
+	 * util.Date)
 	 */
 	@Override
 	public List<AuditEvent> find(Date after) {
@@ -61,22 +67,20 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String,
-	 * java.util.Date)
+	 * @see
+	 * org.springframework.boot.actuate.audit.AuditEventRepository#find(java.
+	 * lang.String, java.util.Date)
 	 */
 	@Override
 	public List<AuditEvent> find(String principal, Date after) {
 		Iterable<PersistentAuditEvent> persistentAuditEvents;
 		if (principal == null && after == null) {
 			persistentAuditEvents = this.persistenceAuditEventRepository.findAll();
-		}
-		else if (after == null) {
+		} else if (after == null) {
 			persistentAuditEvents = this.persistenceAuditEventRepository.findByPrincipal(principal);
-		}
-		else {
+		} else {
 			persistentAuditEvents = this.persistenceAuditEventRepository
-					.findByPrincipalAndAuditEventDateAfter(principal,
-							LocalDateTime.from(after.toInstant()));
+					.findByPrincipalAndAuditEventDateAfter(principal, LocalDateTime.from(after.toInstant()));
 		}
 		return this.auditEventConverter.convertToAuditEvent(persistentAuditEvents);
 	}
@@ -84,8 +88,9 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#find(java.lang.String,
-	 * java.util.Date, java.lang.String)
+	 * @see
+	 * org.springframework.boot.actuate.audit.AuditEventRepository#find(java.
+	 * lang.String, java.util.Date, java.lang.String)
 	 */
 	@Override
 	public List<AuditEvent> find(String principal, Date after, String type) {
@@ -98,9 +103,8 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * org.springframework.boot.actuate.audit.AuditEventRepository#add(org.springframework.boot.
-	 * actuate.audit.AuditEvent)
+	 * @see org.springframework.boot.actuate.audit.AuditEventRepository#add(org.
+	 * springframework.boot. actuate.audit.AuditEvent)
 	 */
 	@Override
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -112,8 +116,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
 			persistentAuditEvent.setPrincipal(event.getPrincipal());
 			persistentAuditEvent.setAuditEventType(event.getType());
 			Instant instant = Instant.ofEpochMilli(event.getTimestamp().getTime());
-			persistentAuditEvent
-			.setAuditEventDate(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()));
+			persistentAuditEvent.setAuditEventDate(LocalDateTime.ofInstant(instant, ZoneId.systemDefault()));
 			persistentAuditEvent.setData(this.auditEventConverter.convertDataToStrings(event.getData()));
 			this.persistenceAuditEventRepository.save(persistentAuditEvent);
 		}

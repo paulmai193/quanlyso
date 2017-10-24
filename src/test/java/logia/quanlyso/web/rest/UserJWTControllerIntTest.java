@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.time.ZoneId;
@@ -35,41 +38,42 @@ public class UserJWTControllerIntTest {
 
 	/** The token provider. */
 	@Autowired
-	private TokenProvider			tokenProvider;
+	private TokenProvider tokenProvider;
 
 	/** The authentication manager. */
 	@Autowired
-	private AuthenticationManager	authenticationManager;
+	private AuthenticationManager authenticationManager;
 
 	/** The user repository. */
 	@Autowired
-	private UserRepository			userRepository;
+	private UserRepository userRepository;
 
 	/** The password encoder. */
 	@Autowired
-	private PasswordEncoder			passwordEncoder;
+	private PasswordEncoder passwordEncoder;
 
 	/** The user service. */
 	@Autowired
-	private UserService				userService;
+	private UserService userService;
 
 	/** The mock mvc. */
-	private MockMvc					mockMvc;
+	private MockMvc mockMvc;
 
 	/**
 	 * Setup.
 	 */
 	@Before
 	public void setup() {
-		UserJWTController userJWTController = new UserJWTController(this.tokenProvider,
-				this.authenticationManager, this.userService);
+		UserJWTController userJWTController = new UserJWTController(this.tokenProvider, this.authenticationManager,
+				this.userService);
 		this.mockMvc = MockMvcBuilders.standaloneSetup(userJWTController).build();
 	}
 
 	/**
 	 * Test authorize.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -88,16 +92,19 @@ public class UserJWTControllerIntTest {
 		LoginVM login = new LoginVM();
 		login.setUsername("user-jwt-controller");
 		login.setPassword("test");
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(login))).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isString())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isNotEmpty());
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(login)))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isString())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isNotEmpty());
 	}
 
 	/**
 	 * Test authorize with remember me.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -117,16 +124,19 @@ public class UserJWTControllerIntTest {
 		login.setUsername("user-jwt-controller-remember-me");
 		login.setPassword("test");
 		login.setRememberMe(true);
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(login))).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isString())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isNotEmpty());
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(login)))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isString())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").isNotEmpty());
 	}
 
 	/**
 	 * Test authorize fails because wrong credential.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -134,16 +144,18 @@ public class UserJWTControllerIntTest {
 		LoginVM login = new LoginVM();
 		login.setUsername("wrong-user");
 		login.setPassword("wrong password");
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(login)))
-		.andExpect(MockMvcResultMatchers.status().isUnauthorized())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").doesNotExist());
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(login)))
+				.andExpect(MockMvcResultMatchers.status().isUnauthorized())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").doesNotExist());
 	}
 
 	/**
 	 * Test authorize fails because be revoked.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -162,9 +174,10 @@ public class UserJWTControllerIntTest {
 		LoginVM login = new LoginVM();
 		login.setUsername("user-jwt-controller");
 		login.setPassword("test");
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(login)))
-		.andExpect(MockMvcResultMatchers.status().isPaymentRequired())
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").doesNotExist());
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/api/authenticate").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(login)))
+				.andExpect(MockMvcResultMatchers.status().isPaymentRequired())
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id_token").doesNotExist());
 	}
 }

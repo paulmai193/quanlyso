@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,34 +24,34 @@ import java.util.Set;
 public class Style implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long		serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long					id;
+	private Long id;
 
 	/** The name. */
 	@Column(name = "name")
-	private String					name;
+	private String name;
 
 	/** The profit factors. */
 	@OneToMany(mappedBy = "styles")
 	@JsonIgnore
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<ProfitFactor>		profitFactors		= new HashSet<>();
+	private Set<ProfitFactor> profitFactors = new HashSet<>();
 
 	/** The cost factors. */
 	@OneToMany(mappedBy = "styles")
 	@JsonIgnore
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<CostFactor>			costFactors			= new HashSet<>();
+	private Set<CostFactor> costFactors = new HashSet<>();
 
 	/** The transaction details. */
 	@OneToMany(mappedBy = "styles")
 	@JsonIgnore
 	@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-	private Set<TransactionDetails>	transactionDetails	= new HashSet<>();
+	private Set<TransactionDetails> transactionDetails = new HashSet<>();
 
 	/**
 	 * Gets the id.
@@ -62,7 +65,8 @@ public class Style implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -80,7 +84,8 @@ public class Style implements Serializable {
 	/**
 	 * Name.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 * @return the style
 	 */
 	public Style name(String name) {
@@ -91,7 +96,8 @@ public class Style implements Serializable {
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -109,7 +115,8 @@ public class Style implements Serializable {
 	/**
 	 * Profit factors.
 	 *
-	 * @param profitFactors the profit factors
+	 * @param profitFactors
+	 *            the profit factors
 	 * @return the style
 	 */
 	public Style profitFactors(Set<ProfitFactor> profitFactors) {
@@ -120,7 +127,8 @@ public class Style implements Serializable {
 	/**
 	 * Adds the profit factors.
 	 *
-	 * @param profitFactor the profit factor
+	 * @param profitFactor
+	 *            the profit factor
 	 * @return the style
 	 */
 	public Style addProfitFactors(ProfitFactor profitFactor) {
@@ -132,7 +140,8 @@ public class Style implements Serializable {
 	/**
 	 * Removes the profit factors.
 	 *
-	 * @param profitFactor the profit factor
+	 * @param profitFactor
+	 *            the profit factor
 	 * @return the style
 	 */
 	public Style removeProfitFactors(ProfitFactor profitFactor) {
@@ -144,7 +153,8 @@ public class Style implements Serializable {
 	/**
 	 * Sets the profit factors.
 	 *
-	 * @param profitFactors the new profit factors
+	 * @param profitFactors
+	 *            the new profit factors
 	 */
 	public void setProfitFactors(Set<ProfitFactor> profitFactors) {
 		this.profitFactors = profitFactors;
@@ -162,7 +172,8 @@ public class Style implements Serializable {
 	/**
 	 * Cost factors.
 	 *
-	 * @param costFactors the cost factors
+	 * @param costFactors
+	 *            the cost factors
 	 * @return the style
 	 */
 	public Style costFactors(Set<CostFactor> costFactors) {
@@ -173,7 +184,8 @@ public class Style implements Serializable {
 	/**
 	 * Adds the cost factors.
 	 *
-	 * @param costFactor the cost factor
+	 * @param costFactor
+	 *            the cost factor
 	 * @return the style
 	 */
 	public Style addCostFactors(CostFactor costFactor) {
@@ -185,7 +197,8 @@ public class Style implements Serializable {
 	/**
 	 * Removes the cost factors.
 	 *
-	 * @param costFactor the cost factor
+	 * @param costFactor
+	 *            the cost factor
 	 * @return the style
 	 */
 	public Style removeCostFactors(CostFactor costFactor) {
@@ -197,7 +210,8 @@ public class Style implements Serializable {
 	/**
 	 * Sets the cost factors.
 	 *
-	 * @param costFactors the new cost factors
+	 * @param costFactors
+	 *            the new cost factors
 	 */
 	public void setCostFactors(Set<CostFactor> costFactors) {
 		this.costFactors = costFactors;
@@ -215,7 +229,8 @@ public class Style implements Serializable {
 	/**
 	 * Transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the style
 	 */
 	public Style transactionDetails(Set<TransactionDetails> transactionDetails) {
@@ -226,7 +241,8 @@ public class Style implements Serializable {
 	/**
 	 * Adds the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the style
 	 */
 	public Style addTransactionDetails(TransactionDetails transactionDetails) {
@@ -236,8 +252,10 @@ public class Style implements Serializable {
 	/**
 	 * Adds the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
+	 * @param transactionDetails
+	 *            the transaction details
+	 * @param isSetToTarget
+	 *            the is set to target detail
 	 * @return the style
 	 */
 	Style addTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
@@ -251,7 +269,8 @@ public class Style implements Serializable {
 	/**
 	 * Removes the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
+	 * @param transactionDetails
+	 *            the transaction details
 	 * @return the style
 	 */
 	public Style removeTransactionDetails(TransactionDetails transactionDetails) {
@@ -261,8 +280,10 @@ public class Style implements Serializable {
 	/**
 	 * Removes the transaction details.
 	 *
-	 * @param transactionDetails the transaction details
-	 * @param isSetToTarget the is set to target detail
+	 * @param transactionDetails
+	 *            the transaction details
+	 * @param isSetToTarget
+	 *            the is set to target detail
 	 * @return the style
 	 */
 	Style removeTransactionDetails(TransactionDetails transactionDetails, boolean isSetToTarget) {
@@ -276,7 +297,8 @@ public class Style implements Serializable {
 	/**
 	 * Sets the transaction details.
 	 *
-	 * @param transactionDetails the new transaction details
+	 * @param transactionDetails
+	 *            the new transaction details
 	 */
 	public void setTransactionDetails(Set<TransactionDetails> transactionDetails) {
 		this.transactionDetails = transactionDetails;

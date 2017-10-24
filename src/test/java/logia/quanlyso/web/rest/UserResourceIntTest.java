@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.time.ZonedDateTime;
@@ -46,80 +49,80 @@ import logia.quanlyso.web.rest.vm.ManagedUserVM;
 public class UserResourceIntTest {
 
 	/** The Constant DEFAULT_LOGIN. */
-	static final String								DEFAULT_LOGIN		= "johndoe";
+	static final String DEFAULT_LOGIN = "johndoe";
 
 	/** The Constant UPDATED_LOGIN. */
-	static final String								UPDATED_LOGIN		= "jhipster";
+	static final String UPDATED_LOGIN = "jhipster";
 
 	/** The Constant DEFAULT_PASSWORD. */
-	static final String								DEFAULT_PASSWORD	= "passjohndoe";
+	static final String DEFAULT_PASSWORD = "passjohndoe";
 
 	/** The Constant UPDATED_PASSWORD. */
-	static final String								UPDATED_PASSWORD	= "passjhipster";
+	static final String UPDATED_PASSWORD = "passjhipster";
 
 	/** The Constant DEFAULT_EMAIL. */
-	static final String								DEFAULT_EMAIL		= "johndoe@localhost";
+	static final String DEFAULT_EMAIL = "johndoe@localhost";
 
 	/** The Constant UPDATED_EMAIL. */
-	static final String								UPDATED_EMAIL		= "jhipster@localhost";
+	static final String UPDATED_EMAIL = "jhipster@localhost";
 
 	/** The Constant DEFAULT_FIRSTNAME. */
-	static final String								DEFAULT_FIRSTNAME	= "john";
+	static final String DEFAULT_FIRSTNAME = "john";
 
 	/** The Constant UPDATED_FIRSTNAME. */
-	static final String								UPDATED_FIRSTNAME	= "jhipsterFirstName";
+	static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
 
 	/** The Constant DEFAULT_LASTNAME. */
-	static final String								DEFAULT_LASTNAME	= "doe";
+	static final String DEFAULT_LASTNAME = "doe";
 
 	/** The Constant UPDATED_LASTNAME. */
-	static final String								UPDATED_LASTNAME	= "jhipsterLastName";
+	static final String UPDATED_LASTNAME = "jhipsterLastName";
 
 	/** The Constant DEFAULT_IMAGEURL. */
-	static final String								DEFAULT_IMAGEURL	= "http://placehold.it/50x50";
+	static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
 
 	/** The Constant UPDATED_IMAGEURL. */
-	static final String								UPDATED_IMAGEURL	= "http://placehold.it/40x40";
+	static final String UPDATED_IMAGEURL = "http://placehold.it/40x40";
 
 	/** The Constant DEFAULT_LANGKEY. */
-	static final String								DEFAULT_LANGKEY		= "en";
+	static final String DEFAULT_LANGKEY = "en";
 
 	/** The Constant UPDATED_LANGKEY. */
-	static final String								UPDATED_LANGKEY		= "fr";
+	static final String UPDATED_LANGKEY = "fr";
 
 	/** The user repository. */
 	@Autowired
-	private UserRepository							userRepository;
+	private UserRepository userRepository;
 
 	/** The mail service. */
 	@Autowired
-	private MailService								mailService;
+	private MailService mailService;
 
 	/** The user service. */
 	@Autowired
-	private UserService								userService;
+	private UserService userService;
 
 	/** The jackson message converter. */
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	/** The pageable argument resolver. */
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	/** The exception translator. */
 	@Autowired
-	private ExceptionTranslator						exceptionTranslator;
+	private ExceptionTranslator exceptionTranslator;
 
 	/** The em. */
 	@Autowired
-	private EntityManager							em;
+	private EntityManager em;
 
 	/** The rest user mock mvc. */
-	private MockMvc									restUserMockMvc;
+	private MockMvc restUserMockMvc;
 
 	/** The user. */
-	private User									user;
+	private User user;
 
 	/**
 	 * Setup.
@@ -129,8 +132,7 @@ public class UserResourceIntTest {
 		MockitoAnnotations.initMocks(this);
 		UserResource userResource = new UserResource(this.userRepository, this.mailService, this.userService);
 		this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
-				.setCustomArgumentResolvers(this.pageableArgumentResolver)
-				.setControllerAdvice(this.exceptionTranslator)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setMessageConverters(this.jacksonMessageConverter).build();
 	}
 
@@ -138,9 +140,11 @@ public class UserResourceIntTest {
 	 * Create a User.
 	 * 
 	 * This is a static method, as tests for other entities might also need it,
-	 * if they test an entity which has a required relationship to the User entity.
+	 * if they test an entity which has a required relationship to the User
+	 * entity.
 	 *
-	 * @param em the em
+	 * @param em
+	 *            the em
 	 * @return the user
 	 */
 	public static User createEntity(EntityManager em) {
@@ -188,7 +192,8 @@ public class UserResourceIntTest {
 	/**
 	 * Creates the user.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -198,15 +203,16 @@ public class UserResourceIntTest {
 		// Create the User
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ROLE_USER");
-		ManagedUserVM managedUserVM = new ManagedUserVM(null, UserResourceIntTest.DEFAULT_LOGIN, UserResourceIntTest.DEFAULT_PASSWORD,
-				UserResourceIntTest.DEFAULT_FIRSTNAME, UserResourceIntTest.DEFAULT_LASTNAME, UserResourceIntTest.DEFAULT_EMAIL, true, UserResourceIntTest.DEFAULT_IMAGEURL,
-				UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null, authorities, ZonedDateTime.now(),
-				ZonedDateTime.now());
+		ManagedUserVM managedUserVM = new ManagedUserVM(null, UserResourceIntTest.DEFAULT_LOGIN,
+				UserResourceIntTest.DEFAULT_PASSWORD, UserResourceIntTest.DEFAULT_FIRSTNAME,
+				UserResourceIntTest.DEFAULT_LASTNAME, UserResourceIntTest.DEFAULT_EMAIL, true,
+				UserResourceIntTest.DEFAULT_IMAGEURL, UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null,
+				authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the User in the database
 		List<User> userList = this.userRepository.findAll();
@@ -223,7 +229,8 @@ public class UserResourceIntTest {
 	/**
 	 * Creates the user with existing id.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -232,16 +239,18 @@ public class UserResourceIntTest {
 
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ROLE_USER");
-		ManagedUserVM managedUserVM = new ManagedUserVM(1L, UserResourceIntTest.DEFAULT_LOGIN, UserResourceIntTest.DEFAULT_PASSWORD,
-				UserResourceIntTest.DEFAULT_FIRSTNAME, UserResourceIntTest.DEFAULT_LASTNAME, UserResourceIntTest.DEFAULT_EMAIL, true, UserResourceIntTest.DEFAULT_IMAGEURL,
-				UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null, authorities, ZonedDateTime.now(),
-				ZonedDateTime.now());
+		ManagedUserVM managedUserVM = new ManagedUserVM(1L, UserResourceIntTest.DEFAULT_LOGIN,
+				UserResourceIntTest.DEFAULT_PASSWORD, UserResourceIntTest.DEFAULT_FIRSTNAME,
+				UserResourceIntTest.DEFAULT_LASTNAME, UserResourceIntTest.DEFAULT_EMAIL, true,
+				UserResourceIntTest.DEFAULT_IMAGEURL, UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null,
+				authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
-		// An entity with an existing ID cannot be created, so this API call must fail
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the User in the database
 		List<User> userList = this.userRepository.findAll();
@@ -251,7 +260,8 @@ public class UserResourceIntTest {
 	/**
 	 * Creates the user with existing login.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -262,17 +272,20 @@ public class UserResourceIntTest {
 
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ROLE_USER");
-		ManagedUserVM managedUserVM = new ManagedUserVM(null, UserResourceIntTest.DEFAULT_LOGIN, // this login should
+		ManagedUserVM managedUserVM = new ManagedUserVM(null, UserResourceIntTest.DEFAULT_LOGIN, // this
+																									// login
+																									// should
 				UserResourceIntTest.// already be used
-				DEFAULT_PASSWORD, UserResourceIntTest.DEFAULT_FIRSTNAME, UserResourceIntTest.DEFAULT_LASTNAME, "anothermail@localhost",
-				true, UserResourceIntTest.DEFAULT_IMAGEURL, UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null, authorities,
-				ZonedDateTime.now(), ZonedDateTime.now());
+						DEFAULT_PASSWORD,
+				UserResourceIntTest.DEFAULT_FIRSTNAME, UserResourceIntTest.DEFAULT_LASTNAME, "anothermail@localhost",
+				true, UserResourceIntTest.DEFAULT_IMAGEURL, UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null,
+				authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
 		// Create the User
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the User in the database
 		List<User> userList = this.userRepository.findAll();
@@ -282,7 +295,8 @@ public class UserResourceIntTest {
 	/**
 	 * Creates the user with existing email.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -294,16 +308,18 @@ public class UserResourceIntTest {
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ROLE_USER");
 		ManagedUserVM managedUserVM = new ManagedUserVM(null, "anotherlogin", UserResourceIntTest.DEFAULT_PASSWORD,
-				UserResourceIntTest.DEFAULT_FIRSTNAME, UserResourceIntTest.DEFAULT_LASTNAME, UserResourceIntTest.DEFAULT_EMAIL, // this email should already be
+				UserResourceIntTest.DEFAULT_FIRSTNAME, UserResourceIntTest.DEFAULT_LASTNAME,
+				UserResourceIntTest.DEFAULT_EMAIL, // this email should already
+													// be
 				// used
-				true, UserResourceIntTest.DEFAULT_IMAGEURL, UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null, authorities,
-				ZonedDateTime.now(), ZonedDateTime.now());
+				true, UserResourceIntTest.DEFAULT_IMAGEURL, UserResourceIntTest.DEFAULT_LANGKEY, null, null, null, null,
+				authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
 		// Create the User
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the User in the database
 		List<User> userList = this.userRepository.findAll();
@@ -314,7 +330,8 @@ public class UserResourceIntTest {
 	 * Gets the all users.
 	 *
 	 * @return the all users
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -323,22 +340,30 @@ public class UserResourceIntTest {
 		this.userRepository.saveAndFlush(this.user);
 
 		// Get all the users
-		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].login").value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LOGIN)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].firstName").value(Matchers.hasItem(UserResourceIntTest.DEFAULT_FIRSTNAME)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].lastName").value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LASTNAME)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].email").value(Matchers.hasItem(UserResourceIntTest.DEFAULT_EMAIL)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].imageUrl").value(Matchers.hasItem(UserResourceIntTest.DEFAULT_IMAGEURL)))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].langKey").value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LANGKEY)));
+		this.restUserMockMvc
+				.perform(MockMvcRequestBuilders.get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].login")
+						.value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LOGIN)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].firstName")
+						.value(Matchers.hasItem(UserResourceIntTest.DEFAULT_FIRSTNAME)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].lastName")
+						.value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LASTNAME)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].email")
+						.value(Matchers.hasItem(UserResourceIntTest.DEFAULT_EMAIL)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].imageUrl")
+						.value(Matchers.hasItem(UserResourceIntTest.DEFAULT_IMAGEURL)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].langKey")
+						.value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LANGKEY)));
 	}
 
 	/**
 	 * Gets the all users by authority user.
 	 *
 	 * @return the all users by authority user
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -353,18 +378,20 @@ public class UserResourceIntTest {
 
 		// Get all the users
 		this.restUserMockMvc
-		.perform(
-				MockMvcRequestBuilders.get("/api/users/role-user?sort=id,desc").accept(MediaType.APPLICATION_JSON))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)).andExpect(
-				MockMvcResultMatchers.jsonPath("$.[*].login").value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LOGIN)));
+				.perform(MockMvcRequestBuilders.get("/api/users/role-user?sort=id,desc")
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].login")
+						.value(Matchers.hasItem(UserResourceIntTest.DEFAULT_LOGIN)));
 	}
 
 	/**
 	 * Gets the all users by authority.
 	 *
 	 * @return the all users by authority
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -395,26 +422,27 @@ public class UserResourceIntTest {
 
 		// Get all the users
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.get("/api/users/role/" + AuthoritiesConstants.USER + "?sort=id,desc")
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].login").value(Matchers.hasItem(user.getLogin())));
+				.perform(MockMvcRequestBuilders.get("/api/users/role/" + AuthoritiesConstants.USER + "?sort=id,desc")
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].login").value(Matchers.hasItem(user.getLogin())));
 
 		// Get all the admin
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.get("/api/users/role/" + AuthoritiesConstants.ADMIN + "?sort=id,desc")
-				.accept(MediaType.APPLICATION_JSON))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].login").value(Matchers.hasItem(admin.getLogin())));
+				.perform(MockMvcRequestBuilders.get("/api/users/role/" + AuthoritiesConstants.ADMIN + "?sort=id,desc")
+						.accept(MediaType.APPLICATION_JSON))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].login").value(Matchers.hasItem(admin.getLogin())));
 	}
 
 	/**
 	 * Gets the user by login information.
 	 *
 	 * @return the user
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -424,21 +452,22 @@ public class UserResourceIntTest {
 
 		// Get the user
 		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/users/{login}", this.user.getLogin()))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.login").value(this.user.getLogin()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(UserResourceIntTest.DEFAULT_FIRSTNAME))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(UserResourceIntTest.DEFAULT_LASTNAME))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.email").value(UserResourceIntTest.DEFAULT_EMAIL))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.imageUrl").value(UserResourceIntTest.DEFAULT_IMAGEURL))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.langKey").value(UserResourceIntTest.DEFAULT_LANGKEY));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.login").value(this.user.getLogin()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(UserResourceIntTest.DEFAULT_FIRSTNAME))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(UserResourceIntTest.DEFAULT_LASTNAME))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value(UserResourceIntTest.DEFAULT_EMAIL))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.imageUrl").value(UserResourceIntTest.DEFAULT_IMAGEURL))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.langKey").value(UserResourceIntTest.DEFAULT_LANGKEY));
 	}
 
 	/**
 	 * Gets the user by id.
 	 *
 	 * @return the user by id
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -447,32 +476,36 @@ public class UserResourceIntTest {
 		this.userRepository.saveAndFlush(this.user);
 
 		// Get the user
-		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/users/id/{id}", this.user.getId())).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.login").value(this.user.getLogin()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(UserResourceIntTest.DEFAULT_FIRSTNAME))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(UserResourceIntTest.DEFAULT_LASTNAME))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.email").value(UserResourceIntTest.DEFAULT_EMAIL))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.imageUrl").value(UserResourceIntTest.DEFAULT_IMAGEURL))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.langKey").value(UserResourceIntTest.DEFAULT_LANGKEY));
+		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/users/id/{id}", this.user.getId()))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.login").value(this.user.getLogin()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.firstName").value(UserResourceIntTest.DEFAULT_FIRSTNAME))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.lastName").value(UserResourceIntTest.DEFAULT_LASTNAME))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.email").value(UserResourceIntTest.DEFAULT_EMAIL))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.imageUrl").value(UserResourceIntTest.DEFAULT_IMAGEURL))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.langKey").value(UserResourceIntTest.DEFAULT_LANGKEY));
 	}
 
 	/**
 	 * Gets the non existing user.
 	 *
 	 * @return the non existing user
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
 	public void getNonExistingUser() throws Exception {
-		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/users/unknown")).andExpect(MockMvcResultMatchers.status().isNotFound());
+		this.restUserMockMvc.perform(MockMvcRequestBuilders.get("/api/users/unknown"))
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	/**
 	 * Update user.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -487,16 +520,16 @@ public class UserResourceIntTest {
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ROLE_USER");
 		ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getId(), updatedUser.getLogin(),
-				UserResourceIntTest.UPDATED_PASSWORD, UserResourceIntTest.UPDATED_FIRSTNAME, UserResourceIntTest.UPDATED_LASTNAME, UserResourceIntTest.UPDATED_EMAIL,
-				updatedUser.getActivated(), UserResourceIntTest.UPDATED_IMAGEURL, UserResourceIntTest.UPDATED_LANGKEY,
-				updatedUser.getCreatedBy(), updatedUser.getCreatedDate(),
-				updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(), authorities,
-				ZonedDateTime.now(), ZonedDateTime.now());
+				UserResourceIntTest.UPDATED_PASSWORD, UserResourceIntTest.UPDATED_FIRSTNAME,
+				UserResourceIntTest.UPDATED_LASTNAME, UserResourceIntTest.UPDATED_EMAIL, updatedUser.getActivated(),
+				UserResourceIntTest.UPDATED_IMAGEURL, UserResourceIntTest.UPDATED_LANGKEY, updatedUser.getCreatedBy(),
+				updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(),
+				authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the User in the database
 		List<User> userList = this.userRepository.findAll();
@@ -512,7 +545,8 @@ public class UserResourceIntTest {
 	/**
 	 * Update user login.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -527,16 +561,16 @@ public class UserResourceIntTest {
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ROLE_USER");
 		ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getId(), UserResourceIntTest.UPDATED_LOGIN,
-				UserResourceIntTest.UPDATED_PASSWORD, UserResourceIntTest.UPDATED_FIRSTNAME, UserResourceIntTest.UPDATED_LASTNAME, UserResourceIntTest.UPDATED_EMAIL,
-				updatedUser.getActivated(), UserResourceIntTest.UPDATED_IMAGEURL, UserResourceIntTest.UPDATED_LANGKEY,
-				updatedUser.getCreatedBy(), updatedUser.getCreatedDate(),
-				updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(), authorities,
-				ZonedDateTime.now(), ZonedDateTime.now());
+				UserResourceIntTest.UPDATED_PASSWORD, UserResourceIntTest.UPDATED_FIRSTNAME,
+				UserResourceIntTest.UPDATED_LASTNAME, UserResourceIntTest.UPDATED_EMAIL, updatedUser.getActivated(),
+				UserResourceIntTest.UPDATED_IMAGEURL, UserResourceIntTest.UPDATED_LANGKEY, updatedUser.getCreatedBy(),
+				updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(),
+				authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the User in the database
 		List<User> userList = this.userRepository.findAll();
@@ -553,7 +587,8 @@ public class UserResourceIntTest {
 	/**
 	 * Update user existing email.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -578,23 +613,29 @@ public class UserResourceIntTest {
 		Set<String> authorities = new HashSet<>();
 		authorities.add("ROLE_USER");
 		ManagedUserVM managedUserVM = new ManagedUserVM(updatedUser.getId(), updatedUser.getLogin(),
-				updatedUser.getPassword(), updatedUser.getFirstName(), updatedUser.getLastName(),
-				"jhipster@localhost", // this email should already be used by anotherUser
+				updatedUser.getPassword(), updatedUser.getFirstName(), updatedUser.getLastName(), "jhipster@localhost", // this
+																														// email
+																														// should
+																														// already
+																														// be
+																														// used
+																														// by
+																														// anotherUser
 				updatedUser.getActivated(), updatedUser.getImageUrl(), updatedUser.getLangKey(),
-				updatedUser.getCreatedBy(), updatedUser.getCreatedDate(),
-				updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(), authorities,
-				ZonedDateTime.now(), ZonedDateTime.now());
+				updatedUser.getCreatedBy(), updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(),
+				updatedUser.getLastModifiedDate(), authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
 
 	/**
 	 * Update user existing login.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -626,21 +667,21 @@ public class UserResourceIntTest {
 				// by
 				// anotherUser
 				updatedUser.getPassword(), updatedUser.getFirstName(), updatedUser.getLastName(),
-				updatedUser.getEmail(), updatedUser.getActivated(), updatedUser.getImageUrl(),
-				updatedUser.getLangKey(), updatedUser.getCreatedBy(), updatedUser.getCreatedDate(),
-				updatedUser.getLastModifiedBy(), updatedUser.getLastModifiedDate(), authorities,
-				ZonedDateTime.now(), ZonedDateTime.now());
+				updatedUser.getEmail(), updatedUser.getActivated(), updatedUser.getImageUrl(), updatedUser.getLangKey(),
+				updatedUser.getCreatedBy(), updatedUser.getCreatedDate(), updatedUser.getLastModifiedBy(),
+				updatedUser.getLastModifiedDate(), authorities, ZonedDateTime.now(), ZonedDateTime.now());
 
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.put("/api/users").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(managedUserVM)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 	}
 
 	/**
 	 * Delete user.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -662,24 +703,26 @@ public class UserResourceIntTest {
 	 * Gets the all authorities.
 	 *
 	 * @return the all authorities
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
 	public void getAllAuthorities() throws Exception {
 		this.restUserMockMvc
-		.perform(MockMvcRequestBuilders.get("/api/users/authorities").accept(TestUtil.APPLICATION_JSON_UTF8)
-				.contentType(TestUtil.APPLICATION_JSON_UTF8))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
-		.andExpect(MockMvcResultMatchers.jsonPath("$").value(Matchers.containsInAnyOrder("ROLE_USER", "ROLE_ADMIN")));
+				.perform(MockMvcRequestBuilders.get("/api/users/authorities").accept(TestUtil.APPLICATION_JSON_UTF8)
+						.contentType(TestUtil.APPLICATION_JSON_UTF8))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$").isArray()).andExpect(MockMvcResultMatchers.jsonPath("$")
+						.value(Matchers.containsInAnyOrder("ROLE_USER", "ROLE_ADMIN")));
 	}
 
 	/**
 	 * Equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -21,16 +24,18 @@ import java.util.List;
 public class ProfileInfoResource {
 
 	/** The env. */
-	private final Environment			env;
+	private final Environment env;
 
 	/** The j hipster properties. */
-	private final JHipsterProperties	jHipsterProperties;
+	private final JHipsterProperties jHipsterProperties;
 
 	/**
 	 * Instantiates a new profile info resource.
 	 *
-	 * @param env the env
-	 * @param jHipsterProperties the j hipster properties
+	 * @param env
+	 *            the env
+	 * @param jHipsterProperties
+	 *            the j hipster properties
 	 */
 	public ProfileInfoResource(Environment env, JHipsterProperties jHipsterProperties) {
 		this.env = env;
@@ -51,12 +56,12 @@ public class ProfileInfoResource {
 	/**
 	 * Gets the ribbon env.
 	 *
-	 * @param activeProfiles the active profiles
+	 * @param activeProfiles
+	 *            the active profiles
 	 * @return the ribbon env
 	 */
 	private String getRibbonEnv(String[] activeProfiles) {
-		String[] displayOnActiveProfiles = this.jHipsterProperties.getRibbon()
-				.getDisplayOnActiveProfiles();
+		String[] displayOnActiveProfiles = this.jHipsterProperties.getRibbon().getDisplayOnActiveProfiles();
 		if (displayOnActiveProfiles == null) {
 			return null;
 		}
@@ -77,16 +82,18 @@ public class ProfileInfoResource {
 	class ProfileInfoVM {
 
 		/** The active profiles. */
-		private String[]	activeProfiles;
+		private String[] activeProfiles;
 
 		/** The ribbon env. */
-		private String		ribbonEnv;
+		private String ribbonEnv;
 
 		/**
 		 * Instantiates a new profile info VM.
 		 *
-		 * @param activeProfiles the active profiles
-		 * @param ribbonEnv the ribbon env
+		 * @param activeProfiles
+		 *            the active profiles
+		 * @param ribbonEnv
+		 *            the ribbon env
 		 */
 		ProfileInfoVM(String[] activeProfiles, String ribbonEnv) {
 			this.activeProfiles = activeProfiles;

@@ -1,9 +1,13 @@
+/*
+ * 
+ */
 package logia.quanlyso.security;
 
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * This exception is thrown in case of a not activated user trying to authenticate.
+ * This exception is thrown in case of a not activated user trying to
+ * authenticate.
  *
  * @author Dai Mai
  */
@@ -15,7 +19,8 @@ public class UserNotActivatedException extends AuthenticationException {
 	/**
 	 * Instantiates a new user not activated exception.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
 	public UserNotActivatedException(String message) {
 		super(message);
@@ -24,8 +29,10 @@ public class UserNotActivatedException extends AuthenticationException {
 	/**
 	 * Instantiates a new user not activated exception.
 	 *
-	 * @param message the message
-	 * @param t the t
+	 * @param message
+	 *            the message
+	 * @param t
+	 *            the t
 	 */
 	public UserNotActivatedException(String message, Throwable t) {
 		super(message, t);

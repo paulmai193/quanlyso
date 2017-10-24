@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.security;
 
 import logia.quanlyso.config.Constants;

@@ -1,8 +1,10 @@
+/*
+ * 
+ */
 package logia.quanlyso.repository;
 
 import logia.quanlyso.domain.CostFactor;
 import logia.quanlyso.domain.Style;
-import logia.quanlyso.domain.Types;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -18,7 +20,8 @@ public interface CostFactorRepository extends JpaRepository<CostFactor, Long> {
 	/**
 	 * Find one by style.
 	 *
-	 * @param style the style
+	 * @param style
+	 *            the style
 	 * @return the list
 	 */
 	CostFactor findOneByStyles(Style style);
@@ -26,7 +29,8 @@ public interface CostFactorRepository extends JpaRepository<CostFactor, Long> {
 	/**
 	 * Find all by styles.
 	 *
-	 * @param style the style
+	 * @param style
+	 *            the style
 	 * @return the list
 	 */
 	List<CostFactor> findAllByStyles(Style style);

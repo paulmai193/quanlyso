@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.util;
 
 import java.time.LocalDate;
@@ -15,7 +18,8 @@ public class DateFormatterUtil {
 	/**
 	 * From DDMMYYYY string to zoned date time.
 	 *
-	 * @param __stringTime the string time
+	 * @param __stringTime
+	 *            the string time
 	 * @return the zoned date time
 	 */
 	public static ZonedDateTime fromDDMMYYYYStringToZonedDateTime(String __stringTime) {
@@ -27,7 +31,8 @@ public class DateFormatterUtil {
 	/**
 	 * From YYYYMMDD string to zoned date time.
 	 *
-	 * @param __stringTime the string time
+	 * @param __stringTime
+	 *            the string time
 	 * @return the zoned date time
 	 */
 	public static ZonedDateTime fromYYYYMMDDStringToZonedDateTime(String __stringTime) {
@@ -39,7 +44,8 @@ public class DateFormatterUtil {
 	/**
 	 * From date time to string DDMMYYYY.
 	 *
-	 * @param __time the time
+	 * @param __time
+	 *            the time
 	 * @return the string
 	 */
 	public static String fromDateTimeToStringDDMMYYYY(ZonedDateTime __time) {
@@ -49,7 +55,8 @@ public class DateFormatterUtil {
 	/**
 	 * From date time to string YYYYMMDD.
 	 *
-	 * @param __time the time
+	 * @param __time
+	 *            the time
 	 * @return the string
 	 */
 	public static String fromDateTimeToStringYYYYMMDD(ZonedDateTime __time) {

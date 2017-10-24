@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.errors;
 
 import org.slf4j.Logger;
@@ -20,7 +23,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.List;
 
 /**
- * Controller advice to translate the server side exceptions to client-friendly json structures.
+ * Controller advice to translate the server side exceptions to client-friendly
+ * json structures.
  *
  * @author Dai Mai
  */
@@ -33,7 +37,8 @@ public class ExceptionTranslator {
 	/**
 	 * Process concurrency error.
 	 *
-	 * @param ex the ex
+	 * @param ex
+	 *            the ex
 	 * @return the error VM
 	 */
 	@ExceptionHandler(ConcurrencyFailureException.class)
@@ -46,7 +51,8 @@ public class ExceptionTranslator {
 	/**
 	 * Process validation error.
 	 *
-	 * @param ex the ex
+	 * @param ex
+	 *            the ex
 	 * @return the error VM
 	 */
 	@ExceptionHandler(MethodArgumentNotValidException.class)
@@ -65,21 +71,22 @@ public class ExceptionTranslator {
 	/**
 	 * Process parameterized validation error.
 	 *
-	 * @param ex the ex
+	 * @param ex
+	 *            the ex
 	 * @return the parameterized error VM
 	 */
 	@ExceptionHandler(CustomParameterizedException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
-	public ParameterizedErrorVM processParameterizedValidationError(
-			CustomParameterizedException ex) {
+	public ParameterizedErrorVM processParameterizedValidationError(CustomParameterizedException ex) {
 		return ex.getErrorVM();
 	}
 
 	/**
 	 * Process access denied exception.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 * @return the error VM
 	 */
 	@ExceptionHandler(AccessDeniedException.class)
@@ -92,21 +99,22 @@ public class ExceptionTranslator {
 	/**
 	 * Process method not supported exception.
 	 *
-	 * @param exception the exception
+	 * @param exception
+	 *            the exception
 	 * @return the error VM
 	 */
 	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
 	@ResponseBody
 	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-	public ErrorVM processMethodNotSupportedException(
-			HttpRequestMethodNotSupportedException exception) {
+	public ErrorVM processMethodNotSupportedException(HttpRequestMethodNotSupportedException exception) {
 		return new ErrorVM(ErrorConstants.ERR_METHOD_NOT_SUPPORTED, exception.getMessage());
 	}
 
 	/**
 	 * Process exception.
 	 *
-	 * @param ex the ex
+	 * @param ex
+	 *            the ex
 	 * @return the response entity
 	 */
 	@ExceptionHandler(Exception.class)
@@ -114,17 +122,13 @@ public class ExceptionTranslator {
 		this.log.error(ex.getMessage(), ex);
 		BodyBuilder builder;
 		ErrorVM errorVM;
-		ResponseStatus responseStatus = AnnotationUtils.findAnnotation(ex.getClass(),
-				ResponseStatus.class);
+		ResponseStatus responseStatus = AnnotationUtils.findAnnotation(ex.getClass(), ResponseStatus.class);
 		if (responseStatus != null) {
 			builder = ResponseEntity.status(responseStatus.value());
-			errorVM = new ErrorVM("error." + responseStatus.value().value(),
-					responseStatus.reason());
-		}
-		else {
+			errorVM = new ErrorVM("error." + responseStatus.value().value(), responseStatus.reason());
+		} else {
 			builder = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-			errorVM = new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR,
-					"Internal server error");
+			errorVM = new ErrorVM(ErrorConstants.ERR_INTERNAL_SERVER_ERROR, "Internal server error");
 		}
 		return builder.body(errorVM);
 	}

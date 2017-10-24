@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
@@ -30,15 +33,16 @@ import javax.sql.DataSource;
 public class DatabaseConfiguration {
 
 	/** The log. */
-	private final Logger		log	= LoggerFactory.getLogger(DatabaseConfiguration.class);
+	private final Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
 
 	/** The env. */
-	private final Environment	env;
+	private final Environment env;
 
 	/**
 	 * Instantiates a new database configuration.
 	 *
-	 * @param env the env
+	 * @param env
+	 *            the env
 	 */
 	public DatabaseConfiguration(Environment env) {
 		this.env = env;
@@ -47,16 +51,20 @@ public class DatabaseConfiguration {
 	/**
 	 * Liquibase.
 	 *
-	 * @param taskExecutor the task executor
-	 * @param dataSource the data source
-	 * @param liquibaseProperties the liquibase properties
+	 * @param taskExecutor
+	 *            the task executor
+	 * @param dataSource
+	 *            the data source
+	 * @param liquibaseProperties
+	 *            the liquibase properties
 	 * @return the spring liquibase
 	 */
 	@Bean
-	public SpringLiquibase liquibase(@Qualifier("taskExecutor") TaskExecutor taskExecutor,
-			DataSource dataSource, LiquibaseProperties liquibaseProperties) {
+	public SpringLiquibase liquibase(@Qualifier("taskExecutor") TaskExecutor taskExecutor, DataSource dataSource,
+			LiquibaseProperties liquibaseProperties) {
 
-		// Use liquibase.integration.spring.SpringLiquibase if you don't want Liquibase to start
+		// Use liquibase.integration.spring.SpringLiquibase if you don't want
+		// Liquibase to start
 		// asynchronously
 		SpringLiquibase liquibase = new AsyncSpringLiquibase(taskExecutor, this.env);
 		liquibase.setDataSource(dataSource);
@@ -66,8 +74,7 @@ public class DatabaseConfiguration {
 		liquibase.setDropFirst(liquibaseProperties.isDropFirst());
 		if (this.env.acceptsProfiles(JHipsterConstants.SPRING_PROFILE_NO_LIQUIBASE)) {
 			liquibase.setShouldRun(false);
-		}
-		else {
+		} else {
 			liquibase.setShouldRun(liquibaseProperties.isEnabled());
 			this.log.debug("Configuring Liquibase");
 		}

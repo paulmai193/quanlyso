@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import logia.quanlyso.service.dto.StyleDTO;
@@ -14,7 +17,8 @@ public interface StyleService {
 	/**
 	 * Save a style.
 	 *
-	 * @param styleDTO the entity to save
+	 * @param styleDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	StyleDTO save(StyleDTO styleDTO);
@@ -29,7 +33,8 @@ public interface StyleService {
 	/**
 	 * Get the "id" style.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	StyleDTO findOne(Long id);
@@ -37,7 +42,8 @@ public interface StyleService {
 	/**
 	 * Delete the "id" style.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	void delete(Long id);
 }

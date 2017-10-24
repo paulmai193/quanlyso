@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.repository;
 
 import logia.quanlyso.domain.Channel;
@@ -72,7 +75,8 @@ public interface ChannelRepository extends JpaRepository<Channel, Long> {
 	/**
 	 * Find one by code.
 	 *
-	 * @param __code the code
+	 * @param __code
+	 *            the code
 	 * @return the list
 	 */
 	Channel findOneByCode(String __code);

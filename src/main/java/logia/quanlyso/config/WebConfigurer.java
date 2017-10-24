@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import com.codahale.metrics.MetricRegistry;
@@ -34,33 +37,34 @@ import java.util.EnumSet;
  * @author Dai Mai
  */
 @Configuration
-public class WebConfigurer
-implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
+public class WebConfigurer implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 
 	/** The log. */
-	private final Logger				log	= LoggerFactory.getLogger(WebConfigurer.class);
+	private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
 
 	/** The env. */
-	private final Environment			env;
+	private final Environment env;
 
 	/** The j hipster properties. */
-	private final JHipsterProperties	jHipsterProperties;
+	private final JHipsterProperties jHipsterProperties;
 
 	/** The hazelcast instance. */
-	private final HazelcastInstance		hazelcastInstance;
+	private final HazelcastInstance hazelcastInstance;
 
 	/** The metric registry. */
-	private MetricRegistry				metricRegistry;
+	private MetricRegistry metricRegistry;
 
 	/**
 	 * Instantiates a new web configurer.
 	 *
-	 * @param env the env
-	 * @param jHipsterProperties the j hipster properties
-	 * @param hazelcastInstance the hazelcast instance
+	 * @param env
+	 *            the env
+	 * @param jHipsterProperties
+	 *            the j hipster properties
+	 * @param hazelcastInstance
+	 *            the hazelcast instance
 	 */
-	public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties,
-			HazelcastInstance hazelcastInstance) {
+	public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties, HazelcastInstance hazelcastInstance) {
 
 		this.env = env;
 		this.jHipsterProperties = jHipsterProperties;
@@ -70,14 +74,14 @@ implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see org.springframework.boot.web.servlet.ServletContextInitializer#onStartup(javax.servlet.
-	 * ServletContext)
+	 * @see
+	 * org.springframework.boot.web.servlet.ServletContextInitializer#onStartup(
+	 * javax.servlet. ServletContext)
 	 */
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		if (this.env.getActiveProfiles().length != 0) {
-			this.log.info("Web application configuration, using profiles: {}",
-					(Object[]) this.env.getActiveProfiles());
+			this.log.info("Web application configuration, using profiles: {}", (Object[]) this.env.getActiveProfiles());
 		}
 		EnumSet<DispatcherType> disps = EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD,
 				DispatcherType.ASYNC);
@@ -91,38 +95,43 @@ implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 	/**
 	 * Customize the Servlet engine: Mime types, the document root, the cache.
 	 *
-	 * @param container the container
+	 * @param container
+	 *            the container
 	 */
 	@Override
 	public void customize(ConfigurableEmbeddedServletContainer container) {
 		MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
 		// IE issue, see https://github.com/jhipster/generator-jhipster/pull/711
 		mappings.add("html", "text/html;charset=utf-8");
-		// CloudFoundry issue, see https://github.com/cloudfoundry/gorouter/issues/64
+		// CloudFoundry issue, see
+		// https://github.com/cloudfoundry/gorouter/issues/64
 		mappings.add("json", "text/html;charset=utf-8");
 		container.setMimeMappings(mappings);
-		// When running in an IDE or with ./mvnw spring-boot:run, set location of the static web
+		// When running in an IDE or with ./mvnw spring-boot:run, set location
+		// of the static web
 		// assets.
 		this.setLocationForStaticAssets(container);
 
 		/*
-		 * Enable HTTP/2 for Undertow - https://twitter.com/ankinson/status/829256167700492288
-		 * HTTP/2 requires HTTPS, so HTTP requests will fallback to HTTP/1.1.
-		 * See the JHipsterProperties class and your application-*.yml configuration files
-		 * for more information.
+		 * Enable HTTP/2 for Undertow -
+		 * https://twitter.com/ankinson/status/829256167700492288 HTTP/2
+		 * requires HTTPS, so HTTP requests will fallback to HTTP/1.1. See the
+		 * JHipsterProperties class and your application-*.yml configuration
+		 * files for more information.
 		 */
 		if (this.jHipsterProperties.getHttp().getVersion().equals(JHipsterProperties.Http.Version.V_2_0)
 				&& container instanceof UndertowEmbeddedServletContainerFactory) {
 
-			((UndertowEmbeddedServletContainerFactory) container).addBuilderCustomizers(
-					builder -> builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
+			((UndertowEmbeddedServletContainerFactory) container)
+					.addBuilderCustomizers(builder -> builder.setServerOption(UndertowOptions.ENABLE_HTTP2, true));
 		}
 	}
 
 	/**
 	 * Sets the location for static assets.
 	 *
-	 * @param container the new location for static assets
+	 * @param container
+	 *            the new location for static assets
 	 */
 	private void setLocationForStaticAssets(ConfigurableEmbeddedServletContainer container) {
 		File root;
@@ -152,14 +161,15 @@ implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 	/**
 	 * Initializes the caching HTTP Headers Filter.
 	 *
-	 * @param servletContext the servlet context
-	 * @param disps the disps
+	 * @param servletContext
+	 *            the servlet context
+	 * @param disps
+	 *            the disps
 	 */
-	private void initCachingHttpHeadersFilter(ServletContext servletContext,
-			EnumSet<DispatcherType> disps) {
+	private void initCachingHttpHeadersFilter(ServletContext servletContext, EnumSet<DispatcherType> disps) {
 		this.log.debug("Registering Caching HTTP Headers Filter");
-		FilterRegistration.Dynamic cachingHttpHeadersFilter = servletContext.addFilter(
-				"cachingHttpHeadersFilter", new CachingHttpHeadersFilter(this.jHipsterProperties));
+		FilterRegistration.Dynamic cachingHttpHeadersFilter = servletContext.addFilter("cachingHttpHeadersFilter",
+				new CachingHttpHeadersFilter(this.jHipsterProperties));
 
 		cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/content/*");
 		cachingHttpHeadersFilter.addMappingForUrlPatterns(disps, true, "/app/*");
@@ -169,8 +179,10 @@ implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 	/**
 	 * Initializes Metrics.
 	 *
-	 * @param servletContext the servlet context
-	 * @param disps the disps
+	 * @param servletContext
+	 *            the servlet context
+	 * @param disps
+	 *            the disps
 	 */
 	private void initMetrics(ServletContext servletContext, EnumSet<DispatcherType> disps) {
 		this.log.debug("Initializing Metrics registries");
@@ -185,8 +197,8 @@ implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 		metricsFilter.setAsyncSupported(true);
 
 		this.log.debug("Registering Metrics Servlet");
-		ServletRegistration.Dynamic metricsAdminServlet = servletContext
-				.addServlet("metricsServlet", new MetricsServlet());
+		ServletRegistration.Dynamic metricsAdminServlet = servletContext.addServlet("metricsServlet",
+				new MetricsServlet());
 
 		metricsAdminServlet.addMapping("/management/metrics/*");
 		metricsAdminServlet.setAsyncSupported(true);
@@ -213,7 +225,8 @@ implements ServletContextInitializer, EmbeddedServletContainerCustomizer {
 	/**
 	 * Sets the metric registry.
 	 *
-	 * @param metricRegistry the new metric registry
+	 * @param metricRegistry
+	 *            the new metric registry
 	 */
 	@Autowired(required = false)
 	public void setMetricRegistry(MetricRegistry metricRegistry) {

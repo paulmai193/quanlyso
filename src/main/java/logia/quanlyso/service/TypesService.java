@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import logia.quanlyso.service.dto.TypesDTO;
@@ -14,7 +17,8 @@ public interface TypesService {
 	/**
 	 * Save a types.
 	 *
-	 * @param typesDTO the entity to save
+	 * @param typesDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	TypesDTO save(TypesDTO typesDTO);
@@ -29,7 +33,8 @@ public interface TypesService {
 	/**
 	 * Get the "id" types.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	TypesDTO findOne(Long id);
@@ -37,7 +42,8 @@ public interface TypesService {
 	/**
 	 * Delete the "id" types.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	void delete(Long id);
 }

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import java.time.Instant;
@@ -35,11 +38,11 @@ public class UserServiceIntTest {
 
 	/** The user repository. */
 	@Autowired
-	private UserRepository	userRepository;
+	private UserRepository userRepository;
 
 	/** The user service. */
 	@Autowired
-	private UserService		userService;
+	private UserService userService;
 
 	/**
 	 * Assert that user must exist to reset password.
@@ -62,8 +65,8 @@ public class UserServiceIntTest {
 	 */
 	@Test
 	public void assertThatOnlyActivatedUserCanRequestPasswordReset() {
-		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe",
-				"john.doe@localhost", "http://placehold.it/50x50", "en-US");
+		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost",
+				"http://placehold.it/50x50", "en-US");
 		Optional<User> maybeUser = this.userService.requestPasswordReset("john.doe@localhost");
 		Assertions.assertThat(maybeUser.isPresent()).isFalse();
 		this.userRepository.delete(user);
@@ -74,8 +77,8 @@ public class UserServiceIntTest {
 	 */
 	@Test
 	public void assertThatResetKeyMustNotBeOlderThan24Hours() {
-		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe",
-				"john.doe@localhost", "http://placehold.it/50x50", "en-US");
+		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost",
+				"http://placehold.it/50x50", "en-US");
 
 		Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
 		String resetKey = RandomUtil.generateResetKey();
@@ -85,8 +88,7 @@ public class UserServiceIntTest {
 
 		this.userRepository.save(user);
 
-		Optional<User> maybeUser = this.userService.completePasswordReset("johndoe2",
-				user.getResetKey());
+		Optional<User> maybeUser = this.userService.completePasswordReset("johndoe2", user.getResetKey());
 
 		Assertions.assertThat(maybeUser.isPresent()).isFalse();
 
@@ -98,16 +100,15 @@ public class UserServiceIntTest {
 	 */
 	@Test
 	public void assertThatResetKeyMustBeValid() {
-		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe",
-				"john.doe@localhost", "http://placehold.it/50x50", "en-US");
+		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost",
+				"http://placehold.it/50x50", "en-US");
 
 		Instant daysAgo = Instant.now().minus(25, ChronoUnit.HOURS);
 		user.setActivated(true);
 		user.setResetDate(daysAgo);
 		user.setResetKey("1234");
 		this.userRepository.save(user);
-		Optional<User> maybeUser = this.userService.completePasswordReset("johndoe2",
-				user.getResetKey());
+		Optional<User> maybeUser = this.userService.completePasswordReset("johndoe2", user.getResetKey());
 		Assertions.assertThat(maybeUser.isPresent()).isFalse();
 		this.userRepository.delete(user);
 	}
@@ -117,8 +118,8 @@ public class UserServiceIntTest {
 	 */
 	@Test
 	public void assertThatUserCanResetPassword() {
-		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe",
-				"john.doe@localhost", "http://placehold.it/50x50", "en-US");
+		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost",
+				"http://placehold.it/50x50", "en-US");
 		String oldPassword = user.getPassword();
 		Instant daysAgo = Instant.now().minus(2, ChronoUnit.HOURS);
 		String resetKey = RandomUtil.generateResetKey();
@@ -126,8 +127,7 @@ public class UserServiceIntTest {
 		user.setResetDate(daysAgo);
 		user.setResetKey(resetKey);
 		this.userRepository.save(user);
-		Optional<User> maybeUser = this.userService.completePasswordReset("johndoe2",
-				user.getResetKey());
+		Optional<User> maybeUser = this.userService.completePasswordReset("johndoe2", user.getResetKey());
 		Assertions.assertThat(maybeUser.isPresent()).isTrue();
 		Assertions.assertThat(maybeUser.get().getResetDate()).isNull();
 		Assertions.assertThat(maybeUser.get().getResetKey()).isNull();
@@ -161,8 +161,8 @@ public class UserServiceIntTest {
 
 	@Test
 	public void assertThatCanGetUserByRole() {
-		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe",
-				"john.doe@localhost", "http://placehold.it/50x50", "en-US", true);
+		User user = this.userService.createUser("johndoe", "johndoe", "John", "Doe", "john.doe@localhost",
+				"http://placehold.it/50x50", "en-US", true);
 		this.userRepository.save(user);
 		Page<UserDTO> page = this.userService.getUserWithAuthoritiesByRole(new PageRequest(0, 10),
 				AuthoritiesConstants.USER);

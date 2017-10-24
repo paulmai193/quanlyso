@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import com.hazelcast.config.Config;
@@ -32,15 +35,16 @@ import javax.annotation.PreDestroy;
 public class CacheConfiguration {
 
 	/** The log. */
-	private final Logger		log	= LoggerFactory.getLogger(CacheConfiguration.class);
+	private final Logger log = LoggerFactory.getLogger(CacheConfiguration.class);
 
 	/** The env. */
-	private final Environment	env;
+	private final Environment env;
 
 	/**
 	 * Instantiates a new cache configuration.
 	 *
-	 * @param env the env
+	 * @param env
+	 *            the env
 	 */
 	public CacheConfiguration(Environment env) {
 		this.env = env;
@@ -58,21 +62,22 @@ public class CacheConfiguration {
 	/**
 	 * Cache manager.
 	 *
-	 * @param hazelcastInstance the hazelcast instance
+	 * @param hazelcastInstance
+	 *            the hazelcast instance
 	 * @return the cache manager
 	 */
 	@Bean
 	public CacheManager cacheManager(HazelcastInstance hazelcastInstance) {
 		this.log.debug("Starting HazelcastCacheManager");
-		CacheManager cacheManager = new com.hazelcast.spring.cache.HazelcastCacheManager(
-				hazelcastInstance);
+		CacheManager cacheManager = new com.hazelcast.spring.cache.HazelcastCacheManager(hazelcastInstance);
 		return cacheManager;
 	}
 
 	/**
 	 * Hazelcast instance.
 	 *
-	 * @param jHipsterProperties the j hipster properties
+	 * @param jHipsterProperties
+	 *            the j hipster properties
 	 * @return the hazelcast instance
 	 */
 	@Bean
@@ -97,8 +102,7 @@ public class CacheConfiguration {
 			config.getNetworkConfig().getJoin().getTcpIpConfig().setEnabled(false);
 		}
 		config.getMapConfigs().put("default", this.initializeDefaultMapConfig());
-		config.getMapConfigs().put("logia.quanlyso.domain.*",
-				this.initializeDomainMapConfig(jHipsterProperties));
+		config.getMapConfigs().put("logia.quanlyso.domain.*", this.initializeDomainMapConfig(jHipsterProperties));
 		return Hazelcast.newHazelcastInstance(config);
 	}
 
@@ -111,29 +115,24 @@ public class CacheConfiguration {
 		MapConfig mapConfig = new MapConfig();
 
 		/*
-		 * Number of backups. If 1 is set as the backup-count for example,
-		 * then all entries of the map will be copied to another JVM for
-		 * fail-safety. Valid numbers are 0 (no backup), 1, 2, 3.
+		 * Number of backups. If 1 is set as the backup-count for example, then
+		 * all entries of the map will be copied to another JVM for fail-safety.
+		 * Valid numbers are 0 (no backup), 1, 2, 3.
 		 */
 		mapConfig.setBackupCount(0);
 
 		/*
-		 * Valid values are:
-		 * NONE (no eviction),
-		 * LRU (Least Recently Used),
-		 * LFU (Least Frequently Used).
-		 * NONE is the default.
+		 * Valid values are: NONE (no eviction), LRU (Least Recently Used), LFU
+		 * (Least Frequently Used). NONE is the default.
 		 */
 		mapConfig.setEvictionPolicy(EvictionPolicy.LRU);
 
 		/*
-		 * Maximum size of the map. When max size is reached,
-		 * map is evicted based on the policy defined.
-		 * Any integer between 0 and Integer.MAX_VALUE. 0 means
-		 * Integer.MAX_VALUE. Default is 0.
+		 * Maximum size of the map. When max size is reached, map is evicted
+		 * based on the policy defined. Any integer between 0 and
+		 * Integer.MAX_VALUE. 0 means Integer.MAX_VALUE. Default is 0.
 		 */
-		mapConfig
-		.setMaxSizeConfig(new MaxSizeConfig(0, MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE));
+		mapConfig.setMaxSizeConfig(new MaxSizeConfig(0, MaxSizeConfig.MaxSizePolicy.USED_HEAP_SIZE));
 
 		return mapConfig;
 	}
@@ -141,13 +140,13 @@ public class CacheConfiguration {
 	/**
 	 * Initialize domain map config.
 	 *
-	 * @param jHipsterProperties the j hipster properties
+	 * @param jHipsterProperties
+	 *            the j hipster properties
 	 * @return the map config
 	 */
 	private MapConfig initializeDomainMapConfig(JHipsterProperties jHipsterProperties) {
 		MapConfig mapConfig = new MapConfig();
-		mapConfig.setTimeToLiveSeconds(
-				jHipsterProperties.getCache().getHazelcast().getTimeToLiveSeconds());
+		mapConfig.setTimeToLiveSeconds(jHipsterProperties.getCache().getHazelcast().getTimeToLiveSeconds());
 		return mapConfig;
 	}
 }

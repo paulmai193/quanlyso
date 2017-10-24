@@ -1,5 +1,7 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.dto;
-
 
 public class CrawlResponseDTO {
 

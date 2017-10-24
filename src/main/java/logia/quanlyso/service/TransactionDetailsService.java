@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import logia.quanlyso.service.dto.TransactionDetailsDTO;
@@ -14,7 +17,8 @@ public interface TransactionDetailsService {
 	/**
 	 * Save a transactionDetails.
 	 *
-	 * @param transactionDetailsDTO the entity to save
+	 * @param transactionDetailsDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	TransactionDetailsDTO save(TransactionDetailsDTO transactionDetailsDTO);
@@ -22,7 +26,8 @@ public interface TransactionDetailsService {
 	/**
 	 * Get all the transactionDetails.
 	 *
-	 * @param pageable the pagination information
+	 * @param pageable
+	 *            the pagination information
 	 * @return the list of entities
 	 */
 	Page<TransactionDetailsDTO> findAll(Pageable pageable);
@@ -30,7 +35,8 @@ public interface TransactionDetailsService {
 	/**
 	 * Get the "id" transactionDetails.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	TransactionDetailsDTO findOne(Long id);
@@ -38,7 +44,8 @@ public interface TransactionDetailsService {
 	/**
 	 * Delete the "id" transactionDetails.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	void delete(Long id);
 }

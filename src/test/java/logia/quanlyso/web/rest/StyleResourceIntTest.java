@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.util.List;
@@ -40,44 +43,44 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 public class StyleResourceIntTest {
 
 	/** The Constant DEFAULT_NAME. */
-	private static final String						DEFAULT_NAME	= "AAAAAAAAAA";
+	private static final String DEFAULT_NAME = "AAAAAAAAAA";
 
 	/** The Constant UPDATED_NAME. */
-	private static final String						UPDATED_NAME	= "BBBBBBBBBB";
+	private static final String UPDATED_NAME = "BBBBBBBBBB";
 
 	/** The style repository. */
 	@Autowired
-	private StyleRepository							styleRepository;
+	private StyleRepository styleRepository;
 
 	/** The style mapper. */
 	@Autowired
-	private StyleMapper								styleMapper;
+	private StyleMapper styleMapper;
 
 	/** The style service. */
 	@Autowired
-	private StyleService							styleService;
+	private StyleService styleService;
 
 	/** The jackson message converter. */
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	/** The pageable argument resolver. */
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	/** The exception translator. */
 	@Autowired
-	private ExceptionTranslator						exceptionTranslator;
+	private ExceptionTranslator exceptionTranslator;
 
 	/** The em. */
 	@Autowired
-	private EntityManager							em;
+	private EntityManager em;
 
 	/** The rest style mock mvc. */
-	private MockMvc									restStyleMockMvc;
+	private MockMvc restStyleMockMvc;
 
 	/** The style. */
-	private Style									style;
+	private Style style;
 
 	/**
 	 * Setup.
@@ -87,8 +90,7 @@ public class StyleResourceIntTest {
 		MockitoAnnotations.initMocks(this);
 		StyleResource styleResource = new StyleResource(this.styleService);
 		this.restStyleMockMvc = MockMvcBuilders.standaloneSetup(styleResource)
-				.setCustomArgumentResolvers(this.pageableArgumentResolver)
-				.setControllerAdvice(this.exceptionTranslator)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setMessageConverters(this.jacksonMessageConverter).build();
 	}
 
@@ -98,7 +100,8 @@ public class StyleResourceIntTest {
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an entity which requires the current entity.
 	 *
-	 * @param em the em
+	 * @param em
+	 *            the em
 	 * @return the style
 	 */
 	public static Style createEntity(EntityManager em) {
@@ -117,7 +120,8 @@ public class StyleResourceIntTest {
 	/**
 	 * Creates the style.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -127,9 +131,9 @@ public class StyleResourceIntTest {
 		// Create the Style
 		StyleDTO styleDTO = this.styleMapper.toDto(this.style);
 		this.restStyleMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Style in the database
 		List<Style> styleList = this.styleRepository.findAll();
@@ -141,7 +145,8 @@ public class StyleResourceIntTest {
 	/**
 	 * Creates the style with existing id.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -152,11 +157,12 @@ public class StyleResourceIntTest {
 		this.style.setId(1L);
 		StyleDTO styleDTO = this.styleMapper.toDto(this.style);
 
-		// An entity with an existing ID cannot be created, so this API call must fail
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
 		this.restStyleMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the Alice in the database
 		List<Style> styleList = this.styleRepository.findAll();
@@ -167,7 +173,8 @@ public class StyleResourceIntTest {
 	 * Gets the all styles.
 	 *
 	 * @return the all styles
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -176,17 +183,21 @@ public class StyleResourceIntTest {
 		this.styleRepository.saveAndFlush(this.style);
 
 		// Get all the styleList
-		this.restStyleMockMvc.perform(MockMvcRequestBuilders.get("/api/styles?sort=id,desc")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.style.getId().intValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").value(Matchers.hasItem(StyleResourceIntTest.DEFAULT_NAME.toString())));
+		this.restStyleMockMvc.perform(MockMvcRequestBuilders.get("/api/styles?sort=id,desc"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id")
+						.value(Matchers.hasItem(this.style.getId().intValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name")
+						.value(Matchers.hasItem(StyleResourceIntTest.DEFAULT_NAME.toString())));
 	}
 
 	/**
 	 * Gets the style.
 	 *
 	 * @return the style
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -195,30 +206,33 @@ public class StyleResourceIntTest {
 		this.styleRepository.saveAndFlush(this.style);
 
 		// Get the style
-		this.restStyleMockMvc.perform(MockMvcRequestBuilders.get("/api/styles/{id}", this.style.getId())).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.style.getId().intValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(StyleResourceIntTest.DEFAULT_NAME.toString()));
+		this.restStyleMockMvc.perform(MockMvcRequestBuilders.get("/api/styles/{id}", this.style.getId()))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.style.getId().intValue())).andExpect(
+						MockMvcResultMatchers.jsonPath("$.name").value(StyleResourceIntTest.DEFAULT_NAME.toString()));
 	}
 
 	/**
 	 * Gets the non existing style.
 	 *
 	 * @return the non existing style
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
 	public void getNonExistingStyle() throws Exception {
 		// Get the style
 		this.restStyleMockMvc.perform(MockMvcRequestBuilders.get("/api/styles/{id}", Long.MAX_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isNotFound());
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	/**
 	 * Update style.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -233,9 +247,9 @@ public class StyleResourceIntTest {
 		StyleDTO styleDTO = this.styleMapper.toDto(updatedStyle);
 
 		this.restStyleMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the Style in the database
 		List<Style> styleList = this.styleRepository.findAll();
@@ -247,7 +261,8 @@ public class StyleResourceIntTest {
 	/**
 	 * Update non existing style.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -257,11 +272,12 @@ public class StyleResourceIntTest {
 		// Create the Style
 		StyleDTO styleDTO = this.styleMapper.toDto(this.style);
 
-		// If the entity doesn't have an ID, it will be created instead of just being updated
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
 		this.restStyleMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.put("/api/styles").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(styleDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Style in the database
 		List<Style> styleList = this.styleRepository.findAll();
@@ -271,7 +287,8 @@ public class StyleResourceIntTest {
 	/**
 	 * Delete style.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -281,9 +298,8 @@ public class StyleResourceIntTest {
 		int databaseSizeBeforeDelete = this.styleRepository.findAll().size();
 
 		// Get the style
-		this.restStyleMockMvc.perform(
-				MockMvcRequestBuilders.delete("/api/styles/{id}", this.style.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+		this.restStyleMockMvc.perform(MockMvcRequestBuilders.delete("/api/styles/{id}", this.style.getId())
+				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the database is empty
 		List<Style> styleList = this.styleRepository.findAll();
@@ -293,7 +309,8 @@ public class StyleResourceIntTest {
 	/**
 	 * Equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -313,7 +330,8 @@ public class StyleResourceIntTest {
 	/**
 	 * Dto equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional

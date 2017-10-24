@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 /**
@@ -22,7 +25,8 @@ public enum TypesConstants {
 	/**
 	 * Instantiates a new types constants.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	TypesConstants(long id) {
 		this.typesId = id;

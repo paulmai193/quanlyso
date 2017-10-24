@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.time.Instant;
@@ -44,49 +47,48 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 @SpringBootTest(classes = QuanlysoApp.class)
 public class CodeResourceIntTest {
 
-	public static final String						DEFAULT_CODE		= "01";
-	public static final String						UPDATED_CODE		= "02";
+	public static final String DEFAULT_CODE = "01";
+	public static final String UPDATED_CODE = "02";
 
-	public static final ZonedDateTime				DEFAULT_OPEN_DATE	= ZonedDateTime
-			.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-	public static final ZonedDateTime				UPDATED_OPEN_DATE	= ZonedDateTime
-			.now(ZoneId.systemDefault()).withHour(0).withMinute(0).withSecond(0).withNano(0);
-
-	@Autowired
-	private CodeRepository							codeRepository;
+	public static final ZonedDateTime DEFAULT_OPEN_DATE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L),
+			ZoneOffset.UTC);
+	public static final ZonedDateTime UPDATED_OPEN_DATE = ZonedDateTime.now(ZoneId.systemDefault()).withHour(0)
+			.withMinute(0).withSecond(0).withNano(0);
 
 	@Autowired
-	private CodeMapper								codeMapper;
+	private CodeRepository codeRepository;
 
 	@Autowired
-	private CodeService								codeService;
+	private CodeMapper codeMapper;
 
 	@Autowired
-	private ChannelService							channelService;
+	private CodeService codeService;
 
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private ChannelService channelService;
 
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	@Autowired
-	private ExceptionTranslator						exceptionTranslator;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	@Autowired
-	private EntityManager							em;
+	private ExceptionTranslator exceptionTranslator;
 
-	private MockMvc									restCodeMockMvc;
+	@Autowired
+	private EntityManager em;
 
-	private Code									code;
+	private MockMvc restCodeMockMvc;
+
+	private Code code;
 
 	@Before
 	public void setup() {
 		MockitoAnnotations.initMocks(this);
 		CodeResource codeResource = new CodeResource(this.codeService, this.channelService);
 		this.restCodeMockMvc = MockMvcBuilders.standaloneSetup(codeResource)
-				.setCustomArgumentResolvers(this.pageableArgumentResolver)
-				.setControllerAdvice(this.exceptionTranslator)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setMessageConverters(this.jacksonMessageConverter).build();
 	}
 
@@ -114,9 +116,9 @@ public class CodeResourceIntTest {
 		// Create the Code
 		CodeDTO codeDTO = this.codeMapper.toDto(this.code);
 		this.restCodeMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Code in the database
 		List<Code> codeList = this.codeRepository.findAll();
@@ -135,11 +137,12 @@ public class CodeResourceIntTest {
 		this.code.setId(1L);
 		CodeDTO codeDTO = this.codeMapper.toDto(this.code);
 
-		// An entity with an existing ID cannot be created, so this API call must fail
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
 		this.restCodeMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the Alice in the database
 		List<Code> codeList = this.codeRepository.findAll();
@@ -153,11 +156,15 @@ public class CodeResourceIntTest {
 		this.codeRepository.saveAndFlush(this.code);
 
 		// Get all the codeList
-		this.restCodeMockMvc.perform(MockMvcRequestBuilders.get("/api/codes?sort=id,desc")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.code.getId().intValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].code").value(Matchers.hasItem(CodeResourceIntTest.DEFAULT_CODE))).andExpect(
-				MockMvcResultMatchers.jsonPath("$.[*].openDate").value(Matchers.hasItem(TestUtil.sameInstant(CodeResourceIntTest.DEFAULT_OPEN_DATE))));
+		this.restCodeMockMvc.perform(MockMvcRequestBuilders.get("/api/codes?sort=id,desc"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id")
+						.value(Matchers.hasItem(this.code.getId().intValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].code")
+						.value(Matchers.hasItem(CodeResourceIntTest.DEFAULT_CODE)))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].openDate")
+						.value(Matchers.hasItem(TestUtil.sameInstant(CodeResourceIntTest.DEFAULT_OPEN_DATE))));
 	}
 
 	@Test
@@ -167,11 +174,13 @@ public class CodeResourceIntTest {
 		this.codeRepository.saveAndFlush(this.code);
 
 		// Get the code
-		this.restCodeMockMvc.perform(MockMvcRequestBuilders.get("/api/codes/{id}", this.code.getId())).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.code.getId().intValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(CodeResourceIntTest.DEFAULT_CODE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.openDate").value(TestUtil.sameInstant(CodeResourceIntTest.DEFAULT_OPEN_DATE)));
+		this.restCodeMockMvc.perform(MockMvcRequestBuilders.get("/api/codes/{id}", this.code.getId()))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.code.getId().intValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(CodeResourceIntTest.DEFAULT_CODE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.openDate")
+						.value(TestUtil.sameInstant(CodeResourceIntTest.DEFAULT_OPEN_DATE)));
 	}
 
 	@Test
@@ -179,7 +188,7 @@ public class CodeResourceIntTest {
 	public void getNonExistingCode() throws Exception {
 		// Get the code
 		this.restCodeMockMvc.perform(MockMvcRequestBuilders.get("/api/codes/{id}", Long.MAX_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isNotFound());
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	@Test
@@ -195,9 +204,9 @@ public class CodeResourceIntTest {
 		CodeDTO codeDTO = this.codeMapper.toDto(updatedCode);
 
 		this.restCodeMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the Code in the database
 		List<Code> codeList = this.codeRepository.findAll();
@@ -215,11 +224,12 @@ public class CodeResourceIntTest {
 		// Create the Code
 		CodeDTO codeDTO = this.codeMapper.toDto(this.code);
 
-		// If the entity doesn't have an ID, it will be created instead of just being updated
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
 		this.restCodeMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.put("/api/codes").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(codeDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Code in the database
 		List<Code> codeList = this.codeRepository.findAll();
@@ -234,9 +244,8 @@ public class CodeResourceIntTest {
 		int databaseSizeBeforeDelete = this.codeRepository.findAll().size();
 
 		// Get the code
-		this.restCodeMockMvc.perform(
-				MockMvcRequestBuilders.delete("/api/codes/{id}", this.code.getId()).accept(TestUtil.APPLICATION_JSON_UTF8))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+		this.restCodeMockMvc.perform(MockMvcRequestBuilders.delete("/api/codes/{id}", this.code.getId())
+				.accept(TestUtil.APPLICATION_JSON_UTF8)).andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the database is empty
 		List<Code> codeList = this.codeRepository.findAll();

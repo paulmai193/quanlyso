@@ -68,12 +68,12 @@
             <table class="form-group table table-striped" id="tbBet">
                 <thead>
                 <tr>
-                    <th>
-                    </th>
+                    <th></th>
                     <th colspan="4" class="form-group must-center">2D</th>
                     <th colspan="4" class="must-center">3D</th>
                     <th colspan="2" class="must-center">4D</th>
                     <th class="must-center" rowspan="4">Channels</th>
+                    <th class="must-center" rowspan="4">Cost</th>
                     <th class="must-center" rowspan="4">Net Amount</th>
                 </tr>
                 <tr>
@@ -126,26 +126,28 @@
                 <tbody>
                 <tr *ngFor="let tran of transactions; trackBy: trackTransactionsById; let i = index">
                     <td class="must-center">
-                        <input type="number" class="form-control" name="chosenNumber_{{ i }}"
-                               id="chosenNumber_{{ i }}"
-                               [(ngModel)]="tran.chosenNumber"/>
+                        <input type="number" class="form-control" name="chosenNumber_{{ i }}" id="chosenNumber_{{ i }}"
+                               style="min-width: 60px !important;" [(ngModel)]="tran.chosenNumber"/>
                     </td>
                     <td class="must-center" *ngFor="let detail of tran.transactionDetailsDTOs; trackBy: trackTransactionDetailsById; let j = index">
                         <input type="number" class="form-control" *ngIf="detail" name="amount_{{ i }}_{{ j }}"
-                               id="amount_{{ i }}_{{ j }}" [(ngModel)]="detail.amount"/>
+                               id="amount_{{ i }}_{{ j }}" style="min-width: 60px !important;" [(ngModel)]="detail.amount"/>
                     </td>
                     <td class="must-center">
                         <select class="form-control" name="trans_channel_{{ i }}" id="trans_channel_{{ i }}" *ngIf="channels" [(ngModel)]="tran.chooseChannel"
-                                (ngModelChange)="onChangeChannel(tran)">
+                                style="min-width: 90px !important;" (ngModelChange)="onChangeChannel(tran)">
                             <option *ngFor="let channel of channels; trackBy: trackChannelById" [ngValue]="channel">
                                 {{ channel.name }}
                             </option>
                         </select>
                     </td>
                     <td class="must-center">
-                        <input type="number" class="form-control" name="net_amount_{{ i }}"
-                               id="net_amount_{{ i }}"
-                               [(ngModel)]="tran.netValue" disabled/>
+                        <input type="number" class="form-control" name="total_cost_{{ i }}" id="total_cost_{{ i }}"
+                               style="min-width: 70px !important;" [(ngModel)]="tran.cost" disabled/>
+                    </td>
+                    <td class="must-center">
+                        <input type="number" class="form-control" name="net_amount_{{ i }}" id="net_amount_{{ i }}"
+                               style="min-width: 70px !important;" [(ngModel)]="tran.netValue" disabled/>
                     </td>
                 </tr>
                 </tbody>

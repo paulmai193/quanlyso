@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import io.github.jhipster.config.JHipsterProperties;
@@ -28,33 +31,37 @@ import java.util.Locale;
 public class MailService {
 
 	/** The log. */
-	private final Logger				log			= LoggerFactory.getLogger(MailService.class);
+	private final Logger log = LoggerFactory.getLogger(MailService.class);
 
 	/** The Constant USER. */
-	private static final String			USER		= "user";
+	private static final String USER = "user";
 
 	/** The Constant BASE_URL. */
-	private static final String			BASE_URL	= "baseUrl";
+	private static final String BASE_URL = "baseUrl";
 
 	/** The j hipster properties. */
-	private final JHipsterProperties	jHipsterProperties;
+	private final JHipsterProperties jHipsterProperties;
 
 	/** The java mail sender. */
-	private final JavaMailSender		javaMailSender;
+	private final JavaMailSender javaMailSender;
 
 	/** The message source. */
-	private final MessageSource			messageSource;
+	private final MessageSource messageSource;
 
 	/** The template engine. */
-	private final SpringTemplateEngine	templateEngine;
+	private final SpringTemplateEngine templateEngine;
 
 	/**
 	 * Instantiates a new mail service.
 	 *
-	 * @param jHipsterProperties the j hipster properties
-	 * @param javaMailSender the java mail sender
-	 * @param messageSource the message source
-	 * @param templateEngine the template engine
+	 * @param jHipsterProperties
+	 *            the j hipster properties
+	 * @param javaMailSender
+	 *            the java mail sender
+	 * @param messageSource
+	 *            the message source
+	 * @param templateEngine
+	 *            the template engine
 	 */
 	public MailService(JHipsterProperties jHipsterProperties, JavaMailSender javaMailSender,
 			MessageSource messageSource, SpringTemplateEngine templateEngine) {
@@ -68,32 +75,33 @@ public class MailService {
 	/**
 	 * Send email.
 	 *
-	 * @param to the to
-	 * @param subject the subject
-	 * @param content the content
-	 * @param isMultipart the is multipart
-	 * @param isHtml the is html
+	 * @param to
+	 *            the to
+	 * @param subject
+	 *            the subject
+	 * @param content
+	 *            the content
+	 * @param isMultipart
+	 *            the is multipart
+	 * @param isHtml
+	 *            the is html
 	 */
 	@Async
-	public void sendEmail(String to, String subject, String content, boolean isMultipart,
-			boolean isHtml) {
-		this.log.debug(
-				"Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}",
-				isMultipart, isHtml, to, subject, content);
+	public void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml) {
+		this.log.debug("Send email[multipart '{}' and html '{}'] to '{}' with subject '{}' and content={}", isMultipart,
+				isHtml, to, subject, content);
 
 		// Prepare message using a Spring helper
 		MimeMessage mimeMessage = this.javaMailSender.createMimeMessage();
 		try {
-			MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart,
-					CharEncoding.UTF_8);
+			MimeMessageHelper message = new MimeMessageHelper(mimeMessage, isMultipart, CharEncoding.UTF_8);
 			message.setTo(to);
 			message.setFrom(this.jHipsterProperties.getMail().getFrom());
 			message.setSubject(subject);
 			message.setText(content, isHtml);
 			this.javaMailSender.send(mimeMessage);
 			this.log.debug("Sent email to User '{}'", to);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			this.log.warn("Email could not be sent to user '{}'", to, e);
 		}
 	}
@@ -101,7 +109,8 @@ public class MailService {
 	/**
 	 * Send activation email.
 	 *
-	 * @param user the user
+	 * @param user
+	 *            the user
 	 */
 	@Async
 	public void sendActivationEmail(User user) {
@@ -118,7 +127,8 @@ public class MailService {
 	/**
 	 * Send creation email.
 	 *
-	 * @param user the user
+	 * @param user
+	 *            the user
 	 */
 	@Async
 	public void sendCreationEmail(User user) {
@@ -135,7 +145,8 @@ public class MailService {
 	/**
 	 * Send password reset mail.
 	 *
-	 * @param user the user
+	 * @param user
+	 *            the user
 	 */
 	@Async
 	public void sendPasswordResetMail(User user) {

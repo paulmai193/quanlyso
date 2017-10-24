@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.util.List;
@@ -41,92 +44,92 @@ import logia.quanlyso.web.rest.errors.ExceptionTranslator;
 public class ChannelResourceIntTest {
 
 	/** The Constant DEFAULT_NAME. */
-	private static final String						DEFAULT_NAME		= "AAAAAAAAAA";
+	private static final String DEFAULT_NAME = "AAAAAAAAAA";
 
 	/** The Constant UPDATED_NAME. */
-	private static final String						UPDATED_NAME		= "BBBBBBBBBB";
+	private static final String UPDATED_NAME = "BBBBBBBBBB";
 
 	/** The Constant DEFAULT_CODE. */
-	private static final String						DEFAULT_CODE		= "12345";
+	private static final String DEFAULT_CODE = "12345";
 
 	/** The Constant UPDATED_CODE. */
-	private static final String						UPDATED_CODE		= "54321";
+	private static final String UPDATED_CODE = "54321";
 
 	/** The Constant DEFAULT_SUNDAY. */
-	private static final Boolean					DEFAULT_SUNDAY		= false;
+	private static final Boolean DEFAULT_SUNDAY = false;
 
 	/** The Constant UPDATED_SUNDAY. */
-	private static final Boolean					UPDATED_SUNDAY		= true;
+	private static final Boolean UPDATED_SUNDAY = true;
 
 	/** The Constant DEFAULT_MONDAY. */
-	private static final Boolean					DEFAULT_MONDAY		= false;
+	private static final Boolean DEFAULT_MONDAY = false;
 
 	/** The Constant UPDATED_MONDAY. */
-	private static final Boolean					UPDATED_MONDAY		= true;
+	private static final Boolean UPDATED_MONDAY = true;
 
 	/** The Constant DEFAULT_TUESDAY. */
-	private static final Boolean					DEFAULT_TUESDAY		= false;
+	private static final Boolean DEFAULT_TUESDAY = false;
 
 	/** The Constant UPDATED_TUESDAY. */
-	private static final Boolean					UPDATED_TUESDAY		= true;
+	private static final Boolean UPDATED_TUESDAY = true;
 
 	/** The Constant DEFAULT_WEDNESDAY. */
-	private static final Boolean					DEFAULT_WEDNESDAY	= false;
+	private static final Boolean DEFAULT_WEDNESDAY = false;
 
 	/** The Constant UPDATED_WEDNESDAY. */
-	private static final Boolean					UPDATED_WEDNESDAY	= true;
+	private static final Boolean UPDATED_WEDNESDAY = true;
 
 	/** The Constant DEFAULT_THURSDAY. */
-	private static final Boolean					DEFAULT_THURSDAY	= false;
+	private static final Boolean DEFAULT_THURSDAY = false;
 
 	/** The Constant UPDATED_THURSDAY. */
-	private static final Boolean					UPDATED_THURSDAY	= true;
+	private static final Boolean UPDATED_THURSDAY = true;
 
 	/** The Constant DEFAULT_FRIDAY. */
-	private static final Boolean					DEFAULT_FRIDAY		= false;
+	private static final Boolean DEFAULT_FRIDAY = false;
 
 	/** The Constant UPDATED_FRIDAY. */
-	private static final Boolean					UPDATED_FRIDAY		= true;
+	private static final Boolean UPDATED_FRIDAY = true;
 
 	/** The Constant DEFAULT_SATURDAY. */
-	private static final Boolean					DEFAULT_SATURDAY	= false;
+	private static final Boolean DEFAULT_SATURDAY = false;
 
 	/** The Constant UPDATED_SATURDAY. */
-	private static final Boolean					UPDATED_SATURDAY	= true;
+	private static final Boolean UPDATED_SATURDAY = true;
 
 	/** The channel repository. */
 	@Autowired
-	private ChannelRepository						channelRepository;
+	private ChannelRepository channelRepository;
 
 	/** The channel mapper. */
 	@Autowired
-	private ChannelMapper							channelMapper;
+	private ChannelMapper channelMapper;
 
 	/** The channel service. */
 	@Autowired
-	private ChannelService							channelService;
+	private ChannelService channelService;
 
 	/** The jackson message converter. */
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	/** The pageable argument resolver. */
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	/** The exception translator. */
 	@Autowired
-	private ExceptionTranslator						exceptionTranslator;
+	private ExceptionTranslator exceptionTranslator;
 
 	/** The em. */
 	@Autowired
-	private EntityManager							em;
+	private EntityManager em;
 
 	/** The rest channel mock mvc. */
-	private MockMvc									restChannelMockMvc;
+	private MockMvc restChannelMockMvc;
 
 	/** The channel. */
-	private Channel									channel;
+	private Channel channel;
 
 	/**
 	 * Setup.
@@ -136,8 +139,7 @@ public class ChannelResourceIntTest {
 		MockitoAnnotations.initMocks(this);
 		ChannelResource channelResource = new ChannelResource(this.channelService);
 		this.restChannelMockMvc = MockMvcBuilders.standaloneSetup(channelResource)
-				.setCustomArgumentResolvers(this.pageableArgumentResolver)
-				.setControllerAdvice(this.exceptionTranslator)
+				.setCustomArgumentResolvers(this.pageableArgumentResolver).setControllerAdvice(this.exceptionTranslator)
 				.setMessageConverters(this.jacksonMessageConverter).build();
 	}
 
@@ -147,13 +149,16 @@ public class ChannelResourceIntTest {
 	 * This is a static method, as tests for other entities might also need it,
 	 * if they test an entity which requires the current entity.
 	 *
-	 * @param em the em
+	 * @param em
+	 *            the em
 	 * @return the channel
 	 */
 	public static Channel createEntity(EntityManager em) {
-		Channel channel = new Channel().name(ChannelResourceIntTest.DEFAULT_NAME).code(ChannelResourceIntTest.DEFAULT_CODE).sunday(ChannelResourceIntTest.DEFAULT_SUNDAY)
-				.monday(ChannelResourceIntTest.DEFAULT_MONDAY).tuesday(ChannelResourceIntTest.DEFAULT_TUESDAY).wednesday(ChannelResourceIntTest.DEFAULT_WEDNESDAY)
-				.thursday(ChannelResourceIntTest.DEFAULT_THURSDAY).friday(ChannelResourceIntTest.DEFAULT_FRIDAY).saturday(ChannelResourceIntTest.DEFAULT_SATURDAY);
+		Channel channel = new Channel().name(ChannelResourceIntTest.DEFAULT_NAME)
+				.code(ChannelResourceIntTest.DEFAULT_CODE).sunday(ChannelResourceIntTest.DEFAULT_SUNDAY)
+				.monday(ChannelResourceIntTest.DEFAULT_MONDAY).tuesday(ChannelResourceIntTest.DEFAULT_TUESDAY)
+				.wednesday(ChannelResourceIntTest.DEFAULT_WEDNESDAY).thursday(ChannelResourceIntTest.DEFAULT_THURSDAY)
+				.friday(ChannelResourceIntTest.DEFAULT_FRIDAY).saturday(ChannelResourceIntTest.DEFAULT_SATURDAY);
 		return channel;
 	}
 
@@ -168,7 +173,8 @@ public class ChannelResourceIntTest {
 	/**
 	 * Creates the channel.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -178,9 +184,9 @@ public class ChannelResourceIntTest {
 		// Create the Channel
 		ChannelDTO channelDTO = this.channelMapper.toDto(this.channel);
 		this.restChannelMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.post("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Channel in the database
 		List<Channel> channelList = this.channelRepository.findAll();
@@ -200,7 +206,8 @@ public class ChannelResourceIntTest {
 	/**
 	 * Creates the channel with existing id.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -211,11 +218,12 @@ public class ChannelResourceIntTest {
 		this.channel.setId(1L);
 		ChannelDTO channelDTO = this.channelMapper.toDto(this.channel);
 
-		// An entity with an existing ID cannot be created, so this API call must fail
+		// An entity with an existing ID cannot be created, so this API call
+		// must fail
 		this.restChannelMockMvc
-		.perform(MockMvcRequestBuilders.post("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
-		.andExpect(MockMvcResultMatchers.status().isBadRequest());
+				.perform(MockMvcRequestBuilders.post("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
+				.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
 		// Validate the Alice in the database
 		List<Channel> channelList = this.channelRepository.findAll();
@@ -226,7 +234,8 @@ public class ChannelResourceIntTest {
 	 * Gets the all channels.
 	 *
 	 * @return the all channels
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -235,28 +244,37 @@ public class ChannelResourceIntTest {
 		this.channelRepository.saveAndFlush(this.channel);
 
 		// Get all the channelList
-		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels?sort=id,desc")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.channel.getId().intValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_NAME.toString())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].code").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_CODE.toString())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].sunday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_SUNDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].monday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_MONDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].tuesday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_TUESDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].wednesday")
-				.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_WEDNESDAY.booleanValue())))
-		.andExpect(
-				MockMvcResultMatchers.jsonPath("$.[*].thursday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_THURSDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].friday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_FRIDAY.booleanValue())))
-		.andExpect(
-				MockMvcResultMatchers.jsonPath("$.[*].saturday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_SATURDAY.booleanValue())));
+		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels?sort=id,desc"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id")
+						.value(Matchers.hasItem(this.channel.getId().intValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_NAME.toString())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].code")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_CODE.toString())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].sunday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_SUNDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].monday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_MONDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].tuesday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_TUESDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].wednesday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_WEDNESDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].thursday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_THURSDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].friday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_FRIDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].saturday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_SATURDAY.booleanValue())));
 	}
 
 	/**
 	 * Gets the channel.
 	 *
 	 * @return the channel
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -266,25 +284,35 @@ public class ChannelResourceIntTest {
 
 		// Get the channel
 		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels/{id}", this.channel.getId()))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.channel.getId().intValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.name").value(ChannelResourceIntTest.DEFAULT_NAME.toString()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.code").value(ChannelResourceIntTest.DEFAULT_CODE.toString()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.sunday").value(ChannelResourceIntTest.DEFAULT_SUNDAY.booleanValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.monday").value(ChannelResourceIntTest.DEFAULT_MONDAY.booleanValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.tuesday").value(ChannelResourceIntTest.DEFAULT_TUESDAY.booleanValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.wednesday").value(ChannelResourceIntTest.DEFAULT_WEDNESDAY.booleanValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.thursday").value(ChannelResourceIntTest.DEFAULT_THURSDAY.booleanValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.friday").value(ChannelResourceIntTest.DEFAULT_FRIDAY.booleanValue()))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.saturday").value(ChannelResourceIntTest.DEFAULT_SATURDAY.booleanValue()));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.id").value(this.channel.getId().intValue()))
+				.andExpect(
+						MockMvcResultMatchers.jsonPath("$.name").value(ChannelResourceIntTest.DEFAULT_NAME.toString()))
+				.andExpect(
+						MockMvcResultMatchers.jsonPath("$.code").value(ChannelResourceIntTest.DEFAULT_CODE.toString()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.sunday")
+						.value(ChannelResourceIntTest.DEFAULT_SUNDAY.booleanValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.monday")
+						.value(ChannelResourceIntTest.DEFAULT_MONDAY.booleanValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.tuesday")
+						.value(ChannelResourceIntTest.DEFAULT_TUESDAY.booleanValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.wednesday")
+						.value(ChannelResourceIntTest.DEFAULT_WEDNESDAY.booleanValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.thursday")
+						.value(ChannelResourceIntTest.DEFAULT_THURSDAY.booleanValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.friday")
+						.value(ChannelResourceIntTest.DEFAULT_FRIDAY.booleanValue()))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.saturday")
+						.value(ChannelResourceIntTest.DEFAULT_SATURDAY.booleanValue()));
 	}
 
 	/**
 	 * Gets the channel by open day.
 	 *
 	 * @return the channel
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -295,21 +323,28 @@ public class ChannelResourceIntTest {
 
 		// Get the channel
 		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels/day/SUNDAY"))
-		        .andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id").value(Matchers.hasItem(this.channel.getId().intValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_NAME.toString())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].code").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_CODE.toString())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].sunday").value(Matchers.hasItem(ChannelResourceIntTest.UPDATED_SUNDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].monday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_MONDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].tuesday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_TUESDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].wednesday")
-				.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_WEDNESDAY.booleanValue())))
-		.andExpect(
-				MockMvcResultMatchers.jsonPath("$.[*].thursday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_THURSDAY.booleanValue())))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].friday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_FRIDAY.booleanValue())))
-		.andExpect(
-				MockMvcResultMatchers.jsonPath("$.[*].saturday").value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_SATURDAY.booleanValue())));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].id")
+						.value(Matchers.hasItem(this.channel.getId().intValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].name")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_NAME.toString())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].code")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_CODE.toString())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].sunday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.UPDATED_SUNDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].monday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_MONDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].tuesday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_TUESDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].wednesday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_WEDNESDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].thursday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_THURSDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].friday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_FRIDAY.booleanValue())))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].saturday")
+						.value(Matchers.hasItem(ChannelResourceIntTest.DEFAULT_SATURDAY.booleanValue())));
 	}
 
 	@Test
@@ -320,29 +355,32 @@ public class ChannelResourceIntTest {
 		this.channelRepository.saveAndFlush(this.channel);
 
 		// Get the channel
-		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels/day/otherday")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$").isEmpty());
+		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels/day/otherday"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$").isEmpty());
 	}
 
 	/**
 	 * Gets the non existing channel.
 	 *
 	 * @return the non existing channel
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
 	public void getNonExistingChannel() throws Exception {
 		// Get the channel
 		this.restChannelMockMvc.perform(MockMvcRequestBuilders.get("/api/channels/{id}", Long.MAX_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isNotFound());
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 
 	/**
 	 * Update channel.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -353,15 +391,17 @@ public class ChannelResourceIntTest {
 
 		// Update the channel
 		Channel updatedChannel = this.channelRepository.findOne(this.channel.getId());
-		updatedChannel.name(ChannelResourceIntTest.UPDATED_NAME).code(ChannelResourceIntTest.UPDATED_CODE).sunday(ChannelResourceIntTest.UPDATED_SUNDAY)
-		.monday(ChannelResourceIntTest.UPDATED_MONDAY).tuesday(ChannelResourceIntTest.UPDATED_TUESDAY).wednesday(ChannelResourceIntTest.UPDATED_WEDNESDAY)
-		.thursday(ChannelResourceIntTest.UPDATED_THURSDAY).friday(ChannelResourceIntTest.UPDATED_FRIDAY).saturday(ChannelResourceIntTest.UPDATED_SATURDAY);
+		updatedChannel.name(ChannelResourceIntTest.UPDATED_NAME).code(ChannelResourceIntTest.UPDATED_CODE)
+				.sunday(ChannelResourceIntTest.UPDATED_SUNDAY).monday(ChannelResourceIntTest.UPDATED_MONDAY)
+				.tuesday(ChannelResourceIntTest.UPDATED_TUESDAY).wednesday(ChannelResourceIntTest.UPDATED_WEDNESDAY)
+				.thursday(ChannelResourceIntTest.UPDATED_THURSDAY).friday(ChannelResourceIntTest.UPDATED_FRIDAY)
+				.saturday(ChannelResourceIntTest.UPDATED_SATURDAY);
 		ChannelDTO channelDTO = this.channelMapper.toDto(updatedChannel);
 
 		this.restChannelMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
-		.andExpect(MockMvcResultMatchers.status().isOk());
+				.perform(MockMvcRequestBuilders.put("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
+				.andExpect(MockMvcResultMatchers.status().isOk());
 
 		// Validate the Channel in the database
 		List<Channel> channelList = this.channelRepository.findAll();
@@ -381,7 +421,8 @@ public class ChannelResourceIntTest {
 	/**
 	 * Update non existing channel.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -391,11 +432,12 @@ public class ChannelResourceIntTest {
 		// Create the Channel
 		ChannelDTO channelDTO = this.channelMapper.toDto(this.channel);
 
-		// If the entity doesn't have an ID, it will be created instead of just being updated
+		// If the entity doesn't have an ID, it will be created instead of just
+		// being updated
 		this.restChannelMockMvc
-		.perform(MockMvcRequestBuilders.put("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
-				.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
-		.andExpect(MockMvcResultMatchers.status().isCreated());
+				.perform(MockMvcRequestBuilders.put("/api/channels").contentType(TestUtil.APPLICATION_JSON_UTF8)
+						.content(TestUtil.convertObjectToJsonBytes(channelDTO)))
+				.andExpect(MockMvcResultMatchers.status().isCreated());
 
 		// Validate the Channel in the database
 		List<Channel> channelList = this.channelRepository.findAll();
@@ -405,7 +447,8 @@ public class ChannelResourceIntTest {
 	/**
 	 * Delete channel.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -426,7 +469,8 @@ public class ChannelResourceIntTest {
 	/**
 	 * Equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional
@@ -446,7 +490,8 @@ public class ChannelResourceIntTest {
 	/**
 	 * Dto equals verifier.
 	 *
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	@Transactional

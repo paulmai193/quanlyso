@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import logia.quanlyso.domain.Transactions;
@@ -16,7 +19,8 @@ public interface CodeService {
 	/**
 	 * Save a code.
 	 *
-	 * @param codeDTO the entity to save
+	 * @param codeDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	CodeDTO save(CodeDTO codeDTO);
@@ -24,7 +28,8 @@ public interface CodeService {
 	/**
 	 * Get all the codes.
 	 *
-	 * @param pageable the pagination information
+	 * @param pageable
+	 *            the pagination information
 	 * @return the list of entities
 	 */
 	Page<CodeDTO> findAll(Pageable pageable);
@@ -32,7 +37,8 @@ public interface CodeService {
 	/**
 	 * Get the "id" code.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	CodeDTO findOne(Long id);
@@ -40,14 +46,16 @@ public interface CodeService {
 	/**
 	 * Delete the "id" code.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	void delete(Long id);
 
 	/**
 	 * Calculate the value of transaction.
 	 *
-	 * @param transactions the transactions
+	 * @param transactions
+	 *            the transactions
 	 * @return the transactions
 	 */
 	Transactions calculate(Transactions transactions);
@@ -55,29 +63,36 @@ public interface CodeService {
 	/**
 	 * Crawl lotteries from minh ngoc site.
 	 *
-	 * @param __channelCodes the channel codes
-	 * @throws Exception the exception
+	 * @param __channelCodes
+	 *            the channel codes
+	 * @throws Exception
+	 *             the exception
 	 */
 	void crawlLotteriesFromMinhNgocSite(Collection<String> __channelCodes) throws Exception;
 
 	/**
 	 * Crawl lotteries from minh ngoc site.
 	 *
-	 * @param __channelCode the channel code
-	 * @throws Exception the exception
+	 * @param __channelCode
+	 *            the channel code
+	 * @throws Exception
+	 *             the exception
 	 */
 	void crawlLotteriesFromMinhNgocSite(String __channelCode) throws Exception;
 
 	/**
 	 * Crawl lotteries from minh ngoc site.
 	 *
-	 * @param __channelCode the channel code
-	 * @param __date the open day
-	 * @param __forceUpdate the force update
-	 * @throws Exception the exception
+	 * @param __channelCode
+	 *            the channel code
+	 * @param __date
+	 *            the open day
+	 * @param __forceUpdate
+	 *            the force update
+	 * @throws Exception
+	 *             the exception
 	 */
-	void crawlLotteriesFromMinhNgocSite(String __channelCode, String __date, boolean __forceUpdate)
-	        throws Exception;
+	void crawlLotteriesFromMinhNgocSite(String __channelCode, String __date, boolean __forceUpdate) throws Exception;
 
 	/**
 	 * Gets the crawl processing.

@@ -1,10 +1,11 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
-import logia.quanlyso.domain.ProfitFactor;
 import logia.quanlyso.service.ProfitFactorService;
-import logia.quanlyso.service.dto.CostFactorDTO;
 import logia.quanlyso.service.dto.ProfitFactorDTO;
 import logia.quanlyso.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -27,19 +28,19 @@ import java.util.Optional;
 public class ProfitFactorResource {
 
 	/** The log. */
-	private final Logger				log			= LoggerFactory
-			.getLogger(ProfitFactorResource.class);
+	private final Logger log = LoggerFactory.getLogger(ProfitFactorResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String			ENTITY_NAME	= "profitFactor";
+	private static final String ENTITY_NAME = "profitFactor";
 
 	/** The profit factor service. */
-	private final ProfitFactorService	profitFactorService;
+	private final ProfitFactorService profitFactorService;
 
 	/**
 	 * Instantiates a new profit factor resource.
 	 *
-	 * @param profitFactorService the profit factor service
+	 * @param profitFactorService
+	 *            the profit factor service
 	 */
 	public ProfitFactorResource(ProfitFactorService profitFactorService) {
 		this.profitFactorService = profitFactorService;
@@ -48,15 +49,18 @@ public class ProfitFactorResource {
 	/**
 	 * POST /profit-factors : Create a new profitFactor.
 	 *
-	 * @param profitFactorDTO the profitFactorDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new profitFactorDTO,
-	 *         or with status 400 (Bad Request) if the profitFactor has already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param profitFactorDTO
+	 *            the profitFactorDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new profitFactorDTO, or with status 400 (Bad Request) if the
+	 *         profitFactor has already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/profit-factors")
 	@Timed
-	public ResponseEntity<ProfitFactorDTO> createProfitFactor(
-			@RequestBody ProfitFactorDTO profitFactorDTO) throws URISyntaxException {
+	public ResponseEntity<ProfitFactorDTO> createProfitFactor(@RequestBody ProfitFactorDTO profitFactorDTO)
+			throws URISyntaxException {
 		this.log.debug("REST request to save ProfitFactor : {}", profitFactorDTO);
 		if (profitFactorDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ProfitFactorResource.ENTITY_NAME,
@@ -72,30 +76,33 @@ public class ProfitFactorResource {
 	/**
 	 * PUT /profit-factors : Updates an existing profitFactor.
 	 *
-	 * @param profitFactorDTO the profitFactorDTO to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated profitFactorDTO,
-	 *         or with status 400 (Bad Request) if the profitFactorDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the profitFactorDTO couldnt be updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param profitFactorDTO
+	 *            the profitFactorDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         profitFactorDTO, or with status 400 (Bad Request) if the
+	 *         profitFactorDTO is not valid, or with status 500 (Internal Server
+	 *         Error) if the profitFactorDTO couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/profit-factors")
 	@Timed
-	public ResponseEntity<ProfitFactorDTO> updateProfitFactor(
-			@RequestBody ProfitFactorDTO profitFactorDTO) throws URISyntaxException {
+	public ResponseEntity<ProfitFactorDTO> updateProfitFactor(@RequestBody ProfitFactorDTO profitFactorDTO)
+			throws URISyntaxException {
 		this.log.debug("REST request to update ProfitFactor : {}", profitFactorDTO);
 		if (profitFactorDTO.getId() == null) {
 			return this.createProfitFactor(profitFactorDTO);
 		}
 		ProfitFactorDTO result = this.profitFactorService.save(profitFactorDTO);
-		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert(ProfitFactorResource.ENTITY_NAME, profitFactorDTO.getId().toString()))
-				.body(result);
+		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ProfitFactorResource.ENTITY_NAME,
+				profitFactorDTO.getId().toString())).body(result);
 	}
 
 	/**
 	 * GET /profit-factors : get all the profitFactors.
 	 *
-	 * @return the ResponseEntity with status 200 (OK) and the list of profitFactors in body
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         profitFactors in body
 	 */
 	@GetMapping("/profit-factors")
 	@Timed
@@ -107,9 +114,10 @@ public class ProfitFactorResource {
 	/**
 	 * GET /profit-factors/:id : get the "id" profitFactor.
 	 *
-	 * @param id the id of the profitFactorDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the profitFactorDTO, or with
-	 *         status 404 (Not Found)
+	 * @param id
+	 *            the id of the profitFactorDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         profitFactorDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/profit-factors/{id}")
 	@Timed
@@ -119,25 +127,27 @@ public class ProfitFactorResource {
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(profitFactorDTO));
 	}
 
-    /**
-     * GET /profit-factors/style/:id : get the profitFactor by style ID.
-     *
-     * @param id the Style ID of the profitFactorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the profitFactorDTO, or with
-     *         status 404 (Not Found)
-     */
-    @GetMapping("/profit-factors/style/{id}")
-    @Timed
-    public ResponseEntity<ProfitFactorDTO> getProfitFactorByStyle(@PathVariable Long id) {
-        this.log.debug("REST request to get ProfitFactor : {}", id);
-        ProfitFactorDTO profitFactorDTO = this.profitFactorService.findOneByStyleId(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(profitFactorDTO));
-    }
+	/**
+	 * GET /profit-factors/style/:id : get the profitFactor by style ID.
+	 *
+	 * @param id
+	 *            the Style ID of the profitFactorDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         profitFactorDTO, or with status 404 (Not Found)
+	 */
+	@GetMapping("/profit-factors/style/{id}")
+	@Timed
+	public ResponseEntity<ProfitFactorDTO> getProfitFactorByStyle(@PathVariable Long id) {
+		this.log.debug("REST request to get ProfitFactor : {}", id);
+		ProfitFactorDTO profitFactorDTO = this.profitFactorService.findOneByStyleId(id);
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(profitFactorDTO));
+	}
 
 	/**
 	 * DELETE /profit-factors/:id : delete the "id" profitFactor.
 	 *
-	 * @param id the id of the profitFactorDTO to delete
+	 * @param id
+	 *            the id of the profitFactorDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/profit-factors/{id}")

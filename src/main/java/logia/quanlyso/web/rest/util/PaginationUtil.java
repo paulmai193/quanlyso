@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.util;
 
 import org.springframework.data.domain.Page;
@@ -9,8 +12,9 @@ import org.springframework.web.util.UriComponentsBuilder;
  * 
  * <p>
  * Pagination uses the same principles as the
- * <a href="https://developer.github.com/v3/#pagination">Github API</a>,
- * and follow <a href="http://tools.ietf.org/html/rfc5988">RFC 5988 (Link header)</a>.
+ * <a href="https://developer.github.com/v3/#pagination">Github API</a>, and
+ * follow <a href="http://tools.ietf.org/html/rfc5988">RFC 5988 (Link
+ * header)</a>.
  *
  * @author Dai Mai
  */
@@ -25,8 +29,10 @@ public final class PaginationUtil {
 	/**
 	 * Generate pagination http headers.
 	 *
-	 * @param page the page
-	 * @param baseUrl the base url
+	 * @param page
+	 *            the page
+	 * @param baseUrl
+	 *            the base url
 	 * @return the http headers
 	 */
 	public static HttpHeaders generatePaginationHttpHeaders(Page page, String baseUrl) {
@@ -35,13 +41,12 @@ public final class PaginationUtil {
 		headers.add("X-Total-Count", "" + Long.toString(page.getTotalElements()));
 		String link = "";
 		if ((page.getNumber() + 1) < page.getTotalPages()) {
-			link = "<" + PaginationUtil.generateUri(baseUrl, page.getNumber() + 1, page.getSize())
-			+ ">; rel=\"next\",";
+			link = "<" + PaginationUtil.generateUri(baseUrl, page.getNumber() + 1, page.getSize()) + ">; rel=\"next\",";
 		}
 		// prev link
 		if ((page.getNumber()) > 0) {
 			link += "<" + PaginationUtil.generateUri(baseUrl, page.getNumber() - 1, page.getSize())
-			+ ">; rel=\"prev\",";
+					+ ">; rel=\"prev\",";
 		}
 		// last and first link
 		int lastPage = 0;
@@ -57,13 +62,16 @@ public final class PaginationUtil {
 	/**
 	 * Generate uri.
 	 *
-	 * @param baseUrl the base url
-	 * @param page the page
-	 * @param size the size
+	 * @param baseUrl
+	 *            the base url
+	 * @param page
+	 *            the page
+	 * @param size
+	 *            the size
 	 * @return the string
 	 */
 	private static String generateUri(String baseUrl, int page, int size) {
-		return UriComponentsBuilder.fromUriString(baseUrl).queryParam("page", page)
-				.queryParam("size", size).toUriString();
+		return UriComponentsBuilder.fromUriString(baseUrl).queryParam("page", page).queryParam("size", size)
+				.toUriString();
 	}
 }

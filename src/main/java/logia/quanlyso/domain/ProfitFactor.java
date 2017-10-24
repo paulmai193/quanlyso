@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import org.hibernate.annotations.Cache;
@@ -18,20 +21,20 @@ import java.util.Objects;
 public class ProfitFactor implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long				id;
+	private Long id;
 
 	/** The rate. */
 	@Column(name = "rate")
-	private Float				rate;
+	private Float rate;
 
 	/** The styles. */
 	@ManyToOne
-	private Style				styles;
+	private Style styles;
 
 	/**
 	 * Gets the id.
@@ -45,7 +48,8 @@ public class ProfitFactor implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -63,7 +67,8 @@ public class ProfitFactor implements Serializable {
 	/**
 	 * Rate.
 	 *
-	 * @param rate the rate
+	 * @param rate
+	 *            the rate
 	 * @return the profit factor
 	 */
 	public ProfitFactor rate(Float rate) {
@@ -74,7 +79,8 @@ public class ProfitFactor implements Serializable {
 	/**
 	 * Sets the rate.
 	 *
-	 * @param rate the new rate
+	 * @param rate
+	 *            the new rate
 	 */
 	public void setRate(Float rate) {
 		this.rate = rate;
@@ -92,7 +98,8 @@ public class ProfitFactor implements Serializable {
 	/**
 	 * Styles.
 	 *
-	 * @param style the style
+	 * @param style
+	 *            the style
 	 * @return the profit factor
 	 */
 	public ProfitFactor styles(Style style) {
@@ -103,7 +110,8 @@ public class ProfitFactor implements Serializable {
 	/**
 	 * Sets the styles.
 	 *
-	 * @param style the new styles
+	 * @param style
+	 *            the new styles
 	 */
 	public void setStyles(Style style) {
 		this.styles = style;

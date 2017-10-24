@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -25,18 +28,19 @@ import java.util.Optional;
 public class CostFactorResource {
 
 	/** The log. */
-	private final Logger			log			= LoggerFactory.getLogger(CostFactorResource.class);
+	private final Logger log = LoggerFactory.getLogger(CostFactorResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String		ENTITY_NAME	= "costFactor";
+	private static final String ENTITY_NAME = "costFactor";
 
 	/** The cost factor service. */
-	private final CostFactorService	costFactorService;
+	private final CostFactorService costFactorService;
 
 	/**
 	 * Instantiates a new cost factor resource.
 	 *
-	 * @param costFactorService the cost factor service
+	 * @param costFactorService
+	 *            the cost factor service
 	 */
 	public CostFactorResource(CostFactorService costFactorService) {
 		this.costFactorService = costFactorService;
@@ -45,10 +49,13 @@ public class CostFactorResource {
 	/**
 	 * POST /cost-factors : Create a new costFactor.
 	 *
-	 * @param costFactorDTO the costFactorDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new costFactorDTO, or
-	 *         with status 400 (Bad Request) if the costFactor has already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param costFactorDTO
+	 *            the costFactorDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new costFactorDTO, or with status 400 (Bad Request) if the
+	 *         costFactor has already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/cost-factors")
 	@Timed
@@ -60,20 +67,23 @@ public class CostFactorResource {
 					"idexists", "A new costFactor cannot already have an ID")).body(null);
 		}
 		CostFactorDTO result = this.costFactorService.save(costFactorDTO);
-		return ResponseEntity
-				.created(new URI("/api/cost-factors/" + result.getId())).headers(HeaderUtil
-						.createEntityCreationAlert(CostFactorResource.ENTITY_NAME, result.getId().toString()))
+		return ResponseEntity.created(new URI("/api/cost-factors/" + result.getId()))
+				.headers(
+						HeaderUtil.createEntityCreationAlert(CostFactorResource.ENTITY_NAME, result.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * PUT /cost-factors : Updates an existing costFactor.
 	 *
-	 * @param costFactorDTO the costFactorDTO to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated costFactorDTO,
-	 *         or with status 400 (Bad Request) if the costFactorDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the costFactorDTO couldnt be updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param costFactorDTO
+	 *            the costFactorDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         costFactorDTO, or with status 400 (Bad Request) if the
+	 *         costFactorDTO is not valid, or with status 500 (Internal Server
+	 *         Error) if the costFactorDTO couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/cost-factors")
 	@Timed
@@ -92,7 +102,8 @@ public class CostFactorResource {
 	/**
 	 * GET /cost-factors : get all the costFactors.
 	 *
-	 * @return the ResponseEntity with status 200 (OK) and the list of costFactors in body
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         costFactors in body
 	 */
 	@GetMapping("/cost-factors")
 	@Timed
@@ -104,9 +115,10 @@ public class CostFactorResource {
 	/**
 	 * GET /cost-factors/:id : get the "id" costFactor.
 	 *
-	 * @param id the id of the costFactorDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the costFactorDTO, or with
-	 *         status 404 (Not Found)
+	 * @param id
+	 *            the id of the costFactorDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         costFactorDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/cost-factors/{id}")
 	@Timed
@@ -116,25 +128,27 @@ public class CostFactorResource {
 		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(costFactorDTO));
 	}
 
-    /**
-     * GET /cost-factors/style/:id : get the costFactor by style ID.
-     *
-     * @param id the Style ID of the costFactorDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the costFactorDTO, or with
-     *         status 404 (Not Found)
-     */
-    @GetMapping("/cost-factors/style/{id}")
-    @Timed
-    public ResponseEntity<CostFactorDTO> getCostFactorByStyle(@PathVariable Long id) {
-        this.log.debug("REST request to get CostFactor : {}", id);
-        CostFactorDTO costFactorDTO = this.costFactorService.findOneByStyleId(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(costFactorDTO));
-    }
+	/**
+	 * GET /cost-factors/style/:id : get the costFactor by style ID.
+	 *
+	 * @param id
+	 *            the Style ID of the costFactorDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         costFactorDTO, or with status 404 (Not Found)
+	 */
+	@GetMapping("/cost-factors/style/{id}")
+	@Timed
+	public ResponseEntity<CostFactorDTO> getCostFactorByStyle(@PathVariable Long id) {
+		this.log.debug("REST request to get CostFactor : {}", id);
+		CostFactorDTO costFactorDTO = this.costFactorService.findOneByStyleId(id);
+		return ResponseUtil.wrapOrNotFound(Optional.ofNullable(costFactorDTO));
+	}
 
 	/**
 	 * DELETE /cost-factors/:id : delete the "id" costFactor.
 	 *
-	 * @param id the id of the costFactorDTO to delete
+	 * @param id
+	 *            the id of the costFactorDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/cost-factors/{id}")

@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import org.junit.Before;
@@ -29,14 +32,14 @@ public class ProfileInfoResourceIntTest {
 
 	/** The environment. */
 	@Mock
-	private Environment			environment;
+	private Environment environment;
 
 	/** The j hipster properties. */
 	@Mock
-	private JHipsterProperties	jHipsterProperties;
+	private JHipsterProperties jHipsterProperties;
 
 	/** The rest profile mock mvc. */
-	private MockMvc				restProfileMockMvc;
+	private MockMvc restProfileMockMvc;
 
 	/**
 	 * Setup.
@@ -53,8 +56,7 @@ public class ProfileInfoResourceIntTest {
 		Mockito.when(this.environment.getDefaultProfiles()).thenReturn(activeProfiles);
 		Mockito.when(this.environment.getActiveProfiles()).thenReturn(activeProfiles);
 
-		ProfileInfoResource profileInfoResource = new ProfileInfoResource(this.environment,
-				this.jHipsterProperties);
+		ProfileInfoResource profileInfoResource = new ProfileInfoResource(this.environment, this.jHipsterProperties);
 		this.restProfileMockMvc = MockMvcBuilders.standaloneSetup(profileInfoResource).build();
 	}
 
@@ -62,19 +64,22 @@ public class ProfileInfoResourceIntTest {
 	 * Gets the profile info with ribbon.
 	 *
 	 * @return the profile info with ribbon
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getProfileInfoWithRibbon() throws Exception {
-		this.restProfileMockMvc.perform(MockMvcRequestBuilders.get("/api/profile-info")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+		this.restProfileMockMvc.perform(MockMvcRequestBuilders.get("/api/profile-info"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
 	}
 
 	/**
 	 * Gets the profile info without ribbon.
 	 *
 	 * @return the profile info without ribbon
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getProfileInfoWithoutRibbon() throws Exception {
@@ -82,15 +87,17 @@ public class ProfileInfoResourceIntTest {
 		ribbon.setDisplayOnActiveProfiles(null);
 		Mockito.when(this.jHipsterProperties.getRibbon()).thenReturn(ribbon);
 
-		this.restProfileMockMvc.perform(MockMvcRequestBuilders.get("/api/profile-info")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+		this.restProfileMockMvc.perform(MockMvcRequestBuilders.get("/api/profile-info"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
 	}
 
 	/**
 	 * Gets the profile info without active profiles.
 	 *
 	 * @return the profile info without active profiles
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getProfileInfoWithoutActiveProfiles() throws Exception {
@@ -98,7 +105,8 @@ public class ProfileInfoResourceIntTest {
 		Mockito.when(this.environment.getDefaultProfiles()).thenReturn(emptyProfile);
 		Mockito.when(this.environment.getActiveProfiles()).thenReturn(emptyProfile);
 
-		this.restProfileMockMvc.perform(MockMvcRequestBuilders.get("/api/profile-info")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
+		this.restProfileMockMvc.perform(MockMvcRequestBuilders.get("/api/profile-info"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
 	}
 }

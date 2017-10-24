@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.impl;
 
 import logia.quanlyso.domain.Types;
@@ -24,19 +27,21 @@ import java.util.stream.Collectors;
 public class TypesServiceImpl implements TypesService {
 
 	/** The log. */
-	private final Logger			log	= LoggerFactory.getLogger(TypesServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(TypesServiceImpl.class);
 
 	/** The types repository. */
-	private final TypesRepository	typesRepository;
+	private final TypesRepository typesRepository;
 
 	/** The types mapper. */
-	private final TypesMapper		typesMapper;
+	private final TypesMapper typesMapper;
 
 	/**
 	 * Instantiates a new types service impl.
 	 *
-	 * @param typesRepository the types repository
-	 * @param typesMapper the types mapper
+	 * @param typesRepository
+	 *            the types repository
+	 * @param typesMapper
+	 *            the types mapper
 	 */
 	public TypesServiceImpl(TypesRepository typesRepository, TypesMapper typesMapper) {
 		this.typesRepository = typesRepository;
@@ -46,7 +51,8 @@ public class TypesServiceImpl implements TypesService {
 	/**
 	 * Save a types.
 	 *
-	 * @param typesDTO the entity to save
+	 * @param typesDTO
+	 *            the entity to save
 	 * @return the persisted entity
 	 */
 	@Override
@@ -76,7 +82,8 @@ public class TypesServiceImpl implements TypesService {
 	/**
 	 * Get one types by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 * @return the entity
 	 */
 	@Override
@@ -91,7 +98,8 @@ public class TypesServiceImpl implements TypesService {
 	/**
 	 * Delete the types by id.
 	 *
-	 * @param id the id of the entity
+	 * @param id
+	 *            the id of the entity
 	 */
 	@Override
 	public void delete(Long id) {

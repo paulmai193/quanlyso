@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest.errors;
 
 import java.util.HashMap;
@@ -22,22 +25,24 @@ import java.util.Map;
 public class CustomParameterizedException extends RuntimeException {
 
 	/** The Constant serialVersionUID. */
-	private static final long			serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The Constant PARAM. */
-	private static final String			PARAM				= "param";
+	private static final String PARAM = "param";
 
 	/** The message. */
-	private final String				message;
+	private final String message;
 
 	/** The param map. */
-	private final Map<String, String>	paramMap			= new HashMap<>();
+	private final Map<String, String> paramMap = new HashMap<>();
 
 	/**
 	 * Instantiates a new custom parameterized exception.
 	 *
-	 * @param message the message
-	 * @param params the params
+	 * @param message
+	 *            the message
+	 * @param params
+	 *            the params
 	 */
 	public CustomParameterizedException(String message, String... params) {
 		super(message);
@@ -52,8 +57,10 @@ public class CustomParameterizedException extends RuntimeException {
 	/**
 	 * Instantiates a new custom parameterized exception.
 	 *
-	 * @param message the message
-	 * @param paramMap the param map
+	 * @param message
+	 *            the message
+	 * @param paramMap
+	 *            the param map
 	 */
 	public CustomParameterizedException(String message, Map<String, String> paramMap) {
 		super(message);

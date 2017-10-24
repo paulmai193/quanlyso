@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;

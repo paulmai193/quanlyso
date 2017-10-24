@@ -1,9 +1,11 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiParam;
-import logia.quanlyso.domain.Transactions;
 import logia.quanlyso.service.TransactionsService;
 import logia.quanlyso.service.dto.TransactionsDTO;
 import logia.quanlyso.web.rest.util.HeaderUtil;
@@ -33,19 +35,19 @@ import java.util.Optional;
 public class TransactionsResource {
 
 	/** The log. */
-	private final Logger				log			= LoggerFactory
-			.getLogger(TransactionsResource.class);
+	private final Logger log = LoggerFactory.getLogger(TransactionsResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String			ENTITY_NAME	= "transactions";
+	private static final String ENTITY_NAME = "transactions";
 
 	/** The transactions service. */
-	private final TransactionsService	transactionsService;
+	private final TransactionsService transactionsService;
 
 	/**
 	 * Instantiates a new transactions resource.
 	 *
-	 * @param transactionsService the transactions service
+	 * @param transactionsService
+	 *            the transactions service
 	 */
 	public TransactionsResource(TransactionsService transactionsService) {
 		this.transactionsService = transactionsService;
@@ -54,15 +56,18 @@ public class TransactionsResource {
 	/**
 	 * POST /transactions : Create a new transactions.
 	 *
-	 * @param transactionsDTO the transactionsDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new transactionsDTO,
-	 *         or with status 400 (Bad Request) if the transactions has already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param transactionsDTO
+	 *            the transactionsDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new transactionsDTO, or with status 400 (Bad Request) if the
+	 *         transactions has already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/transactions")
 	@Timed
-	public ResponseEntity<TransactionsDTO> createTransactions(
-			@RequestBody TransactionsDTO transactionsDTO) throws URISyntaxException {
+	public ResponseEntity<TransactionsDTO> createTransactions(@RequestBody TransactionsDTO transactionsDTO)
+			throws URISyntaxException {
 		this.log.debug("REST request to save Transactions : {}", transactionsDTO);
 		if (transactionsDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(TransactionsResource.ENTITY_NAME,
@@ -78,48 +83,52 @@ public class TransactionsResource {
 	/**
 	 * PUT /transactions : Updates an existing transactions.
 	 *
-	 * @param transactionsDTO the transactionsDTO to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated transactionsDTO,
-	 *         or with status 400 (Bad Request) if the transactionsDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the transactionsDTO couldnt be updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param transactionsDTO
+	 *            the transactionsDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         transactionsDTO, or with status 400 (Bad Request) if the
+	 *         transactionsDTO is not valid, or with status 500 (Internal Server
+	 *         Error) if the transactionsDTO couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/transactions")
 	@Timed
-	public ResponseEntity<TransactionsDTO> updateTransactions(
-			@RequestBody TransactionsDTO transactionsDTO) throws URISyntaxException {
+	public ResponseEntity<TransactionsDTO> updateTransactions(@RequestBody TransactionsDTO transactionsDTO)
+			throws URISyntaxException {
 		this.log.debug("REST request to update Transactions : {}", transactionsDTO);
 		if (transactionsDTO.getId() == null) {
 			return this.createTransactions(transactionsDTO);
 		}
 		TransactionsDTO result = this.transactionsService.save(transactionsDTO);
-		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert(TransactionsResource.ENTITY_NAME, transactionsDTO.getId().toString()))
-				.body(result);
+		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(TransactionsResource.ENTITY_NAME,
+				transactionsDTO.getId().toString())).body(result);
 	}
 
 	/**
 	 * GET /transactions : get all the transactions.
 	 *
-	 * @param pageable the pagination information
-	 * @return the ResponseEntity with status 200 (OK) and the list of transactions in body
+	 * @param pageable
+	 *            the pagination information
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         transactions in body
 	 */
 	@GetMapping("/transactions")
 	@Timed
 	public ResponseEntity<List<TransactionsDTO>> getAllTransactions(@ApiParam Pageable pageable) {
 		this.log.debug("REST request to get a page of Transactions");
 		Page<TransactionsDTO> page = this.transactionsService.findAll(pageable);
-		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,
-				"/api/transactions");
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/transactions");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
 
 	/**
 	 * GET /transactions/:id : get the "id" transactions.
 	 *
-	 * @param id the id of the transactionsDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the transactionsDTO, or with
-	 *         status 404 (Not Found)
+	 * @param id
+	 *            the id of the transactionsDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         transactionsDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/transactions/{id}")
 	@Timed
@@ -132,7 +141,8 @@ public class TransactionsResource {
 	/**
 	 * DELETE /transactions/:id : delete the "id" transactions.
 	 *
-	 * @param id the id of the transactionsDTO to delete
+	 * @param id
+	 *            the id of the transactionsDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/transactions/{id}")
@@ -147,40 +157,44 @@ public class TransactionsResource {
 	/**
 	 * POST /transactions/calculate : Calculate value of transactions.
 	 *
-	 * @param transactionsDTO the transactionsDTO to calculate
-	 * @return the ResponseEntity with status 200 (Success) and with body the transactionsDTO has
-	 *         been calculating value
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param transactionsDTO
+	 *            the transactionsDTO to calculate
+	 * @return the ResponseEntity with status 200 (Success) and with body the
+	 *         transactionsDTO has been calculating value
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/transactions/calculate")
 	@Timed
-	public ResponseEntity<TransactionsDTO> calculateTransaction(
-			@RequestBody TransactionsDTO transactionsDTO) throws URISyntaxException {
+	public ResponseEntity<TransactionsDTO> calculateTransaction(@RequestBody TransactionsDTO transactionsDTO)
+			throws URISyntaxException {
 		this.log.debug("REST request to calculate value of Transaction : {}", transactionsDTO);
 		TransactionsDTO result = this.transactionsService.calculate(transactionsDTO);
 		return ResponseEntity.ok(result);
 	}
 
-    /**
-     * POST /transactions/calculate/list : Calculate value of transactions.
-     *
-     * @param __transactionsDTO the transactionsDTO to calculate
-     * @return the ResponseEntity with status 200 (Success) and with body the transactionsDTO has
-     *         been calculating value
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/transactions/calculate/list")
-    @Timed
-    public ResponseEntity<List<TransactionsDTO>> calculateListTransaction(
-        @RequestBody List<TransactionsDTO> __transactionsDTO) throws URISyntaxException {
-        this.log.debug("REST request to calculate value of List Transaction");
-        List<TransactionsDTO> _results = new ArrayList<>();
-        for (TransactionsDTO _dto: __transactionsDTO) {
-            TransactionsDTO _result = this.transactionsService.calculate(_dto);
-            _results.add(_result);
-        }
+	/**
+	 * POST /transactions/calculate/list : Calculate value of transactions.
+	 *
+	 * @param __transactionsDTO
+	 *            the transactionsDTO to calculate
+	 * @return the ResponseEntity with status 200 (Success) and with body the
+	 *         transactionsDTO has been calculating value
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
+	 */
+	@PostMapping("/transactions/calculate/list")
+	@Timed
+	public ResponseEntity<List<TransactionsDTO>> calculateListTransaction(
+			@RequestBody List<TransactionsDTO> __transactionsDTO) throws URISyntaxException {
+		this.log.debug("REST request to calculate value of List Transaction");
+		List<TransactionsDTO> _results = new ArrayList<>();
+		for (TransactionsDTO _dto : __transactionsDTO) {
+			TransactionsDTO _result = this.transactionsService.calculate(_dto);
+			_results.add(_result);
+		}
 
-        return ResponseEntity.ok(_results);
-    }
+		return ResponseEntity.ok(_results);
+	}
 
 }

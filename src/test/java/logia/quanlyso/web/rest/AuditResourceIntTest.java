@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import java.time.LocalDateTime;
@@ -38,44 +41,42 @@ import logia.quanlyso.service.AuditEventService;
 public class AuditResourceIntTest {
 
 	/** The Constant SAMPLE_PRINCIPAL. */
-	private static final String						SAMPLE_PRINCIPAL	= "SAMPLE_PRINCIPAL";
+	private static final String SAMPLE_PRINCIPAL = "SAMPLE_PRINCIPAL";
 
 	/** The Constant SAMPLE_TYPE. */
-	private static final String						SAMPLE_TYPE			= "SAMPLE_TYPE";
+	private static final String SAMPLE_TYPE = "SAMPLE_TYPE";
 
 	/** The Constant SAMPLE_TIMESTAMP. */
-	private static final LocalDateTime				SAMPLE_TIMESTAMP	= LocalDateTime
-			.parse("2015-08-04T10:11:30");
+	private static final LocalDateTime SAMPLE_TIMESTAMP = LocalDateTime.parse("2015-08-04T10:11:30");
 
 	/** The Constant FORMATTER. */
-	private static final DateTimeFormatter			FORMATTER			= DateTimeFormatter
-			.ofPattern("yyyy-MM-dd");
+	private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 	/** The audit event repository. */
 	@Autowired
-	private PersistenceAuditEventRepository			auditEventRepository;
+	private PersistenceAuditEventRepository auditEventRepository;
 
 	/** The audit event converter. */
 	@Autowired
-	private AuditEventConverter						auditEventConverter;
+	private AuditEventConverter auditEventConverter;
 
 	/** The jackson message converter. */
 	@Autowired
-	private MappingJackson2HttpMessageConverter		jacksonMessageConverter;
+	private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
 	/** The formatting conversion service. */
 	@Autowired
-	private FormattingConversionService				formattingConversionService;
+	private FormattingConversionService formattingConversionService;
 
 	/** The pageable argument resolver. */
 	@Autowired
-	private PageableHandlerMethodArgumentResolver	pageableArgumentResolver;
+	private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
 	/** The audit event. */
-	private PersistentAuditEvent					auditEvent;
+	private PersistentAuditEvent auditEvent;
 
 	/** The rest audit mock mvc. */
-	private MockMvc									restAuditMockMvc;
+	private MockMvc restAuditMockMvc;
 
 	/**
 	 * Setup.
@@ -108,7 +109,8 @@ public class AuditResourceIntTest {
 	 * Gets the all audits.
 	 *
 	 * @return the all audits
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getAllAudits() throws Exception {
@@ -116,16 +118,19 @@ public class AuditResourceIntTest {
 		this.auditEventRepository.save(this.auditEvent);
 
 		// Get all the audits
-		this.restAuditMockMvc.perform(MockMvcRequestBuilders.get("/management/audits")).andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].principal").value(Matchers.hasItem(AuditResourceIntTest.SAMPLE_PRINCIPAL)));
+		this.restAuditMockMvc.perform(MockMvcRequestBuilders.get("/management/audits"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].principal")
+						.value(Matchers.hasItem(AuditResourceIntTest.SAMPLE_PRINCIPAL)));
 	}
 
 	/**
 	 * Gets the audit.
 	 *
 	 * @return the audit
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getAudit() throws Exception {
@@ -134,69 +139,75 @@ public class AuditResourceIntTest {
 
 		// Get the audit
 		this.restAuditMockMvc.perform(MockMvcRequestBuilders.get("/management/audits/{id}", this.auditEvent.getId()))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.principal").value(AuditResourceIntTest.SAMPLE_PRINCIPAL));
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.principal").value(AuditResourceIntTest.SAMPLE_PRINCIPAL));
 	}
 
 	/**
 	 * Gets the audits by date.
 	 *
 	 * @return the audits by date
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getAuditsByDate() throws Exception {
 		// Initialize the database
 		this.auditEventRepository.save(this.auditEvent);
 
-		// Generate dates for selecting audits by date, making sure the period will contain the
+		// Generate dates for selecting audits by date, making sure the period
+		// will contain the
 		// audit
 		String fromDate = AuditResourceIntTest.SAMPLE_TIMESTAMP.minusDays(1).format(AuditResourceIntTest.FORMATTER);
 		String toDate = AuditResourceIntTest.SAMPLE_TIMESTAMP.plusDays(1).format(AuditResourceIntTest.FORMATTER);
 
 		// Get the audit
 		this.restAuditMockMvc
-		.perform(MockMvcRequestBuilders.get("/management/audits?fromDate=" + fromDate + "&toDate=" + toDate))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.jsonPath("$.[*].principal").value(Matchers.hasItem(AuditResourceIntTest.SAMPLE_PRINCIPAL)));
+				.perform(MockMvcRequestBuilders.get("/management/audits?fromDate=" + fromDate + "&toDate=" + toDate))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.jsonPath("$.[*].principal")
+						.value(Matchers.hasItem(AuditResourceIntTest.SAMPLE_PRINCIPAL)));
 	}
 
 	/**
 	 * Gets the non existing audits by date.
 	 *
 	 * @return the non existing audits by date
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getNonExistingAuditsByDate() throws Exception {
 		// Initialize the database
 		this.auditEventRepository.save(this.auditEvent);
 
-		// Generate dates for selecting audits by date, making sure the period will not contain the
+		// Generate dates for selecting audits by date, making sure the period
+		// will not contain the
 		// sample audit
 		String fromDate = AuditResourceIntTest.SAMPLE_TIMESTAMP.minusDays(2).format(AuditResourceIntTest.FORMATTER);
 		String toDate = AuditResourceIntTest.SAMPLE_TIMESTAMP.minusDays(1).format(AuditResourceIntTest.FORMATTER);
 
 		// Query audits but expect no results
 		this.restAuditMockMvc
-		.perform(MockMvcRequestBuilders.get("/management/audits?fromDate=" + fromDate + "&toDate=" + toDate))
-		.andExpect(MockMvcResultMatchers.status().isOk())
-		.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-		.andExpect(MockMvcResultMatchers.header().string("X-Total-Count", "0"));
+				.perform(MockMvcRequestBuilders.get("/management/audits?fromDate=" + fromDate + "&toDate=" + toDate))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+				.andExpect(MockMvcResultMatchers.header().string("X-Total-Count", "0"));
 	}
 
 	/**
 	 * Gets the non existing audit.
 	 *
 	 * @return the non existing audit
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@Test
 	public void getNonExistingAudit() throws Exception {
 		// Get the audit
 		this.restAuditMockMvc.perform(MockMvcRequestBuilders.get("/management/audits/{id}", Long.MAX_VALUE))
-		.andExpect(MockMvcResultMatchers.status().isNotFound());
+				.andExpect(MockMvcResultMatchers.status().isNotFound());
 	}
 }

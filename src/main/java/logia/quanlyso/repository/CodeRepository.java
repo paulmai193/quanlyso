@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.repository;
 
 import logia.quanlyso.domain.Channel;
@@ -16,8 +19,10 @@ public interface CodeRepository extends JpaRepository<Code, Long> {
 	/**
 	 * Find all by open day.
 	 *
-	 * @param channels the channels
-	 * @param openDate the open date
+	 * @param channels
+	 *            the channels
+	 * @param openDate
+	 *            the open date
 	 * @return the list
 	 */
 	List<Code> findAllByChannelsAndOpenDate(Channel channels, ZonedDateTime openDate);

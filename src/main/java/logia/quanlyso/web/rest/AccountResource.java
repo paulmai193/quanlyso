@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -34,26 +37,28 @@ import java.util.Optional;
 public class AccountResource {
 
 	/** The log. */
-	private final Logger			log	= LoggerFactory.getLogger(AccountResource.class);
+	private final Logger log = LoggerFactory.getLogger(AccountResource.class);
 
 	/** The user repository. */
-	private final UserRepository	userRepository;
+	private final UserRepository userRepository;
 
 	/** The user service. */
-	private final UserService		userService;
+	private final UserService userService;
 
 	/** The mail service. */
-	private final MailService		mailService;
+	private final MailService mailService;
 
 	/**
 	 * Instantiates a new account resource.
 	 *
-	 * @param userRepository the user repository
-	 * @param userService the user service
-	 * @param mailService the mail service
+	 * @param userRepository
+	 *            the user repository
+	 * @param userService
+	 *            the user service
+	 * @param mailService
+	 *            the mail service
 	 */
-	public AccountResource(UserRepository userRepository, UserService userService,
-			MailService mailService) {
+	public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
 
 		this.userRepository = userRepository;
 		this.userService = userService;
@@ -63,12 +68,13 @@ public class AccountResource {
 	/**
 	 * POST /register : register the user.
 	 *
-	 * @param managedUserVM the managed user View Model
-	 * @return the ResponseEntity with status 201 (Created) if the user is registered or 400 (Bad
-	 *         Request) if the login or email is already in use
+	 * @param managedUserVM
+	 *            the managed user View Model
+	 * @return the ResponseEntity with status 201 (Created) if the user is
+	 *         registered or 400 (Bad Request) if the login or email is already
+	 *         in use
 	 */
-	@PostMapping(path = "/register", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.TEXT_PLAIN_VALUE })
+	@PostMapping(path = "/register", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.TEXT_PLAIN_VALUE })
 	@Timed
 	@ApiIgnore("Quanlyso system don't support register account. Contact administrator to get new one")
 	public ResponseEntity registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
@@ -77,16 +83,14 @@ public class AccountResource {
 		textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
 		return this.userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
-				.map(user -> new ResponseEntity<>("login already in use", textPlainHeaders,
-						HttpStatus.BAD_REQUEST))
+				.map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
 				.orElseGet(() -> this.userRepository.findOneByEmail(managedUserVM.getEmail())
-						.map(user -> new ResponseEntity<>("email address already in use",
-								textPlainHeaders, HttpStatus.BAD_REQUEST))
+						.map(user -> new ResponseEntity<>("email address already in use", textPlainHeaders,
+								HttpStatus.BAD_REQUEST))
 						.orElseGet(() -> {
 							User user = this.userService.createUser(managedUserVM.getLogin(),
 									managedUserVM.getPassword(), managedUserVM.getFirstName(),
-									managedUserVM.getLastName(),
-									managedUserVM.getEmail().toLowerCase(),
+									managedUserVM.getLastName(), managedUserVM.getEmail().toLowerCase(),
 									managedUserVM.getImageUrl(), managedUserVM.getLangKey());
 
 							this.mailService.sendActivationEmail(user);
@@ -97,23 +101,27 @@ public class AccountResource {
 	/**
 	 * GET /activate : activate the registered user.
 	 *
-	 * @param key the activation key
-	 * @return the ResponseEntity with status 200 (OK) and the activated user in body, or status 500
-	 *         (Internal Server Error) if the user couldn't be activated
+	 * @param key
+	 *            the activation key
+	 * @return the ResponseEntity with status 200 (OK) and the activated user in
+	 *         body, or status 500 (Internal Server Error) if the user couldn't
+	 *         be activated
 	 */
 	@GetMapping("/activate")
 	@Timed
-//	@ApiIgnore("Quanlyso system don't support activate account. Contact administrator to do this")
+	// @ApiIgnore("Quanlyso system don't support activate account. Contact
+	// administrator to do this")
 	public ResponseEntity activateAccount(@RequestParam(value = "key") String key) {
-		return this.userService.activateRegistration(key)
-				.map(user -> new ResponseEntity<>(HttpStatus.OK))
+		return this.userService.activateRegistration(key).map(user -> new ResponseEntity<>(HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 	}
 
 	/**
-	 * GET /authenticate : check if the user is authenticated, and return its login.
+	 * GET /authenticate : check if the user is authenticated, and return its
+	 * login.
 	 *
-	 * @param request the HTTP request
+	 * @param request
+	 *            the HTTP request
 	 * @return the login if the user is authenticated
 	 */
 	@GetMapping("/authenticate")
@@ -126,8 +134,9 @@ public class AccountResource {
 	/**
 	 * GET /account : get the current user.
 	 *
-	 * @return the ResponseEntity with status 200 (OK) and the current user in body, or status 500
-	 *         (Internal Server Error) if the user couldn't be returned
+	 * @return the ResponseEntity with status 200 (OK) and the current user in
+	 *         body, or status 500 (Internal Server Error) if the user couldn't
+	 *         be returned
 	 */
 	@GetMapping("/account")
 	@Timed
@@ -140,9 +149,11 @@ public class AccountResource {
 	/**
 	 * POST /account : update the current user information.
 	 *
-	 * @param userDTO the current user information
-	 * @return the ResponseEntity with status 200 (OK), or status 400 (Bad Request) or 500 (Internal
-	 *         Server Error) if the user couldn't be updated
+	 * @param userDTO
+	 *            the current user information
+	 * @return the ResponseEntity with status 200 (OK), or status 400 (Bad
+	 *         Request) or 500 (Internal Server Error) if the user couldn't be
+	 *         updated
 	 */
 	@PostMapping("/account")
 	@Timed
@@ -150,15 +161,14 @@ public class AccountResource {
 	public ResponseEntity saveAccount(@Valid @RequestBody UserDTO userDTO) {
 		final String userLogin = SecurityUtils.getCurrentUserLogin();
 		Optional<User> existingUser = this.userRepository.findOneByEmail(userDTO.getEmail());
-		if (existingUser.isPresent()
-				&& (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
-			return ResponseEntity.badRequest().headers(HeaderUtil
-					.createFailureAlert("user-management", "emailexists", "Email already in use"))
+		if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
+			return ResponseEntity.badRequest()
+					.headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use"))
 					.body(null);
 		}
 		return this.userRepository.findOneByLogin(userLogin).map(u -> {
-			this.userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(),
-					userDTO.getEmail(), userDTO.getLangKey(), userDTO.getImageUrl());
+			this.userService.updateUser(userDTO.getFirstName(), userDTO.getLastName(), userDTO.getEmail(),
+					userDTO.getLangKey(), userDTO.getImageUrl());
 			return new ResponseEntity(HttpStatus.OK);
 		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 	}
@@ -166,9 +176,10 @@ public class AccountResource {
 	/**
 	 * POST /account/change_password : changes the current user's password.
 	 *
-	 * @param password the new password
-	 * @return the ResponseEntity with status 200 (OK), or status 400 (Bad Request) if the new
-	 *         password is not strong enough
+	 * @param password
+	 *            the new password
+	 * @return the ResponseEntity with status 200 (OK), or status 400 (Bad
+	 *         Request) if the new password is not strong enough
 	 */
 	@PostMapping(path = "/account/change_password", produces = MediaType.TEXT_PLAIN_VALUE)
 	@Timed
@@ -181,11 +192,13 @@ public class AccountResource {
 	}
 
 	/**
-	 * POST /account/reset_password/init : Send an email to reset the password of the user.
+	 * POST /account/reset_password/init : Send an email to reset the password
+	 * of the user.
 	 *
-	 * @param mail the mail of the user
-	 * @return the ResponseEntity with status 200 (OK) if the email was sent, or status 400 (Bad
-	 *         Request) if the email address is not registered
+	 * @param mail
+	 *            the mail of the user
+	 * @return the ResponseEntity with status 200 (OK) if the email was sent, or
+	 *         status 400 (Bad Request) if the email address is not registered
 	 */
 	@PostMapping(path = "/account/reset_password/init", produces = MediaType.TEXT_PLAIN_VALUE)
 	@Timed
@@ -197,22 +210,22 @@ public class AccountResource {
 	}
 
 	/**
-	 * POST /account/reset_password/finish : Finish to reset the password of the user.
+	 * POST /account/reset_password/finish : Finish to reset the password of the
+	 * user.
 	 *
-	 * @param keyAndPassword the generated key and the new password
-	 * @return the ResponseEntity with status 200 (OK) if the password has been reset,
-	 *         or status 400 (Bad Request) or 500 (Internal Server Error) if the password could not
-	 *         be reset
+	 * @param keyAndPassword
+	 *            the generated key and the new password
+	 * @return the ResponseEntity with status 200 (OK) if the password has been
+	 *         reset, or status 400 (Bad Request) or 500 (Internal Server Error)
+	 *         if the password could not be reset
 	 */
 	@PostMapping(path = "/account/reset_password/finish", produces = MediaType.TEXT_PLAIN_VALUE)
 	@Timed
-	public ResponseEntity finishPasswordReset(
-			@RequestBody KeyAndPasswordVM keyAndPassword) {
+	public ResponseEntity finishPasswordReset(@RequestBody KeyAndPasswordVM keyAndPassword) {
 		if (!this.checkPasswordLength(keyAndPassword.getNewPassword())) {
 			return new ResponseEntity<>("Incorrect password", HttpStatus.BAD_REQUEST);
 		}
-		return this.userService
-				.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
+		return this.userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey())
 				.map(user -> new ResponseEntity<>(HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
 	}
@@ -220,12 +233,12 @@ public class AccountResource {
 	/**
 	 * Check password length.
 	 *
-	 * @param password the password
+	 * @param password
+	 *            the password
 	 * @return true, if successful
 	 */
 	private boolean checkPasswordLength(String password) {
-		return !StringUtils.isEmpty(password)
-				&& password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH
+		return !StringUtils.isEmpty(password) && password.length() >= ManagedUserVM.PASSWORD_MIN_LENGTH
 				&& password.length() <= ManagedUserVM.PASSWORD_MAX_LENGTH;
 	}
 }

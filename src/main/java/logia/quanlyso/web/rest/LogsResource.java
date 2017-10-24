@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import ch.qos.logback.classic.Level;
@@ -35,7 +38,8 @@ public class LogsResource {
 	/**
 	 * Change level.
 	 *
-	 * @param jsonLogger the json logger
+	 * @param jsonLogger
+	 *            the json logger
 	 */
 	@PutMapping("/logs")
 	@ResponseStatus(HttpStatus.NO_CONTENT)

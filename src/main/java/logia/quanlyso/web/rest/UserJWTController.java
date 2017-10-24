@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -38,26 +41,29 @@ import java.util.Collections;
 public class UserJWTController {
 
 	/** The log. */
-	private final Logger				log	= LoggerFactory.getLogger(UserJWTController.class);
+	private final Logger log = LoggerFactory.getLogger(UserJWTController.class);
 
 	/** The token provider. */
-	private final TokenProvider			tokenProvider;
+	private final TokenProvider tokenProvider;
 
 	/** The authentication manager. */
-	private final AuthenticationManager	authenticationManager;
+	private final AuthenticationManager authenticationManager;
 
 	/** The user service. */
-	private final UserService			userService;
+	private final UserService userService;
 
 	/**
 	 * Instantiates a new user JWT controller.
 	 *
-	 * @param tokenProvider the token provider
-	 * @param authenticationManager the authentication manager
-	 * @param userService the user service
+	 * @param tokenProvider
+	 *            the token provider
+	 * @param authenticationManager
+	 *            the authentication manager
+	 * @param userService
+	 *            the user service
 	 */
-	public UserJWTController(TokenProvider tokenProvider,
-			AuthenticationManager authenticationManager, UserService userService) {
+	public UserJWTController(TokenProvider tokenProvider, AuthenticationManager authenticationManager,
+			UserService userService) {
 		this.tokenProvider = tokenProvider;
 		this.authenticationManager = authenticationManager;
 		this.userService = userService;
@@ -66,27 +72,27 @@ public class UserJWTController {
 	/**
 	 * Authorize.
 	 *
-	 * @param loginVM the login VM
-	 * @param response the response
+	 * @param loginVM
+	 *            the login VM
+	 * @param response
+	 *            the response
 	 * @return the response entity
 	 */
 	@PostMapping("/authenticate")
 	@Timed
-	public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM,
-			HttpServletResponse response) {
+	public ResponseEntity authorize(@Valid @RequestBody LoginVM loginVM, HttpServletResponse response) {
 
 		UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
 				loginVM.getUsername(), loginVM.getPassword());
 
 		try {
-			Authentication authentication = this.authenticationManager
-					.authenticate(authenticationToken);
+			Authentication authentication = this.authenticationManager.authenticate(authenticationToken);
 
 			// Check grand & revoke access date
 			User user = this.userService.getUserWithAuthoritiesByLogin(loginVM.getUsername()).get();
 			ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
-			if (user.getRevokeAccessDate() != null && (user.getGrantAccessDate().isAfter(now)
-					|| user.getRevokeAccessDate().isBefore(now))) {
+			if (user.getRevokeAccessDate() != null
+					&& (user.getGrantAccessDate().isAfter(now) || user.getRevokeAccessDate().isBefore(now))) {
 				throw new UserRevokeAccessException("Account be revoked access by administrator");
 			}
 
@@ -96,17 +102,13 @@ public class UserJWTController {
 			String jwt = this.tokenProvider.createToken(authentication, rememberMe);
 			response.addHeader(JWTConfigurer.AUTHORIZATION_HEADER, "Bearer " + jwt);
 			return ResponseEntity.ok(new JWTToken(jwt));
-		}
-		catch (UserRevokeAccessException ae) {
+		} catch (UserRevokeAccessException ae) {
 			this.log.trace("Authentication exception trace: {}", ae);
-			return new ResponseEntity<>(
-					Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
+			return new ResponseEntity<>(Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
 					HttpStatus.PAYMENT_REQUIRED);
-		}
-		catch (AuthenticationException ae) {
+		} catch (AuthenticationException ae) {
 			this.log.trace("Authentication exception trace: {}", ae);
-			return new ResponseEntity<>(
-					Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
+			return new ResponseEntity<>(Collections.singletonMap("AuthenticationException", ae.getLocalizedMessage()),
 					HttpStatus.UNAUTHORIZED);
 		}
 	}
@@ -124,7 +126,8 @@ public class UserJWTController {
 		/**
 		 * Instantiates a new JWT token.
 		 *
-		 * @param idToken the id token
+		 * @param idToken
+		 *            the id token
 		 */
 		JWTToken(String idToken) {
 			this.idToken = idToken;
@@ -143,7 +146,8 @@ public class UserJWTController {
 		/**
 		 * Sets the id token.
 		 *
-		 * @param idToken the new id token
+		 * @param idToken
+		 *            the new id token
 		 */
 		void setIdToken(String idToken) {
 			this.idToken = idToken;

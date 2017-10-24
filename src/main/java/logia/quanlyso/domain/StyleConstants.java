@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 /**
@@ -20,7 +23,8 @@ public enum StyleConstants {
 	/**
 	 * Instantiates a new style constants.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
 	StyleConstants(long id) {
 		this.styleId = id;

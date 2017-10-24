@@ -344,7 +344,7 @@ export class QuanLySoToolComponent implements OnInit, OnDestroy {
             this.transactions = result;
             for (const tran of this.transactions) {
                 tran.openDate = this.datePipe.transform(tran.openDate, this.DATE_FORMAT);
-                tran.chooseChannel = this.channels.find(value => value.id === tran.transactionDetailsDTOs[0].channelsId);
+                tran.chooseChannel = this.channels.find((value) => value.id === tran.transactionDetailsDTOs[0].channelsId);
             }
             this.isCalculate = false;
         } else {

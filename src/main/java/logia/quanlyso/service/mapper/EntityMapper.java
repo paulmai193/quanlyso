@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.mapper;
 
 import java.util.List;
@@ -5,8 +8,10 @@ import java.util.List;
 /**
  * Contract for a generic dto to entity mapper.
  * 
- * @param <DTO> - DTO type parameter.
- * @param <ENTITY> - Entity type parameter.
+ * @param <DTO>
+ *            - DTO type parameter.
+ * @param <ENTITY>
+ *            - Entity type parameter.
  */
 
 public interface EntityMapper<DTO, ENTITY> {

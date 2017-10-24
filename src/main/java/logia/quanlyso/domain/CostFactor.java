@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import org.hibernate.annotations.Cache;
@@ -18,24 +21,24 @@ import java.util.Objects;
 public class CostFactor implements Serializable {
 
 	/** The Constant serialVersionUID. */
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	/** The id. */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long				id;
+	private Long id;
 
 	/** The minRate. */
 	@Column(name = "maxRate")
 	private Float maxRate;
 
-    /** The maxRate. */
-    @Column(name = "minRate")
-    private Float minRate;
+	/** The maxRate. */
+	@Column(name = "minRate")
+	private Float minRate;
 
 	/** The styles. */
 	@ManyToOne
-	private Style				styles;
+	private Style styles;
 
 	/**
 	 * Gets the id.
@@ -49,7 +52,8 @@ public class CostFactor implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -67,7 +71,8 @@ public class CostFactor implements Serializable {
 	/**
 	 * Min rate.
 	 *
-	 * @param rate the minRate
+	 * @param rate
+	 *            the minRate
 	 * @return the cost factor
 	 */
 	public CostFactor minRate(Float rate) {
@@ -78,26 +83,27 @@ public class CostFactor implements Serializable {
 	/**
 	 * Sets the minRate.
 	 *
-	 * @param minRate the new minRate
+	 * @param minRate
+	 *            the new minRate
 	 */
 	public void setMinRate(Float minRate) {
 		this.minRate = minRate;
 	}
 
-    public Float getMaxRate() {
-        return maxRate;
-    }
+	public Float getMaxRate() {
+		return maxRate;
+	}
 
-    public CostFactor maxRate(Float rate) {
-	    this.setMaxRate(rate);
-	    return this;
-    }
+	public CostFactor maxRate(Float rate) {
+		this.setMaxRate(rate);
+		return this;
+	}
 
-    public void setMaxRate(Float maxRate) {
-        this.maxRate = maxRate;
-    }
+	public void setMaxRate(Float maxRate) {
+		this.maxRate = maxRate;
+	}
 
-    /**
+	/**
 	 * Gets the styles.
 	 *
 	 * @return the styles
@@ -109,7 +115,8 @@ public class CostFactor implements Serializable {
 	/**
 	 * Styles.
 	 *
-	 * @param style the style
+	 * @param style
+	 *            the style
 	 * @return the cost factor
 	 */
 	public CostFactor styles(Style style) {
@@ -120,7 +127,8 @@ public class CostFactor implements Serializable {
 	/**
 	 * Sets the styles.
 	 *
-	 * @param style the new styles
+	 * @param style
+	 *            the new styles
 	 */
 	public void setStyles(Style style) {
 		this.styles = style;

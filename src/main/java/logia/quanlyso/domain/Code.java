@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.domain;
 
 import org.hibernate.annotations.Cache;
@@ -16,20 +19,20 @@ import java.util.Objects;
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class Code implements Serializable {
 
-	private static final long	serialVersionUID	= 1L;
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long				id;
+	private Long id;
 
 	@Column(name = "code")
-	private String				code;
+	private String code;
 
 	@Column(name = "open_date")
-	private ZonedDateTime		openDate;
+	private ZonedDateTime openDate;
 
 	@ManyToOne
-	private Channel				channels;
+	private Channel channels;
 
 	public Long getId() {
 		return this.id;
@@ -100,7 +103,7 @@ public class Code implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Code{" + "id=" + this.getId() + ", code='" + this.getCode() + "'" + ", openDate='"
-				+ this.getOpenDate() + "'" + "}";
+		return "Code{" + "id=" + this.getId() + ", code='" + this.getCode() + "'" + ", openDate='" + this.getOpenDate()
+				+ "'" + "}";
 	}
 }

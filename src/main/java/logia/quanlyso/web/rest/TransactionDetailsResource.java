@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -31,19 +34,19 @@ import java.util.Optional;
 public class TransactionDetailsResource {
 
 	/** The log. */
-	private final Logger					log			= LoggerFactory
-			.getLogger(TransactionDetailsResource.class);
+	private final Logger log = LoggerFactory.getLogger(TransactionDetailsResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String				ENTITY_NAME	= "transactionDetails";
+	private static final String ENTITY_NAME = "transactionDetails";
 
 	/** The transaction details service. */
-	private final TransactionDetailsService	transactionDetailsService;
+	private final TransactionDetailsService transactionDetailsService;
 
 	/**
 	 * Instantiates a new transaction details resource.
 	 *
-	 * @param transactionDetailsService the transaction details service
+	 * @param transactionDetailsService
+	 *            the transaction details service
 	 */
 	public TransactionDetailsResource(TransactionDetailsService transactionDetailsService) {
 		this.transactionDetailsService = transactionDetailsService;
@@ -52,11 +55,13 @@ public class TransactionDetailsResource {
 	/**
 	 * POST /transaction-details : Create a new transactionDetails.
 	 *
-	 * @param transactionDetailsDTO the transactionDetailsDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new
-	 *         transactionDetailsDTO, or with status 400 (Bad Request) if the transactionDetails has
-	 *         already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param transactionDetailsDTO
+	 *            the transactionDetailsDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new transactionDetailsDTO, or with status 400 (Bad Request) if
+	 *         the transactionDetails has already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/transaction-details")
 	@Timed
@@ -64,8 +69,10 @@ public class TransactionDetailsResource {
 			@RequestBody TransactionDetailsDTO transactionDetailsDTO) throws URISyntaxException {
 		this.log.debug("REST request to save TransactionDetails : {}", transactionDetailsDTO);
 		if (transactionDetailsDTO.getId() != null) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(TransactionDetailsResource.ENTITY_NAME,
-					"idexists", "A new transactionDetails cannot already have an ID")).body(null);
+			return ResponseEntity.badRequest()
+					.headers(HeaderUtil.createFailureAlert(TransactionDetailsResource.ENTITY_NAME, "idexists",
+							"A new transactionDetails cannot already have an ID"))
+					.body(null);
 		}
 		TransactionDetailsDTO result = this.transactionDetailsService.save(transactionDetailsDTO);
 		return ResponseEntity
@@ -77,13 +84,14 @@ public class TransactionDetailsResource {
 	/**
 	 * PUT /transaction-details : Updates an existing transactionDetails.
 	 *
-	 * @param transactionDetailsDTO the transactionDetailsDTO to update
+	 * @param transactionDetailsDTO
+	 *            the transactionDetailsDTO to update
 	 * @return the ResponseEntity with status 200 (OK) and with body the updated
-	 *         transactionDetailsDTO,
-	 *         or with status 400 (Bad Request) if the transactionDetailsDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the transactionDetailsDTO couldnt be
-	 *         updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 *         transactionDetailsDTO, or with status 400 (Bad Request) if the
+	 *         transactionDetailsDTO is not valid, or with status 500 (Internal
+	 *         Server Error) if the transactionDetailsDTO couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/transaction-details")
 	@Timed
@@ -101,26 +109,27 @@ public class TransactionDetailsResource {
 	/**
 	 * GET /transaction-details : get all the transactionDetails.
 	 *
-	 * @param pageable the pagination information
-	 * @return the ResponseEntity with status 200 (OK) and the list of transactionDetails in body
+	 * @param pageable
+	 *            the pagination information
+	 * @return the ResponseEntity with status 200 (OK) and the list of
+	 *         transactionDetails in body
 	 */
 	@GetMapping("/transaction-details")
 	@Timed
-	public ResponseEntity<List<TransactionDetailsDTO>> getAllTransactionDetails(
-			@ApiParam Pageable pageable) {
+	public ResponseEntity<List<TransactionDetailsDTO>> getAllTransactionDetails(@ApiParam Pageable pageable) {
 		this.log.debug("REST request to get a page of TransactionDetails");
 		Page<TransactionDetailsDTO> page = this.transactionDetailsService.findAll(pageable);
-		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page,
-				"/api/transaction-details");
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/transaction-details");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
 	}
 
 	/**
 	 * GET /transaction-details/:id : get the "id" transactionDetails.
 	 *
-	 * @param id the id of the transactionDetailsDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the transactionDetailsDTO, or
-	 *         with status 404 (Not Found)
+	 * @param id
+	 *            the id of the transactionDetailsDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         transactionDetailsDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/transaction-details/{id}")
 	@Timed
@@ -133,7 +142,8 @@ public class TransactionDetailsResource {
 	/**
 	 * DELETE /transaction-details/:id : delete the "id" transactionDetails.
 	 *
-	 * @param id the id of the transactionDetailsDTO to delete
+	 * @param id
+	 *            the id of the transactionDetailsDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/transaction-details/{id}")
@@ -142,7 +152,8 @@ public class TransactionDetailsResource {
 		this.log.debug("REST request to delete TransactionDetails : {}", id);
 		this.transactionDetailsService.delete(id);
 		return ResponseEntity.ok()
-				.headers(HeaderUtil.createEntityDeletionAlert(TransactionDetailsResource.ENTITY_NAME, id.toString())).build();
+				.headers(HeaderUtil.createEntityDeletionAlert(TransactionDetailsResource.ENTITY_NAME, id.toString()))
+				.build();
 	}
 
 }

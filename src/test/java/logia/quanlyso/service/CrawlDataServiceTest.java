@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,16 +26,16 @@ import logia.quanlyso.service.util.DateFormatterUtil;
 @SpringBootTest(classes = QuanlysoApp.class)
 @Transactional
 public class CrawlDataServiceTest {
-	
+
 	@Autowired
-	private CodeService			codeService;
-	
+	private CodeService codeService;
+
 	@Autowired
 	private ChannelRepository channelRepository;
-	
+
 	@Autowired
 	private CodeRepository codeRepository;
-	
+
 	/**
 	 * @throws Exception
 	 */
@@ -45,7 +48,7 @@ public class CrawlDataServiceTest {
 		ZonedDateTime _openDate = DateFormatterUtil.fromDDMMYYYYStringToZonedDateTime(_date);
 		boolean __forceUpdate = true;
 		this.codeService.crawlLotteriesFromMinhNgocSite(_channelCode, _date, __forceUpdate);
-		
+
 		// Assert value
 		List<Code> _codes = this.codeRepository.findAllByChannelsAndOpenDate(_channel, _openDate);
 		assertThat(_codes).isNotEmpty();

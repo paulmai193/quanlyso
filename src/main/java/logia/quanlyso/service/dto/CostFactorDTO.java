@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.service.dto;
 
 import java.io.Serializable;
@@ -16,7 +19,7 @@ public class CostFactorDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** The id. */
-	private Long	id;
+	private Long id;
 
 	/** The minRate. */
 	private Float minRate;
@@ -24,7 +27,7 @@ public class CostFactorDTO implements Serializable {
 	private Float maxRate;
 
 	/** The styles id. */
-	private Long	stylesId;
+	private Long stylesId;
 
 	/**
 	 * Gets the id.
@@ -38,7 +41,8 @@ public class CostFactorDTO implements Serializable {
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -56,21 +60,22 @@ public class CostFactorDTO implements Serializable {
 	/**
 	 * Sets the minRate.
 	 *
-	 * @param minRate the new minRate
+	 * @param minRate
+	 *            the new minRate
 	 */
 	public void setMinRate(Float minRate) {
 		this.minRate = minRate;
 	}
 
-    public Float getMaxRate() {
-        return maxRate;
-    }
+	public Float getMaxRate() {
+		return maxRate;
+	}
 
-    public void setMaxRate(Float maxRate) {
-        this.maxRate = maxRate;
-    }
+	public void setMaxRate(Float maxRate) {
+		this.maxRate = maxRate;
+	}
 
-    /**
+	/**
 	 * Gets the styles id.
 	 *
 	 * @return the styles id
@@ -82,7 +87,8 @@ public class CostFactorDTO implements Serializable {
 	/**
 	 * Sets the styles id.
 	 *
-	 * @param styleId the new styles id
+	 * @param styleId
+	 *            the new styles id
 	 */
 	public void setStylesId(Long styleId) {
 		this.stylesId = styleId;
@@ -119,13 +125,9 @@ public class CostFactorDTO implements Serializable {
 		return Objects.hashCode(this.getId());
 	}
 
-    @Override
-    public String toString() {
-        return "CostFactorDTO{" +
-            "id=" + id +
-            ", minRate=" + minRate +
-            ", maxRate=" + maxRate +
-            ", stylesId=" + stylesId +
-            '}';
-    }
+	@Override
+	public String toString() {
+		return "CostFactorDTO{" + "id=" + id + ", minRate=" + minRate + ", maxRate=" + maxRate + ", stylesId="
+				+ stylesId + '}';
+	}
 }

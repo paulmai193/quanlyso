@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package logia.quanlyso.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
@@ -40,23 +43,26 @@ import java.util.stream.Collectors;
 public class CodeResource {
 
 	/** The log. */
-	private final Logger		log			= LoggerFactory.getLogger(CodeResource.class);
+	private final Logger log = LoggerFactory.getLogger(CodeResource.class);
 
 	/** The Constant ENTITY_NAME. */
-	private static final String	ENTITY_NAME	= "code";
+	private static final String ENTITY_NAME = "code";
 
 	/** The code service. */
-	private final CodeService	codeService;
+	private final CodeService codeService;
 
 	/** The channel service. */
-	private final ChannelService	channelService;
+	private final ChannelService channelService;
 
 	/**
 	 * Instantiates a new code resource.
 	 *
-	 * @param __codeService the code service
-	 * @param __channelService the channel service
-	 * @param __processingListener the processing listener
+	 * @param __codeService
+	 *            the code service
+	 * @param __channelService
+	 *            the channel service
+	 * @param __processingListener
+	 *            the processing listener
 	 */
 	public CodeResource(CodeService __codeService, ChannelService __channelService) {
 		this.codeService = __codeService;
@@ -66,56 +72,60 @@ public class CodeResource {
 	/**
 	 * POST /codes : Create a new code.
 	 *
-	 * @param __codeDTO the codeDTO to create
-	 * @return the ResponseEntity with status 201 (Created) and with body the new codeDTO, or with
-	 *         status 400 (Bad Request) if the code has already an ID
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param __codeDTO
+	 *            the codeDTO to create
+	 * @return the ResponseEntity with status 201 (Created) and with body the
+	 *         new codeDTO, or with status 400 (Bad Request) if the code has
+	 *         already an ID
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PostMapping("/codes")
 	@Timed
-	public ResponseEntity<CodeDTO> createCode(@RequestBody CodeDTO __codeDTO)
-			throws URISyntaxException {
+	public ResponseEntity<CodeDTO> createCode(@RequestBody CodeDTO __codeDTO) throws URISyntaxException {
 		this.log.debug("REST request to save Code : {}", __codeDTO);
 		if (__codeDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(CodeResource.ENTITY_NAME,
 					"idexists", "A new code cannot already have an ID")).body(null);
 		}
 		CodeDTO result = this.codeService.save(__codeDTO);
-		return ResponseEntity
-				.created(new URI("/api/codes/" + result.getId())).headers(HeaderUtil
-						.createEntityCreationAlert(CodeResource.ENTITY_NAME, result.getId().toString()))
+		return ResponseEntity.created(new URI("/api/codes/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert(CodeResource.ENTITY_NAME, result.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * PUT /codes : Updates an existing code.
 	 *
-	 * @param codeDTO the codeDTO to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated codeDTO,
-	 *         or with status 400 (Bad Request) if the codeDTO is not valid,
-	 *         or with status 500 (Internal Server Error) if the codeDTO couldnt be updated
-	 * @throws URISyntaxException if the Location URI syntax is incorrect
+	 * @param codeDTO
+	 *            the codeDTO to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         codeDTO, or with status 400 (Bad Request) if the codeDTO is not
+	 *         valid, or with status 500 (Internal Server Error) if the codeDTO
+	 *         couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
 	 */
 	@PutMapping("/codes")
 	@Timed
-	public ResponseEntity<CodeDTO> updateCode(@RequestBody CodeDTO codeDTO)
-			throws URISyntaxException {
+	public ResponseEntity<CodeDTO> updateCode(@RequestBody CodeDTO codeDTO) throws URISyntaxException {
 		this.log.debug("REST request to update Code : {}", codeDTO);
 		if (codeDTO.getId() == null) {
 			return this.createCode(codeDTO);
 		}
 		CodeDTO result = this.codeService.save(codeDTO);
 		return ResponseEntity.ok()
-				.headers(
-						HeaderUtil.createEntityUpdateAlert(CodeResource.ENTITY_NAME, codeDTO.getId().toString()))
+				.headers(HeaderUtil.createEntityUpdateAlert(CodeResource.ENTITY_NAME, codeDTO.getId().toString()))
 				.body(result);
 	}
 
 	/**
 	 * GET /codes : get all the codes.
 	 *
-	 * @param pageable the pagination information
-	 * @return the ResponseEntity with status 200 (OK) and the list of codes in body
+	 * @param pageable
+	 *            the pagination information
+	 * @return the ResponseEntity with status 200 (OK) and the list of codes in
+	 *         body
 	 */
 	@GetMapping("/codes")
 	@Timed
@@ -129,9 +139,10 @@ public class CodeResource {
 	/**
 	 * GET /codes/:id : get the "id" code.
 	 *
-	 * @param id the id of the codeDTO to retrieve
-	 * @return the ResponseEntity with status 200 (OK) and with body the codeDTO, or with status 404
-	 *         (Not Found)
+	 * @param id
+	 *            the id of the codeDTO to retrieve
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         codeDTO, or with status 404 (Not Found)
 	 */
 	@GetMapping("/codes/{id}")
 	@Timed
@@ -144,7 +155,8 @@ public class CodeResource {
 	/**
 	 * DELETE /codes/:id : delete the "id" code.
 	 *
-	 * @param id the id of the codeDTO to delete
+	 * @param id
+	 *            the id of the codeDTO to delete
 	 * @return the ResponseEntity with status 200 (OK)
 	 */
 	@DeleteMapping("/codes/{id}")
@@ -159,13 +171,14 @@ public class CodeResource {
 	/**
 	 * POST /codes/crawl : Crawl codes data from other website.
 	 *
-	 * @param __crawlRequestDTO the crawl request DTO
+	 * @param __crawlRequestDTO
+	 *            the crawl request DTO
 	 * @return the response entity with status 201 (Created)
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
 	@PostMapping(value = "/codes/crawl")
-	public ResponseEntity<Void> crawlData(@RequestBody CrawlRequestDTO __crawlRequestDTO)
-	        throws Exception {
+	public ResponseEntity<Void> crawlData(@RequestBody CrawlRequestDTO __crawlRequestDTO) throws Exception {
 		this.log.debug("REST request to crawl code data from other website");
 		if (__crawlRequestDTO == null) {
 			__crawlRequestDTO = new CrawlRequestDTO();
@@ -177,10 +190,10 @@ public class CodeResource {
 		}
 
 		if (__crawlRequestDTO.getChannelCodes() == null) {
-			List<ChannelDTO> channelDTOs = this.channelService.findAllByOpenDay(__crawlRequestDTO.getOpenDay().getDayOfWeek());
+			List<ChannelDTO> channelDTOs = this.channelService
+					.findAllByOpenDay(__crawlRequestDTO.getOpenDay().getDayOfWeek());
 			Set<String> _codes = new HashSet<>();
-			_codes.addAll(channelDTOs.parallelStream().map(_dto -> _dto.getCode())
-			        .collect(Collectors.toSet()));
+			_codes.addAll(channelDTOs.parallelStream().map(_dto -> _dto.getCode()).collect(Collectors.toSet()));
 			__crawlRequestDTO.setChannelCodes(_codes);
 		}
 
